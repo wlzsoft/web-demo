@@ -1,0 +1,23 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+# eclipse config #
+.classpath
+.project
+.setting*
+# maven config #
+target*
+# gradle config #
+build
+.gradle
+# intellij idea #
+*.iml
+.idea/*
+*/.externalToolBuilders/*
+.metadata*
+logback*.log
+log4j*.log
+disconf/*
+disconf
