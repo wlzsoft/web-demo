@@ -14,8 +14,33 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.smartframe</groupId>
+	  <artifactId>basics</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    
+    <dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+    
   </dependencies>
   <build>
     <finalName>web-demo</finalName>
+    <plugins>
+    	<plugin>
+			  <groupId>org.eclipse.jetty</groupId>
+			  <artifactId>jetty-maven-plugin</artifactId>
+			  <version>9.3.18.v20170406</version> 
+				<configuration>
+					 <defaultsDescriptor>src/test/java/jetty/jetty-config.xml</defaultsDescriptor>
+					<webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+				</configuration>
+			</plugin>
+    </plugins>
   </build>
 </project>
