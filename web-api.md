@@ -2,24 +2,24 @@
 > http://profileapi.mk.meizu.com/profile/getUserBaseInfo.json
 - 参数
 
-|   名称   |    类型  | 是否必须 | 描述 |  
-| :------: | :------: | :-------:|: ---:|
-| userName |  String |    是    | 用户名称 |
-| password |  String |    是    | 用户密码 |
+|   名称   |    类型  | 是否必须 | 描述  
+| :------: | :------: | :-------:|: ---:
+| userName |  String |    是    | 用户名称 
+| password |  String |    是    | 用户密码 
 
 - 返回结果
 
-|   名称   |    类型  | 是否必须 | 描述 |  
-| :------: | :------: | :-------:|: ---:|
-| id       |  String |    是    | 用户ID |
-| birthday |  String |    否    | 出生年月 |
-| userName |  String |    是    | 用户名 |
-| email    |  String |    否    | 邮箱 |
-| telphone |  String |    否    | 联系电话 |
-| degree   |  String |    是    | 用户等级 |
-| registerTime |  String |    是    | 注册时间 |
-| lasterLoginTime |  String |    否    | 最后登陆时间 |
-| remark |  String |    否    | 备注 |
+|   名称   |    类型  | 是否必须 | 描述 
+| :------: | :------: | :-------:|: ---:
+| id       |  String |    是    | 用户ID 
+| birthday |  String |    否    | 出生年月 
+| userName |  String |    是    | 用户名 
+| email    |  String |    否    | 邮箱 
+| telphone |  String |    否    | 联系电话 
+| degree   |  String |    是    | 用户等级 
+| registerTime |  String |    是    | 注册时间 
+| lasterLoginTime |  String |    否    | 最后登陆时间 
+| remark |  String |    否    | 备注 
 
 - 示例
 
