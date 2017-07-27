@@ -2,10 +2,10 @@
 > http://profileapi.mk.meizu.com/profile/getUserBaseInfo.json
 - 参数
 
-   名称   |    类型  | 是否必须 | 描述  
- :------: | :------: | :-------:|: ---:
- userName |  String |    是    | 用户名称 
- password |  String |    是    | 用户密码 
+ 名称 | 类型 | 是否必须 | 描述 
+------------ | ------------- | ------------- | ------------- 
+userName | String | 是 | 用户名称
+password | String | 是 | 用户密码
 
 - 返回结果
 
