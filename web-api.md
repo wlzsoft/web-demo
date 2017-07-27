@@ -1,41 +1,41 @@
+## 1.æˆ·åŸºç™»å½•æŽ¥å£
+> http://profileapi.mk.meizu.com/profile/getUserBaseInfo.json
+- å‚æ•°
 
-## 1.ÓÃ»§µÇÂ¼½Ó¿Ú
->½Ó¿ÚµØÖ·£º http://xxx.com/login.json
-- ¿ÉÑ¡²ÎÊý<ÎÞ>
-- ·µ»Ø
-- ÓÃ»§²»´æÔÚ{"fid":0,"flymeId":0,"userStatus":-1}
-- ÓÃ»§´æÔÚ{"fid":11111,"flymeId":222222,"userStatus":3,"userName":"gavinfengzi","nickName":"fengzi","isDisabled":0}
-- userStatus:-1  Î´¼ÓÈë,0  ÒÑ¼ÓÈë  , 1  ÒÑÌá½»×ÊÁÏ  ,2  ÊµÃûÊ§°Ü  ,3  ÊµÃû³É¹¦
+|   åç§°   |    ç±»åž‹  | æ˜¯å¦å¿…é¡» | æè¿° |  
+| :------: | :------: | :-------:|: ---:|
+| userName |  String |    æ˜¯    | ç”¨æˆ·åç§° |
+| password |  String |    æ˜¯    | ç”¨æˆ·å¯†ç  |
 
+- è¿”å›žç»“æžœ
+
+|   åç§°   |    ç±»åž‹  | æ˜¯å¦å¿…é¡» | æè¿° |  
+| :------: | :------: | :-------:|: ---:|
+| id       |  String |    æ˜¯    | ç”¨æˆ·ID |
+| birthday |  String |    å¦    | å‡ºç”Ÿå¹´æœˆ |
+| userName |  String |    æ˜¯    | ç”¨æˆ·å |
+| email    |  String |    å¦    | é‚®ç®± |
+| telphone |  String |    å¦    | è”ç³»ç”µè¯ |
+| degree   |  String |    æ˜¯    | ç”¨æˆ·ç­‰çº§ |
+| registerTime |  String |    æ˜¯    | æ³¨å†Œæ—¶é—´ |
+| lasterLoginTime |  String |    å¦    | æœ€åŽç™»é™†æ—¶é—´ |
+| remark |  String |    å¦    | å¤‡æ³¨ |
+
+- ç¤ºä¾‹
 
 ``` json
 {
     "code": 200,
-    "dateline": 1497606011991,
     "success": true,
     "value": {
-        "promotionTitle": "Èö´ò·¢Ê¿´ó·ò",
-        "code": 200,
-        "shareContent": "·ÖÏíÎÄ×Ö3333",
-        "shortUrl": "www.mklink.com/z8LLDN",
-        "mkid": "z8LLDN",
-        "promotionPic": "http://172.17.60.52/group1/M00/00/2F/rBE8NFkkKiCAJ-_wAAPeUpHrQlo947.jpg"
+        "id": "1",
+        "birthday": 2000-06-11,
+        "userName": "LiWang",
+        "email": "liwang@163.com",
+        "telphone": "13365847895",
+        "degree": "1",
+        "registerTime":"2017-06-11 12:25:45",
+        "lasterLoginTime":"2017-07-11 12:25:45",
+        "remark":""
     }
 }
-
-## 1.ÓÃ»§µÇ³ö½Ó¿Ú
->½Ó¿ÚµØÖ·£º http://xxx.com/logout.json
-- ²ÎÊý£º    
-| ²ÎÊýÃû|²ÎÊýÃèÊö | ²ÎÊýÀàÐÍ | ²ÎÊý³¤¶È | ÊÇ·ñ¿ÉÎª¿Õ | ±¸×¢ |
-	|------|------|------|--------|------|------|
-	| userId| ÓÃ»§ID| Integer | 11 | ·ñ  |  |
-```
-
-- Ê§°Ü
-- 5001,"»î¶¯ID¸ñÊ½´íÎó!"
-- 5002,"»î¶¯²»´æÔÚ"
-- 5003,"»î¶¯Î´¿ªÊ¼"
-- 5004,"»î¶¯ÒÑ½áÊø"
-- 5006,"»î¶¯Î´ÆôÓÃ"
-- 5005,"ÐÂÔöÊ§°Ü"
-
