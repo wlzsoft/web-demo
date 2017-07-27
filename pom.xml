@@ -18,7 +18,6 @@
 	  <artifactId>basics</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    
     <dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>javax.servlet-api</artifactId>
@@ -28,6 +27,17 @@
   <build>
     <finalName>web-demo</finalName>
     <plugins>
+        <!--引入JDK 版本插件 -->
+	    <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>utf-8</encoding>
+			</configuration> 		   
+	    </plugin>
+	    <!--引入Jetty 启动插件 -->
     	<plugin>
 			  <groupId>org.eclipse.jetty</groupId>
 			  <artifactId>jetty-maven-plugin</artifactId>

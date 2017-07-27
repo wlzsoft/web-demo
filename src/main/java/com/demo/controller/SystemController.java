@@ -24,17 +24,17 @@ public class SystemController {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		if(null==userName||userName.equals("")||null==password||password.equals("")){
-			model.addObject("message", "ÓÃ»§Ãû»òÃÜÂë²»ÄÜÎª¿Õ");
+			model.addObject("message", "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Îªï¿½ï¿½");
 			model.setViewName("/view/login");	
 			return model ;
 		}
 		 UserEntity userCur = userService.findUserLogin(userName, password);
 		if(null == userCur){
-			model.addObject("message", "ÓÃ»§Ãû»òÃÜÂë´íÎó");
+			model.addObject("message", "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			model.setViewName("/view/login");	
 			return model ;
 		}else{
-			request.getSession().setAttribute("userCur", userCur);
+			request.getSession().setAttribute("userCur_"+userCur.getId(), userCur);
 			model.addObject("userName", userName);
 			model.setViewName("/view/index");	
 			return model;
@@ -45,11 +45,12 @@ public class SystemController {
 
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request ,HttpServletResponse response ,ModelAndView model){
-		HttpSession session = request.getSession(false);//·ÀÖ¹´´½¨Session
+		HttpSession session = request.getSession(false);//ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Session
+		String userId = request.getParameter("userId");
 		if(null == session){
 			model.setViewName("/view/login");	
 		}else{
-			request.getSession().removeAttribute("userCur");
+			request.getSession().removeAttribute("userCur_"+userId);
 			model.setViewName("/view/login");
 		}
 		return model;
