@@ -6,13 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.demo.entity.UserEntity;
+
 
 @Controller
 @RequestMapping("/user")	
 public class UserController {
 	
 	@RequestMapping("/savaUser")
-	public ModelAndView savaUser(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
+	public ModelAndView savaUser(HttpServletRequest request ,HttpServletResponse response,UserEntity userentity ,ModelAndView model){
 		
 		return model ;
 	}
