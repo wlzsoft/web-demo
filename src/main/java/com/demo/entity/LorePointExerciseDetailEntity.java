@@ -3,22 +3,31 @@ package com.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LoreExerciseDetailEntity implements Serializable {
+/**
+ * 知识点练习详情
+ * @author Administrator
+ *
+ */
+public class LorePointExerciseDetailEntity implements Serializable {
 
 	private static final long serialVersionUID = 8598685062349072088L;
 	
 	  public Integer id            ;
 	  public Integer userId        ;
-	  public Integer lorePointId        ;
-	  public Date firstExerciseDate  ;
-	  public Date lastExerciseDate   ;
-	  public Integer exerciseNumber;
-	  public float  correctRate   ;
-	  public Integer  correctNumber ;
-	  public Integer errorNumber   ;
-	  public Date avgConsumingTime   ;
-	  public float weights       ;
-	  public float  grasp         ;
+	  public Integer lorePointId        ; //知识点ID
+	  public Date nextExerciseTime ;//'计划下次练习时间',
+	  public Integer exerciseCycle ;// '知识点当前练习周期',
+	  public Integer conCorrectNumber ;// '连续回答正确次数',
+	  public Integer conErrorNumber ;// '连续回答错误次数',
+	  public Date firstExerciseDate  ;//首次练习日期
+	  public Date lastExerciseDate   ;//上一次练习日期
+	  public Integer exerciseNumber;//练习总次数
+	  public float  correctRate   ;//总正确数
+	  public Integer  correctNumber ;//总正确数
+	  public Integer errorNumber   ;//总错误数
+	  public Date avgConsumingTime   ;//平均耗时
+	  public float weights       ;//练习权重
+	  public float  grasp         ;//掌握值
 	  
 	public Integer getId() {
 		return id;
@@ -31,6 +40,31 @@ public class LoreExerciseDetailEntity implements Serializable {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	public Date getNextExerciseTime() {
+		return nextExerciseTime;
+	}
+	public void setNextExerciseTime(Date nextExerciseTime) {
+		this.nextExerciseTime = nextExerciseTime;
+	}
+	public Integer getExerciseCycle() {
+		return exerciseCycle;
+	}
+	public void setExerciseCycle(Integer exerciseCycle) {
+		this.exerciseCycle = exerciseCycle;
+	}
+	public Integer getConCorrectNumber() {
+		return conCorrectNumber;
+	}
+	public void setConCorrectNumber(Integer conCorrectNumber) {
+		this.conCorrectNumber = conCorrectNumber;
+	}
+	public Integer getConErrorNumber() {
+		return conErrorNumber;
+	}
+	public void setConErrorNumber(Integer conErrorNumber) {
+		this.conErrorNumber = conErrorNumber;
 	}
 	public Integer getLorePointId() {
 		return lorePointId;

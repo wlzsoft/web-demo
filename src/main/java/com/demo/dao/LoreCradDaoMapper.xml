@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.LoreCradDao">
+	
+  <insert id="savaLoreCrad" parameterType="com.demo.entity.LoreCardEntity">
+ 	  INSERT INTO loreCrad(
+				lorePointId,
+				language,
+				area,
+				questionType,
+				difficultyLevel,
+				titleText,
+				titleVoiceSrc,
+				titleAutoPlay,
+				questionText,
+				questionVoiceSrc,
+				questionAutoPlay,
+				questionImages,
+				answers,
+				createTime,
+				createId
+		)VALUES(
+				#{lorePointId},
+				#{language},
+				#{area},
+				#{questionType},
+				#{difficultyLevel},
+				#{titleText},
+				#{titleVoiceSrc},
+				#{titleAutoPlay},
+				#{questionText},
+				#{questionVoiceSrc},
+				#{questionAutoPlay},
+				#{questionImages},
+				#{answers},
+				#{createTime},
+				#{createId}
+		)
+  </insert>	
+	
+  <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.entity.LoreCardEntity">
+     select * from lorecrad t where t.id=#{id}
+  </select>
+   
+   <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.entity.LoreCardEntity"> 
+        select * from lorecrad t where t.lorePointId=#{lorePointId}
+   </select>  
+</mapper>

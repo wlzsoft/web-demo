@@ -15,7 +15,7 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
    	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->  
-    <context:component-scan base-package="com.demo"   use-default-filters="true" />
+    <context:component-scan base-package="com.smartframe,com.demo"   use-default-filters="true" />
     
     <!--加载注解驱动  -->
 	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
@@ -27,7 +27,16 @@
 	    <property name="suffix" value=".jsp"/>
 	</bean>
 	
-	
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->  
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    
+        <!-- 默认编码 -->  
+        <property name="defaultEncoding" value="utf-8" />    
+        <!-- 文件大小最大值 -->  
+        <property name="maxUploadSize" value="10485760000" />    
+        <!-- 内存中的最大值 -->  
+        <property name="maxInMemorySize" value="40960" />    
+    </bean>  
+    
 	<!-- 配置内容协商视图解析 -->
 	<bean id="contentNegotiatingViewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<!-- 设置内容协商管理器 -->
@@ -53,7 +62,9 @@
 	</bean>
 
 	<!-- JSON视图 -->
-	<bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
+	<bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="extractValueFromSingleKeyModel" value="true" />
+	</bean>
 	
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="mediaTypes">

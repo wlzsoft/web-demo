@@ -9,17 +9,25 @@ public class ExcerciseBookEntity implements Serializable{
 	
 	public Integer id ;
 	
-	public String  excerciseBookName ;
+	public String  excerciseBookName ;//练习本名称
 	
-	public Integer  parentId ;
+	public Integer  parentId ;//父级ID
 	
-	public Integer  sharedType ;
+	public Integer language	;//	卡片使用的语言	
 	
-	public Boolean  isLeaves ;
+	public Integer area	;//	卡片所属领域
+	
+	public Integer  sharedType ;//共享类型 (0私有、1只读共享)
+	
+	public Boolean  isLeaves ;//是否叶子节点
 	
 	public Date  createTime ;
 	
-	public Integer  createID ;
+	public Integer  createId ;
+	
+	public Date  updateTime ;
+	
+	public Integer  updateId ;
 	
 	public String  remark   ;
 
@@ -71,12 +79,28 @@ public class ExcerciseBookEntity implements Serializable{
 		this.createTime = createTime;
 	}
 
-	public Integer getCreateID() {
-		return createID;
+	public Integer getCreateId() {
+		return createId;
 	}
 
-	public void setCreateID(Integer createID) {
-		this.createID = createID;
+	public void setCreateId(Integer createId) {
+		this.createId = createId;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getUpdateId() {
+		return updateId;
+	}
+
+	public void setUpdateId(Integer updateId) {
+		this.updateId = updateId;
 	}
 
 	public String getRemark() {

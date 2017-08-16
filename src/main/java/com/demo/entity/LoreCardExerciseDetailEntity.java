@@ -8,17 +8,17 @@ public class LoreCardExerciseDetailEntity implements Serializable{
 	private static final long serialVersionUID = -4597855193912517426L;
 	
    public Integer id            ;
-   public Integer userId        ;
-   public Integer loreCardId        ;
-   public Date firstExerciseDate  ;
-   public Date lastExerciseDate   ;
-   public Integer exerciseNumber;
-   public float  correctRate   ;
-   public Integer  correctNumber ;
-   public Integer errorNumber   ;
-   public Date avgConsumingTime   ;
-   public float weights       ;
-   public float  grasp         ;
+   public Integer userId        ;//用户ID
+   public Integer loreCardId        ;//卡片ID
+   public Date firstExerciseDate  ;//首次练习日期
+   public Date lastExerciseDate   ;//上一次练习日期
+   public Integer exerciseNumber;//练习次数
+   public float  correctRate   ;//正确率
+   public Integer  correctNumber ;//正确数
+   public Integer errorNumber   ;//错误数
+   public Date avgConsumingTime   ;//平均耗时
+   public float weights       ;//练习权重
+   public float  grasp         ;//掌握值
 	  
 	public Integer getId() {
 		return id;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.ExcerciseBookDao">
+	
+	<insert id="excerciseSava" parameterType="com.demo.entity.ExcerciseBookEntity">
+			INSERT INTO excercisebook(
+					excerciseBookName,
+					parentId,
+					sharedType,
+					isLeaves,
+					createTime,
+					createId,
+					remark
+			)VALUES(
+					#{excerciseBookName},
+					#{parentId},
+					#{sharedType},
+					#{isLeaves},
+					#{createTime},
+					#{createId},
+					#{remark}
+			)
+	</insert>
+	
+	<delete id="delExcerciseById">
+		DELETE FROM  excercisebook  WHERE  id=#{excerciseId}
+	</delete>
+	
+	<update id="editExcercise" parameterType="com.demo.entity.ExcerciseBookEntity">
+		 UPDATE excercisebook set
+			   <if test="excerciseBookName !=null" >excerciseBookName=#{excerciseBookName},</if>
+			   <if test="parentId !=null">parentId=#{parentId},</if>
+			   <if test="sharedType !=null">sharedType=#{sharedType},</if>
+			   <if test="isLeaves !=null">isLeaves=#{isLeaves},</if>
+			   <if test="remark !=null">remark=#{remark},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null">updateId=#{updateId}</if>
+		   WHERE id=#{id}
+	</update>
+	
+	<select id="findExcerciseId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+		select * from excercisebook t where t.id=#{excerciseId}
+	</select>
+	
+	<select id="searchAllExcercise" resultType="com.demo.entity.ExcerciseBookEntity">
+		select * from excercisebook t 
+	</select>
+	
+	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+	   SELECT id,lorePointName,excerciseBookId,lorePointName,number FROM 
+		   lorepoint t
+		WHERE excerciseBookId=#{excerciseId} 
+	</select>
+     
+</mapper>

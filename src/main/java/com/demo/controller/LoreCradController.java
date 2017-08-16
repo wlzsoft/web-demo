@@ -1,46 +1,146 @@
 package com.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.demo.entity.LoreCardEntity;
+import com.demo.entity.LoreCardExerciseDetailEntity;
+import com.demo.entity.LoreCradAnswersEntity;
+import com.demo.service.LoreCradService;
+import com.smartframe.dto.Result;
+import com.smartframe.dto.ResultObject;
 
 
 @Controller
-@RequestMapping("/loreCrad")
+@RequestMapping("/crad")
 public class LoreCradController {
 
+	@Autowired
+	private LoreCradService loreCradService;
 	
+	/**
+	 * 保存知识卡片
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
 	@RequestMapping("/savaLoreCrad")
-	public ModelAndView savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
-		
-		return null;
+	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity,LoreCradAnswersEntity answersEntity ){
+		 loreCradService.savaLoreCrad(loreCardEntity,answersEntity);
+		return ResultObject.successMessage("保存成功");
 	}
 	
+	/**
+	 * 根据知识卡片ID 删除知识卡片
+	 * @param request
+	 * @param response
+	 * @param loreCardId
+	 * @return
+	 */
 	@RequestMapping("/delLoreCrad")
-	public ModelAndView delLoreCrad(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
-		
-		return null;
+	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
+		   loreCradService.delLoreCrad(Integer.parseInt(loreCardId));
+		return ResultObject.successMessage("删除成功");
 	}
 	
+	/**
+	 * 更新知识卡片信息
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
 	@RequestMapping("/editLoreCrad")
-	public ModelAndView editLoreCrad(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
-		
-		return null;
+	public Result<?> editLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
+		 loreCradService.editLoreCrad(entity);
+		return ResultObject.successMessage("修改成功");
 	}
 	
-	@RequestMapping("/searchLoreCrad")
-	public ModelAndView searchLoreCrad(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
-		
-		return null;
+	/**
+	 * 根据知识卡片ID ，获取知识卡片信息
+	 * @param request
+	 * @param response
+	 * @param loreCardId
+	 * @return
+	 */
+	@RequestMapping("/findLoreCradById")
+	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
+		LoreCardEntity entity = loreCradService.findLoreCradById(Integer.parseInt(loreCardId));
+		if(null ==entity){
+			return ResultObject.successMessage("没有数据");
+		}
+		return ResultObject.successObject(entity);
 	}
 	
-	@RequestMapping("/searchAllLoreCrad")
-	public ModelAndView searchAllLoreCrad(HttpServletRequest request ,HttpServletResponse response,ModelAndView model){
-		
-		return null;
+	/**
+	 * 根据知识点ID ,获取知识卡片信息
+	 * @param request
+	 * @param response
+	 * @param lorePointId
+	 * @return
+	 */
+	@RequestMapping("/findLoreCradByPointId")
+	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
+		List<LoreCardEntity> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(lorePointId));
+		if(entityList.size()==0){
+			return ResultObject.successMessage("没有数据");
+		}
+		return ResultObject.successObject(entityList);
+	}
+	
+	/**
+	 * 获取所有开放的知识卡片信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getOpenLoreCrad")
+	public Result<?> getOpenLoreCrad(HttpServletRequest request ,HttpServletResponse response){
+		List<LoreCardEntity> entityList = loreCradService.getOpenLoreCrad();
+		if(entityList.size()==0){
+			return ResultObject.successMessage("没有数据");
+		}
+		return ResultObject.successObject(entityList);
+	}
+	
+	
+	/**
+	 * 根据知识卡片ID ，获取知识卡片的练习详情
+	 * @param request
+	 * @param response
+	 * @param lorePointId
+	 * @return
+	 */
+	@RequestMapping("/getLoreCradDetailByPointId")
+	public Result<?> getLoreCradDetailByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
+		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(loreCardId));
+		if(null==entity){
+			return ResultObject.successMessage("没有数据");
+		}
+		return ResultObject.successObject(entity);
+	}
+	
+	/**
+	 * 根据卡片ID ，获取卡片的答案信息
+	 * @param request
+	 * @param response
+	 * @param loreCardId
+	 * @return
+	 */
+	@RequestMapping("/getLoreCradAnswerByPointId")
+	public Result<?> getLoreCradAnswerByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
+		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(loreCardId));
+		if(entityList.size()<1){
+			return ResultObject.successMessage("没有数据");
+		}
+		return ResultObject.successObject(entityList);
 	}
 	
 }

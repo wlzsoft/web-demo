@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.UserDao">
+     <select id="findUserLogin" parameterType="java.lang.String" resultType="com.demo.entity.UserEntity">
+        SELECT * FROM userinfo t WHERE  t.userName=#{userName} AND t.password=#{password}  
+     </select>
+     
+     <insert id="savaUser" parameterType="com.demo.entity.UserEntity">
+		     INSERT INTO userinfo(
+					birthday,
+					userName,
+					password,
+					email,
+					telphone,
+					degree,
+					registerTime,
+					remark
+			 ) VALUES(
+					#{birthday},
+					#{userName},
+					#{password},
+					#{email},
+					#{telphone},
+					#{degree},
+					#{registerTime},
+					#{remark}
+			 )
+     </insert>
+     
+     <select id="findUserExerciseDetailById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserExerciseDetailEntity">
+     		SELECT * FROM userexercisedetail t WHERE t.userId=#{userId}
+     </select>
+     
+     <select id="findExerciseById" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+     		SELECT * FROM excercisebook t WHERE t.userId=#{userId}
+     </select>
+     
+</mapper>

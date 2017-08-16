@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.ReviewDao">
+	
+	  <insert id="savaUserExcerciseDetail" parameterType="com.demo.entity.UserExerciseDetailEntity">
+	  	 	  INSERT INTO userexercisedetail(
+				userId,
+				loreCardId,
+				lorePointId,
+				exerciseDate,
+				startExerciseTime,
+				endExerciseTime,
+				exerciseUpshot
+		)VALUES(
+				#{userId},
+				#{loreCardId},
+				#{lorePointId},
+				#{exerciseDate},
+				#{startExerciseTime},
+				#{endExerciseTime},
+				#{exerciseUpshot}
+		)
+	  
+	  </insert>
+	  
+	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
+	  		 UPDATE lorepoint set
+			   lorePointName=${nextExerciseTime},
+			   exerciseCycle=${exerciseCycle},
+			   conCorrectNumber=${conCorrectNumber},
+			   conErrorNumber=${conErrorNumber},
+			   lastExerciseDate=${lastExerciseDate},
+			   exerciseNumber=${exerciseNumber},
+			   correctNumber=${correctNumber},
+			   errorNumber=${errorNumber}
+		     where id=#{id}
+	  </update>
+     
+</mapper>

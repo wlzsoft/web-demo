@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.LorePointDao">
+	
+	<insert id="install" parameterType="com.demo.entity.LorePointEntity">
+			INSERT INTO lorepoint(
+					lorePointName,
+					excerciseBookId,
+					number,
+					createTime,
+					createId
+			)VALUES(
+					#{lorePointName},
+					#{excerciseBookId},
+					#{number},
+					#{createTime},
+					#{createId}
+			)
+	</insert>
+	
+	<insert id="inesterExcerciseOrPoint" parameterType="java.lang.Integer">
+		  INSERT INTO excercisebook_lorepoint(
+					excerciseBookId,
+					lorePointId
+			)VALUES(
+					#{excerciseBookId},
+					#{lorePointId}
+			)
+	</insert>
+	
+	<delete id="dellById">
+		DELETE FROM  lorepoint  WHERE  id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.demo.entity.LorePointEntity">
+		 UPDATE lorepoint set
+			   <if test="lorePointName !=null" >lorePointName=#{lorePointName},</if>
+			   <if test="number !=null">number=#{number},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null">updateId=#{updateId}</if>
+	    where id=#{id}
+	</update>
+	
+	<delete id="delExcerciseOrPoint" parameterType="java.lang.Integer">
+		DELETE FROM  excercisebook_lorepoint  WHERE  lorePointId=#{id}
+	</delete>
+	
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointEntity">
+		select * from  lorepoint t where t.id=#{id}
+	</select>
+	
+	<select id="searchAllLorePoint" resultType="com.demo.dto.PonitDto">
+		select t.id,t.lorePointName,t.number from  lorePoint t
+	</select>
+	
+	<select id="findPointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointExerciseDetailEntity">
+		SELECT * FROM loreexercisedetail t WHERE t.lorePointId=#{id}
+	</select>
+	
+     
+</mapper>

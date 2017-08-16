@@ -1,48 +1,22 @@
-package com.demo.controller;
+package com.demo.controller.test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.demo.entity.UserEntity;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.gridfs.GridFSBucket;
-import com.mongodb.client.gridfs.GridFSBuckets;
-import com.mongodb.client.gridfs.model.GridFSUploadOptions;
-import com.mongodb.gridfs.GridFSInputFile;
-
-@Controller
-public class MongoDBConnet {
+public class MongoDBConnet {/*
 	
 	@RequestMapping("/mongo")
 	public void conn(){
 		
-		/*
-		 * 1¡¢´´½¨Êý¾Ý¿âÁ¬½Ó
-		 */
+		
+		 * 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
+		 
         try {
-			 MongoClient mongoClient = new MongoClient("172.16.180.88",27017);
-			//È¡µÃÊý¾Ý¿â¶ÔÏó
+			 MongoClient mongoClient = new MongoClient("172.16.180.85",27017);
+			//È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
 			 MongoDatabase db=mongoClient.getDatabase("excercise");
 			
 			String collectionName="files";
 			
-			//´´½¨Êý¾Ý¿â¶ÔÏóÖÐGridFS¼¯ºÏ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GridFSï¿½ï¿½ï¿½ï¿½
 			GridFSBucket  gridFSBucket= GridFSBuckets.create(db,collectionName);	
 			
 			InputStream streamToUploadFrom = new FileInputStream(new File("E:/my.png"));
@@ -53,19 +27,19 @@ public class MongoDBConnet {
 			System.out.println("============="+fileId.toString());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		    System.out.println("´æ´¢ÎÄ¼þÊ±·¢Éú´íÎó£¡£¡£¡");
+		    System.out.println("ï¿½æ´¢ï¿½Ä¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¡£ï¿½ï¿½ï¿½");
 		}
-/*		
 		
 		
-		 * 3¡¢¸ù¾Ýid²éÑ¯ÉÏ´«ÎÄ¼þ
+		
+		 * 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½Ñ¯ï¿½Ï´ï¿½ï¿½Ä¼ï¿½
 		 
 		GridFSDBFile findOne= gridFS.findOne(new BasicDBObject("_id",createFile.getId()));
 		System.out.print(findOne);
 		
 		
-		 * 4¡¢²éÑ¯ËùÓÐÎÄ¼þÁÐ±í
-		 * DBCursor Êý¾Ý¿âÓÎ±ê
+		 * 4ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð±ï¿½
+		 * DBCursor ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Î±ï¿½
 		 
 		DBCursor fileList=gridFS.getFileList();
 		while(fileList.hasNext())
@@ -74,11 +48,11 @@ public class MongoDBConnet {
 		}
 		
 		
-		 *5¡¢ É¾³ýÎÄ¼þ
+		 *5ï¿½ï¿½ É¾ï¿½ï¿½ï¿½Ä¼ï¿½
 		 
 		gridFS.remove(new  BasicDBObject("_id",createFile.getId()));
 		
-	*/
+	
 	}
 	
 	@RequestMapping("/coll")
@@ -87,21 +61,21 @@ public class MongoDBConnet {
 		
 		
 	      try{   
-	          // Á¬½Óµ½ mongodb ·þÎñ
+	          // ï¿½ï¿½ï¿½Óµï¿½ mongodb ï¿½ï¿½ï¿½ï¿½
 	    	  MongoClient mongoClient = new MongoClient("172.16.180.88",27017);
-			//È¡µÃÊý¾Ý¿â¶ÔÏó
+			//È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
 	    	  MongoDatabase  mongoDatabase = mongoClient.getDatabase("excercise"); 
 
 	    	  
 	    	  
 	          MongoCollection collection = mongoDatabase.getCollection("test");
-	          System.out.println("¼¯ºÏ test Ñ¡Ôñ³É¹¦");
-	          //²åÈëÎÄµµ  
-	          /** 
-	          * 1. ´´½¨ÎÄµµ org.bson.Document ²ÎÊýÎªkey-valueµÄ¸ñÊ½ 
-	          * 2. ´´½¨ÎÄµµ¼¯ºÏList<Document> 
-	          * 3. ½«ÎÄµµ¼¯ºÏ²åÈëÊý¾Ý¿â¼¯ºÏÖÐ mongoCollection.insertMany(List<Document>) ²åÈëµ¥¸öÎÄµµ¿ÉÒÔÓÃ mongoCollection.insertOne(Document) 
-	          * */
+	          System.out.println("ï¿½ï¿½ï¿½ï¿½ test Ñ¡ï¿½ï¿½É¹ï¿½");
+	          //ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½  
+	          *//** 
+	          * 1. ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ org.bson.Document ï¿½ï¿½ï¿½ï¿½Îªkey-valueï¿½Ä¸ï¿½Ê½ 
+	          * 2. ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½List<Document> 
+	          * 3. ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿â¼¯ï¿½ï¿½ï¿½ï¿½ mongoCollection.insertMany(List<Document>) ï¿½ï¿½ï¿½ëµ¥ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ mongoCollection.insertOne(Document) 
+	          * *//*
 	          
 	         UserEntity user = new UserEntity();
 	         			user.setBirthday(new Date());
@@ -113,19 +87,19 @@ public class MongoDBConnet {
 	         			for (Entry<String, Object> entry : set) {
 	         				document.put(entry.getKey(), entry.getValue());
 						}
-/*	          Document document = new Document("title", "MongoDB").  
+	          Document document = new Document("title", "MongoDB").  
 	        	         append("description", "database").  
 	        	         append("likes", 100).  
-	        	         append("by", "Fly");  */
+	        	         append("by", "Fly");  
 	         			
 	          List<Document> documents = new ArrayList<Document>();  
 	          documents.add(document);  
 	          collection.insertMany(documents); 
-	          System.out.println("ÎÄµµ²åÈë³É¹¦");
+	          System.out.println("ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½");
 	       }catch(Exception e){
 	          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       }
 		
 	
 	}
-}
+*/}

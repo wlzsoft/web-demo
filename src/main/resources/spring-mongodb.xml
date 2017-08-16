@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd ">
+        
+       	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->  
+    <context:component-scan base-package="com.smartframe"   use-default-filters="true" />    
+    <!-- 获取配置资源 -->  
+<!--     <context:property-placeholder location="classpath:properties/mongodb.properties" />   -->
+    
+    <bean id="propertyBean" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+     <property name="locations">  
+        <array>  
+            <value>classpath:properties/*.properties</value>  
+        </array>  
+     </property>  
+   </bean>  
+    
+      	<!-- 1.7版本+不支持mongo,支持mongo-client,options为client-options -->
+    	<!-- Usage of 'UserCredentials' with 'MongoClient' is no longer supported -->
+    	<!-- 配置mongodb连接池 ,创建mongoClient实例-->
+   	 	<!--credentials="mongodb://${mongo.user}:${mongo.pwd}@${mongo.host}:${mongo.port}/${mongo.defaultDbName}"为什么不起作用
+  			  如果需要验证,mongo-client需要加这句: credentials="${mongo.user}:${mongo.pwd}@${mongo.defaultDbName}"
+   		 -->
+    <mongo:mongo-client id="mongoClient" host="${mongo.host}" port="${mongo.port}">
+			<mongo:client-options
+			    connections-per-host="${mongo.connectionsPerHost}"
+			    min-connections-per-host="${mongo.minConnectionsPerHost}"
+			    threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+			    connect-timeout="${mongo.connectTimeout}"
+			    max-wait-time="${mongo.maxWaitTime}"
+			    socket-keep-alive="${mongo.socketKeepAlive}"
+			    socket-timeout="${mongo.socketTimeout}"
+			    description="${mongo.description}"
+			    max-connection-idle-time="${mongo.maxConnectionIdleTime}"
+			    max-connection-life-time="${mongo.maxConnectionLifeTime}"
+			    />
+<!-- 			    heartbeat-socket-timeout="${mongo.heartbeatSocketTimeout}"
+			    heartbeat-connect-timeout="${mongo.heartbeatConnectTimeout}"
+			    min-heartbeat-frequency="${mongo.minHeartbeatFrequency}"
+			    heartbeat-frequency="${mongo.heartbeatFrequency}" -->
+			
+			  
+    </mongo:mongo-client>  
+    <!-- 设置使用的数据库 名-->  
+    <mongo:db-factory id="mongoDbFactory" dbname="${mongo.defaultDbName}" mongo-ref="mongoClient"/>
+    					
+    <!-- mongodb的模板 -->  
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongoDbFactory" />
+    </bean> 
+    
+     <mongo:mapping-converter id="converter"  db-factory-ref="mongoDbFactory" />
+     <bean id="gridFsTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">  
+        <constructor-arg ref="mongoDbFactory" />  
+        <constructor-arg ref="converter" />  
+        <constructor-arg value="files" index="2" /><!-- 表名 -->  
+    </bean>
+    
+</beans>  
