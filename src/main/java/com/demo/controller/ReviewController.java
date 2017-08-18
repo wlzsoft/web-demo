@@ -32,8 +32,8 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/savaReview")
-	public Result<?> reviewCrad(HttpServletRequest request ,HttpServletResponse response,String lorePointId,String cradId,Integer right){
-		reviewService.reviewCrad(lorePointId, cradId, right);
+	public Result<?> reviewCrad(HttpServletRequest request ,HttpServletResponse response,String pointId,String cradId,Integer right){
+		reviewService.reviewCrad(pointId, cradId, right);
 		return ResultObject.successMessage("保存成功") ;
 	}
 	

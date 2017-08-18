@@ -63,7 +63,8 @@ public class BookTest {
 	
 	@Test
 	public void booklist(){
-		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise();
+		Integer userId=1;
+		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
 		System.out.println(entityList.size());
 	}
 	

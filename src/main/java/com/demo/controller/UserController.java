@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.UserEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.service.UserService;
@@ -44,17 +42,4 @@ public class UserController {
 		return ResultObject.successObject(list);
 	}
 	
-	/**
-	 * 根据用户ID获取 用户所有练习本
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @param userId
-	 * @return
-	 */
-	@RequestMapping("/findExerciseById")
-	public Result<?> findExerciseById(HttpServletRequest request ,HttpServletResponse response,String userId){
-		List<ExcerciseBookEntity>  list = userService.findExerciseById(Integer.parseInt(userId));
-		return ResultObject.successObject(list);
-	}
 }

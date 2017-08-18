@@ -46,8 +46,8 @@ public class LoreCradController {
 	 * @return
 	 */
 	@RequestMapping("/delCrad")
-	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
-		   loreCradService.delLoreCrad(Integer.parseInt(loreCardId));
+	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String cardId){
+		   loreCradService.delLoreCrad(Integer.parseInt(cardId));
 		return ResultObject.successMessage("删除成功");
 	}
 	
@@ -72,8 +72,8 @@ public class LoreCradController {
 	 * @return
 	 */
 	@RequestMapping("/findCrad")
-	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
-		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(loreCardId));
+	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String cardId){
+		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(cardId));
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -87,9 +87,9 @@ public class LoreCradController {
 	 * @param lorePointId
 	 * @return
 	 */
-	@RequestMapping("/findCradByPointId")
-	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
-		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(lorePointId));
+	@RequestMapping("/findCradPointId")
+	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(pointId));
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -102,7 +102,7 @@ public class LoreCradController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/getOpenCrad")
+	@RequestMapping("/openCrad")
 	public Result<?> getOpenLoreCrad(HttpServletRequest request ,HttpServletResponse response){
 		List<LoreCardEntity> entityList = loreCradService.getOpenLoreCrad();
 		if(entityList.size()==0){

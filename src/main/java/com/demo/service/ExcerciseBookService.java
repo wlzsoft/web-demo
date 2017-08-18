@@ -40,8 +40,8 @@ public class ExcerciseBookService {
 		return entity;
 	}
 	
-	public List<ExcerciseBookEntity> searchAllExcercise(){
-		List<ExcerciseBookEntity> list = excerciseBookDao.searchAllExcercise();
+	public List<ExcerciseBookEntity> searchAllExcercise(Integer userId){
+		List<ExcerciseBookEntity> list = excerciseBookDao.searchAllExcercise(userId);
 		return list;
 	}
 	

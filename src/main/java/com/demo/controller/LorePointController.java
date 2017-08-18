@@ -63,15 +63,15 @@ public class LorePointController {
 	 * @return
 	 */
 	@RequestMapping("/delPoint")
-	public Result<?> delLorePoint(HttpServletRequest request ,HttpServletResponse response,String id){
-		lorePointService.delLorePoint(Integer.parseInt(id));
+	public Result<?> delLorePoint(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		lorePointService.delLorePoint(Integer.parseInt(pointId));
 		return ResultObject.successMessage("删除成功");
 	}
 	
 	
 	@RequestMapping("/findPoint")
-	public Result<PonitDto> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
-		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(lorePointId));
+	public Result<PonitDto> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
 		return ResultObject.successObject(entity);
 	}
 	
@@ -89,8 +89,8 @@ public class LorePointController {
 	 * @return
 	 */
 	@RequestMapping("/pointDetail")
-	public Result<?> findPointIdByDetail(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
-		LorePointExerciseDetailEntity list = lorePointService.findPointIdByDetail(Integer.parseInt(lorePointId));
+	public Result<?> findPointIdByDetail(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		LorePointExerciseDetailEntity list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
 		return ResultObject.successObject(list);
 	}
 

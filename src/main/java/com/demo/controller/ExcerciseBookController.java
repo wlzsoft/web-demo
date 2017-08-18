@@ -83,14 +83,14 @@ public class ExcerciseBookController {
 	}
 	
 	/**
-	 * 查询所有练习本节点信息
+	 * 根据用户ID 查询所有练习本节点信息
 	 * @param request
 	 * @param response
 	 * @return
 	 */
 	@RequestMapping("/booklist")
-	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response){
-		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise();
+	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,String userId){
+		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(Integer.parseInt(userId));
 		return ResultObject.successObject(entityList);
 	}
 	

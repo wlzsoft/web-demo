@@ -20,7 +20,7 @@ public interface ExcerciseBookDao {
 	
 	public ExcerciseBookEntity findExcerciseId(@Param("excerciseId")Integer excerciseId);
 	
-	public List<ExcerciseBookEntity> searchAllExcercise();
+	public List<ExcerciseBookEntity> searchAllExcercise(@Param("userId")Integer userId);
 	
 	public List<ExcerciseBookEntity> fidByName();
 	
