@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dto.CardDto;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
@@ -31,9 +32,9 @@ public class LoreCradController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/savaLoreCrad")
-	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity,LoreCradAnswersEntity answersEntity ){
-		 loreCradService.savaLoreCrad(loreCardEntity,answersEntity);
+	@RequestMapping("/savaCrad")
+	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
+		 loreCradService.savaLoreCrad(loreCardEntity);
 		return ResultObject.successMessage("保存成功");
 	}
 	
@@ -44,7 +45,7 @@ public class LoreCradController {
 	 * @param loreCardId
 	 * @return
 	 */
-	@RequestMapping("/delLoreCrad")
+	@RequestMapping("/delCrad")
 	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
 		   loreCradService.delLoreCrad(Integer.parseInt(loreCardId));
 		return ResultObject.successMessage("删除成功");
@@ -57,7 +58,7 @@ public class LoreCradController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/editLoreCrad")
+	@RequestMapping("/editCrad")
 	public Result<?> editLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
 		 loreCradService.editLoreCrad(entity);
 		return ResultObject.successMessage("修改成功");
@@ -70,9 +71,9 @@ public class LoreCradController {
 	 * @param loreCardId
 	 * @return
 	 */
-	@RequestMapping("/findLoreCradById")
+	@RequestMapping("/findCrad")
 	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
-		LoreCardEntity entity = loreCradService.findLoreCradById(Integer.parseInt(loreCardId));
+		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(loreCardId));
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -86,9 +87,9 @@ public class LoreCradController {
 	 * @param lorePointId
 	 * @return
 	 */
-	@RequestMapping("/findLoreCradByPointId")
+	@RequestMapping("/findCradByPointId")
 	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
-		List<LoreCardEntity> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(lorePointId));
+		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(lorePointId));
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -101,7 +102,7 @@ public class LoreCradController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/getOpenLoreCrad")
+	@RequestMapping("/getOpenCrad")
 	public Result<?> getOpenLoreCrad(HttpServletRequest request ,HttpServletResponse response){
 		List<LoreCardEntity> entityList = loreCradService.getOpenLoreCrad();
 		if(entityList.size()==0){
@@ -118,7 +119,7 @@ public class LoreCradController {
 	 * @param lorePointId
 	 * @return
 	 */
-	@RequestMapping("/getLoreCradDetailByPointId")
+	@RequestMapping("/getCradDetailByPointId")
 	public Result<?> getLoreCradDetailByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
 		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(loreCardId));
 		if(null==entity){
@@ -134,7 +135,7 @@ public class LoreCradController {
 	 * @param loreCardId
 	 * @return
 	 */
-	@RequestMapping("/getLoreCradAnswerByPointId")
+	@RequestMapping("/getCradAnswerByPointId")
 	public Result<?> getLoreCradAnswerByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
 		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(loreCardId));
 		if(entityList.size()<1){

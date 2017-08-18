@@ -6,7 +6,7 @@ public class PonitDto {
 	
 	public String lorePointName ;//知识点名称
 	
-	public String  excerciseBookId ;//练习本名称 
+	public String  excerciseBookId ;//练习本ID
 	
 	public  Integer number; //知识点卡片数量
 

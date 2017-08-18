@@ -21,13 +21,15 @@ public class PointTest {
 	
 	@Test
 	public void savaPoint(){
-		LorePointEntity entity = new LorePointEntity();
-		entity.setCreateId(1);
-		entity.setCreateTime(new Date());
-		entity.setLorePointName("魅蓝");
-		entity.setNumber(0);
-		entity.setExcerciseBookId(3);
-		lorePointService.savaLorePoint(entity);
+		for(int i=1;i<=5;i++){
+			LorePointEntity entity = new LorePointEntity();
+			entity.setCreateId(1);
+			entity.setCreateTime(new Date());
+			entity.setLorePointName("魅族PRO_"+i);
+			entity.setNumber(0);
+			entity.setExcerciseBookId(3);
+			lorePointService.savaLorePoint(entity);
+		}
 	}
 	
 	@Test

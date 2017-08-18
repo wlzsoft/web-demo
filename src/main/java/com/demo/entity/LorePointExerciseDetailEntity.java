@@ -22,7 +22,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	  public Date firstExerciseDate  ;//首次练习日期
 	  public Date lastExerciseDate   ;//上一次练习日期
 	  public Integer exerciseNumber;//练习总次数
-	  public float  correctRate   ;//总正确数
+	  public float  correctRate   ;//正确率
 	  public Integer  correctNumber ;//总正确数
 	  public Integer errorNumber   ;//总错误数
 	  public Date avgConsumingTime   ;//平均耗时
@@ -48,6 +48,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	public void setNextExerciseTime(Date nextExerciseTime) {
 		this.nextExerciseTime = nextExerciseTime;
 	}
+	
 	public Integer getExerciseCycle() {
 		return exerciseCycle;
 	}

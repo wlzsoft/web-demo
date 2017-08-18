@@ -70,8 +70,8 @@ public class LorePointController {
 	
 	
 	@RequestMapping("/findPoint")
-	public Result<LorePointEntity> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
-		LorePointEntity entity = lorePointService.findLorePointId(Integer.parseInt(lorePointId));
+	public Result<PonitDto> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String lorePointId){
+		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(lorePointId));
 		return ResultObject.successObject(entity);
 	}
 	

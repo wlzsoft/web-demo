@@ -38,11 +38,51 @@
 		)
   </insert>	
 	
-  <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.entity.LoreCardEntity">
-     select * from lorecrad t where t.id=#{id}
+  <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
+          select t.id,t.lorePointId ,b.lorePointName ,t.questionType,
+                t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+          from lorecrad t ,lorepoint b  
+          where  t.lorePointId=b.id and t.id=#{id}
   </select>
    
-   <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.entity.LoreCardEntity"> 
-        select * from lorecrad t where t.lorePointId=#{lorePointId}
+   <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
+          select t.id,t.lorePointId ,b.lorePointName ,t.questionType,
+                t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+          from lorecrad t ,lorepoint b  
+          where  t.lorePointId=b.id and t.lorePointId=#{lorePointId}
    </select>  
+   
+   <delete id="dellById" parameterType="java.lang.Integer">
+     delete from lorecrad where id=#{id}
+   </delete>
+   
+   <update id="editLoreCrad" parameterType="com.demo.entity.LoreCardEntity">
+   		 UPDATE lorecrad set
+			   <if test="language !=null" >language=#{language},</if>
+			   <if test="area !=null">area=#{area},</if>
+			   <if test="questionType !=null">questionType=#{questionType},</if>
+			   <if test="difficultyLevel !=null">difficultyLevel=#{difficultyLevel},</if>
+			   <if test="titleText !=null">titleText=#{titleText},</if>
+			   <if test="titleVoiceSrc !=null">titleVoiceSrc=#{titleVoiceSrc},</if>
+			   <if test="titleAutoPlay !=null">titleAutoPlay=#{titleAutoPlay},</if>
+			   <if test="questionText !=null">questionText=#{questionText},</if>
+			   <if test="questionVoiceSrc !=null">questionVoiceSrc=#{questionVoiceSrc},</if>
+			   <if test="questionAutoPlay !=null">questionAutoPlay=#{questionAutoPlay},</if>
+			   <if test="questionImages !=null">questionImages=#{questionImages},</if>
+			   <if test="answers !=null">answers=#{answers},</if>
+			   <if test="isOpen !=null">isOpen=#{isOpen},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null">updateId=#{updateId}</if>
+	    where id=#{id}
+   </update>
+   
+   <update id="addPonitNumber" parameterType="java.lang.Integer">
+      UPDATE lorepoint t set t.number=t.number+1 WHERE t.id=#{id}
+   </update>
+   
+   <update id="delPonitNumber" parameterType="java.lang.Integer">
+      UPDATE lorepoint t ,lorecrad b  set t.number=t.number-1 WHERE b.id=#{id} AND t.id =b.lorePointId
+   </update>
+   
+   
 </mapper>

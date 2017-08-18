@@ -67,11 +67,4 @@ public class BookTest {
 		System.out.println(entityList.size());
 	}
 	
-	@Test
-	public void findbookponit(){
-
-	}
-	
-	
-	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.LoreCradDao;
+import com.demo.dto.CardDto;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
@@ -23,31 +24,32 @@ public class LoreCradService {
 	private SystemService systemService;
 	
 	@Transactional
-	public void savaLoreCrad(LoreCardEntity entity,LoreCradAnswersEntity answersEntity ){
+	public void savaLoreCrad(LoreCardEntity entity){
 		   entity.setCreateId(systemService.getCurrentUser().getId());
 		   entity.setCreateTime(new Date());
-		   entity.setTitleAutoPlay(true);
-		   entity.setQuestionAutoPlay(true);
-		   loreCradDao.savaLoreCrad(entity);
-		 // loreCradDao.savaCradAnswers(answersEntity);
-		 // loreCradDao.savaCardExerciseDetail(cradId);
+		 loreCradDao.addPonitNumber(entity.getLorePointId());
+		 loreCradDao.savaLoreCrad(entity);
+		 
 	}
 	
+	@Transactional
 	public void delLoreCrad(Integer loreCardId){
+		loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
+		
 	}
 	
 	public void editLoreCrad(LoreCardEntity entity){
-		entity.setUpdateId(systemService.getCurrentUser().getId());
-		entity.setUpdateTime(new Date());
-		loreCradDao.update(entity);
+		 //entity.setUpdateId(systemService.getCurrentUser().getId());
+		 //entity.setUpdateTime(new Date());
+		loreCradDao.editLoreCrad(entity);
 	}
 	
-	public LoreCardEntity findLoreCradById(Integer loreCardId){
+	public CardDto findLoreCradById(Integer loreCardId){
 	   return loreCradDao.findLoreCradById(loreCardId);
 	}
 	
-	public List<LoreCardEntity> findLoreCradByPointId(Integer lorePointId){
+	public List<CardDto> findLoreCradByPointId(Integer lorePointId){
 		return loreCradDao.findLoreCradByPointId(lorePointId);
 	}
 	

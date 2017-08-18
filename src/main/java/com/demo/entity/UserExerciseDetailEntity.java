@@ -9,12 +9,14 @@ public class UserExerciseDetailEntity implements Serializable {
 	
 	  public Integer id  ;
 	  public Integer  userId               ;
-	  public Integer  loreCardId           ;//卡片ID'
+	  public Integer  loreCradId           ;//卡片ID'
 	  public Integer lorePointId; //知识点ID
 	  public Date  exerciseDate    ;//练习日期
 	  public Date  startExerciseTime     ;//练习开始时间
 	  public Date  endExerciseTime      ;//练习结束时间
 	  public Integer  exerciseUpshot          ;//练习结果(1：正确:  2：错误)
+	  
+	  
 	public Integer getId() {
 		return id;
 	}
@@ -27,11 +29,11 @@ public class UserExerciseDetailEntity implements Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Integer getLoreCardId() {
-		return loreCardId;
+	public Integer getLoreCradId() {
+		return loreCradId;
 	}
-	public void setLoreCardId(Integer loreCardId) {
-		this.loreCardId = loreCardId;
+	public void setLoreCradId(Integer loreCradId) {
+		this.loreCradId = loreCradId;
 	}
 	public Integer getLorePointId() {
 		return lorePointId;

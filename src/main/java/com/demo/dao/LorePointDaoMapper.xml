@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.LorePointDao">
 	
-	<insert id="install" parameterType="com.demo.entity.LorePointEntity">
+	<insert id="install" parameterType="com.demo.entity.LorePointEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO lorepoint(
 					lorePointName,
 					excerciseBookId,
@@ -18,15 +18,20 @@
 			)
 	</insert>
 	
-	<insert id="inesterExcerciseOrPoint" parameterType="java.lang.Integer">
-		  INSERT INTO excercisebook_lorepoint(
-					excerciseBookId,
-					lorePointId
+	<insert id="addPointDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
+		  INSERT INTO loreexercisedetail( 
+					userId,
+					exerciseCycle,
+					lorePointId,
+					nextExerciseTime
 			)VALUES(
-					#{excerciseBookId},
-					#{lorePointId}
+					#{userId},
+					#{exerciseCycle},
+					#{lorePointId},
+					#{nextExerciseTime}
 			)
 	</insert>
+	
 	
 	<delete id="dellById">
 		DELETE FROM  lorepoint  WHERE  id=#{id}
@@ -45,7 +50,7 @@
 		DELETE FROM  excercisebook_lorepoint  WHERE  lorePointId=#{id}
 	</delete>
 	
-	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointEntity">
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		select * from  lorepoint t where t.id=#{id}
 	</select>
 	

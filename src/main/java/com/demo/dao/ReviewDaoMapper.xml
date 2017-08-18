@@ -3,9 +3,9 @@
 <mapper namespace="com.demo.dao.ReviewDao">
 	
 	  <insert id="savaUserExcerciseDetail" parameterType="com.demo.entity.UserExerciseDetailEntity">
-	  	 	  INSERT INTO userexercisedetail(
+	  	 INSERT INTO userexercisedetail(
 				userId,
-				loreCardId,
+				loreCradId,
 				lorePointId,
 				exerciseDate,
 				startExerciseTime,
@@ -13,7 +13,7 @@
 				exerciseUpshot
 		)VALUES(
 				#{userId},
-				#{loreCardId},
+				#{loreCradId},
 				#{lorePointId},
 				#{exerciseDate},
 				#{startExerciseTime},
@@ -24,16 +24,61 @@
 	  </insert>
 	  
 	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
-	  		 UPDATE lorepoint set
-			   lorePointName=${nextExerciseTime},
-			   exerciseCycle=${exerciseCycle},
-			   conCorrectNumber=${conCorrectNumber},
-			   conErrorNumber=${conErrorNumber},
-			   lastExerciseDate=${lastExerciseDate},
-			   exerciseNumber=${exerciseNumber},
-			   correctNumber=${correctNumber},
-			   errorNumber=${errorNumber}
+	  		 UPDATE loreexercisedetail set
+			   nextExerciseTime=#{nextExerciseTime},
+			   exerciseCycle=#{exerciseCycle},
+			   conCorrectNumber=#{conCorrectNumber},
+			   conErrorNumber=#{conErrorNumber},
+			   lastExerciseDate=#{lastExerciseDate},
+			   exerciseNumber=#{exerciseNumber},
+			   correctNumber=#{correctNumber},
+			   errorNumber=#{errorNumber}
 		     where id=#{id}
 	  </update>
+	  
+	  <select id="bookList" parameterType="java.lang.Integer" resultType="com.demo.dto.BookDto">
+		  	SELECT 
+		  	  t.id,
+		  	  t.excerciseBookName,
+		  	  t.parentId,
+		  	  t.sharedType,
+		  	  t.isLeaves,
+		  	  t.createId
+		  	 FROM excercisebook  t 
+		  	 WHERE t.createId=#{userId}
+		  	   ORDER BY t.id ASC
+	  </select>
+	  
+	  <select id="reviewPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		  	SELECT t.id ,
+		  		t.lorePointName,
+		  		t.excerciseBookId,
+		  		t.number
+		  	FROM
+			  lorepoint t ,
+			  loreexercisedetail a 
+			WHERE t.excerciseBookId=#{excerciseBookId}
+			  AND t.id = a.lorePointId 
+			  AND a.userId=#{userId}
+			  AND a.nextExerciseTime is not NULL
+			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
+			ORDER BY  a.nextExerciseTime asc 
+	  </select>
+	  
+	  <select id="reviewPointNull" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+			SELECT 
+			    t.id ,
+		  		t.lorePointName,
+		  		t.excerciseBookId,
+		  		t.number
+			 FROM
+			  lorepoint t ,
+			  loreexercisedetail a 
+			WHERE t.excerciseBookId=#{excerciseBookId}
+			  AND t.id = a.lorePointId 
+			  AND a.userId=#{userId}
+				AND a.nextExerciseTime is NULL
+			ORDER BY  t.id asc 
+	  </select>
      
 </mapper>
