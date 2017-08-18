@@ -3,6 +3,7 @@ package com.demo.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -195,7 +196,16 @@ public class ReviewService {
 					  System.out.println("条件以满足无需再继续查找...........................");
 					 break; 
 				  }
-
+			 }
+		 }
+		 //当所有知识点都练习完了的时候，进行随即抽取
+		 if(listAll.size()<20){
+			 List<PonitDto> ponitList = lorePointDao.roundPoint(userId);
+			 java.util.Random random = new java.util.Random();
+			 for(int j=0;j<20-listAll.size();j++){
+				 int randomPos = random.nextInt(ponitList.size());
+				 listAll.add(ponitList.get(randomPos));
+				 ponitList.remove(randomPos);
 			 }
 		 }
 		 

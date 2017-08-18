@@ -62,5 +62,9 @@
 		SELECT * FROM loreexercisedetail t WHERE t.lorePointId=#{id}
 	</select>
 	
+	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+	   SELECT t.id,t.lorePointName,t.number FROM lorepoint t ,loreexercisedetail a WHERE t.id=a.lorePointId AND a.userId=#{userId}
+	</select>
+	
      
 </mapper>

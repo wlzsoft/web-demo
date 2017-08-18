@@ -31,6 +31,8 @@ public interface LorePointDao {
 	
 	public void addPointDetail(LorePointExerciseDetailEntity entity);
 	
+	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
+	
 	
 	
 }
