@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,9 +31,11 @@ public class ImageUpController {
 		ImageUrlDto dto = new ImageUrlDto();
 		
 		try {
-			
+			Date date = new Date(); 
+			long unixTimestamp = date.getTime()/1000; 
 		    //上传到七牛后保存的文件名
-		    String key = "my-java5.png";
+		   // String key = "my-java5.png";
+		    String key = unixTimestamp+"";
 		    //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
 		    Zone z = Zone.autoZone();
 		    Configuration c = new Configuration(z);

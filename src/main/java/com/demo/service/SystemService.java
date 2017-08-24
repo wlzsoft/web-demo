@@ -43,7 +43,8 @@ public class SystemService  {
 		if(session == null) {
 			return null;
 		}
-		UserEntity  user = (UserEntity)session.getAttribute(session.getId());
+		//UserEntity  user = (UserEntity)session.getAttribute(session.getId());
+		UserEntity  user = (UserEntity)session.getAttribute("userCur");
 		return user;
 	}
 	

@@ -18,14 +18,8 @@ import com.smartframe.dto.ResultObject;
 @Controller
 public class SystemController {
 	
-/*	@Autowired
-	private UserService userService;
-	
-
-	
 	@Autowired
-	private JedisCluster jedisCluster;
-	
+	private UserService userService;
 
 	
 	@RequestMapping("/login")
@@ -40,7 +34,7 @@ public class SystemController {
 		if(null == userCur){
 			return ResultObject.successMessage("户名或密码错误") ;
 		}else{
-			request.getSession().setAttribute("userCur_"+userCur.getId(), userCur);
+			request.getSession().setAttribute("userCur", userCur);
 			return  ResultObject.successObject(userCur) ;
 		}
 		
@@ -58,6 +52,6 @@ public class SystemController {
 			model.setViewName("/view/login");
 		}
 		return model;
-	}*/
+	}
 	
 }

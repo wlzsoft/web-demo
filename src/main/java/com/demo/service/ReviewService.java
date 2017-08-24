@@ -3,7 +3,6 @@ package com.demo.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,6 +113,7 @@ public class ReviewService {
 					 detailEntity.setConCorrectNumber(detailEntity.getConCorrectNumber()+1);
 					 detailEntity.setConErrorNumber(0);
 					 detailEntity.setLastExerciseDate(new Date());
+					 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);
 				}
 		 }else{//错误
 			 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp)); 
@@ -121,6 +121,7 @@ public class ReviewService {
 			 detailEntity.setExerciseCycle(1);
 			 detailEntity.setConCorrectNumber(0);
 			 detailEntity.setConErrorNumber(detailEntity.getConErrorNumber()+1);
+			 detailEntity.setErrorNumber(detailEntity.getErrorNumber()+1);
 			 detailEntity.setLastExerciseDate(new Date()); 
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
@@ -220,5 +221,14 @@ public class ReviewService {
 	      int randomPos = random.nextInt(cardList.size());
 	      return cardList.get(randomPos);
 	}
+	
+	
+	public static void main(String[] args){
+		Date date = new Date(); 
+		long unixTimestamp = date.getTime()/1000;  
+		System.out.println(unixTimestamp);  
+		
+	}
+	// 1503364197
 
 }

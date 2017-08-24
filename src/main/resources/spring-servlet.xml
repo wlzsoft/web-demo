@@ -5,7 +5,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans.xsd  
-            http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context  
            http://www.springframework.org/schema/context/spring-context.xsd  
            http://www.springframework.org/schema/aop  
            http://www.springframework.org/schema/aop/spring-aop.xsd  
@@ -77,6 +77,15 @@
 		<property name="ignoreAcceptHeader" value="true"></property>
 		<property name="defaultContentType" value="text/html"></property>
 	</bean>
+	
+   <bean id="webFilter" class="com.demo.fiter.LoginInterceptor"></bean>
+	<mvc:interceptors>
+	  <mvc:interceptor>
+	     <mvc:mapping path="/*/*"/>
+	        <ref bean="webFilter"/>
+	  </mvc:interceptor>
+	</mvc:interceptors>  
+	
 	
 </beans>
 
