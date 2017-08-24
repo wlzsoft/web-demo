@@ -32,7 +32,7 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/saveReview")
-	public Result<?> reviewCrad(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
+	public Result<?> reviewCard(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
 		reviewService.reviewCrad(pointId, cardId, right);
 		return ResultObject.successMessage("保存成功") ;
 	}
