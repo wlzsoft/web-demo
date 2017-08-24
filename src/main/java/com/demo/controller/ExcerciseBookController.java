@@ -37,7 +37,7 @@ public class ExcerciseBookController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/savabook")
+	@RequestMapping("/saveBook")
 	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
 		excerciseService.excerciseSava(entity);
 		return ResultObject.successMessage("保存成功");
@@ -50,7 +50,7 @@ public class ExcerciseBookController {
 	 * @param excerciseId 练习本ID
 	 * @return
 	 */
-	@RequestMapping("/delbook")
+	@RequestMapping("/delBook")
 	public Result<?> delExcercise(HttpServletRequest request ,HttpServletResponse response,String excerciseId){
 		excerciseService.delExcercise(excerciseId);
 		return ResultObject.successMessage("删除成功");
@@ -63,7 +63,7 @@ public class ExcerciseBookController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/editbook")
+	@RequestMapping("/editBook")
 	public Result<?> editExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
 		excerciseService.editExcercise(entity);
 		return ResultObject.successMessage("修改成功");
@@ -76,7 +76,7 @@ public class ExcerciseBookController {
 	 * @param excerciseId
 	 * @return
 	 */
-	@RequestMapping("/findbook")
+	@RequestMapping("/findBook")
 	public Result<ExcerciseBookEntity> findExcerciseId(HttpServletRequest request ,HttpServletResponse response,String excerciseId){
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(excerciseId);
 		return ResultObject.successObject(entity);
@@ -88,7 +88,7 @@ public class ExcerciseBookController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping("/booklist")
+	@RequestMapping("/bookList")
 	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,String userId){
 		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(Integer.parseInt(userId));
 		return ResultObject.successObject(entityList);
@@ -101,7 +101,7 @@ public class ExcerciseBookController {
 	 * @param excerciseId
 	 * @return
 	 */
-	@RequestMapping("/bookponitlist")
+	@RequestMapping("/bookPonitList")
 	public Result<List<PonitDto>> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String excerciseId){
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(excerciseId));
 		return ResultObject.successObject(entityList); 

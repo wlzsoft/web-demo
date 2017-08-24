@@ -31,9 +31,9 @@ public class ReviewController {
 	 * @param right 回答是否正确 1：正确   0：错误
 	 * @return
 	 */
-	@RequestMapping("/savaReview")
-	public Result<?> reviewCrad(HttpServletRequest request ,HttpServletResponse response,String pointId,String cradId,Integer right){
-		reviewService.reviewCrad(pointId, cradId, right);
+	@RequestMapping("/saveReview")
+	public Result<?> reviewCrad(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
+		reviewService.reviewCrad(pointId, cardId, right);
 		return ResultObject.successMessage("保存成功") ;
 	}
 	
