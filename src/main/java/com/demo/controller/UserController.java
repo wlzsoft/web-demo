@@ -26,7 +26,7 @@ public class UserController {
 	@Autowired
 	private SystemService systemService ;
 	
-	@RequestMapping("/saveUser")
+	@RequestMapping("/addUser")
 	public Result<?> savaUser(HttpServletRequest request ,HttpServletResponse response,UserEntity userentity ){
 		userService.savaUser(userentity);
 		return ResultObject.successMessage("保存成功") ;

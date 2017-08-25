@@ -32,7 +32,7 @@ public class LoreCardController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/saveCard")
+	@RequestMapping("/addCard")
 	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
 		 loreCradService.savaLoreCrad(loreCardEntity);
 		return ResultObject.successMessage("保存成功");

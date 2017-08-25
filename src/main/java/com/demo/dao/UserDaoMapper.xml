@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.UserDao">
-     <select id="findUserLogin" parameterType="java.lang.String" resultType="com.demo.dto.UserDto">
+     <select id="findUserLogin" parameterType="java.lang.String" resultType="com.demo.entity.UserEntity">
         SELECT 
+            id ,
         	username ,
 			email,
 			telphone,

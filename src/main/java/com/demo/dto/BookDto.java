@@ -5,13 +5,13 @@ public class BookDto {
 
 	public Integer id ;
 	
-	public String  excerciseBookName ;//练习本名称
+	public String  bookName ;//练习本名称
 	
-	public Integer  parentId ;//父级ID
+	public String  language ;
+	
+	public String  area ;
 	
 	public Integer  sharedType ;//共享类型 (0私有、1只读共享)
-	
-	public Boolean  isLeaves ;//是否叶子节点
 	
 	public Integer  createId ;
 
@@ -23,22 +23,6 @@ public class BookDto {
 		this.id = id;
 	}
 
-	public String getExcerciseBookName() {
-		return excerciseBookName;
-	}
-
-	public void setExcerciseBookName(String excerciseBookName) {
-		this.excerciseBookName = excerciseBookName;
-	}
-
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
 	public Integer getSharedType() {
 		return sharedType;
 	}
@@ -47,12 +31,28 @@ public class BookDto {
 		this.sharedType = sharedType;
 	}
 
-	public Boolean getIsLeaves() {
-		return isLeaves;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setIsLeaves(Boolean isLeaves) {
-		this.isLeaves = isLeaves;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	public Integer getCreateId() {

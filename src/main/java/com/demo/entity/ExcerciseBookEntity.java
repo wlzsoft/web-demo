@@ -9,17 +9,13 @@ public class ExcerciseBookEntity implements Serializable{
 	
 	public Integer id ;
 	
-	public String  excerciseBookName ;//练习本名称
+    public String bookName;//练习本名称
 	
-	public Integer  parentId ;//父级ID
+	public String language	;//	卡片使用的语言	
 	
-	public Integer language	;//	卡片使用的语言	
-	
-	public Integer area	;//	卡片所属领域
+	public String area	;//	卡片所属领域
 	
 	public Integer  sharedType ;//共享类型 (0私有、1只读共享)
-	
-	public Boolean  isLeaves ;//是否叶子节点
 	
 	public Date  createTime ;
 	
@@ -38,21 +34,30 @@ public class ExcerciseBookEntity implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 
-	public String getExcerciseBookName() {
-		return excerciseBookName;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setExcerciseBookName(String excerciseBookName) {
-		this.excerciseBookName = excerciseBookName;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
-	public Integer getParentId() {
-		return parentId;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	public Integer getSharedType() {
@@ -61,14 +66,6 @@ public class ExcerciseBookEntity implements Serializable{
 
 	public void setSharedType(Integer sharedType) {
 		this.sharedType = sharedType;
-	}
-
-	public Boolean getIsLeaves() {
-		return isLeaves;
-	}
-
-	public void setIsLeaves(Boolean isLeaves) {
-		this.isLeaves = isLeaves;
 	}
 
 	public Date getCreateTime() {

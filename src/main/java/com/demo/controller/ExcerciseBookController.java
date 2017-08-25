@@ -42,7 +42,7 @@ public class ExcerciseBookController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/saveBook")
+	@RequestMapping("/addBook")
 	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
 		excerciseService.excerciseSava(entity);
 		return ResultObject.successMessage("保存成功");

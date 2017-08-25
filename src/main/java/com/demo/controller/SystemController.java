@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.dto.UserDto;
+import com.demo.entity.UserEntity;
 import com.demo.service.UserService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -29,7 +29,7 @@ public class SystemController {
 		if(null==userName||userName.equals("")||null==password||password.equals("")){
 			return ResultObject.sucreMessage("用户名或密码不能为空!") ;
 		}
-		UserDto userCur = userService.findUserLogin(userName, password);
+		UserEntity userCur = userService.findUserLogin(userName, password);
 		if(null == userCur){
 			return ResultObject.sucreMessage("户名或密码错误") ;
 		}else{

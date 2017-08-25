@@ -22,7 +22,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		if(userCur != null){
 		  return true; 
 		}
-		response.sendRedirect("https://www.baidu.com");
+		response.sendRedirect("http://172.29.224.150:8080/#/login");
 		return false;
 	}
 

@@ -36,7 +36,7 @@ public class LorePointController {
 	 * @param entity
 	 * @return
 	 */
-	@RequestMapping("/savePoint")
+	@RequestMapping("/addPoint")
 	public Result<?> savaLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
 		lorePointService.savaLorePoint(entity);
 		return ResultObject.successMessage("保存成功");
