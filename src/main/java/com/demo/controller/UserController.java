@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.entity.UserEntity;
 import com.demo.entity.UserExerciseDetailEntity;
+import com.demo.service.SystemService;
 import com.demo.service.UserService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -21,6 +22,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SystemService systemService ;
 	
 	@RequestMapping("/saveUser")
 	public Result<?> savaUser(HttpServletRequest request ,HttpServletResponse response,UserEntity userentity ){
@@ -37,8 +41,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/findUserExerciseDetailById")
-	public Result<List<UserExerciseDetailEntity>> findUserExerciseDetailById(HttpServletRequest request ,HttpServletResponse response,String userId){
-		List<UserExerciseDetailEntity> list = userService.findUserExerciseDetailById(Integer.parseInt(userId));
+	public Result<List<UserExerciseDetailEntity>> findUserExerciseDetailById(HttpServletRequest request ,HttpServletResponse response,Integer userId){
+		userId =systemService.getCurrentUser().getId();
+		List<UserExerciseDetailEntity> list = userService.findUserExerciseDetailById(userId);
 		return ResultObject.successObject(list);
 	}
 	

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.CardDto;
 import com.demo.dto.PonitDto;
 import com.demo.service.ReviewService;
+import com.demo.service.SystemService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -21,6 +22,9 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private SystemService systemService ;
 	
 	/**
 	 * 复习保存
@@ -46,8 +50,9 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/excercise")
-	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ,String userId){
-		List<PonitDto> ponitDto = reviewService.excercise(Integer.parseInt(userId));
+	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ,Integer userId){
+		userId =systemService.getCurrentUser().getId();
+		List<PonitDto> ponitDto = reviewService.excercise(userId);
 		return ResultObject.successObject(ponitDto) ;
 	}
 	

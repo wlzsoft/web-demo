@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.service.ExcerciseBookService;
+import com.demo.service.SystemService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -27,6 +28,10 @@ public class ExcerciseBookController {
 	
 	@Autowired
 	private ExcerciseBookService excerciseService ;	
+	
+	
+	@Autowired
+	private SystemService systemService ;
 	
 	
 	/**
@@ -89,8 +94,9 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/bookList")
-	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,String userId){
-		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(Integer.parseInt(userId));
+	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,Integer userId){
+		userId =systemService.getCurrentUser().getId();
+		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
 		return ResultObject.successObject(entityList);
 	}
 	
