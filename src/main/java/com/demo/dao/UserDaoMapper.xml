@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.UserDao">
-     <select id="findUserLogin" parameterType="java.lang.String" resultType="com.demo.entity.UserEntity">
-        SELECT * FROM userinfo t WHERE  t.userName=#{userName} AND t.password=#{password}  
+     <select id="findUserLogin" parameterType="java.lang.String" resultType="com.demo.dto.UserDto">
+        SELECT 
+        	username ,
+			email,
+			telphone,
+			birthday,
+			degree,
+	  		registerTime,
+	  		lasterLoginTime
+        FROM userinfo t WHERE  t.username=#{username} AND t.password=#{password}  
      </select>
      
      <insert id="savaUser" parameterType="com.demo.entity.UserEntity">
 		     INSERT INTO userinfo(
 					birthday,
-					userName,
+					username,
 					password,
 					email,
 					telphone,
@@ -17,7 +25,7 @@
 					remark
 			 ) VALUES(
 					#{birthday},
-					#{userName},
+					#{username},
 					#{password},
 					#{email},
 					#{telphone},

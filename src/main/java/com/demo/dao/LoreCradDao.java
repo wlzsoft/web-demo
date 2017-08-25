@@ -33,7 +33,7 @@ public interface LoreCradDao {
 	
 	public void savaCradAnswers(LoreCradAnswersEntity entity);
 	
-	public void savaCardExerciseDetail(@Param("cradId")Integer cradId);
+	public void savaCardExerciseDetail(LoreCardExerciseDetailEntity entity);
 	
 	public void addPonitNumber(@Param("id")Integer id);
 	

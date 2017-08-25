@@ -26,9 +26,15 @@ public class LoreCradService {
 	@Transactional
 	public void savaLoreCrad(LoreCardEntity entity){
 		   entity.setCreateId(systemService.getCurrentUser().getId());
-		   entity.setCreateTime(new Date());
+		  entity.setCreateTime(new Date());
 		 loreCradDao.addPonitNumber(entity.getLorePointId());
 		 loreCradDao.savaLoreCrad(entity);
+		 //保存卡片的联系详情
+		 LoreCardExerciseDetailEntity cardExerciseDetail = new LoreCardExerciseDetailEntity();
+		   cardExerciseDetail.setUserId(systemService.getCurrentUser().getId()); //-============该处需要需求 后面修改为 该卡片练习人的ID
+		   //cardExerciseDetail.setUserId(1); 
+		   cardExerciseDetail.setLoreCardId(entity.getId());
+		 loreCradDao.savaCardExerciseDetail(cardExerciseDetail);
 		 
 	}
 	

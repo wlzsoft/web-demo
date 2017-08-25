@@ -7,9 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.entity.UserEntity;
+import com.demo.dto.UserDto;
 import com.demo.service.UserService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -25,14 +24,14 @@ public class SystemController {
 	@RequestMapping("/login")
 	public Result<?> login(HttpServletRequest request ,HttpServletResponse response){
 		
-		String userName = request.getParameter("userName");
+		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
 		if(null==userName||userName.equals("")||null==password||password.equals("")){
-			return ResultObject.successMessage("用户名或密码不能为空!") ;
+			return ResultObject.sucreMessage("用户名或密码不能为空!") ;
 		}
-		 UserEntity userCur = userService.findUserLogin(userName, password);
+		UserDto userCur = userService.findUserLogin(userName, password);
 		if(null == userCur){
-			return ResultObject.successMessage("户名或密码错误") ;
+			return ResultObject.sucreMessage("户名或密码错误") ;
 		}else{
 			request.getSession().setAttribute("userCur", userCur);
 			return  ResultObject.successObject(userCur) ;
@@ -42,16 +41,16 @@ public class SystemController {
 	
 
 	@RequestMapping("/logout")
-	public ModelAndView logout(HttpServletRequest request ,HttpServletResponse response ,ModelAndView model){
+	public Result<?> logout(HttpServletRequest request ,HttpServletResponse response){
 		HttpSession session = request.getSession(false);//防止创建Session
 		String userId = request.getParameter("userId");
+		session = request.getSession(); 
 		if(null == session){
-			model.setViewName("/view/login");	
+			return ResultObject.successMessage("退出成功") ;	
 		}else{
-			request.getSession().removeAttribute("userCur_"+userId);
-			model.setViewName("/view/login");
+			request.getSession().removeAttribute("userCur");
+			return ResultObject.successMessage("退出成功") ;
 		}
-		return model;
 	}
 	
 }

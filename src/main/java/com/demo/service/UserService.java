@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.UserDao;
+import com.demo.dto.UserDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.UserEntity;
 import com.demo.entity.UserExerciseDetailEntity;
@@ -17,7 +18,7 @@ public class UserService {
 	@Autowired
 	public UserDao userDao;
 	
-	public UserEntity findUserLogin(String userName ,String password){
+	public UserDto findUserLogin(String userName ,String password){
 		return userDao.findUserLogin(userName, password);
 	}
 	

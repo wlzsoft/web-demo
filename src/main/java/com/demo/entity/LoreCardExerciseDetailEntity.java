@@ -13,6 +13,8 @@ public class LoreCardExerciseDetailEntity implements Serializable{
    public Date firstExerciseDate  ;//首次练习日期
    public Date lastExerciseDate   ;//上一次练习日期
    public Integer exerciseNumber;//练习次数
+   public Integer conCorrectNumber;//连续回答正确次数	
+   public Integer conErrorNumber;//连续回答错误次数		
    public float  correctRate   ;//正确率
    public Integer  correctNumber ;//正确数
    public Integer errorNumber   ;//错误数
