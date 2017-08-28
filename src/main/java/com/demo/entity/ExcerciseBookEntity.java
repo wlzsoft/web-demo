@@ -17,6 +17,8 @@ public class ExcerciseBookEntity implements Serializable{
 	
 	public Integer  sharedType ;//共享类型 (0私有、1只读共享)
 	
+	public Double progress;
+	
 	public Date  createTime ;
 	
 	public Integer  createId ;
@@ -58,6 +60,14 @@ public class ExcerciseBookEntity implements Serializable{
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+	
+	public Double getProgress() {
+		return progress;
+	}
+
+	public void setProgress(Double progress) {
+		this.progress = progress;
 	}
 
 	public Integer getSharedType() {

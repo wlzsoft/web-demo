@@ -24,14 +24,14 @@ public class LorePointService {
 	
 	@Transactional
 	public void savaLorePoint(LorePointEntity entity){
-		//entity.setCreateId(systemService.getCurrentUser().getId());
-		//entity.setCreateTime(new Date());
+		  entity.setCreateId(systemService.getCurrentUser().getId());
+		  entity.setCreateTime(new Date());
 		  entity.setNumber(0);
 		 lorePointDao.install(entity);
 	   
 		//插入知识点练习明细
 		LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
-			//pointDetail.setUserId(systemService.getCurrentUser().getId());
+			pointDetail.setUserId(systemService.getCurrentUser().getId());
 			pointDetail.setUserId(1);
 			pointDetail.setLorePointId(entity.getId());
 			pointDetail.setNextExerciseTime(new Date());
@@ -41,8 +41,8 @@ public class LorePointService {
 	
 	@Transactional
 	public void editLorePoint(LorePointEntity entity){
-		//entity.setUpdateId(systemService.getCurrentUser().getId());
-		//entity.setUpdateTime(new Date());
+		entity.setUpdateId(systemService.getCurrentUser().getId());
+		entity.setUpdateTime(new Date());
 		lorePointDao.update(entity);
 	}
 	

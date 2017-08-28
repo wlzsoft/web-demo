@@ -39,10 +39,8 @@
 	  <select id="bookList" parameterType="java.lang.Integer" resultType="com.demo.dto.BookDto">
 		  	SELECT 
 		  	  t.id,
-		  	  t.excerciseBookName,
-		  	  t.parentId,
+		  	  t.bookName,
 		  	  t.sharedType,
-		  	  t.isLeaves,
 		  	  t.createId
 		  	 FROM excercisebook  t 
 		  	 WHERE t.createId=#{userId}
@@ -50,14 +48,17 @@
 	  </select>
 	  
 	  <select id="reviewPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+	  
 		  	SELECT t.id ,
 		  		t.lorePointName,
-		  		t.excerciseBookId,
+		  		t.chapterId,
 		  		t.number
 		  	FROM
 			  lorepoint t ,
-			  loreexercisedetail a 
-			WHERE t.excerciseBookId=#{excerciseBookId}
+			  loreexercisedetail a ,
+			  chapter b
+			WHERE b.bookId=#{excerciseBookId}
+			  AND t.chapterId=b.id
 			  AND t.id = a.lorePointId 
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is not NULL
@@ -66,18 +67,19 @@
 	  </select>
 	  
 	  <select id="reviewPointNull" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT 
-			    t.id ,
+		  	SELECT t.id ,
 		  		t.lorePointName,
-		  		t.excerciseBookId,
+		  		t.chapterId,
 		  		t.number
-			 FROM
+		  	FROM
 			  lorepoint t ,
-			  loreexercisedetail a 
-			WHERE t.excerciseBookId=#{excerciseBookId}
+			  loreexercisedetail a ,
+			  chapter b
+			WHERE b.bookId=#{excerciseBookId}
+			  AND t.chapterId=b.id
 			  AND t.id = a.lorePointId 
 			  AND a.userId=#{userId}
-				AND a.nextExerciseTime is NULL
+			  AND a.nextExerciseTime is NULL
 			ORDER BY  t.id asc 
 	  </select>
      

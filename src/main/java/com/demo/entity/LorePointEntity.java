@@ -9,7 +9,9 @@ public class LorePointEntity implements Serializable{
 	
 	 public Integer  id          ;
 	 
-	 public Integer excerciseBookId ;//练习本主键ID
+	 public Integer bookId ;//练习本主键ID
+	 
+	 public Integer chapterId ;//章节主键ID
 	 
 	 public String  lorePointName    ;//知识点名称
 	 
@@ -30,13 +32,20 @@ public class LorePointEntity implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Integer getExcerciseBookId() {
-		return excerciseBookId;
+	public Integer getBookId() {
+		return bookId;
 	}
 
-	public void setExcerciseBookId(Integer excerciseBookId) {
-		this.excerciseBookId = excerciseBookId;
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
+	public Integer getChapterId() {
+		return chapterId;
+	}
+
+	public void setChapterId(Integer chapterId) {
+		this.chapterId = chapterId;
 	}
 
 	public String getLorePointName() {

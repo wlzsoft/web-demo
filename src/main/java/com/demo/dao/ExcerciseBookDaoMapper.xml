@@ -47,9 +47,26 @@
 	</select>
 	
 	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	   SELECT id,lorePointName,excerciseBookId,lorePointName,number FROM 
-		   lorepoint t
-		WHERE chapterId=#{chapterId} 
+			SELECT t.id,t.lorePointName,t.chapterId,t.number FROM lorepoint t
+			 WHERE a.bookId=#{excerciseId}
 	</select>
+	
+	<select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
+			SELECT 
+			  a.*
+			FROM chapter a, excercisebook b
+			WHERE a.bookId=b.id
+			 AND b.id=#{excerciseId}
+	</select>
+	
+	<select id="bookProgress" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	    SELECT COUNT(*) progress FROM loreexercisedetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId}
+	</select>
+	
+	<select id="bookProgressYes" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	   SELECT COUNT(*) progress FROM loreexercisedetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId} AND t.exerciseNumber>0
+	</select>
+	
+
      
 </mapper>

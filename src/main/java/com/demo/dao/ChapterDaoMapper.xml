@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.ChapterDao">
+	
+	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity">
+	   INSERT INTO chapter(
+				parentId,
+				name,
+				bookId
+		)VALUES(
+				#{parentId},
+				#{name},
+				#{bookId}
+		)
+	</insert>
+	
+	<delete id="delChapter" parameterType="java.lang.Integer">
+	   DELETE FROM chapter where id=#{chapterId}
+	</delete>
+
+	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
+			 UPDATE chapter set
+			   <if test="parentId !=null" >parentId=#{parentId},</if>
+			   <if test="name !=null">name=#{name},</if>
+			   <if test="bookId !=null">bookId=#{bookId},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null">updateId=#{updateId}</if>
+		   WHERE id=#{id}
+	</update>
+	
+	<select id="findChapterPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+			SELECT t.id,t.lorePointName,t.chapterId,t.number 
+			 FROM lorepoint t ,chapter a 
+			 WHERE t.chapterId=a.id
+			    AND a.id=#{chapterId}
+	</select>
+     
+</mapper>

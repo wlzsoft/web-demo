@@ -24,11 +24,10 @@ public class BookTest {
 	public void savaBook(){
 		for(int i=10;i>0;i--){
 			ExcerciseBookEntity entity = new ExcerciseBookEntity();
+			entity.setLanguage("en");
 			entity.setCreateId(1);
 			entity.setCreateTime(new Date());
-			entity.setExcerciseBookName("魅族科技_"+i);
-			entity.setIsLeaves(false);
-			entity.setParentId(1);
+			entity.setBookName("魅族科技_"+i);
 			entity.setSharedType(0);
 			excerciseService.excerciseSava(entity);	
 		}
@@ -36,17 +35,16 @@ public class BookTest {
 	
 	@Test
 	public void delBook(){
-		String excerciseId = "1";
-		excerciseService.delExcercise(excerciseId);
+		String bookId = "1";
+		excerciseService.delExcercise(bookId);
 	}
 	
 	@Test
 	public void editbook(){
 		ExcerciseBookEntity entity = new ExcerciseBookEntity();
-		entity.setId(2);
-		entity.setExcerciseBookName("魅族科技_222222");
-		entity.setIsLeaves(false);
-		entity.setParentId(1);
+		entity.setId(22);
+		entity.setBookName("魅族科技_22");
+		entity.setArea("{'数学','奥数'}");
 		entity.setSharedType(0);
 		entity.setUpdateId(2);
 		entity.setUpdateTime(new Date());
@@ -56,9 +54,9 @@ public class BookTest {
 	
 	@Test
 	public void findbook(){
-		String excerciseId = "2";
+		String excerciseId = "22";
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(excerciseId);
-		System.out.println(entity.getId()+"_"+entity.getExcerciseBookName());
+		System.out.println(entity.getId()+"_"+entity.getBookName());
 	}
 	
 	@Test

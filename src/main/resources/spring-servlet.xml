@@ -64,6 +64,9 @@
 	<!-- JSON视图 -->
 	<bean id="mappingJacksonJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 		<property name="extractValueFromSingleKeyModel" value="true" />
+		<property name="modelKeys">
+            <value type="java.lang.String">result</value>  
+		</property>
 	</bean>
 	
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">

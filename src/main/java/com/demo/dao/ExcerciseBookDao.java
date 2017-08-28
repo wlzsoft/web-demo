@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.demo.dto.BookProgressDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
 
 
@@ -24,6 +26,12 @@ public interface ExcerciseBookDao {
 	
 	public List<ExcerciseBookEntity> fidByName();
 	
-	public List<PonitDto> findExcerciseIdToPonit(@Param("excerciseId")Integer id);
+	public List<PonitDto> findExcerciseIdToPonit(@Param("excerciseId")Integer excerciseId);
+	
+	public List<ChapterEntity> bookChapterList(@Param("excerciseId")Integer excerciseId);
+	
+	public Integer bookProgress(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	
+	public Integer bookProgressYes(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 }

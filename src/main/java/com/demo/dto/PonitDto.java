@@ -6,7 +6,7 @@ public class PonitDto {
 	
 	public String lorePointName ;//知识点名称
 	
-	public String  excerciseBookId ;//练习本ID
+	public String  chapterId ;//章节ID
 	
 	public  Integer number; //知识点卡片数量
 
@@ -26,12 +26,12 @@ public class PonitDto {
 		this.lorePointName = lorePointName;
 	}
 
-	public String getExcerciseBookId() {
-		return excerciseBookId;
+	public String getChapterId() {
+		return chapterId;
 	}
 
-	public void setExcerciseBookId(String excerciseBookId) {
-		this.excerciseBookId = excerciseBookId;
+	public void setChapterId(String chapterId) {
+		this.chapterId = chapterId;
 	}
 
 	public Integer getNumber() {

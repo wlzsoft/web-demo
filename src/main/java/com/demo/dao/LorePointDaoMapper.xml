@@ -5,13 +5,15 @@
 	<insert id="install" parameterType="com.demo.entity.LorePointEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO lorepoint(
 					lorePointName,
-					excerciseBookId,
+					bookId,
+					chapterId,
 					number,
 					createTime,
 					createId
 			)VALUES(
 					#{lorePointName},
-					#{excerciseBookId},
+					#{bookId},
+					#{chapterId},
 					#{number},
 					#{createTime},
 					#{createId}
@@ -23,11 +25,13 @@
 					userId,
 					exerciseCycle,
 					lorePointId,
+					bookId,
 					nextExerciseTime
 			)VALUES(
 					#{userId},
 					#{exerciseCycle},
 					#{lorePointId},
+					#{bookId},
 					#{nextExerciseTime}
 			)
 	</insert>
@@ -63,7 +67,7 @@
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	   SELECT t.id,t.lorePointName,t.number FROM lorepoint t ,loreexercisedetail a WHERE t.id=a.lorePointId AND a.userId=#{userId}
+	   SELECT t.id,t.lorePointName,t.number,t.chapterId FROM lorepoint t ,loreexercisedetail a WHERE t.id=a.lorePointId AND a.userId=#{userId}
 	</select>
 	
      
