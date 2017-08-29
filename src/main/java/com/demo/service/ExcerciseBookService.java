@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.dao.ExcerciseBookDao;
 import com.demo.dto.BookProgressDto;
+import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
@@ -22,10 +23,13 @@ public class ExcerciseBookService {
 	@Autowired
 	private ExcerciseBookDao excerciseBookDao;
 	
-	public void excerciseSava(ExcerciseBookEntity entity){
+	public IdEntity excerciseSava(ExcerciseBookEntity entity){
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
 		excerciseBookDao.excerciseSava(entity);
+		IdEntity identity = new IdEntity();	
+		identity.setId(entity.getId());
+		return identity;
 	}
 	
 	public void delExcercise(String excerciseId){
@@ -33,8 +37,8 @@ public class ExcerciseBookService {
 	}
 	
 	public void editExcercise(ExcerciseBookEntity entity){
-		//entity.setUpdateId(systemService.getCurrentUser().getId());
-		//entity.setUpdateTime(new Date());
+		entity.setUpdateId(systemService.getCurrentUser().getId());
+		entity.setUpdateTime(new Date());
 		excerciseBookDao.editExcercise(entity);
 	}
 	

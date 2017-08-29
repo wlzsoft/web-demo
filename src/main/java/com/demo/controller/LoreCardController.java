@@ -77,7 +77,7 @@ public class LoreCardController {
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
 		}
-		return ResultObject.successObject(entity);
+		return ResultObject.successObject(entity,null);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class LoreCardController {
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
 		}
-		return ResultObject.successObject(entityList);
+		return ResultObject.successObject(entityList,null);
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class LoreCardController {
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
 		}
-		return ResultObject.successObject(entityList);
+		return ResultObject.successObject(entityList,null);
 	}
 	
 	
@@ -125,7 +125,7 @@ public class LoreCardController {
 		if(null==entity){
 			return ResultObject.successMessage("没有数据");
 		}
-		return ResultObject.successObject(entity);
+		return ResultObject.successObject(entity,null);
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public class LoreCardController {
 		if(entityList.size()<1){
 			return ResultObject.successMessage("没有数据");
 		}
-		return ResultObject.successObject(entityList);
+		return ResultObject.successObject(entityList,null);
 	}
 	
 }

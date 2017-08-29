@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
+import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -28,6 +29,9 @@ public class LorePointController {
 	
 	@Autowired
 	private LorePointService lorePointService;
+	
+	@Autowired
+	private ExcerciseBookService excerciseService ;	
 	
 	/**
 	 * 保存知识点信息
@@ -72,13 +76,13 @@ public class LorePointController {
 	@RequestMapping("/findPoint")
 	public Result<PonitDto> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
 		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
-		return ResultObject.successObject(entity);
+		return ResultObject.successObject(entity,null);
 	}
 	
 	@RequestMapping("/pointList")
 	public Result<List<PonitDto>> searchAllLorePoint(HttpServletRequest request ,HttpServletResponse response){
 		List<PonitDto> entityList = lorePointService.searchAllLorePoint();
-		return ResultObject.successObject(entityList);
+		return ResultObject.successObject(entityList,null);
 	}
 	
 	/**
@@ -91,7 +95,21 @@ public class LorePointController {
 	@RequestMapping("/pointDetail")
 	public Result<?> findPointIdByDetail(HttpServletRequest request ,HttpServletResponse response,String pointId){
 		LorePointExerciseDetailEntity list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
-		return ResultObject.successObject(list);
+		return ResultObject.successObject(list,null);
+	}
+	
+	
+	/**
+	 * 根据练习本节点ID 查询该节点下所有知识点信息
+	 * @param request
+	 * @param response
+	 * @param excerciseId
+	 * @return
+	 */
+	@RequestMapping("/bookPonitList")
+	public Result<List<PonitDto>> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
+		return ResultObject.successObject(entityList,null); 
 	}
 
 }

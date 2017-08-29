@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.ChapterDao;
+import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
 
@@ -26,9 +27,11 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public void addChapter(ChapterEntity entity){
+	public IdEntity addChapter(ChapterEntity entity){
 		chapterDao.addChapter(entity);
-	
+		IdEntity identity = new IdEntity();	
+		identity.setId(entity.getId());
+	  return identity;
 	}
 	
 	/**

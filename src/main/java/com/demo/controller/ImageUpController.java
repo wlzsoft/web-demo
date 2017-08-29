@@ -65,7 +65,7 @@ public class ImageUpController {
 		} catch (RuntimeException e2) {
 			e2.printStackTrace();
 		}
-		return ResultObject.successObject(dto);
+		return ResultObject.successObject(dto,null);
 		
 	}
 	

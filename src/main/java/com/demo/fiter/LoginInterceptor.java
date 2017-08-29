@@ -22,7 +22,11 @@ public class LoginInterceptor implements HandlerInterceptor{
 		if(userCur != null){
 		  return true; 
 		}
-		response.sendRedirect("http://172.29.224.150:8080/#/login");
+		response.setStatus(401);
+		//response.sendRedirect("http://172.29.224.150:8080/#/login");
+/*		HandlerMethod hm = (HandlerMethod)handler;
+		response.getWriter().write("sdfsdf");
+		response.getWriter().flush();*/
 		return false;
 	}
 

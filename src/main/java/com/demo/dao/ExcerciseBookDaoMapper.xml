@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ExcerciseBookDao">
 	
-	<insert id="excerciseSava" parameterType="com.demo.entity.ExcerciseBookEntity">
+	<insert id="excerciseSava" parameterType="com.demo.entity.ExcerciseBookEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO excercisebook(
 					bookName,
 					language,

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ChapterDao">
 	
-	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity">
+	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity"  useGeneratedKeys="true" keyProperty="id">
 	   INSERT INTO chapter(
 				parentId,
 				name,

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.BookProgressDto;
+import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
@@ -46,8 +47,8 @@ public class ExcerciseBookController {
 	 */
 	@RequestMapping("/addBook")
 	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
-		excerciseService.excerciseSava(entity);
-		return ResultObject.successMessage("保存成功");
+		IdEntity identity = excerciseService.excerciseSava(entity);
+		return ResultObject.successObject(identity,"保存成功");
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class ExcerciseBookController {
 	@RequestMapping("/findBook")
 	public Result<ExcerciseBookEntity> findExcerciseId(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
-		return ResultObject.successObject(entity);
+		return ResultObject.successObject(entity,null);
 	}
 	
 	/**
@@ -99,37 +100,10 @@ public class ExcerciseBookController {
 	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,Integer userId){
 		userId =systemService.getCurrentUser().getId();
 		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
-		return ResultObject.successObject(entityList);
+		return ResultObject.successObject(entityList,null);
 	}
 	
-	
-	/**
-	 * 根据练习本节点ID 查询该节点下所有知识点信息
-	 * @param request
-	 * @param response
-	 * @param excerciseId
-	 * @return
-	 */
-	@RequestMapping("/bookPonitList")
-	public Result<List<PonitDto>> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String bookId){
-		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
-		return ResultObject.successObject(entityList); 
-	}
-	
-	
-	/**
-	 * 根据练习本ID ， 查询该节点下所有章节信息
-	 * @param request
-	 * @param response
-	 * @param excerciseId
-	 * @return
-	 */
-	@RequestMapping("/bookChapterList")
-	public Result<List<ChapterEntity>> bookChapterList(HttpServletRequest request ,HttpServletResponse response,String bookId){
-		List<ChapterEntity> entityList = excerciseService.bookChapterList(Integer.parseInt(bookId));
-		return ResultObject.successObject(entityList); 
-	}
-	
+
     
 	/**
 	 * 根据练习本ID ， 查询用户练习本练习进度
@@ -141,7 +115,7 @@ public class ExcerciseBookController {
 	@RequestMapping("/bookProgress")
 	public Result<?> bookProgress(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		BookProgressDto entity = excerciseService.bookProgress(Integer.parseInt(bookId));
-		return ResultObject.successObject(entity); 
+		return ResultObject.successObject(entity,null); 
 	}
 	
 	

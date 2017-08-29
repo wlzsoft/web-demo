@@ -38,7 +38,7 @@ public class ReviewController {
 	@RequestMapping("/addReview")
 	public Result<?> reviewCard(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
 		reviewService.reviewCrad(pointId, cardId, right);
-		return ResultObject.successMessage("保存成功") ;
+		return ResultObject.successMessage("成功") ;
 	}
 	
 	
@@ -53,7 +53,7 @@ public class ReviewController {
 	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ,Integer userId){
 		userId =systemService.getCurrentUser().getId();
 		List<PonitDto> ponitDto = reviewService.excercise(userId);
-		return ResultObject.successObject(ponitDto) ;
+		return ResultObject.successObject(ponitDto,null) ;
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class ReviewController {
 	@RequestMapping("/card")
 	public Result<?> getCard(HttpServletRequest request ,HttpServletResponse response ,String pointId ){
 		CardDto cardDto = reviewService.roundCard(Integer.parseInt(pointId));
-		return ResultObject.successObject(cardDto) ;
+		return ResultObject.successObject(cardDto,null) ;
 	}
 
 }

@@ -29,7 +29,7 @@ public class UserController {
 	@RequestMapping("/addUser")
 	public Result<?> savaUser(HttpServletRequest request ,HttpServletResponse response,UserEntity userentity ){
 		userService.savaUser(userentity);
-		return ResultObject.successMessage("保存成功") ;
+		return ResultObject.successMessage("成功") ;
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class UserController {
 	public Result<List<UserExerciseDetailEntity>> findUserExerciseDetailById(HttpServletRequest request ,HttpServletResponse response,Integer userId){
 		userId =systemService.getCurrentUser().getId();
 		List<UserExerciseDetailEntity> list = userService.findUserExerciseDetailById(userId);
-		return ResultObject.successObject(list);
+		return ResultObject.successObject(list,null);
 	}
 	
 }

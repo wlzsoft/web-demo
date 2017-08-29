@@ -31,10 +31,10 @@ public class SystemController {
 		}
 		UserEntity userCur = userService.findUserLogin(userName, password);
 		if(null == userCur){
-			return ResultObject.sucreMessage("户名或密码错误") ;
+			return ResultObject.sucreMessage("用户名或密码错误!") ;
 		}else{
 			request.getSession().setAttribute("userCur", userCur);
-			return  ResultObject.successObject(userCur) ;
+			return  ResultObject.successObject(userCur,null) ;
 		}
 		
 	 }
