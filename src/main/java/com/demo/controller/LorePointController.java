@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
@@ -42,8 +43,16 @@ public class LorePointController {
 	 */
 	@RequestMapping("/addPoint")
 	public Result<?> savaLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
-		lorePointService.savaLorePoint(entity);
-		return ResultObject.successMessage("保存成功");
+		if(null==entity.getBookId()||entity.getBookId().equals("")){
+			return ResultObject.warnMessage("所属练习本ID不能为空");
+		}
+		
+		if(null==entity.getPointName()||entity.getPointName().equals("")){
+			return ResultObject.warnMessage("知识点名称不能为空");
+		}
+		
+		IdEntity identity = lorePointService.savaLorePoint(entity);
+		return ResultObject.successObject(identity,"保存成功");
 	}
 	
 	/**
@@ -55,7 +64,20 @@ public class LorePointController {
 	 */
 	@RequestMapping("/editPoint")
 	public Result<?> editLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
-		lorePointService.editLorePoint(entity);
+		if(null==entity.getId()||entity.getId().equals("")){
+			return ResultObject.warnMessage("主键ID不能为空");
+		}
+		if(null==entity.getBookId()||entity.getBookId().equals("")){
+			return ResultObject.warnMessage("所属练习本ID不能为空");
+		}
+		
+		if(null==entity.getPointName()||entity.getPointName().equals("")){
+			return ResultObject.warnMessage("知识点名称不能为空");
+		}
+		int count = lorePointService.editLorePoint(entity);
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("修改成功");
 	}
 	
@@ -68,13 +90,22 @@ public class LorePointController {
 	 */
 	@RequestMapping("/delPoint")
 	public Result<?> delLorePoint(HttpServletRequest request ,HttpServletResponse response,String pointId){
-		lorePointService.delLorePoint(Integer.parseInt(pointId));
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		int count = lorePointService.delLorePoint(Integer.parseInt(pointId));
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("删除成功");
 	}
 	
 	
 	@RequestMapping("/findPoint")
-	public Result<PonitDto> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+	public Result<?> findLorePointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
 		return ResultObject.successObject(entity,null);
 	}
@@ -94,6 +125,9 @@ public class LorePointController {
 	 */
 	@RequestMapping("/pointDetail")
 	public Result<?> findPointIdByDetail(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		LorePointExerciseDetailEntity list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
 		return ResultObject.successObject(list,null);
 	}
@@ -106,8 +140,11 @@ public class LorePointController {
 	 * @param excerciseId
 	 * @return
 	 */
-	@RequestMapping("/bookPonitList")
-	public Result<List<PonitDto>> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	@RequestMapping("/bookPointList")
+	public Result<?> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
 		return ResultObject.successObject(entityList,null); 
 	}

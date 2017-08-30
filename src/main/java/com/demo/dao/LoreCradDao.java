@@ -17,13 +17,13 @@ public interface LoreCradDao {
 	
 	public void install(LoreCardEntity entity);
 	
-	public void dellById(@Param("id")Integer id);
+	public int dellById(@Param("id")Integer id);
 	
-	public void editLoreCrad(LoreCardEntity entity);
+	public int editLoreCrad(LoreCardEntity entity);
 	
 	public CardDto findLoreCradById(@Param("id")Integer id);
 	
-	public List<CardDto> findLoreCradByPointId(@Param("lorePointId")Integer lorePointId);
+	public List<CardDto> findLoreCradByPointId(@Param("pointId")Integer lorePointId);
 	
 	public List<LoreCardEntity> getOpenLoreCrad();
 	
@@ -37,7 +37,7 @@ public interface LoreCradDao {
 	
 	public void addPonitNumber(@Param("id")Integer id);
 	
-	public void delPonitNumber(@Param("id")Integer id);
+	public int delPonitNumber(@Param("id")Integer id);
 	
 	
  	

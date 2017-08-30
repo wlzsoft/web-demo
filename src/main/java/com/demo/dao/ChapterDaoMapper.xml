@@ -20,7 +20,6 @@
 
 	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
 			 UPDATE chapter set
-			   <if test="parentId !=null" >parentId=#{parentId},</if>
 			   <if test="name !=null">name=#{name},</if>
 			   <if test="bookId !=null">bookId=#{bookId},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
@@ -29,8 +28,8 @@
 	</update>
 	
 	<select id="findChapterPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT t.id,t.lorePointName,t.chapterId,t.number 
-			 FROM lorepoint t ,chapter a 
+			SELECT t.id,t.pointName,t.chapterId,t.number 
+			 FROM point t ,chapter a 
 			 WHERE t.chapterId=a.id
 			    AND a.id=#{chapterId}
 	</select>

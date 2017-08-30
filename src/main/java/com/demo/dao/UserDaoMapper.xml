@@ -11,11 +11,11 @@
 			degree,
 	  		registerTime,
 	  		lasterLoginTime
-        FROM userinfo t WHERE  t.username=#{username} AND t.password=#{password}  
+        FROM userInfo t WHERE  t.username=#{username} AND t.password=#{password}  
      </select>
      
      <insert id="savaUser" parameterType="com.demo.entity.UserEntity">
-		     INSERT INTO userinfo(
+		     INSERT INTO userInfo(
 					birthday,
 					username,
 					password,
@@ -37,11 +37,11 @@
      </insert>
      
      <select id="findUserExerciseDetailById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserExerciseDetailEntity">
-     		SELECT * FROM userexercisedetail t WHERE t.userId=#{userId}
+     		SELECT * FROM userExerciseDetail t WHERE t.userId=#{userId}
      </select>
      
      <select id="findExerciseById" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
-     		SELECT * FROM excercisebook t WHERE t.userId=#{userId}
+     		SELECT * FROM book t WHERE t.userId=#{userId}
      </select>
      
 </mapper>

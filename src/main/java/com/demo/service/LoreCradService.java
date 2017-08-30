@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.LoreCradDao;
 import com.demo.dto.CardDto;
+import com.demo.dto.IdEntity;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
@@ -24,31 +25,33 @@ public class LoreCradService {
 	private SystemService systemService;
 	
 	@Transactional
-	public void savaLoreCrad(LoreCardEntity entity){
+	public IdEntity savaLoreCrad(LoreCardEntity entity){
 		   entity.setCreateId(systemService.getCurrentUser().getId());
-		  entity.setCreateTime(new Date());
-		 loreCradDao.addPonitNumber(entity.getLorePointId());
+		   entity.setCreateTime(new Date());
+		 loreCradDao.addPonitNumber(entity.getPointId());
 		 loreCradDao.savaLoreCrad(entity);
 		 //保存卡片的联系详情
 		 LoreCardExerciseDetailEntity cardExerciseDetail = new LoreCardExerciseDetailEntity();
 		   cardExerciseDetail.setUserId(systemService.getCurrentUser().getId()); //-============该处需要需求 后面修改为 该卡片练习人的ID
-		   //cardExerciseDetail.setUserId(1); 
-		   cardExerciseDetail.setLoreCardId(entity.getId());
+		   cardExerciseDetail.setCardId(entity.getId());
 		 loreCradDao.savaCardExerciseDetail(cardExerciseDetail);
-		 
+		 IdEntity idEntity = new IdEntity();
+		 idEntity.setId(entity.getId());
+		 return idEntity;
 	}
 	
 	@Transactional
-	public void delLoreCrad(Integer loreCardId){
-		loreCradDao.delPonitNumber(loreCardId);
+	public int delLoreCrad(Integer loreCardId){
+		int count = loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
-		
+		return count;
 	}
 	
-	public void editLoreCrad(LoreCardEntity entity){
-		 //entity.setUpdateId(systemService.getCurrentUser().getId());
-		 //entity.setUpdateTime(new Date());
-		loreCradDao.editLoreCrad(entity);
+	public int editLoreCrad(LoreCardEntity entity){
+		 entity.setUpdateId(systemService.getCurrentUser().getId());
+		 entity.setUpdateTime(new Date());
+		int count = loreCradDao.editLoreCrad(entity);
+		return count;
 	}
 	
 	public CardDto findLoreCradById(Integer loreCardId){

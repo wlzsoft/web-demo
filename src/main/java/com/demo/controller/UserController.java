@@ -28,8 +28,14 @@ public class UserController {
 	
 	@RequestMapping("/addUser")
 	public Result<?> savaUser(HttpServletRequest request ,HttpServletResponse response,UserEntity userentity ){
+		if(null==userentity.getUsername()||userentity.getUsername().equals("")){
+			return ResultObject.warnMessage("用户名不能为空");
+		}
+		if(null==userentity.getPassword()||userentity.getPassword().equals("")){
+			return ResultObject.warnMessage("密码不能为空");
+		}
 		userService.savaUser(userentity);
-		return ResultObject.successMessage("成功") ;
+		return ResultObject.successMessage("保存成功") ;
 	}
 	
 	/**
@@ -41,8 +47,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/findUserExerciseDetailById")
-	public Result<List<UserExerciseDetailEntity>> findUserExerciseDetailById(HttpServletRequest request ,HttpServletResponse response,Integer userId){
-		userId =systemService.getCurrentUser().getId();
+	public Result<List<UserExerciseDetailEntity>> findUserExerciseDetailById(HttpServletRequest request ,HttpServletResponse response){
+		Integer userId =systemService.getCurrentUser().getId();
 		List<UserExerciseDetailEntity> list = userService.findUserExerciseDetailById(userId);
 		return ResultObject.successObject(list,null);
 	}

@@ -3,15 +3,15 @@
 <mapper namespace="com.demo.dao.LorePointDao">
 	
 	<insert id="install" parameterType="com.demo.entity.LorePointEntity" useGeneratedKeys="true" keyProperty="id">
-			INSERT INTO lorepoint(
-					lorePointName,
+			INSERT INTO point(
+					pointName,
 					bookId,
 					chapterId,
 					number,
 					createTime,
 					createId
 			)VALUES(
-					#{lorePointName},
+					#{pointName},
 					#{bookId},
 					#{chapterId},
 					#{number},
@@ -21,16 +21,16 @@
 	</insert>
 	
 	<insert id="addPointDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
-		  INSERT INTO loreexercisedetail( 
+		  INSERT INTO pointExerciseDetail( 
 					userId,
 					exerciseCycle,
-					lorePointId,
+					pointId,
 					bookId,
 					nextExerciseTime
 			)VALUES(
 					#{userId},
 					#{exerciseCycle},
-					#{lorePointId},
+					#{pointId},
 					#{bookId},
 					#{nextExerciseTime}
 			)
@@ -38,36 +38,33 @@
 	
 	
 	<delete id="dellById">
-		DELETE FROM  lorepoint  WHERE  id=#{id}
+		DELETE FROM  point  WHERE  id=#{id}
 	</delete>
 	
 	<update id="update" parameterType="com.demo.entity.LorePointEntity">
-		 UPDATE lorepoint set
-			   <if test="lorePointName !=null" >lorePointName=#{lorePointName},</if>
+		 UPDATE point set
+			   <if test="pointName !=null" >pointName=#{pointName},</if>
 			   <if test="number !=null">number=#{number},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
 	    where id=#{id}
 	</update>
 	
-	<delete id="delExcerciseOrPoint" parameterType="java.lang.Integer">
-		DELETE FROM  excercisebook_lorepoint  WHERE  lorePointId=#{id}
-	</delete>
 	
 	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-		select * from  lorepoint t where t.id=#{id}
+		select * from  point t where t.id=#{id}
 	</select>
 	
 	<select id="searchAllLorePoint" resultType="com.demo.dto.PonitDto">
-		select t.id,t.lorePointName,t.number from  lorePoint t
+		select t.id,t.pointName,t.number,t.bookId from  point t
 	</select>
 	
 	<select id="findPointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointExerciseDetailEntity">
-		SELECT * FROM loreexercisedetail t WHERE t.lorePointId=#{id}
+		SELECT * FROM pointExerciseDetail t WHERE t.pointId=#{id}
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	   SELECT t.id,t.lorePointName,t.number,t.chapterId FROM lorepoint t ,loreexercisedetail a WHERE t.id=a.lorePointId AND a.userId=#{userId}
+	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
 	</select>
 	
      

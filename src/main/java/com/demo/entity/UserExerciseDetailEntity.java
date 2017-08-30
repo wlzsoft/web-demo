@@ -9,8 +9,8 @@ public class UserExerciseDetailEntity implements Serializable {
 	
 	  public Integer id  ;
 	  public Integer  userId               ;
-	  public Integer  loreCradId           ;//卡片ID'
-	  public Integer lorePointId; //知识点ID
+	  public Integer  cardId           ;//卡片ID'
+	  public Integer pointId; //知识点ID
 	  public Date  exerciseDate    ;//练习日期
 	  public Date  startExerciseTime     ;//练习开始时间
 	  public Date  endExerciseTime      ;//练习结束时间
@@ -29,17 +29,17 @@ public class UserExerciseDetailEntity implements Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Integer getLoreCradId() {
-		return loreCradId;
+	public Integer getCardId() {
+		return cardId;
 	}
-	public void setLoreCradId(Integer loreCradId) {
-		this.loreCradId = loreCradId;
+	public void setCardId(Integer cardId) {
+		this.cardId = cardId;
 	}
-	public Integer getLorePointId() {
-		return lorePointId;
+	public Integer getPointId() {
+		return pointId;
 	}
-	public void setLorePointId(Integer lorePointId) {
-		this.lorePointId = lorePointId;
+	public void setPointId(Integer pointId) {
+		this.pointId = pointId;
 	}
 	public Date getExerciseDate() {
 		return exerciseDate;

@@ -41,8 +41,11 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public void delChapter(Integer chapterId){
-		chapterDao.delChapter(chapterId);
+	public int delChapter(Integer chapterId){
+		int count = chapterDao.delChapter(chapterId);
+		System.out.println("================="+count);
+		//更新章节下面的知识点，把知识点的对应的章节ID 设置为null
+		return count;
 	}
 	
 	/**
@@ -52,10 +55,11 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public void editChapter(ChapterEntity entity){
+	public int editChapter(ChapterEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
-		chapterDao.editChapter(entity);
+		int count = chapterDao.editChapter(entity);
+		return count;
 	}
 	
 	

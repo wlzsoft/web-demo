@@ -40,8 +40,8 @@ public class ReviewService {
 			entity.setExerciseDate(new Date());
 			entity.setStartExerciseTime(new Date());
 			entity.setExerciseUpshot(right);
-			entity.setLoreCradId(Integer.parseInt(cradId));
-			entity.setLorePointId(Integer.parseInt(lorePointId));
+			entity.setCardId(Integer.parseInt(cradId));
+			entity.setPointId(Integer.parseInt(lorePointId));
 			entity.setUserId(1);
 			reviewDao.savaUserExcerciseDetail(entity);
 		//更新用户知识点联系详情

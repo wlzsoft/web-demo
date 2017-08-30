@@ -43,7 +43,7 @@ public class SystemController {
 	@RequestMapping("/logout")
 	public Result<?> logout(HttpServletRequest request ,HttpServletResponse response){
 		HttpSession session = request.getSession(false);//防止创建Session
-		String userId = request.getParameter("userId");
+	//	String userId = request.getParameter("userId");
 		session = request.getSession(); 
 		if(null == session){
 			return ResultObject.successMessage("退出成功") ;	

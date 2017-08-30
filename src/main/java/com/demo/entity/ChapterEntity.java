@@ -6,10 +6,10 @@ import java.util.Date;
 public class ChapterEntity implements Serializable {
 
 	private static final long serialVersionUID = 9059527466326065039L;
-	public Integer	id	;
-    public Integer	 parentId;
-    public String name ;
-	public Integer	 bookId;
+	public Integer	id	;//主键ID
+    public Integer	 parentId;//父级ID
+    public String name ;//章节名称
+	public Integer	 bookId;//所属练习本ID
 	public Integer updateId;
 	public Date updateTime;
 	

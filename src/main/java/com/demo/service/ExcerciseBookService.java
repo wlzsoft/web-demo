@@ -32,14 +32,16 @@ public class ExcerciseBookService {
 		return identity;
 	}
 	
-	public void delExcercise(String excerciseId){
-		excerciseBookDao.delExcerciseById(excerciseId);
+	public int delExcercise(String excerciseId){
+		int count = excerciseBookDao.delExcerciseById(excerciseId);
+		return count;
 	}
 	
-	public void editExcercise(ExcerciseBookEntity entity){
+	public int editExcercise(ExcerciseBookEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
-		excerciseBookDao.editExcercise(entity);
+		int count = excerciseBookDao.editExcercise(entity);
+		return count;
 	}
 	
 	public ExcerciseBookEntity findExcerciseId(String id){

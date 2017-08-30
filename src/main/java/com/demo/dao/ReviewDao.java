@@ -20,9 +20,9 @@ public interface ReviewDao {
 	
 	public List<BookDto> bookList(@Param("userId")Integer userId);
 	
-	public List<PonitDto> reviewPoint(@Param("excerciseBookId")Integer excerciseBookId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPoint(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
-	public List<PonitDto> reviewPointNull(@Param("excerciseBookId")Integer excerciseBookId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPointNull(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 	public List<CardDto> roundCard(@Param("pointId")Integer pointId);
 

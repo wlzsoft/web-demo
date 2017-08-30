@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.dao.ExcerciseBookDao">
 	
 	<insert id="excerciseSava" parameterType="com.demo.entity.ExcerciseBookEntity" useGeneratedKeys="true" keyProperty="id">
-			INSERT INTO excercisebook(
+			INSERT INTO book(
 					bookName,
 					language,
 					area,
@@ -23,11 +23,11 @@
 	</insert>
 	
 	<delete id="delExcerciseById">
-		DELETE FROM  excercisebook  WHERE  id=#{excerciseId}
+		DELETE FROM  book  WHERE  id=#{bookId}
 	</delete>
 	
 	<update id="editExcercise" parameterType="com.demo.entity.ExcerciseBookEntity">
-		 UPDATE excercisebook set
+		 UPDATE book set
 			   <if test="bookName !=null" >bookName=#{bookName},</if>
 			   <if test="language !=null">language=#{language},</if>
 			   <if test="sharedType !=null">sharedType=#{sharedType},</if>
@@ -39,32 +39,33 @@
 	</update>
 	
 	<select id="findExcerciseId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
-		select * from excercisebook t where t.id=#{excerciseId}
+		select * from book t where t.id=#{bookId}
 	</select>
 	
 	<select id="searchAllExcercise" resultType="com.demo.entity.ExcerciseBookEntity">
-		select * from excercisebook t where t.createId=#{userId}
+		select * from book t where t.createId=#{userId}
 	</select>
 	
 	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT t.id,t.lorePointName,t.chapterId,t.number FROM lorepoint t
-			 WHERE a.bookId=#{excerciseId}
+			SELECT t.id,t.pointName,t.chapterId,t.number FROM point t
+			 WHERE t.bookId=#{bookId}
 	</select>
 	
 	<select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
 			SELECT 
 			  a.*
-			FROM chapter a, excercisebook b
+			FROM chapter a, book b
 			WHERE a.bookId=b.id
-			 AND b.id=#{excerciseId}
+			 AND b.id=#{bookId}
+			ORDER BY a.id ASC
 	</select>
 	
 	<select id="bookProgress" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-	    SELECT COUNT(*) progress FROM loreexercisedetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId}
+	    SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId}
 	</select>
 	
 	<select id="bookProgressYes" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-	   SELECT COUNT(*) progress FROM loreexercisedetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId} AND t.exerciseNumber>0
+	   SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId} AND t.exerciseNumber>0
 	</select>
 	
 

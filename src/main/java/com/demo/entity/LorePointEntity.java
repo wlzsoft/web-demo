@@ -13,7 +13,7 @@ public class LorePointEntity implements Serializable{
 	 
 	 public Integer chapterId ;//章节主键ID
 	 
-	 public String  lorePointName    ;//知识点名称
+	 public String  pointName    ;//知识点名称
 	 
 	 public Integer  number      ;//知识点卡片数量
 	 
@@ -48,12 +48,12 @@ public class LorePointEntity implements Serializable{
 		this.chapterId = chapterId;
 	}
 
-	public String getLorePointName() {
-		return lorePointName;
+	public String getPointName() {
+		return pointName;
 	}
 
-	public void setLorePointName(String lorePointName) {
-		this.lorePointName = lorePointName;
+	public void setPointName(String pointName) {
+		this.pointName = pointName;
 	}
 
 	public Integer getNumber() {

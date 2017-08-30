@@ -7,7 +7,7 @@ public class LoreCradAnswersEntity implements Serializable {
 	
 	private static final long serialVersionUID = 5137654231298881852L;
 	  public Integer id ;//
-	  public Integer loreCardId ;// '卡片ID',
+	  public Integer cardId ;// '卡片ID',
 	  public Integer answersRight;//  '是否是正确答案',
 	  public String answersText;// '答案文本',
 	  public String answersVoiceSrc ;//'答案文本音频地址',
@@ -23,11 +23,12 @@ public class LoreCradAnswersEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getLoreCardId() {
-		return loreCardId;
+
+	public Integer getCardId() {
+		return cardId;
 	}
-	public void setLoreCardId(Integer loreCardId) {
-		this.loreCardId = loreCardId;
+	public void setCardId(Integer cardId) {
+		this.cardId = cardId;
 	}
 	public Integer getAnswersRight() {
 		return answersRight;

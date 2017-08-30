@@ -3,9 +3,9 @@ package com.demo.dto;
 public class CardDto {
 	
 	public Integer id	;	
-	public Integer lorePointId	;//知识点ID
-	public String lorePointName;//知识点标题 lorePointName
-	public String questionType	;//	卡片题型 (单选：radio  多选： checkbox  填空： bland)				
+	public Integer pointId	;//知识点ID
+	public String  pointName;//知识点标题 lorePointName
+	public String  questionType	;//	卡片题型 (单选：radio  多选： checkbox  填空： bland)				
 	public Integer difficultyLevel	;//卡片难度系数				
 	public String  titleText	;//	卡片标题文本				
 	public String questionText	;//	问题描述文本				
@@ -13,11 +13,18 @@ public class CardDto {
 	public String answers;//卡片答案	
 	
 	
-	public String getLorePointName() {
-		return lorePointName;
+
+	public Integer getPointId() {
+		return pointId;
 	}
-	public void setLorePointName(String lorePointName) {
-		this.lorePointName = lorePointName;
+	public void setPointId(Integer pointId) {
+		this.pointId = pointId;
+	}
+	public String getPointName() {
+		return pointName;
+	}
+	public void setPointName(String pointName) {
+		this.pointName = pointName;
 	}
 	public Integer getId() {
 		return id;
@@ -25,12 +32,7 @@ public class CardDto {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getLorePointId() {
-		return lorePointId;
-	}
-	public void setLorePointId(Integer lorePointId) {
-		this.lorePointId = lorePointId;
-	}
+
 	public String getQuestionType() {
 		return questionType;
 	}

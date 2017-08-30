@@ -3,8 +3,8 @@
 <mapper namespace="com.demo.dao.LoreCradDao">
 	
   <insert id="savaLoreCrad" parameterType="com.demo.entity.LoreCardEntity" useGeneratedKeys="true" keyProperty="id">
- 	  INSERT INTO loreCrad(
-				lorePointId,
+ 	  INSERT INTO card(
+				pointId,
 				language,
 				area,
 				questionType,
@@ -20,7 +20,7 @@
 				createTime,
 				createId
 		)VALUES(
-				#{lorePointId},
+				#{pointId},
 				#{language},
 				#{area},
 				#{questionType},
@@ -39,25 +39,25 @@
   </insert>	
 	
   <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
-          select t.id,t.lorePointId ,b.lorePointName ,t.questionType,
+          select t.id,t.pointId ,b.pointName ,t.questionType,
                 t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
-          from lorecrad t ,lorepoint b  
-          where  t.lorePointId=b.id and t.id=#{id}
+          from card t ,point b  
+          where  t.pointId=b.id and t.id=#{id}
   </select>
    
    <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
-          select t.id,t.lorePointId ,b.lorePointName ,t.questionType,
+          select t.id,t.pointId ,b.pointName ,t.questionType,
                 t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
-          from lorecrad t ,lorepoint b  
-          where  t.lorePointId=b.id and t.lorePointId=#{lorePointId}
+          from card t ,point b  
+          where  t.pointId=b.id and t.pointId=#{pointId}
    </select>  
    
    <delete id="dellById" parameterType="java.lang.Integer">
-     delete from lorecrad where id=#{id}
+     delete from card where id=#{id}
    </delete>
    
    <update id="editLoreCrad" parameterType="com.demo.entity.LoreCardEntity">
-   		 UPDATE lorecrad set
+   		 UPDATE card set
 			   <if test="language !=null" >language=#{language},</if>
 			   <if test="area !=null">area=#{area},</if>
 			   <if test="questionType !=null">questionType=#{questionType},</if>
@@ -77,20 +77,20 @@
    </update>
    
    <update id="addPonitNumber" parameterType="java.lang.Integer">
-      UPDATE lorepoint t set t.number=t.number+1 WHERE t.id=#{id}
+      UPDATE point t set t.number=t.number+1 WHERE t.id=#{id}
    </update>
    
    <update id="delPonitNumber" parameterType="java.lang.Integer">
-      UPDATE lorepoint t ,lorecrad b  set t.number=t.number-1 WHERE b.id=#{id} AND t.id =b.lorePointId
+      UPDATE point t ,card b  set t.number=t.number-1 WHERE b.id=#{id} AND t.id =b.pointId
    </update>
    
    <insert id="savaCardExerciseDetail" parameterType="com.demo.entity.LoreCardExerciseDetailEntity">
-    	  INSERT INTO lorecradexercisedetail(
+    	  INSERT INTO cardExerciseDetail (
 				userId,
-				loreCardId
+				cardId
 		)VALUES(
 				#{userId},
-				#{loreCardId}
+				#{cardId}
 		)
    </insert>
    

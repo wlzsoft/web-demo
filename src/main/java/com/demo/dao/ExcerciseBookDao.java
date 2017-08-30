@@ -15,19 +15,19 @@ public interface ExcerciseBookDao {
 
 	public void excerciseSava(ExcerciseBookEntity entity);
 	
-	public void delExcerciseById(@Param("excerciseId")String excerciseId);
+	public int delExcerciseById(@Param("bookId")String bookId);
 	
-	public void editExcercise(ExcerciseBookEntity entity);
+	public int editExcercise(ExcerciseBookEntity entity);
 	
-	public ExcerciseBookEntity findExcerciseId(@Param("excerciseId")Integer excerciseId);
+	public ExcerciseBookEntity findExcerciseId(@Param("bookId")Integer bookId);
 	
 	public List<ExcerciseBookEntity> searchAllExcercise(@Param("userId")Integer userId);
 	
 	public List<ExcerciseBookEntity> fidByName();
 	
-	public List<PonitDto> findExcerciseIdToPonit(@Param("excerciseId")Integer excerciseId);
+	public List<PonitDto> findExcerciseIdToPonit(@Param("bookId")Integer bookId);
 	
-	public List<ChapterEntity> bookChapterList(@Param("excerciseId")Integer excerciseId);
+	public List<ChapterEntity> bookChapterList(@Param("bookId")Integer bookId);
 	
 	public Integer bookProgress(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	

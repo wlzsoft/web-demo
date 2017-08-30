@@ -9,7 +9,7 @@ public class LoreCardExerciseDetailEntity implements Serializable{
 	
    public Integer id            ;
    public Integer userId        ;//用户ID
-   public Integer loreCardId        ;//卡片ID
+   public Integer cardId        ;//卡片ID
    public Date firstExerciseDate  ;//首次练习日期
    public Date lastExerciseDate   ;//上一次练习日期
    public Integer exerciseNumber;//练习次数
@@ -34,11 +34,24 @@ public class LoreCardExerciseDetailEntity implements Serializable{
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Integer getLoreCardId() {
-		return loreCardId;
+	
+	public Integer getCardId() {
+		return cardId;
 	}
-	public void setLoreCardId(Integer loreCardId) {
-		this.loreCardId = loreCardId;
+	public void setCardId(Integer cardId) {
+		this.cardId = cardId;
+	}
+	public Integer getConCorrectNumber() {
+		return conCorrectNumber;
+	}
+	public void setConCorrectNumber(Integer conCorrectNumber) {
+		this.conCorrectNumber = conCorrectNumber;
+	}
+	public Integer getConErrorNumber() {
+		return conErrorNumber;
+	}
+	public void setConErrorNumber(Integer conErrorNumber) {
+		this.conErrorNumber = conErrorNumber;
 	}
 	public Date getFirstExerciseDate() {
 		return firstExerciseDate;

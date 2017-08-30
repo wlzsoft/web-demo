@@ -37,8 +37,17 @@ public class ReviewController {
 	 */
 	@RequestMapping("/addReview")
 	public Result<?> reviewCard(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		if(null==cardId||cardId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		if(null==right||right.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		reviewService.reviewCrad(pointId, cardId, right);
-		return ResultObject.successMessage("成功") ;
+		return ResultObject.successMessage("保存成功") ;
 	}
 	
 	
@@ -50,8 +59,8 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/excercise")
-	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ,Integer userId){
-		userId =systemService.getCurrentUser().getId();
+	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ){
+		Integer userId =systemService.getCurrentUser().getId();
 		List<PonitDto> ponitDto = reviewService.excercise(userId);
 		return ResultObject.successObject(ponitDto,null) ;
 	}
@@ -65,6 +74,9 @@ public class ReviewController {
 	 */
 	@RequestMapping("/card")
 	public Result<?> getCard(HttpServletRequest request ,HttpServletResponse response ,String pointId ){
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		CardDto cardDto = reviewService.roundCard(Integer.parseInt(pointId));
 		return ResultObject.successObject(cardDto,null) ;
 	}

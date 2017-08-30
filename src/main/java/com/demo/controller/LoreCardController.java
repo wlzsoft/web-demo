@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
+import com.demo.dto.IdEntity;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
@@ -34,8 +35,18 @@ public class LoreCardController {
 	 */
 	@RequestMapping("/addCard")
 	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
-		 loreCradService.savaLoreCrad(loreCardEntity);
-		return ResultObject.successMessage("保存成功");
+		if(null==loreCardEntity.getPointId()||loreCardEntity.getPointId().equals("")){
+			return ResultObject.warnMessage("所属知识点ID不能为空");
+		}
+		if(null==loreCardEntity.getQuestionType()||loreCardEntity.getQuestionType().equals("")){
+			return ResultObject.warnMessage("卡片题型不能为空");
+		}
+		if(null==loreCardEntity.getAnswers()||loreCardEntity.getAnswers().equals("")){
+			return ResultObject.warnMessage("卡片答案不能为空");
+		}
+		
+		IdEntity idEntity =  loreCradService.savaLoreCrad(loreCardEntity);
+		return ResultObject.successObject(idEntity, "保存成功");
 	}
 	
 	/**
@@ -47,7 +58,13 @@ public class LoreCardController {
 	 */
 	@RequestMapping("/delCard")
 	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String cardId){
-		   loreCradService.delLoreCrad(Integer.parseInt(cardId));
+		if(null==cardId||cardId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		int count = loreCradService.delLoreCrad(Integer.parseInt(cardId));
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("删除成功");
 	}
 	
@@ -60,7 +77,19 @@ public class LoreCardController {
 	 */
 	@RequestMapping("/editCard")
 	public Result<?> editLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
-		 loreCradService.editLoreCrad(entity);
+		if(null==entity.getId()||entity.getId().equals("")){
+			return ResultObject.warnMessage("ID不能为空");
+		}
+		if(null==entity.getQuestionType()||entity.getQuestionType().equals("")){
+			return ResultObject.warnMessage("卡片题型不能为空");
+		}
+		if(null==entity.getAnswers()||entity.getAnswers().equals("")){
+			return ResultObject.warnMessage("卡片答案不能为空");
+		}
+		int count = loreCradService.editLoreCrad(entity);
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("修改成功");
 	}
 	
@@ -73,6 +102,9 @@ public class LoreCardController {
 	 */
 	@RequestMapping("/findCard")
 	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String cardId){
+		if(null==cardId||cardId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(cardId));
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
@@ -87,8 +119,11 @@ public class LoreCardController {
 	 * @param lorePointId
 	 * @return
 	 */
-	@RequestMapping("/findCardPointId")
+	@RequestMapping("/pointCardList")
 	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+		if(null==pointId||pointId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(pointId));
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
@@ -119,9 +154,12 @@ public class LoreCardController {
 	 * @param lorePointId
 	 * @return
 	 */
-	@RequestMapping("/getCardDetailByPointId")
-	public Result<?> getLoreCradDetailByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
-		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(loreCardId));
+	@RequestMapping("/getCardInfo")
+	public Result<?> getLoreCradDetailByPointId(HttpServletRequest request ,HttpServletResponse response,String cardId){
+		if(null==cardId||cardId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(cardId));
 		if(null==entity){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -135,9 +173,12 @@ public class LoreCardController {
 	 * @param loreCardId
 	 * @return
 	 */
-	@RequestMapping("/getCardAnswerByPointId")
-	public Result<?> getLoreCradAnswerByPointId(HttpServletRequest request ,HttpServletResponse response,String loreCardId){
-		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(loreCardId));
+	@RequestMapping("/getCardAnswer")
+	public Result<?> getLoreCradAnswerByPointId(HttpServletRequest request ,HttpServletResponse response,String cardId){
+		if(null==cardId||cardId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(cardId));
 		if(entityList.size()<1){
 			return ResultObject.successMessage("没有数据");
 		}

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
-import com.demo.dto.PonitDto;
-import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.SystemService;
@@ -47,6 +45,19 @@ public class ExcerciseBookController {
 	 */
 	@RequestMapping("/addBook")
 	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
+		
+		if(null==entity.getBookName()||entity.getBookName().equals("")){
+			return ResultObject.warnMessage("练习本名称不能为空");
+		}
+		
+		if(null==entity.getLanguage()||entity.getLanguage().equals("")){
+			return ResultObject.warnMessage("语言不能为空");
+		}
+		
+		if(null==entity.getArea()||entity.getArea().equals("")){
+			return ResultObject.warnMessage("领域不能为空");
+		}
+		
 		IdEntity identity = excerciseService.excerciseSava(entity);
 		return ResultObject.successObject(identity,"保存成功");
 	}
@@ -60,7 +71,13 @@ public class ExcerciseBookController {
 	 */
 	@RequestMapping("/delBook")
 	public Result<?> delExcercise(HttpServletRequest request ,HttpServletResponse response,String bookId){
-		excerciseService.delExcercise(bookId);
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		int count = excerciseService.delExcercise(bookId);
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("删除成功");
 	}
 	
@@ -73,8 +90,18 @@ public class ExcerciseBookController {
 	 */
 	@RequestMapping("/editBook")
 	public Result<?> editExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
-		excerciseService.editExcercise(entity);
-		return ResultObject.successMessage("修改成功");
+		if(null==entity.getId()||entity.getId().equals("")){
+			return ResultObject.warnMessage("主键ID不能为空");
+		}
+		
+		if(null==entity.getBookName()||entity.getBookName().equals("")){
+			return ResultObject.warnMessage("练习本名称不能为空");
+		}
+		int count = excerciseService.editExcercise(entity);
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
+		return ResultObject.successMessage("修改成功");	
 	}
 	
 	/**
@@ -85,7 +112,10 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/findBook")
-	public Result<ExcerciseBookEntity> findExcerciseId(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	public Result<?> findExcerciseId(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
 		return ResultObject.successObject(entity,null);
 	}
@@ -97,8 +127,8 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/bookList")
-	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response,Integer userId){
-		userId =systemService.getCurrentUser().getId();
+	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response){
+		Integer userId =systemService.getCurrentUser().getId();
 		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
 		return ResultObject.successObject(entityList,null);
 	}
@@ -114,6 +144,9 @@ public class ExcerciseBookController {
 	 */
 	@RequestMapping("/bookProgress")
 	public Result<?> bookProgress(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		BookProgressDto entity = excerciseService.bookProgress(Integer.parseInt(bookId));
 		return ResultObject.successObject(entity,null); 
 	}

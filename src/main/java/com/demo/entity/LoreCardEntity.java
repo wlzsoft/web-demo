@@ -8,7 +8,7 @@ public class LoreCardEntity implements Serializable{
 	private static final long serialVersionUID = 461079389536773396L;
 	
 	public Integer id	;	
-	public Integer lorePointId	;//知识点ID				
+	public Integer pointId	;//知识点ID				
 	public Integer language	;//	卡片使用的语言				
 	public Integer area	;//	卡片所属领域				
 	public String questionType	;//	卡片题型 (单选：radio  多选： checkbox  填空： bland)				
@@ -33,11 +33,12 @@ public class LoreCardEntity implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getLorePointId() {
-		return lorePointId;
+
+	public Integer getPointId() {
+		return pointId;
 	}
-	public void setLorePointId(Integer lorePointId) {
-		this.lorePointId = lorePointId;
+	public void setPointId(Integer pointId) {
+		this.pointId = pointId;
 	}
 	public Integer getLanguage() {
 		return language;

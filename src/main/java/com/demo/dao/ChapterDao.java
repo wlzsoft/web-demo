@@ -28,7 +28,7 @@ public interface ChapterDao {
 	 * @param entity
 	 * @return
 	 */
-	public void delChapter(@Param("chapterId")Integer chapterId);
+	public int delChapter(@Param("chapterId")Integer chapterId);
 	/**
 	 * 修改章节信息
 	 * @param request
@@ -36,7 +36,7 @@ public interface ChapterDao {
 	 * @param entity
 	 * @return
 	 */
-	public void editChapter(ChapterEntity entity);
+	public int editChapter(ChapterEntity entity);
 	
 	/**
 	 * 根据章节Id 查询章节下面所有知识点

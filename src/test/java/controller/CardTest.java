@@ -24,7 +24,7 @@ public class CardTest {
 	public void savaCrad(){	
 		
 		LoreCardEntity entity = new LoreCardEntity();
-		entity.setLorePointId(17);
+		entity.setPointId(17);
 		entity.setLanguage(1);
 		entity.setArea(1);
 		entity.setQuestionType("radio ");

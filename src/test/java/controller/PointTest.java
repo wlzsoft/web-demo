@@ -25,7 +25,7 @@ public class PointTest {
 			LorePointEntity entity = new LorePointEntity();
 			entity.setCreateId(1);
 			entity.setCreateTime(new Date());
-			entity.setLorePointName("魅族PRO_"+i);
+			entity.setPointName("魅族PRO_"+i);
 			entity.setNumber(0);
 			entity.setBookId(3);
 			lorePointService.savaLorePoint(entity);
@@ -38,7 +38,7 @@ public class PointTest {
 		entity.setId(7);
 		entity.setUpdateId(1);
 		entity.setUpdateTime(new Date());
-		entity.setLorePointName("魅蓝 X");
+		entity.setPointName("魅蓝 X");
 		entity.setNumber(0);
 		entity.setBookId(3);
 		lorePointService.editLorePoint(entity);

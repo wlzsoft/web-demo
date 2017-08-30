@@ -14,9 +14,9 @@ public interface LorePointDao {
 	
 	public Integer install(LorePointEntity entity);
 	
-	public void dellById(@Param("id")Integer id);
+	public int dellById(@Param("id")Integer id);
 	
-	public void update(LorePointEntity entity);
+	public int update(LorePointEntity entity);
 	
 	public PonitDto findById(@Param("id")Integer id);
 	

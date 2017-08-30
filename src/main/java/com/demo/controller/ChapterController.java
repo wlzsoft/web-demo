@@ -37,6 +37,15 @@ public class ChapterController {
 	 */
 	@RequestMapping("/addChapter")
 	public Result<?> addChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
+		
+		if(null==entity.getName()||entity.getName().equals("")){
+			return ResultObject.warnMessage("章节名称不能为空");
+		}
+		
+		if(null==entity.getBookId()||entity.getBookId().equals("")){
+			return ResultObject.warnMessage("章节所属练习本ID不能为空");
+		}
+		
 		IdEntity identity = chapterService.addChapter(entity);
 		return ResultObject.successObject(identity,"保存成功");
 	
@@ -51,7 +60,13 @@ public class ChapterController {
 	 */
 	@RequestMapping("/delChapter")
 	public Result<?> delChapter(HttpServletRequest request ,HttpServletResponse response,String chapterId){
-		chapterService.delChapter(Integer.parseInt(chapterId));
+		if(null==chapterId||chapterId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		int count = chapterService.delChapter(Integer.parseInt(chapterId));
+		if(count==0){
+			return ResultObject.successMessage("无操作数据");
+		}
 		return ResultObject.successMessage("删除成功") ;
 	}
 	
@@ -64,9 +79,15 @@ public class ChapterController {
 	 */
 	@RequestMapping("/editChapter")
 	public Result<?> editChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
-		chapterService.editChapter(entity);
-		return ResultObject.successMessage("修改成功") ;
-	
+		if(null==entity.getId()||entity.getId().equals("")){
+			return ResultObject.warnMessage("主键ID不能为空");
+		}else{
+			int count = chapterService.editChapter(entity);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+			return ResultObject.successMessage("修改成功") ;	
+		}
 	}
 	
 	
@@ -79,6 +100,9 @@ public class ChapterController {
 	 */
 	@RequestMapping("/findChapterPoint")
 	public Result<?> findChapterPoint(HttpServletRequest request ,HttpServletResponse response,String chapterId){
+		if(null==chapterId||chapterId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		List<PonitDto> list = chapterService.findChapterPoint(Integer.parseInt(chapterId));
 		return ResultObject.successObject(list,null);
 	
@@ -93,7 +117,10 @@ public class ChapterController {
 	 * @return
 	 */
 	@RequestMapping("/bookChapterList")
-	public Result<List<ChapterEntity>> bookChapterList(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	public Result<?> bookChapterList(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
 		List<ChapterEntity> entityList = excerciseService.bookChapterList(Integer.parseInt(bookId));
 		return ResultObject.successObject(entityList,null); 
 	}

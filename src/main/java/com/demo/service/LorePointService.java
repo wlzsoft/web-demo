@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.LorePointDao;
+import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
@@ -23,7 +24,7 @@ public class LorePointService {
 	private LorePointDao lorePointDao;
 	
 	@Transactional
-	public void savaLorePoint(LorePointEntity entity){
+	public IdEntity savaLorePoint(LorePointEntity entity){
 		  entity.setCreateId(systemService.getCurrentUser().getId());
 		  entity.setCreateTime(new Date());
 		  entity.setNumber(0);
@@ -33,21 +34,26 @@ public class LorePointService {
 		LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
 			pointDetail.setUserId(systemService.getCurrentUser().getId());
 			pointDetail.setUserId(1);
-			pointDetail.setLorePointId(entity.getId());
+			pointDetail.setPointId(entity.getId());
 			pointDetail.setNextExerciseTime(new Date());
 			pointDetail.setExerciseCycle(0);
 		lorePointDao.addPointDetail(pointDetail);	
+		IdEntity identity = new IdEntity();	
+		identity.setId(entity.getId());
+		return identity;
 	}
 	
 	@Transactional
-	public void editLorePoint(LorePointEntity entity){
+	public int editLorePoint(LorePointEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
-		lorePointDao.update(entity);
+		int count = lorePointDao.update(entity);
+		return count;
 	}
 	
-	public void delLorePoint(Integer id){
-		lorePointDao.dellById(id);
+	public int delLorePoint(Integer id){
+		int count = lorePointDao.dellById(id);
+		return count ;
 	}
 
 	public PonitDto findLorePointId(Integer id){
