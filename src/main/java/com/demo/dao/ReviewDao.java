@@ -25,5 +25,7 @@ public interface ReviewDao {
 	public List<PonitDto> reviewPointNull(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 	public List<CardDto> roundCard(@Param("pointId")Integer pointId);
+	
+	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
 
 }

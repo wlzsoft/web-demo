@@ -44,4 +44,8 @@
      		SELECT * FROM book t WHERE t.userId=#{userId}
      </select>
      
+     <select id="getUserByName" parameterType="java.lang.String"  resultType="com.demo.entity.UserEntity">
+         select * from userInfo t where t.username=#{username}
+     </select>
+     
 </mapper>

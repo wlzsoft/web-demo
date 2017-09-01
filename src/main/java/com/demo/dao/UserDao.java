@@ -19,5 +19,7 @@ public interface UserDao {
 	 public List<UserExerciseDetailEntity> findUserExerciseDetailById(@Param("userId")Integer userId);
 	 
 	 public List<ExcerciseBookEntity> findExerciseById(@Param("userId")Integer userId);
+	 
+	 public  List<UserEntity> getUserByName(@Param("username")String userName);
 
 }

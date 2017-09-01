@@ -33,7 +33,6 @@ public class LorePointService {
 		//插入知识点练习明细
 		LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
 			pointDetail.setUserId(systemService.getCurrentUser().getId());
-			pointDetail.setUserId(1);
 			pointDetail.setPointId(entity.getId());
 			pointDetail.setNextExerciseTime(new Date());
 			pointDetail.setExerciseCycle(0);

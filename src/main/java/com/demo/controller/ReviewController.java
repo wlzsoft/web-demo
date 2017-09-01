@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,10 +60,25 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/excercise")
-	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response ){
+	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		Integer userId =systemService.getCurrentUser().getId();
-		List<PonitDto> ponitDto = reviewService.excercise(userId);
-		return ResultObject.successObject(ponitDto,null) ;
+		List<CardDto> cardList = new ArrayList<>();
+		if(null==bookId||bookId.equals("")||bookId.equals("0")){
+			List<PonitDto> ponitDtoList = reviewService.excercise(userId);
+			for(PonitDto dto: ponitDtoList){
+				CardDto cardDto = reviewService.roundCard(dto.getId());
+				if(null!=cardDto){
+					cardList.add(cardDto);	
+				}
+			}
+		}else{
+			List<PonitDto> ponitDtoList = reviewService.excercise(userId,Integer.parseInt(bookId));
+			for(PonitDto dto: ponitDtoList){
+				CardDto cardDto = reviewService.roundCard(dto.getId());
+				cardList.add(cardDto);
+			}
+		}
+		return ResultObject.successObject(cardList,null) ;
 	}
 	
 	/**

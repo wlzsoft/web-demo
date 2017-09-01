@@ -82,14 +82,12 @@
 	</bean>
 	
    <bean id="webFilter" class="com.demo.fiter.LoginInterceptor"></bean>
-	<mvc:interceptors>
+   <mvc:interceptors>
 	  <mvc:interceptor>
 	     <mvc:mapping path="/*/*"/>
 	        <ref bean="webFilter"/>
-	  </mvc:interceptor>
-	</mvc:interceptors>  
-	
-	
+	  </mvc:interceptor> 
+   </mvc:interceptors>
 </beans>
 
 

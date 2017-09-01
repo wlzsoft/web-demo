@@ -52,7 +52,8 @@
 		  	SELECT t.id ,
 		  		t.pointName,
 		  		t.chapterId,
-		  		t.number
+		  		t.number,
+		  		t.bookId
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a ,
@@ -60,6 +61,7 @@
 			WHERE b.bookId=#{bookId}
 			  AND t.chapterId=b.id
 			  AND t.id = a.pointId 
+			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is not NULL
 			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
@@ -70,7 +72,8 @@
 		  	SELECT t.id ,
 		  		t.pointName,
 		  		t.chapterId,
-		  		t.number
+		  		t.number,
+		  		t.bookId
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a ,
@@ -78,9 +81,25 @@
 			WHERE b.bookId=#{bookId}
 			  AND t.chapterId=b.id
 			  AND t.id = a.pointId 
+			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is NULL
 			ORDER BY  t.id asc 
 	  </select>
-     
+	  
+	  <select id="roundCard" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
+          select t.id,t.pointId ,b.pointName ,t.questionType,
+                t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+          from card t ,point b  
+          where  t.pointId=b.id and t.pointId=#{pointId} AND b.number>0
+       </select> 
+       
+       <select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+	     SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId
+	         FROM point t ,pointExerciseDetail a
+	          WHERE t.id=a.pointId 
+	          AND t.number>0
+	          AND a.userId=#{userId}
+	   </select>
+	  
 </mapper>

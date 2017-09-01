@@ -1,5 +1,6 @@
 package com.demo.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.demo.dao.UserDao;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.UserEntity;
 import com.demo.entity.UserExerciseDetailEntity;
+import com.smartframe.basics.util.DES;
 
 @Service("userService")
 public class UserService {
@@ -18,6 +20,11 @@ public class UserService {
 	public UserDao userDao;
 	
 	public UserEntity findUserLogin(String userName ,String password){
+		try {
+			password = DES.DESAndBase64Encrypt(password, "w#_L9~za", "UTF-8");//DES加密处理 
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return userDao.findUserLogin(userName, password);
 	}
 	
@@ -32,5 +39,14 @@ public class UserService {
 	
 	public List<ExcerciseBookEntity> findExerciseById(Integer userId){
 		return userDao.findExerciseById(userId);
+	}
+	
+	/**
+	 * 根据用户名查询用户信息
+	 * @param username
+	 * @return
+	 */
+	public List<UserEntity>  getUserByName(String username){
+		return userDao.getUserByName(username);
 	}
 }

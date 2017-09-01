@@ -2,6 +2,7 @@ package com.demo.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ExcerciseBookDao;
+import com.demo.dao.LoreCradDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.BookDto;
@@ -29,7 +31,12 @@ public class ReviewService {
 	private LorePointDao lorePointDao;
 	
 	@Autowired
+	private LoreCradDao loreCradDao;
+	
+	@Autowired
 	private ExcerciseBookDao excerciseBookDao;
+	
+	private final int COUNT=20;
 	
 	@Transactional
 	public void reviewCrad(String lorePointId,String cradId,Integer right){
@@ -138,88 +145,217 @@ public class ReviewService {
 					 List<PonitDto> pointList = reviewDao.reviewPoint(entity.getId(),userId); //查询小于或等于 当前时间的知识点 (下次练习时间不为null的数据)
 					 if(pointList.size()>0){
 						 if(listAll.size()==0){
-							 if(pointList.size()<=20){
+							 if(pointList.size()<=COUNT){
 								 listAll.addAll(pointList); 
 								 con=con+pointList.size();
 							 }else{
-								 for(int i=0;i<20;i++){
+								 for(int i=0;i<COUNT;i++){
 									 listAll.add(pointList.get(i)) ;
 								 }
-								 con=20;
+								 con=COUNT;
 							 }
 						 }else{
-							 if(pointList.size()<=(20-con)){
+							 if(pointList.size()<=(COUNT-con)){
 								 listAll.addAll(pointList); 
 								 con=con+pointList.size();
 							 }else{
-								 for(int i=0;i<(20-con);i++){
+								 for(int i=0;i<(COUNT-con);i++){
 									 listAll.add(pointList.get(i)) ;
 								 }
-								 con=20; 
+								 con=COUNT; 
 							 }
 						 } 
 					 }
-					  if(con>=20){
+					  if(con>=COUNT){
 						  System.out.println("条件以满足无需再继续查找...........................");
 						 break; 
 					  }
 			   }
 		 
-		 if(listAll.size()<20){
+		 if(listAll.size()<COUNT){
 		     for(int j=0;j<bookList.size();j++){
 					 BookDto entity = bookList.get(j);
 					 List<PonitDto> pointList = reviewDao.reviewPointNull(entity.getId(),userId); //查询下次练习时间为null的数据 按 id升序排
 					 if(pointList.size()>0){
 						 if(listAll.size()==0){
-							 if(pointList.size()<=20){
+							 if(pointList.size()<=COUNT){
 								 listAll.addAll(pointList); 
 								 con=con+pointList.size();
 							 }else{
-								 for(int i=0;i<20;i++){
+								 for(int i=0;i<COUNT;i++){
 									 listAll.add(pointList.get(i)) ;
 								 }
-								 con=20;
+								 con=COUNT;
 							 }
 						 }else{
-							 if(pointList.size()<=(20-con)){
+							 if(pointList.size()<=(COUNT-con)){
 								 listAll.addAll(pointList); 
 								 con=con+pointList.size();
 							 }else{
-								 for(int i=0;i<(20-con);i++){
+								 for(int i=0;i<(COUNT-con);i++){
 									 listAll.add(pointList.get(i)) ;
 								 }
-								 con=20; 
+								 con=COUNT; 
 							 }
 						 } 
 					 }
 				 
-				  if(con>=20){
+				  if(con>=COUNT){
 					  System.out.println("条件以满足无需再继续查找...........................");
 					 break; 
 				  }
 			 }
 		 }
 		 //当所有知识点都练习完了的时候，进行随即抽取
-		 if(listAll.size()<20){
-			 List<PonitDto> ponitList = lorePointDao.roundPoint(userId);
-			 java.util.Random random = new java.util.Random();
-			 for(int j=0;j<20-listAll.size();j++){
-				 int randomPos = random.nextInt(ponitList.size());
-				 listAll.add(ponitList.get(randomPos));
-				 ponitList.remove(randomPos);
+		 
+		 if(listAll.size()<COUNT){
+			 List<PonitDto> ponitList = reviewDao.roundPoint(userId);
+			 if(ponitList.size()>0){
+				 java.util.Random random = new java.util.Random();
+				 if(ponitList.size()>listAll.size()){
+					 if(ponitList.size()>COUNT){
+						 do{
+							 int randomPos = random.nextInt(ponitList.size());
+							 listAll.add(ponitList.get(randomPos));
+							 ponitList.remove(randomPos);
+							 
+							 HashSet<PonitDto> hset = new HashSet<>(listAll);      
+							 listAll.clear();      
+							 listAll.addAll(hset);
+							 
+						 } while(listAll.size()<COUNT);
+					 }else{
+						 listAll.addAll(ponitList);
+						 HashSet hset = new HashSet(listAll);      
+						 listAll.clear();      
+						 listAll.addAll(hset);
+					 }
+				 }
 			 }
 		 }
+		 
+/*		 if(listAll.size()<COUNT){
+			 List<PonitDto> ponitList = lorePointDao.roundPoint(userId);
+			 if(ponitList.size()>0){
+				 java.util.Random random = new java.util.Random();
+				 if(COUNT-listAll.size()>ponitList.size()){
+					 
+                   for(int j=0;j<ponitList.size();j++){
+						 int randomPos = random.nextInt(ponitList.size());
+						 //查看新集合中是否有指定的元素，如果没有则加入
+						 if(!listAll.contains(ponitList.get(randomPos))){
+							 listAll.add(ponitList.get(randomPos));
+							 ponitList.remove(randomPos);
+						  }else{
+							  --j;
+						  }
+					 } 
+				 }else{
+					 for(int j=0;j<COUNT-listAll.size();j++){
+						 int randomPos = random.nextInt(ponitList.size());
+						 //查看新集合中是否有指定的元素，如果没有则加入
+						 if(!listAll.contains(ponitList.get(randomPos))){
+							 listAll.add(ponitList.get(randomPos));
+							 ponitList.remove(randomPos);
+						  }else{
+							  --j;
+						  }
+					 } 
+				 }
+			 }
+		 }*/
 		 
 		 System.out.println("数据大小为--------------："+listAll.size());
 		return listAll ;
 	}
 	
 	
+	
+	/**根据练习本ID 来计算获取知识点
+	 * @param userId
+	 * @param bookId
+	 * @return
+	 */
+	public List<PonitDto> excercise(Integer userId,Integer bookId){
+
+		 List<PonitDto> listAll = new ArrayList<PonitDto>();
+		 int con = 0;//用于记录查询知识点的个数
+		 List<PonitDto> pointList = reviewDao.reviewPoint(bookId,userId); //查询小于或等于 当前时间的知识点 (下次练习时间不为null的数据)
+		 
+		 if(pointList.size()>0){
+				if(listAll.size()==0){
+					 if(pointList.size()<=COUNT){
+						 listAll.addAll(pointList); 
+						 con=con+pointList.size();
+					 }else{
+						 for(int i=0;i<COUNT;i++){
+							 listAll.add(pointList.get(i)) ;
+						 }
+						 con=COUNT;
+					 }
+				 }else{
+					 if(pointList.size()<=(COUNT-con)){
+						 listAll.addAll(pointList); 
+						 con=con+pointList.size();
+					 }else{
+						 for(int i=0;i<(COUNT-con);i++){
+							 listAll.add(pointList.get(i)) ;
+						 }
+						 con=COUNT; 
+					 }
+				 } 
+		}
+		 
+		if(listAll.size()<COUNT){
+		     List<PonitDto> pointList_2 = reviewDao.reviewPointNull(bookId,userId); //查询下次练习时间为null的数据 按 id升序排
+			 if(pointList_2.size()>0){
+				 if(listAll.size()==0){
+					 if(pointList_2.size()<=COUNT){
+						 listAll.addAll(pointList_2); 
+						 con=con+pointList_2.size();
+					 }else{
+						 for(int i=0;i<COUNT;i++){
+							 listAll.add(pointList_2.get(i)) ;
+						 }
+						 con=COUNT;
+					 }
+				 }else{
+					 if(pointList_2.size()<=(COUNT-con)){
+						 listAll.addAll(pointList_2); 
+						 con=con+pointList_2.size();
+					 }else{
+						 for(int i=0;i<(COUNT-con);i++){
+							 listAll.add(pointList_2.get(i)) ;
+						 }
+						 con=COUNT; 
+					 }
+				 } 
+			 }
+				 
+	   }
+		 
+		 System.out.println("数据大小为--------------："+listAll.size());
+		return listAll ;
+	}
+	
+	
+	
+	/**
+	 * 根据知识点ID ，随机获取一个卡片信息
+	 * @param request
+	 * @param response
+	 * @param pointId
+	 * @return
+	 */
 	public CardDto roundCard(Integer pointId){
 		  List<CardDto> cardList = reviewDao.roundCard(pointId);
-	      java.util.Random random = new java.util.Random();
-	      int randomPos = random.nextInt(cardList.size());
-	      return cardList.get(randomPos);
+		  if(cardList.size()>0){
+		      java.util.Random random = new java.util.Random();
+		      int randomPos = random.nextInt(cardList.size()); 
+		      return cardList.get(randomPos);
+		  }else{
+			  return null;
+		  }
 	}
 	
 	
