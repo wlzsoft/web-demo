@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.demo.dto.ChapterDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
 
@@ -22,14 +23,6 @@ public interface ChapterDao {
 	public void addChapter(ChapterEntity entity);
 	
 	/**
-	 * 删除章节信息
-	 * @param request
-	 * @param response
-	 * @param entity
-	 * @return
-	 */
-	public int delChapter(@Param("chapterId")Integer chapterId);
-	/**
 	 * 修改章节信息
 	 * @param request
 	 * @param response
@@ -45,6 +38,14 @@ public interface ChapterDao {
 	 * @param entity
 	 * @return
 	 */
-	public List<PonitDto> findChapterPoint(@Param("chapterId")Integer chapterId);
+	public List<PonitDto> findChapterPoint(@Param("chapterId")Integer chapterId,@Param("bookId")Integer bookId);
+	
+	
+	/**
+	 * 根据练习本ID，查询练习本下面所有章节
+	 * @param bookId
+	 * @return
+	 */
+	public ChapterDto bookChapterList(@Param("bookId")Integer bookId);
 
 }

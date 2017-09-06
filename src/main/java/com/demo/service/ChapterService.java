@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.ChapterDao;
+import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
@@ -34,19 +35,6 @@ public class ChapterService {
 	  return identity;
 	}
 	
-	/**
-	 * 删除章节信息
-	 * @param request
-	 * @param response
-	 * @param entity
-	 * @return
-	 */
-	public int delChapter(Integer chapterId){
-		int count = chapterDao.delChapter(chapterId);
-		System.out.println("================="+count);
-		//更新章节下面的知识点，把知识点的对应的章节ID 设置为null
-		return count;
-	}
 	
 	/**
 	 * 修改章节信息
@@ -64,15 +52,25 @@ public class ChapterService {
 	
 	
 	/**
-	 * 根据章节Id 查询章节下面所有知识点
+	 * 根据章节Id 练习本ID , 查询章节下面所有知识点
 	 * @param request
 	 * @param response
 	 * @param entity
 	 * @return
 	 */
-	public List<PonitDto> findChapterPoint(Integer chapterId){
-		return chapterDao.findChapterPoint(chapterId);
+	public List<PonitDto> findChapterPoint(Integer chapterId,Integer bookId){
+		return chapterDao.findChapterPoint(chapterId,bookId);
 	
+	}
+	
+	
+	/**
+	 * 根据练习本ID，查询练习本下面所有章节
+	 * @param bookId
+	 * @return
+	 */
+	public ChapterDto bookChapterList(Integer bookId){
+		return chapterDao.bookChapterList(bookId);
 	}
 
 }

@@ -7,9 +7,8 @@ public class ChapterEntity implements Serializable {
 
 	private static final long serialVersionUID = 9059527466326065039L;
 	public Integer	id	;//主键ID
-    public Integer	 parentId;//父级ID
-    public String name ;//章节名称
 	public Integer	 bookId;//所属练习本ID
+	public String chapterJson;//章节Json
 	public Integer updateId;
 	public Date updateTime;
 	
@@ -19,23 +18,17 @@ public class ChapterEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getParentId() {
-		return parentId;
-	}
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public Integer getBookId() {
 		return bookId;
 	}
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
+	}
+	public String getChapterJson() {
+		return chapterJson;
+	}
+	public void setChapterJson(String chapterJson) {
+		this.chapterJson = chapterJson;
 	}
 	public Integer getUpdateId() {
 		return updateId;

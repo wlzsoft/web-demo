@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.LorePointDao;
 import com.demo.dto.IdEntity;
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
@@ -63,7 +64,7 @@ public class LorePointService {
 		return lorePointDao.searchAllLorePoint();
 	}
 	
-	public LorePointExerciseDetailEntity findPointIdByDetail(Integer id){
+	public PointExerciseDetailDto findPointIdByDetail(Integer id){
 		return lorePointDao.findPointIdByDetail(id);
 	}
 	

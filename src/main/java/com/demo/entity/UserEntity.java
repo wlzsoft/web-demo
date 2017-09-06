@@ -13,6 +13,8 @@ public class UserEntity implements Serializable{
 	
 	public String password ;
 	
+	public String avata;//用户头像地址
+	
 	public String email;
 	
 	public String telphone;
@@ -106,6 +108,13 @@ public class UserEntity implements Serializable{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+
+	public String getAvata() {
+		return avata;
+	}
+
+	public void setAvata(String avata) {
+		this.avata = avata;
+	}
 	
 }

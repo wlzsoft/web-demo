@@ -51,15 +51,6 @@
 			 WHERE t.bookId=#{bookId}
 	</select>
 	
-	<select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
-			SELECT 
-			  a.*
-			FROM chapter a, book b
-			WHERE a.bookId=b.id
-			 AND b.id=#{bookId}
-			ORDER BY a.id ASC
-	</select>
-	
 	<select id="bookProgress" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 	    SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId}
 	</select>

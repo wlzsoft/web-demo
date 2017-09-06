@@ -58,10 +58,6 @@ public class ExcerciseBookService {
 		return excerciseBookDao.findExcerciseIdToPonit(excerciseId);
 	}
 	
-	public List<ChapterEntity> bookChapterList(Integer excerciseId){
-		return excerciseBookDao.bookChapterList(excerciseId);
-	}
-	
 	public BookProgressDto bookProgress(Integer bookId){
 		Integer userId =  systemService.getCurrentUser().getId();
 		Integer count = excerciseBookDao.bookProgress(bookId,userId);

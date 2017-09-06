@@ -4,34 +4,33 @@
 	
 	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity"  useGeneratedKeys="true" keyProperty="id">
 	   INSERT INTO chapter(
-				parentId,
-				name,
+				chapterJson,
 				bookId
 		)VALUES(
-				#{parentId},
-				#{name},
+				#{chapterJson},
 				#{bookId}
 		)
 	</insert>
 	
-	<delete id="delChapter" parameterType="java.lang.Integer">
-	   DELETE FROM chapter where id=#{chapterId}
-	</delete>
-
 	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
 			 UPDATE chapter set
-			   <if test="name !=null">name=#{name},</if>
-			   <if test="bookId !=null">bookId=#{bookId},</if>
+			   <if test="chapterJson !=null">chapterJson=#{chapterJson},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
-		   WHERE id=#{id}
+		   WHERE bookId=#{bookId}
 	</update>
 	
 	<select id="findChapterPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number 
-			 FROM point t ,chapter a 
-			 WHERE t.chapterId=a.id
-			    AND a.id=#{chapterId}
+			SELECT t.id,t.pointName,t.chapterId,t.number ,t.bookId
+			 FROM point t 
+			 WHERE t.chapterId=#{chapterId} and t.bookId=#{bookId}
+	</select>
+	
+   <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.dto.ChapterDto">
+			SELECT 
+			  a.chapterJson,a.bookId
+			FROM chapter a
+			WHERE a.bookId=#{bookId}
 	</select>
      
 </mapper>

@@ -10,6 +10,7 @@
 			birthday,
 			degree,
 	  		registerTime,
+	  		avata,
 	  		lasterLoginTime
         FROM userInfo t WHERE  t.username=#{username} AND t.password=#{password}  
      </select>
@@ -23,6 +24,7 @@
 					telphone,
 					degree,
 					registerTime,
+					avata,
 					remark
 			 ) VALUES(
 					#{birthday},
@@ -32,6 +34,7 @@
 					#{telphone},
 					#{degree},
 					#{registerTime},
+					#{avata},
 					#{remark}
 			 )
      </insert>

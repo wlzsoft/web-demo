@@ -27,8 +27,6 @@ public interface ExcerciseBookDao {
 	
 	public List<PonitDto> findExcerciseIdToPonit(@Param("bookId")Integer bookId);
 	
-	public List<ChapterEntity> bookChapterList(@Param("bookId")Integer bookId);
-	
 	public Integer bookProgress(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 	public Integer bookProgressYes(@Param("bookId")Integer bookId,@Param("userId")Integer userId);

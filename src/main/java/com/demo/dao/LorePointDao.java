@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
@@ -27,7 +28,14 @@ public interface LorePointDao {
 	 * @param id 知识点Id
 	 * @return
 	 */
-	public LorePointExerciseDetailEntity findPointIdByDetail(@Param("id")Integer id);
+	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer id);
+	
+	/**
+	 * 根据知识点ID 获取知识点练习详情
+	 * @param id 知识点Id
+	 * @return
+	 */
+	public LorePointExerciseDetailEntity pointIdByDetail(@Param("id")Integer id);
 	
 	public void addPointDetail(LorePointExerciseDetailEntity entity);
 	

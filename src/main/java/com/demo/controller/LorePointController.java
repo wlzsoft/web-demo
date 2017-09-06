@@ -10,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.IdEntity;
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.LorePointEntity;
-import com.demo.entity.LorePointExerciseDetailEntity;
+import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.smartframe.dto.Result;
@@ -33,6 +34,9 @@ public class LorePointController {
 	
 	@Autowired
 	private ExcerciseBookService excerciseService ;	
+	
+	@Autowired
+	private ChapterService chapterService;
 	
 	/**
 	 * 保存知识点信息
@@ -128,8 +132,27 @@ public class LorePointController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		LorePointExerciseDetailEntity list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
+		PointExerciseDetailDto list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
 		return ResultObject.successObject(list,null);
+	}
+	
+	
+	
+	/**
+	 * 根据章节Id,练习本ID , 查询章节下面所有知识点
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping("/chapterPointList")
+	public Result<?> findChapterPoint(HttpServletRequest request ,HttpServletResponse response,String chapterId,String bookId){
+		if(null==chapterId||chapterId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		List<PonitDto> list = chapterService.findChapterPoint(Integer.parseInt(chapterId),Integer.parseInt(bookId));
+		return ResultObject.successObject(list,null);
+	
 	}
 	
 	

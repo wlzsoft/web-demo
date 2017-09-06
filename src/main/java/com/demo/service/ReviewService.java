@@ -52,7 +52,7 @@ public class ReviewService {
 			entity.setUserId(1);
 			reviewDao.savaUserExcerciseDetail(entity);
 		//更新用户知识点联系详情
-		LorePointExerciseDetailEntity  detailEntity = lorePointDao.findPointIdByDetail(Integer.parseInt(lorePointId));
+		LorePointExerciseDetailEntity  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId));
 		int exerciseNumber =detailEntity.getExerciseNumber();
 		 if(right==1){//正确
 			 int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());
