@@ -33,6 +33,19 @@ public class UserService {
 		userDao.savaUser(entity);
 	}
 	
+	public void editUser(UserEntity entity){
+		entity.setUpdateTime(new Date());
+		userDao.editUser(entity);
+	}
+	
+	public UserEntity getUserById(Integer userId){
+		return userDao.getUserById(userId);
+	}
+	
+	public void updateLasterLoginTime(UserEntity entity){
+		userDao.updateLasterLoginTime(entity);
+	}
+	
 	public List<UserExerciseDetailEntity> findUserExerciseDetailById(Integer userId){
 		return userDao.findUserExerciseDetailById(userId);
 	}

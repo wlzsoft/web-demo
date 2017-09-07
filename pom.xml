@@ -5,7 +5,7 @@
   <artifactId>web-demo</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>web-demo Maven Webapp</name>
+  <name>web-demo( 刻意练习demo)</name>
   <url>http://maven.apache.org</url>
   <dependencies>
 <!--     <dependency>

@@ -35,10 +35,11 @@ public class SystemController {
 		if(null==userName||userName.equals("")||null==password||password.equals("")){
 			return ResultObject.sucreMessage("用户名或密码不能为空!") ;
 		}
-		UserEntity userCur = userService.findUserLogin(userName, password);
+		UserEntity userCur = userService.findUserLogin(userName, password);//查询用户是否存现
 		if(null == userCur){
 			return ResultObject.sucreMessage("用户名或密码错误!") ;
 		}else{
+			userService.updateLasterLoginTime(userCur);
 			request.getSession().setAttribute("userCur", userCur);
 			return  ResultObject.successObject(userCur,"登录成功") ;
 		}
@@ -109,5 +110,5 @@ public class SystemController {
 		       return false; 
 		   } 
 		   return true; 
-		}
+	}
 }

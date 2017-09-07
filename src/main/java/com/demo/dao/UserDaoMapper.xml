@@ -39,6 +39,28 @@
 			 )
      </insert>
      
+     <update id="editUser" parameterType="com.demo.entity.UserEntity">
+        UPDATE userInfo set
+          	   <if test="birthday !=null">birthday=#{birthday},</if>
+			   <if test="username !=null">username=#{username},</if>
+			   <if test="password !=null">password=#{password},</if>
+			   <if test="avata !=null">avata=#{avata},</if>
+			   <if test="email !=null">email=#{email},</if>
+			   <if test="telphone !=null">telphone=#{telphone},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime}</if>
+        WHERE id=#{id}
+     </update>
+     
+     
+    <update id="updateLasterLoginTime" parameterType="com.demo.entity.UserEntity">
+        UPDATE userInfo set lasterLoginTime=#{lasterLoginTime}  
+         WHERE id=#{id}
+    </update>
+     
+    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserEntity">
+        SELECT * from userInfo where id=#{userId}
+    </select>
+     
      <select id="findUserExerciseDetailById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserExerciseDetailEntity">
      		SELECT * FROM userExerciseDetail t WHERE t.userId=#{userId}
      </select>

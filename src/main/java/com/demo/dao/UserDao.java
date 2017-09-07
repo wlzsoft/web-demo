@@ -16,6 +16,12 @@ public interface UserDao {
 	 
 	 public void savaUser(UserEntity entity);
 	 
+	 public void editUser(UserEntity entity);
+	 
+	 public void updateLasterLoginTime(UserEntity entity);
+	 
+	 public UserEntity getUserById(@Param("userId")Integer userId);
+	 
 	 public List<UserExerciseDetailEntity> findUserExerciseDetailById(@Param("userId")Integer userId);
 	 
 	 public List<ExcerciseBookEntity> findExerciseById(@Param("userId")Integer userId);

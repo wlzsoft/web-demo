@@ -28,6 +28,8 @@ public class UserEntity implements Serializable{
 	public Date lasterLoginTime;
 	
 	public String remark;
+	
+	public Date updateTime;
 
 	public Integer getId() {
 		return id;
@@ -116,5 +118,12 @@ public class UserEntity implements Serializable{
 	public void setAvata(String avata) {
 		this.avata = avata;
 	}
-	
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }
