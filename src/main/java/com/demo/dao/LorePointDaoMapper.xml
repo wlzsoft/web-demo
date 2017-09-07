@@ -49,7 +49,15 @@
 			   <if test="updateId !=null">updateId=#{updateId}</if>
 	    where id=#{id}
 	</update>
-	
+
+	<update id="batchUpdate" parameterType="java.lang.Integer">
+         UPDATE point t SET  t.chapterId=#{chapterId} WHERE
+		 id  in
+		<foreach collection="pointIdArray" item="id" index="index" open="(" close=")" separator=",">
+			#{id,jdbcType=INTEGER}
+		</foreach>
+
+	</update>
 	
 	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		select * from  point t where t.id=#{id}

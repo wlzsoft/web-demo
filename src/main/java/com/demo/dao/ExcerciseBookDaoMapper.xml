@@ -47,7 +47,7 @@
 	</select>
 	
 	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number FROM point t
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId FROM point t
 			 WHERE t.bookId=#{bookId}
 	</select>
 	

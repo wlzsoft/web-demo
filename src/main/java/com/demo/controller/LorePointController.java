@@ -84,12 +84,32 @@ public class LorePointController {
 		}
 		return ResultObject.successMessage("修改成功");
 	}
+
+
+	/**
+	 * 根据知识ID 批量更新知识点章节Id
+	 * @param request
+	 * @param response
+	 * @param pointIds 知识点数组
+	 * @param chapterId 章节Id
+	 * @return
+	 */
+	@RequestMapping("/batchUpdateChapter")
+	public Result<?> batchUpdate(HttpServletRequest request ,HttpServletResponse response,String pointIds ,String chapterId){
+		String [] pointIdArray= pointIds.split(",");
+		if(pointIdArray.length>0){
+			lorePointService.batchUpdate(pointIdArray,Integer.parseInt(chapterId));
+		}else{
+			return ResultObject.warnMessage("知识点ID不能为空");
+		}
+        return ResultObject.successMessage("更新成功");
+	}
 	
 	/**
 	 * 根据知识点ID 删除知识点信息
 	 * @param request
 	 * @param response
-	 * @param id
+	 * @param pointId
 	 * @return
 	 */
 	@RequestMapping("/delPoint")
@@ -124,7 +144,7 @@ public class LorePointController {
 	 * 根据知识点ID 获取知识点练习详情
 	 * @param request
 	 * @param response
-	 * @param id 知识点Id
+	 * @param pointId 知识点Id
 	 * @return
 	 */
 	@RequestMapping("/pointDetail")
@@ -142,7 +162,7 @@ public class LorePointController {
 	 * 根据章节Id,练习本ID , 查询章节下面所有知识点
 	 * @param request
 	 * @param response
-	 * @param entity
+	 * @param bookId
 	 * @return
 	 */
 	@RequestMapping("/chapterPointList")
@@ -160,7 +180,7 @@ public class LorePointController {
 	 * 根据练习本节点ID 查询该节点下所有知识点信息
 	 * @param request
 	 * @param response
-	 * @param excerciseId
+	 * @param bookId
 	 * @return
 	 */
 	@RequestMapping("/bookPointList")

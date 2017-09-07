@@ -18,6 +18,8 @@ public interface LorePointDao {
 	public int dellById(@Param("id")Integer id);
 	
 	public int update(LorePointEntity entity);
+
+	public int batchUpdate(@Param("pointIdArray")Integer[] pointIdArray,@Param("chapterId") Integer chapterId);
 	
 	public PonitDto findById(@Param("id")Integer id);
 	

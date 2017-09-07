@@ -51,6 +51,15 @@ public class LorePointService {
 		int count = lorePointDao.update(entity);
 		return count;
 	}
+
+	public int batchUpdate(String[] pointIdArray,Integer chapterId){
+		Integer[] points =new Integer[pointIdArray.length];
+		for (int i=0;i<pointIdArray.length;i++){
+			points[i]=Integer.parseInt(pointIdArray[i]);
+		}
+		int count = lorePointDao.batchUpdate(points,chapterId);
+		return count;
+	}
 	
 	public int delLorePoint(Integer id){
 		int count = lorePointDao.dellById(id);
