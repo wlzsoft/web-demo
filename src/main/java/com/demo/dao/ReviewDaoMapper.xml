@@ -23,7 +23,7 @@
 	  
 	  </insert>
 	  
-	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
+	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.dto.PointExerciseDetailDto">
 	  		 UPDATE pointExerciseDetail set
 			   nextExerciseTime=#{nextExerciseTime},
 			   exerciseCycle=#{exerciseCycle},
@@ -33,7 +33,7 @@
 			   exerciseNumber=#{exerciseNumber},
 			   correctNumber=#{correctNumber},
 			   errorNumber=#{errorNumber}
-		     where id=#{id}
+		     where pointId=#{pointId} and userId=#{userId}
 	  </update>
 	  
 	  <select id="bookList" parameterType="java.lang.Integer" resultType="com.demo.dto.BookDto">
@@ -47,6 +47,24 @@
 		  	   ORDER BY t.id ASC
 	  </select>
 	  
+	  
+	 <select id="reviewPointAll" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+	  
+		  	SELECT t.id ,
+		  		t.pointName,
+		  		t.chapterId,
+		  		t.number,
+		  		t.bookId
+		  	FROM
+			  point t ,
+			  pointExerciseDetail a
+			WHERE a.bookId=#{bookId}
+			  AND t.id = a.pointId 
+			  AND t.number>0
+			  AND a.userId=#{userId}
+			ORDER BY a.pointId asc 
+	  </select>
+	  
 	  <select id="reviewPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 	  
 		  	SELECT t.id ,
@@ -56,10 +74,8 @@
 		  		t.bookId
 		  	FROM
 			  point t ,
-			  pointExerciseDetail a ,
-			  chapter b
-			WHERE b.bookId=#{bookId}
-			  AND t.chapterId=b.id
+			  pointExerciseDetail a
+			WHERE a.bookId=#{bookId}
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
@@ -67,6 +83,7 @@
 			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
 			ORDER BY  a.nextExerciseTime asc 
 	  </select>
+	  
 	  
 	  <select id="reviewPointNull" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		  	SELECT t.id ,
@@ -76,10 +93,8 @@
 		  		t.bookId
 		  	FROM
 			  point t ,
-			  pointExerciseDetail a ,
-			  chapter b
-			WHERE b.bookId=#{bookId}
-			  AND t.chapterId=b.id
+			  pointExerciseDetail a
+			WHERE a.bookId=#{bookId}
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}

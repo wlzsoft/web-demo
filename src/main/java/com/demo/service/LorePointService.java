@@ -35,6 +35,7 @@ public class LorePointService {
 		LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
 			pointDetail.setUserId(systemService.getCurrentUser().getId());
 			pointDetail.setPointId(entity.getId());
+			pointDetail.setBookId(pointDetail.getBookId());
 			pointDetail.setNextExerciseTime(new Date());
 			pointDetail.setExerciseCycle(0);
 		lorePointDao.addPointDetail(pointDetail);	

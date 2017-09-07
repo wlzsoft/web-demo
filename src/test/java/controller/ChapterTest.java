@@ -21,7 +21,6 @@ public class ChapterTest {
 		ChapterEntity entity = new ChapterEntity();
 		for(int i=22;i<30;i++){
 			entity.setBookId(i);
-			entity.setName("第二章");
 			chapterService.addChapter(entity);
 		}
 	}

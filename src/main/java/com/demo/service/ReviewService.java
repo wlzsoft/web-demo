@@ -15,8 +15,8 @@ import com.demo.dao.LorePointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.LorePointExerciseDetailEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.util.enums.LearningCycle;
 import com.smartframe.basics.util.DateUtil;
@@ -52,7 +52,7 @@ public class ReviewService {
 			entity.setUserId(1);
 			reviewDao.savaUserExcerciseDetail(entity);
 		//更新用户知识点联系详情
-		LorePointExerciseDetailEntity  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId));
+		PointExerciseDetailDto  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId));
 		int exerciseNumber =detailEntity.getExerciseNumber();
 		 if(right==1){//正确
 			 int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());
@@ -333,6 +333,33 @@ public class ReviewService {
 			 }
 				 
 	   }
+		
+		 
+	 if(listAll.size()<COUNT){
+			 List<PonitDto> ponitList = reviewDao.reviewPointAll(bookId,userId);
+			 if(ponitList.size()>0){
+				 java.util.Random random = new java.util.Random();
+				 if(ponitList.size()>listAll.size()){
+					 if(ponitList.size()>COUNT){
+						 do{
+							 int randomPos = random.nextInt(ponitList.size());
+							 listAll.add(ponitList.get(randomPos));
+							 ponitList.remove(randomPos);
+							 
+							 HashSet<PonitDto> hset = new HashSet<>(listAll);      
+							 listAll.clear();      
+							 listAll.addAll(hset);
+							 
+						 } while(listAll.size()<COUNT);
+					 }else{
+						 listAll.addAll(ponitList);
+						 HashSet hset = new HashSet(listAll);      
+						 listAll.clear();      
+						 listAll.addAll(hset);
+					 }
+				 }
+			 }
+		 }
 		 
 		 System.out.println("数据大小为--------------："+listAll.size());
 		return listAll ;

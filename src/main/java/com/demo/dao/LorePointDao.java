@@ -35,7 +35,7 @@ public interface LorePointDao {
 	 * @param id 知识点Id
 	 * @return
 	 */
-	public LorePointExerciseDetailEntity pointIdByDetail(@Param("id")Integer id);
+	public PointExerciseDetailDto pointIdByDetail(@Param("id")Integer id);
 	
 	public void addPointDetail(LorePointExerciseDetailEntity entity);
 	
