@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dto.UserDto;
 import com.demo.entity.UserEntity;
 import com.demo.service.UserService;
 import com.smartframe.basics.util.DES;
@@ -35,7 +36,7 @@ public class SystemController {
 		if(null==userName||userName.equals("")||null==password||password.equals("")){
 			return ResultObject.sucreMessage("用户名或密码不能为空!") ;
 		}
-		UserEntity userCur = userService.findUserLogin(userName, password);//查询用户是否存现
+		UserDto userCur = userService.findUserLogin(userName, password);//查询用户是否存现
 		if(null == userCur){
 			return ResultObject.sucreMessage("用户名或密码错误!") ;
 		}else{

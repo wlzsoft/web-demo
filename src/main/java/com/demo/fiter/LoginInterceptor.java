@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.demo.entity.UserEntity;
+import com.demo.dto.UserDto;
 
 public class LoginInterceptor implements HandlerInterceptor{
 
@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		    return true;    
 		}
 		HttpSession session = request.getSession(); 
-		UserEntity userCur = (UserEntity)session.getAttribute("userCur"); 
+		UserDto userCur = (UserDto)session.getAttribute("userCur"); 
 		if(userCur != null){
 		  return true; 
 		}

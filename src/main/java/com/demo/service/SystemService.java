@@ -5,11 +5,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
-//import com.meizu.cache.Constants;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.demo.entity.UserEntity;
+import com.demo.dto.UserDto;
 
 @Service
 public class SystemService  {
@@ -22,7 +21,7 @@ public class SystemService  {
 	 * 操作步骤: TODO<br>
 	 * @return
 	 */
-	public UserEntity getCurrentUser() {
+	public UserDto getCurrentUser() {
 		RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 		if(ra != null) {
 			request = ((ServletRequestAttributes)ra).getRequest(); 
@@ -38,13 +37,13 @@ public class SystemService  {
 	 * @param request
 	 * @return
 	 */
-	public UserEntity getCurrentUser(HttpServletRequest request) {
+	public UserDto getCurrentUser(HttpServletRequest request) {
 		HttpSession  session = request.getSession();
 		if(session == null) {
 			return null;
 		}
 		//UserEntity  user = (UserEntity)session.getAttribute(session.getId());
-		UserEntity  user = (UserEntity)session.getAttribute("userCur");
+		UserDto  user = (UserDto)session.getAttribute("userCur");
 		return user;
 	}
 	
@@ -56,8 +55,8 @@ public class SystemService  {
 	 * @return
 	 * @throws Exception 
 	 */
-	public UserEntity getCurrentUserForInterrupt() throws Exception {
-		UserEntity user = getCurrentUser();
+	public UserDto getCurrentUserForInterrupt() throws Exception {
+		UserDto user = getCurrentUser();
 		 if(user == null) {
 			 throw new Exception("用户未登录");
 		 }

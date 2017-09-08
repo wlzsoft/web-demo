@@ -13,7 +13,7 @@ public class UserEntity implements Serializable{
 	
 	public String password ;
 	
-	public String avata;//用户头像地址
+	public String avatar;//用户头像地址
 	
 	public String email;
 	
@@ -25,7 +25,7 @@ public class UserEntity implements Serializable{
 	
 	public Date registerTime;
 	
-	public Date lasterLoginTime;
+	public Date lastloginTime;
 	
 	public String remark;
 	
@@ -95,12 +95,12 @@ public class UserEntity implements Serializable{
 		this.registerTime = registerTime;
 	}
 
-	public Date getLasterLoginTime() {
-		return lasterLoginTime;
+	public Date getLastloginTime() {
+		return lastloginTime;
 	}
 
-	public void setLasterLoginTime(Date lasterLoginTime) {
-		this.lasterLoginTime = lasterLoginTime;
+	public void setLastloginTime(Date lastloginTime) {
+		this.lastloginTime = lastloginTime;
 	}
 
 	public String getRemark() {
@@ -111,12 +111,12 @@ public class UserEntity implements Serializable{
 		this.remark = remark;
 	}
 
-	public String getAvata() {
-		return avata;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setAvata(String avata) {
-		this.avata = avata;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public Date getUpdateTime() {
