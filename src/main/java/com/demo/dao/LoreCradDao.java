@@ -39,6 +39,13 @@ public interface LoreCradDao {
 	
 	public int delPonitNumber(@Param("id")Integer id);
 	
+	/**
+	 * 根据知识点Id删除 知识点下面所有卡片信息
+	 * @param pointId
+	 * @return
+	 */
+	public int delCardByPointId(@Param("pointId")Integer pointId);
+	
 	
  	
 }

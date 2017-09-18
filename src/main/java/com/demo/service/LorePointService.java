@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dao.LoreCradDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
@@ -23,6 +24,9 @@ public class LorePointService {
 	
 	@Autowired
 	private LorePointDao lorePointDao;
+	
+	@Autowired
+	private LoreCradDao cardDao;
 	
 	@Transactional
 	public IdEntity savaLorePoint(LorePointEntity entity){
@@ -61,8 +65,11 @@ public class LorePointService {
 		return count;
 	}
 	
+	@Transactional
 	public int delLorePoint(Integer id){
 		int count = lorePointDao.dellById(id);
+		//同时删除该知识点下所有的知识卡片信息
+		cardDao.delCardByPointId(id);
 		return count ;
 	}
 

@@ -94,4 +94,8 @@
 		)
    </insert>
    
+   <delete id="delCardByPointId" parameterType="java.lang.Integer">
+      delete from card where pointId=#{pointId}
+   </delete>
+   
 </mapper>

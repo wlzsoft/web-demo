@@ -47,6 +47,7 @@ public class LoreCradService {
 		return count;
 	}
 	
+	
 	public int editLoreCrad(LoreCardEntity entity){
 		 entity.setUpdateId(systemService.getCurrentUser().getId());
 		 entity.setUpdateTime(new Date());
