@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dto.UserDto;
 import com.demo.entity.UserEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.service.SystemService;
@@ -117,7 +118,43 @@ public class UserController {
 	}
 	
 	
+	/**
+	 * 修改密码
+	 * @param request
+	 * @param response
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping("/updatePassword")
+	public Result<?> updatePassword(HttpServletRequest request ,HttpServletResponse response,String oldPassword,String newPassword ){
+		
+		if(null==oldPassword||oldPassword.equals("")){
+			return ResultObject.sucreMessage("原密码不能为空!") ;
+		}
+		
+		if(null==newPassword||newPassword.equals("")){
+			return ResultObject.sucreMessage("新密码不能为空!") ;
+		}
+		
+		String userName= systemService.getCurrentUser().getUsername();
+		UserDto userCur = userService.findUserLogin(userName, oldPassword);//查询用户是否存现
+		if(null == userCur){
+			return ResultObject.sucreMessage("原密码错误!") ;
+		}else{
+			Integer userId= systemService.getCurrentUser().getId();
+			userService.updatePassword(userId, newPassword);
+		}
+		return  ResultObject.successMessage("修改成功");
+	}
 	
+	
+	
+	
+	/**
+	 * 验证字符串是否是数值
+	 * @param str
+	 * @return
+	 */
 	public boolean isNumeric(String str){ 
 		   Pattern pattern = Pattern.compile("[0-9]*"); 
 		   Matcher isNum = pattern.matcher(str);

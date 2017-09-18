@@ -2,7 +2,9 @@ package com.demo.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +65,18 @@ public class UserService {
 	 */
 	public List<UserEntity>  getUserByName(String username){
 		return userDao.getUserByName(username);
+	}
+	
+	
+	public void updatePassword(Integer userId ,String password){
+		try {
+			password = DES.DESAndBase64Encrypt(password, "w#_L9~za", "UTF-8");//DES加密处理 
+			Map<String, Object> map = new HashMap<String, Object>();
+				map.put("userId", userId);
+				map.put("password", password);
+			userDao.updatePassword(map);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }

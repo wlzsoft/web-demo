@@ -1,6 +1,7 @@
 package com.demo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,7 @@ public interface UserDao {
 	 public List<ExcerciseBookEntity> findExerciseById(@Param("userId")Integer userId);
 	 
 	 public  List<UserEntity> getUserByName(@Param("username")String userName);
+	 
+	 public void updatePassword(Map<String, Object> map);
 
 }
