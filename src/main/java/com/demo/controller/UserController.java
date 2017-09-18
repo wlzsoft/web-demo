@@ -80,28 +80,36 @@ public class UserController {
 			}
 		}
 		
+		String username =  systemService.getCurrentUser().getUsername();
+		
 		if(null!=userentity.getUsername()&&!userentity.getUsername().equals("")){
 			
-		     if(userentity.getUsername().length()>20){
+		    if(userentity.getUsername().length()>20){
 				   return ResultObject.warnMessage("用户名过长");
 			}
-			
-			List<UserEntity> list = userService.getUserByName(userentity.getUsername().replaceAll(" ",""));
-			if(list.size()>0){
-				return ResultObject.warnMessage("用户名已经存在");
-			}else{
-				userentity.setUsername(userentity.getUsername().replaceAll(" ",""));
-			}
+		    
+		    if(!username.equals(userentity.getUsername())){
+				List<UserEntity> list = userService.getUserByName(userentity.getUsername().replaceAll(" ",""));
+				if(list.size()>0){
+					return ResultObject.warnMessage("用户名已经存在");
+				}else{
+					userentity.setUsername(userentity.getUsername().replaceAll(" ",""));
+				}
+		    }
+
 		}
 		
 		Integer curId = systemService.getCurrentUser().getId();//获取当前登录用户信息
 		
-		if(null==userentity.getId()||userentity.getId().equals("")){
+		userentity.setId(curId);
+		
+   /*	if(null==userentity.getId()||userentity.getId().equals("")){
 			return ResultObject.warnMessage("修改用户信息异常");	
 		}
+		
 		if(curId.intValue()!=userentity.getId().intValue()){
 			return ResultObject.warnMessage("修改用户信息异常");
-		}
+		}*/
 		
 		userService.editUser(userentity);
 		

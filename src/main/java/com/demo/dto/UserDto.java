@@ -1,17 +1,12 @@
-package com.demo.entity;
+package com.demo.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class UserEntity implements Serializable{
-	
-	private static final long serialVersionUID = -482262390418753384L;
+public class UserDto {
 
 	public Integer id;
 	
 	public String username ;
-	
-	public String password ;
 	
 	public String avatar;//用户头像地址
 	
@@ -19,17 +14,13 @@ public class UserEntity implements Serializable{
 	
 	public String telphone;
 	
-	public String birthday;
-	
-	public Integer degree;
+	public Date birthday;
 	
 	public Date registerTime;
 	
 	public Date lastloginTime;
 	
 	public String remark;
-	
-	public Date updateTime;
 
 	public Integer getId() {
 		return id;
@@ -47,12 +38,12 @@ public class UserEntity implements Serializable{
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getEmail() {
@@ -71,20 +62,22 @@ public class UserEntity implements Serializable{
 		this.telphone = telphone;
 	}
 
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
-	public Integer getDegree() {
-		return degree;
+
+	
+	public Date getLastloginTime() {
+		return lastloginTime;
 	}
 
-	public void setDegree(Integer degree) {
-		this.degree = degree;
+	public void setLastloginTime(Date lastloginTime) {
+		this.lastloginTime = lastloginTime;
 	}
 
 	public Date getRegisterTime() {
@@ -95,14 +88,6 @@ public class UserEntity implements Serializable{
 		this.registerTime = registerTime;
 	}
 
-	public Date getLastloginTime() {
-		return lastloginTime;
-	}
-
-	public void setLastloginTime(Date lastloginTime) {
-		this.lastloginTime = lastloginTime;
-	}
-
 	public String getRemark() {
 		return remark;
 	}
@@ -110,20 +95,6 @@ public class UserEntity implements Serializable{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+	
+	
 }
