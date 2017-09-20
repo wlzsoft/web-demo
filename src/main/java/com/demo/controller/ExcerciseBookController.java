@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ExcerciseBookEntity;
@@ -59,6 +60,8 @@ public class ExcerciseBookController {
 		}
 		
 		IdEntity identity = excerciseService.excerciseSava(entity);
+		//同时往用户-练习本 表插入一条关联数据
+		
 		return ResultObject.successObject(identity,"保存成功");
 	}
 	
@@ -127,9 +130,9 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/bookList")
-	public Result<List<ExcerciseBookEntity>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response){
+	public Result<List<BookDto>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response){
 		Integer userId =systemService.getCurrentUser().getId();
-		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
+		List<BookDto> entityList = excerciseService.searchAllExcercise(userId);
 		return ResultObject.successObject(entityList,null);
 	}
 	

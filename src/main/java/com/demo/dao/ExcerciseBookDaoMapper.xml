@@ -42,8 +42,15 @@
 		select * from book t where t.id=#{bookId}
 	</select>
 	
-	<select id="searchAllExcercise" resultType="com.demo.entity.ExcerciseBookEntity">
-		select * from book t where t.createId=#{userId}
+	<select id="searchAllExcercise" resultType="com.demo.dto.BookDto">
+		select 
+			t.id ,
+			t.bookName,
+			t.`language`,
+			t.area ,
+			t.sharedType,
+			t.createId
+		from book t  ,userbook a where a.bookId=t.id and a.userId=#{userId}
 	</select>
 	
 	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">

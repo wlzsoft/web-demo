@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.ExcerciseBookDao;
+import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
 
 @Service("excerciseService")
@@ -49,8 +49,8 @@ public class ExcerciseBookService {
 		return entity;
 	}
 	
-	public List<ExcerciseBookEntity> searchAllExcercise(Integer userId){
-		List<ExcerciseBookEntity> list = excerciseBookDao.searchAllExcercise(userId);
+	public List<BookDto> searchAllExcercise(Integer userId){
+		List<BookDto> list = excerciseBookDao.searchAllExcercise(userId);
 		return list;
 	}
 	
