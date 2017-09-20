@@ -10,13 +10,13 @@
 	<!-- 配置数据源 使用的是Druid数据源 -->
 	<bean id="dataSource" name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
  		
-        <property name="url" value="jdbc:mysql://172.16.180.65:3306/excercise?useUnicode=true&amp;characterEncoding=UTF-8&amp;useCompression=true&amp;characterSetResults=utf8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull" />
+<!--         <property name="url" value="jdbc:mysql://172.16.180.65:3306/excercise?useUnicode=true&amp;characterEncoding=UTF-8&amp;useCompression=true&amp;characterSetResults=utf8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull" />
 		<property name="username" value="root" />
-		<property name="password" value="ros123" /> 
+		<property name="password" value="ros123" />  -->
 
-<!--    		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ebird?useUnicode=true&amp;characterEncoding=UTF-8&amp;useCompression=true&amp;characterSetResults=utf8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull" />
+   		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ebird?useUnicode=true&amp;characterEncoding=UTF-8&amp;useCompression=true&amp;characterSetResults=utf8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull" />
 		<property name="username" value="root" />
-		<property name="password" value="ebirtroot" />    -->
+		<property name="password" value="ebirtroot" />  
 		
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="0" />

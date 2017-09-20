@@ -31,11 +31,25 @@ public class ImageUpController {
 		ImageUrlDto dto = new ImageUrlDto();
 		
 		try {
-			Date date = new Date(); 
-			long unixTimestamp = date.getTime()/1000; 
-		    //上传到七牛后保存的文件名
-		   // String key = "my-java5.png";
-		    String key = unixTimestamp+"";
+			   Date date = new Date(); 
+			  long unixTimestamp = date.getTime()/1000; 
+			
+			 String fileName=file.getFileItem().getName(); 
+		     String key = unixTimestamp+fileName.hashCode()+"";//上传到七牛后保存的文件名
+            
+            // String prefix=fileName.substring(fileName.lastIndexOf(".")+1); //获取文件后缀
+             String prefix="";
+             String contentType = file.getContentType();
+             if(contentType.equals("image/png")){
+            	 prefix=".png";
+             }else if(contentType.equals("image/jpeg")){
+            	 prefix=".jpg";
+             }else{
+            	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
+             }
+             
+             key=key+prefix;//生成文件名
+             
 		    //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
 		    Zone z = Zone.autoZone();
 		    Configuration c = new Configuration(z);
@@ -46,6 +60,7 @@ public class ImageUpController {
 	            //调用put方法上传
 	        	
 	            Response res = uploadManager.put(file.getBytes(), key, getUpToken());
+	              
 	            //打印返回的信息
 	            System.out.println(res.bodyString());
 	        } catch (QiniuException e) {
@@ -61,7 +76,7 @@ public class ImageUpController {
 	        }
 	        
 			dto.setFileName(key);
-			dto.setFileUrl("http://ouq4b0pql.bkt.clouddn.com/"+key);
+			dto.setFileUrl("https://ebird.res.simfun.net/"+key);
 		} catch (RuntimeException e2) {
 			e2.printStackTrace();
 		}
@@ -73,16 +88,23 @@ public class ImageUpController {
     public String getUpToken() {
     	
 	    //设置好账号的ACCESS_KEY和SECRET_KEY
-	    String ACCESS_KEY = "HymZmx8L-J-BsHaV77YicdQt4kStrcW5lGuPW0l-";
-	    String SECRET_KEY = "1TgHByYcmoEn-x-1Em3QiVS3PKBbrdmNPSA-fxkV";
+/*	    String ACCESS_KEY = "HymZmx8L-J-BsHaV77YicdQt4kStrcW5lGuPW0l-";
+	    String SECRET_KEY = "1TgHByYcmoEn-x-1Em3QiVS3PKBbrdmNPSA-fxkV";*/
+	    String ACCESS_KEY = "3logzQq7VRF5q4M5NSeneqv-B5cqiAwcO2jm-fKq";
+	    String SECRET_KEY = "HSqVTmW9BN7iCmD7PPLpzr8d8P8BvBx2Bj5BeeyV";
 	    //密钥配置
 	    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 	    //要上传的空间
-	    String bucketname = "eb-demo";
+	    String bucketname = "ebird";
         return auth.uploadToken(bucketname);
     }
 
 	
-	
+	public static void main(String[] args){
+		
+		String str="我是阿斯顿asdf";//1470326319
+		System.out.println(str.hashCode());
+		
+	}
 
 }
