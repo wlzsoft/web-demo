@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,11 +32,12 @@ public class ImageUpController {
 		ImageUrlDto dto = new ImageUrlDto();
 		
 		try {
-			   Date date = new Date(); 
+			  Date date = new Date(); 
 			  long unixTimestamp = date.getTime()/1000; 
-			
-			 String fileName=file.getFileItem().getName(); 
-		     String key = unixTimestamp+fileName.hashCode()+"";//上传到七牛后保存的文件名
+			  
+			 UUID uuid = UUID.randomUUID();
+			// String fileName=file.getFileItem().getName(); 
+		     String key = unixTimestamp+""+uuid;//上传到七牛后保存的文件名
             
             // String prefix=fileName.substring(fileName.lastIndexOf(".")+1); //获取文件后缀
              String prefix="";
