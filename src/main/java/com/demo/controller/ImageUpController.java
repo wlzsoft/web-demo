@@ -102,11 +102,4 @@ public class ImageUpController {
     }
 
 	
-	public static void main(String[] args){
-		
-		String str="我是阿斯顿asdf";//1470326319
-		System.out.println(str.hashCode());
-		
-	}
-
 }
