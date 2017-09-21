@@ -13,8 +13,11 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ExcerciseBookEntity;
+import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
+import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
+import com.demo.service.UserBookService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -34,6 +37,12 @@ public class ExcerciseBookController {
 	
 	@Autowired
 	private SystemService systemService ;
+	
+	@Autowired
+	private UserBookService userBookService;
+	
+	@Autowired
+	private LorePointService lorePointService;
 	
 	
 	/**
@@ -60,8 +69,10 @@ public class ExcerciseBookController {
 		}
 		
 		IdEntity identity = excerciseService.excerciseSava(entity);
-		//同时往用户-练习本 表插入一条关联数据
-		
+		UserBookEntity userBookEntity = new UserBookEntity();
+					userBookEntity.setBookId(identity.getId());
+					userBookEntity.setUserId(systemService.getCurrentUser().getId());
+		userBookService.addUserBook(userBookEntity);
 		return ResultObject.successObject(identity,"保存成功");
 	}
 	
@@ -81,6 +92,9 @@ public class ExcerciseBookController {
 		if(count==0){
 			return ResultObject.successMessage("无操作数据");
 		}
+		//同时删除用户练习本关联关系表数据
+		userBookService.delUserBookBybooKId(Integer.parseInt(bookId));
+		
 		return ResultObject.successMessage("删除成功");
 	}
 	
@@ -154,7 +168,35 @@ public class ExcerciseBookController {
 		return ResultObject.successObject(entity,null); 
 	}
 	
+	/**
+	 * 用户订阅共享练习本接口
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @return
+	 */
+	@RequestMapping("/addShareBook")
+	public Result<?> addUserBook(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		UserBookEntity userBookEntity = new UserBookEntity();
+			userBookEntity.setBookId(Integer.parseInt(bookId));
+			userBookEntity.setUserId(systemService.getCurrentUser().getId());
+		userBookService.addUserBook(userBookEntity);
+		lorePointService.pushPoint(Integer.parseInt(bookId),systemService.getCurrentUser().getId());//根据bookId推送到订阅的用户
+		return ResultObject.successMessage("添加成功");
+	}
 	
-	
-
+	/**
+	 * 获取所有共享类型练习本
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getShareBook")
+	public Result<?> getShareBook(HttpServletRequest request ,HttpServletResponse response){
+		List<BookDto> entityList = excerciseService.getOpenBook();
+		return ResultObject.successObject(entityList,null);
+	}
 }

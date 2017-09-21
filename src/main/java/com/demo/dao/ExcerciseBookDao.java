@@ -28,6 +28,14 @@ public interface ExcerciseBookDao {
 	 */
 	public List<BookDto> searchAllExcercise(@Param("userId")Integer userId);
 	
+	
+	/**
+	 * 获取所有共享类型练习本
+	 * @return
+	 */
+	public List<BookDto> getOpenBook();
+	
+	
 	public List<ExcerciseBookEntity> fidByName();
 	
 	public List<PonitDto> findExcerciseIdToPonit(@Param("bookId")Integer bookId);

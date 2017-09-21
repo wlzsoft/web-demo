@@ -41,7 +41,27 @@ public interface LorePointDao {
 	
 	public void addPointDetail(LorePointExerciseDetailEntity entity);
 	
+	/**
+	 * 根据知识点ID ,练习本Id 新增【推送】到订阅用户
+	 * @param entityList
+	 */
+	public void addPointDetailList(List<LorePointExerciseDetailEntity> entityList);
+	
 	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
+	
+	/**
+	 * 根据知识点ID ,练习本Id 删除【推送】到订阅用户的练习明细
+	 * @param pointId
+	 * @param bookId
+	 */
+	public void delPoinDetailtByPointId(@Param("pointId")Integer pointId);
+	
+	/**
+	 * 根据练习本Id 删除【推送】到订阅用户的练习明细
+	 * @param pointId
+	 * @param bookId
+	 */
+	public void delPoinDetailtByBookId(@Param("bookId")Integer bookId);
 	
 	
 	

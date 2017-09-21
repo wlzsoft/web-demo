@@ -29,6 +29,8 @@ public class ExcerciseBookService {
 		excerciseBookDao.excerciseSava(entity);
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
+		//同时往用户-练习本 表插入一条关联数据
+		
 		return identity;
 	}
 	
@@ -56,6 +58,15 @@ public class ExcerciseBookService {
 	
 	public List<PonitDto> findExcerciseIdToPonit(Integer excerciseId){
 		return excerciseBookDao.findExcerciseIdToPonit(excerciseId);
+	}
+	
+	/**
+	 * 获取所有共享类型练习本
+	 * @return
+	 */
+	public List<BookDto> getOpenBook(){
+		List<BookDto> list = excerciseBookDao.getOpenBook();
+		return list;
 	}
 	
 	public BookProgressDto bookProgress(Integer bookId){
