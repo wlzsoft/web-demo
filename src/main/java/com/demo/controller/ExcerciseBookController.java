@@ -88,11 +88,6 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		int count = excerciseService.delExcercise(bookId);
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
-		}
-		
 		/**
 		 * 加操作权限
 		 * */
@@ -101,6 +96,10 @@ public class ExcerciseBookController {
 		if(userId!=entity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
+			int count = excerciseService.delExcercise(bookId);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
 			//同时删除用户练习本关联关系表数据
 			userBookService.delUserBookBybooKId(Integer.parseInt(bookId));	
 			return ResultObject.successMessage("删除成功");
