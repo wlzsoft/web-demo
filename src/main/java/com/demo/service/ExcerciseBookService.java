@@ -82,5 +82,25 @@ public class ExcerciseBookService {
 		 dto.setProgress(progress);
 		return dto;
 	}
+	
+	/**
+	 * 根据 poindId 查询 知识点所属练习本信息
+	 * @param pointId
+	 * @return
+	 */
+	public ExcerciseBookEntity findBookByPointId(Integer pointId){
+		return excerciseBookDao.findBookByPointId(pointId);
+	}
+	
+    /**
+     * 根据 cardId 查询 卡片所属练习本信息
+     * @param cardId
+     * @return
+     */
+    public ExcerciseBookEntity findBookByCardId(Integer cardId){
+    	return excerciseBookDao.findBookByCardId(cardId);
+	}
+    
+ 
 
 }

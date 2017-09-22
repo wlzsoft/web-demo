@@ -169,6 +169,18 @@ public class LorePointController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
 		return ResultObject.successObject(entity,null);
 	}
@@ -191,6 +203,18 @@ public class LorePointController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		PointExerciseDetailDto list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
 		return ResultObject.successObject(list,null);
 	}
@@ -209,6 +233,18 @@ public class LorePointController {
 		if(null==chapterId||chapterId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		List<PonitDto> list = chapterService.findChapterPoint(Integer.parseInt(chapterId),Integer.parseInt(bookId));
 		return ResultObject.successObject(list,null);
 	
@@ -227,6 +263,18 @@ public class LorePointController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
 		return ResultObject.successObject(entityList,null); 
 	}

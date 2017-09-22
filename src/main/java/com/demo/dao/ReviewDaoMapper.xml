@@ -117,5 +117,13 @@
 	          AND t.number>0
 	          AND a.userId=#{userId}
 	   </select>
+	   
+	   <select id="getAuthByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
+	       SELECT * FROM pointexercisedetail t WHERE t.pointId=#{pointId} AND t.userId=#{userId}
+	   </select>
+	   
+	   <select id="getAuthByBookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto" >
+	        SELECT * FROM pointexercisedetail t WHERE t.bookId=#{bookId} AND t.userId=#{userId}
+	   </select>
 	  
 </mapper>

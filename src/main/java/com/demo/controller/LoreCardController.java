@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
+import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
 import com.demo.entity.LorePointEntity;
+import com.demo.service.ExcerciseBookService;
 import com.demo.service.LoreCradService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
@@ -31,6 +33,10 @@ public class LoreCardController {
 	
 	@Autowired
 	private LorePointService lorePointService;
+	
+	
+	@Autowired
+	private ExcerciseBookService excerciseService ;	
 	
 	@Autowired
 	private SystemService systemService ;
@@ -145,6 +151,20 @@ public class LoreCardController {
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
+		
+		
 		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(cardId));
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
@@ -164,6 +184,18 @@ public class LoreCardController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(pointId));
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
@@ -199,6 +231,19 @@ public class LoreCardController {
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
+		
 		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(cardId));
 		if(null==entity){
 			return ResultObject.successMessage("没有数据");
@@ -218,6 +263,18 @@ public class LoreCardController {
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(cardId));
 		if(entityList.size()<1){
 			return ResultObject.successMessage("没有数据");
