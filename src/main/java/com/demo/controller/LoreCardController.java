@@ -14,7 +14,10 @@ import com.demo.dto.IdEntity;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
+import com.demo.entity.LorePointEntity;
 import com.demo.service.LoreCradService;
+import com.demo.service.LorePointService;
+import com.demo.service.SystemService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -25,6 +28,12 @@ public class LoreCardController {
 
 	@Autowired
 	private LoreCradService loreCradService;
+	
+	@Autowired
+	private LorePointService lorePointService;
+	
+	@Autowired
+	private SystemService systemService ;
 	
 	/**
 	 * 保存知识卡片
@@ -45,8 +54,18 @@ public class LoreCardController {
 			return ResultObject.warnMessage("卡片答案不能为空");
 		}
 		
-		IdEntity idEntity =  loreCradService.savaLoreCrad(loreCardEntity);
-		return ResultObject.successObject(idEntity, "保存成功");
+		
+		/**
+		 * 加操作权限
+		 * */
+		LorePointEntity point = lorePointService.findLorePoint(loreCardEntity.getPointId());
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=point.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");	
+		}else{
+			IdEntity idEntity =  loreCradService.savaLoreCrad(loreCardEntity);
+			return ResultObject.successObject(idEntity, "保存成功");
+		}
 	}
 	
 	/**
@@ -61,11 +80,21 @@ public class LoreCardController {
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		int count = loreCradService.delLoreCrad(Integer.parseInt(cardId));
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
+		
+		/**
+		 * 加操作权限
+		 * */
+		LoreCardEntity entity = loreCradService.findLoreCrad(Integer.parseInt(cardId));
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=entity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");	
+		}else{
+			int count = loreCradService.delLoreCrad(Integer.parseInt(cardId));
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+			return ResultObject.successMessage("删除成功");
 		}
-		return ResultObject.successMessage("删除成功");
 	}
 	
 	/**
@@ -86,11 +115,22 @@ public class LoreCardController {
 		if(null==entity.getAnswers()||entity.getAnswers().equals("")){
 			return ResultObject.warnMessage("卡片答案不能为空");
 		}
-		int count = loreCradService.editLoreCrad(entity);
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
+		
+		
+		/**
+		 * 加操作权限
+		 * */
+		LoreCardEntity cardEntity = loreCradService.findLoreCrad(entity.getId());
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=cardEntity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");	
+		}else{
+			int count = loreCradService.editLoreCrad(entity);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+			return ResultObject.successMessage("修改成功");
 		}
-		return ResultObject.successMessage("修改成功");
 	}
 	
 	/**

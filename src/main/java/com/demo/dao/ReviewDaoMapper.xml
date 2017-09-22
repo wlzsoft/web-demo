@@ -42,9 +42,10 @@
 		  	  t.bookName,
 		  	  t.sharedType,
 		  	  t.createId
-		  	 FROM book  t 
-		  	 WHERE t.createId=#{userId}
-		  	   ORDER BY t.id ASC
+		  	 FROM book  t ,userbook a
+		  	 WHERE t.id = a.bookId
+		  	    AND a.userId=#{userId}
+		  	    ORDER BY t.id ASC
 	  </select>
 	  
 	  

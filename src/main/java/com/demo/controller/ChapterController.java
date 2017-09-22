@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ChapterEntity;
+import com.demo.entity.ExcerciseBookEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
+import com.demo.service.SystemService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -27,6 +29,9 @@ public class ChapterController {
 	
 	@Autowired
 	private ExcerciseBookService excerciseService ;	
+	
+	@Autowired
+	private SystemService systemService ;
 	
 	/**
 	 * 新增 修改 章节信息
@@ -46,15 +51,24 @@ public class ChapterController {
 			return ResultObject.warnMessage("章节所属练习本ID不能为空");
 		}
 		
-		ChapterDto chapterDto = chapterService.bookChapterList(entity.getBookId());//判断bookId 在章节表中是否存在
-		
-		if(null==chapterDto){
-			IdEntity identity = chapterService.addChapter(entity);
-			return ResultObject.successObject(identity,"新增成功");
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity bookBntity = excerciseService.findExcerciseId(entity.getBookId().toString());
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=bookBntity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");
 		}else{
-		      chapterService.editChapter(entity);
+			ChapterDto chapterDto = chapterService.bookChapterList(entity.getBookId());//判断bookId 在章节表中是否存在
+			
+			if(null==chapterDto){
+				IdEntity identity = chapterService.addChapter(entity);
+				return ResultObject.successObject(identity,"新增成功");
+			}else{
+			      chapterService.editChapter(entity);
 
-			return ResultObject.successMessage("修改成功") ;	
+				return ResultObject.successMessage("修改成功") ;	
+			}
 		}
 	}
 	
@@ -71,11 +85,21 @@ public class ChapterController {
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
 			return ResultObject.warnMessage("章节所属练习本ID不能为空");
 		}else{
-			int count = chapterService.editChapter(entity);
-			if(count==0){
-				return ResultObject.successMessage("无操作数据");
+			/**
+			 * 加操作权限
+			 * */
+			ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getBookId().toString());
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=bookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");
+			}else{
+				int count = chapterService.editChapter(entity);
+				if(count==0){
+					return ResultObject.successMessage("无操作数据");
+				}
+				return ResultObject.successMessage("修改成功") ;	
 			}
-			return ResultObject.successMessage("修改成功") ;	
+			
 		}
 	}
 	
@@ -92,11 +116,21 @@ public class ChapterController {
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("主键ID不能为空");
 		}else{
-			int count = chapterService.editChapter(entity);
-			if(count==0){
-				return ResultObject.successMessage("无操作数据");
+			
+			/**
+			 * 加操作权限
+			 * */
+			ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getId().toString());
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=bookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");
+			}else{
+				int count = chapterService.editChapter(entity);
+				if(count==0){
+					return ResultObject.successMessage("无操作数据");
+				}
+				return ResultObject.successMessage("修改成功") ;
 			}
-			return ResultObject.successMessage("修改成功") ;	
 		}
 	}
 	

@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.demo.dto.BookDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
 
 
@@ -21,7 +21,20 @@ public interface ExcerciseBookDao {
 	
 	public ExcerciseBookEntity findExcerciseId(@Param("bookId")Integer bookId);
 	
-	public List<ExcerciseBookEntity> searchAllExcercise(@Param("userId")Integer userId);
+	/**
+	 * 根据用户ID 查询所有练习本信息
+	 * @param userId用户Id
+	 * @return
+	 */
+	public List<BookDto> searchAllExcercise(@Param("userId")Integer userId);
+	
+	
+	/**
+	 * 获取所有共享类型练习本
+	 * @return
+	 */
+	public List<BookDto> getOpenBook(@Param("userId")Integer userId);
+	
 	
 	public List<ExcerciseBookEntity> fidByName();
 	

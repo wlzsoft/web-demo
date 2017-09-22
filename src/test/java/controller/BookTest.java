@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.demo.dto.BookDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.service.ExcerciseBookService;
 
@@ -62,7 +63,7 @@ public class BookTest {
 	@Test
 	public void booklist(){
 		Integer userId=1;
-		List<ExcerciseBookEntity> entityList = excerciseService.searchAllExcercise(userId);
+		List<BookDto> entityList = excerciseService.searchAllExcercise(userId);
 		System.out.println(entityList.size());
 	}
 	

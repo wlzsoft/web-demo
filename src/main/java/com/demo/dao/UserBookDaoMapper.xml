@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.UserBookDao">
+
+	<insert id="addUserBook" parameterType="com.demo.entity.UserBookEntity">
+		  INSERT INTO userbook(
+					userId,
+					bookId,
+					createTime,
+					createId
+			)VALUES(
+					#{userId},
+					#{bookId},
+					#{createTime},
+					#{createId}
+			)
+	</insert>
+	
+	<delete id="delUserBookById" parameterType="java.lang.Integer">
+	   delete from userbook  where id=#{id}
+	</delete>
+	
+	<delete id="delUserBookByBookId" parameterType="java.lang.Integer">
+	   delete from userbook  where bookId=#{bookId}
+	</delete>
+	
+	<delete id="delUserBook" parameterType="java.lang.Integer">
+	   delete from userbook  where bookId=#{bookId} and userId=#{userId}
+	</delete>
+	
+	<select id="findUser" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
+	   select * from userBook t where t.bookId=#{bookId}
+	</select>
+	
+	<select id="findUser_userId_bookId" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
+	   select * from userBook t where t.bookId=#{bookId} and t.userId=#{userId}
+	</select>
+    
+</mapper>
