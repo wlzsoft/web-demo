@@ -386,6 +386,39 @@ public class ReviewService {
 	}
 	
 	
+	/**
+	 * 根据知识点pointId 获取是否有练习权限
+	 * @param pointId
+	 * @param userId
+	 * @return
+	 */
+	public Boolean getAuthByPointId(Integer pointId,Integer userId){
+		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByPointId(pointId,userId);
+		if(dto.size()>0){
+			return true;
+		}else{
+		    return false;
+		}
+	}
+	
+	/**
+	 * 根据练习本 bookId 获取是否有练习权限
+	 * @param bookId
+	 * @param userId
+	 * @return
+	 */
+	public Boolean getAuthByBookId(Integer bookId,Integer userId){
+		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByBookId(bookId,userId);
+		if(dto.size()>0){
+			return true;
+		}else{
+		    return false;
+		}
+	}
+	
+	
+	
+	
 	public static void main(String[] args){
 		Date date = new Date(); 
 		long unixTimestamp = date.getTime()/1000;  

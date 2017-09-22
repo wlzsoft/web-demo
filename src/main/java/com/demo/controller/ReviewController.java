@@ -47,6 +47,16 @@ public class ReviewController {
 		if(null==right||right.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 添加权限
+		 * **/
+		Integer userId =systemService.getCurrentUser().getId();
+		Boolean flag = reviewService.getAuthByPointId(Integer.parseInt(pointId), userId);
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		
 		reviewService.reviewCrad(pointId, cardId, right);
 		return ResultObject.successMessage("保存成功") ;
 	}
@@ -61,7 +71,17 @@ public class ReviewController {
 	 */
 	@RequestMapping("/excercise")
 	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		
+		/**
+		 * 添加权限
+		 * **/
 		Integer userId =systemService.getCurrentUser().getId();
+		Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		
+		
 		List<CardDto> cardList = new ArrayList<>();
 		if(null==bookId||bookId.equals("")||bookId.equals("0")){
 			List<PonitDto> ponitDtoList = reviewService.excercise(userId);
@@ -93,6 +113,16 @@ public class ReviewController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 添加权限
+		 * **/
+		Integer userId =systemService.getCurrentUser().getId();
+		Boolean flag = reviewService.getAuthByPointId(Integer.parseInt(pointId), userId);
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		
 		CardDto cardDto = reviewService.roundCard(Integer.parseInt(pointId));
 		return ResultObject.successObject(cardDto,null) ;
 	}

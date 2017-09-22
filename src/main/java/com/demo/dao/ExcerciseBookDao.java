@@ -44,4 +44,18 @@ public interface ExcerciseBookDao {
 	
 	public Integer bookProgressYes(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
+	/**
+	 * 根据 poindId 查询 知识点所属练习本信息
+	 * @param pointId
+	 * @return
+	 */
+	public ExcerciseBookEntity findBookByPointId(@Param("pointId")Integer pointId);
+	
+    /**
+     * 根据 cardId 查询 卡片所属练习本信息
+     * @param cardId
+     * @return
+     */
+    public ExcerciseBookEntity findBookByCardId(@Param("cardId")Integer cardId);
+	
 }

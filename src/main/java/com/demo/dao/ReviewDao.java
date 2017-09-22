@@ -30,5 +30,21 @@ public interface ReviewDao {
 	
 	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
 	
+	/**
+	 * 根据知识点pointId 获取是否有练习权限
+	 * @param pointId
+	 * @param userId
+	 * @return
+	 */
+	public List<PointExerciseDetailDto> getAuthByPointId(@Param("pointId")Integer pointId,@Param("userId")Integer userId);
+	
+	/**
+	 * 根据练习本 bookId 获取是否有练习权限
+	 * @param bookId
+	 * @param userId
+	 * @return
+	 */
+	public List<PointExerciseDetailDto> getAuthByBookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	
 
 }

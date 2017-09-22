@@ -147,6 +147,19 @@ public class ChapterController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity BookEntity = excerciseService.findExcerciseId(bookId);
+		if(BookEntity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=BookEntity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
+		
 		ChapterDto entityList = chapterService.bookChapterList(Integer.parseInt(bookId));
 		if(null==entityList){
 			return ResultObject.successObject(null,null); 

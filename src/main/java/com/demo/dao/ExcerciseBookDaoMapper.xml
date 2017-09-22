@@ -79,6 +79,19 @@
 	   SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId} AND t.exerciseNumber>0
 	</select>
 	
+	<select id="findBookByPointId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+		SELECT a.* FROM book a ,point b
+ 			WHERE a.id =b.bookId
+  			 AND b.id=#{pointId}
+	</select>
+	
+	<select id="findBookByCardId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity" >
+	    SELECT a.* FROM book a ,point b ,card c
+            WHERE c.pointId=b.id
+		     AND b.bookId=a.id
+		     AND c.id=#{cardId}
+	</select>
+	
 
      
 </mapper>

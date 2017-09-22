@@ -88,11 +88,6 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		int count = excerciseService.delExcercise(bookId);
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
-		}
-		
 		/**
 		 * 加操作权限
 		 * */
@@ -101,6 +96,10 @@ public class ExcerciseBookController {
 		if(userId!=entity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
+			int count = excerciseService.delExcercise(bookId);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
 			//同时删除用户练习本关联关系表数据
 			userBookService.delUserBookBybooKId(Integer.parseInt(bookId));	
 			return ResultObject.successMessage("删除成功");
@@ -128,8 +127,9 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
+		ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getId().toString());
 		Integer userId = systemService.getCurrentUser().getId();
-		if(userId!=entity.getCreateId()){
+		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
 			int count = excerciseService.editExcercise(entity);
@@ -152,8 +152,19 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		/**
+		 * 加操作权限
+		 * */
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
-		return ResultObject.successObject(entity,null);
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
+		return ResultObject.successObject(entity,null);	
 	}
 	
 	/**
@@ -183,8 +194,21 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		BookProgressDto entity = excerciseService.bookProgress(Integer.parseInt(bookId));
-		return ResultObject.successObject(entity,null); 
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
+		
+		BookProgressDto bPentity = excerciseService.bookProgress(Integer.parseInt(bookId));
+		return ResultObject.successObject(bPentity,null); 
 	}
 	
 	/**
@@ -199,6 +223,19 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
+		
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		if(entity.getSharedType()==0){
+			Integer userId = systemService.getCurrentUser().getId();
+			if(userId!=entity.getCreateId()){
+				return ResultObject.warnMessage("无操作权限");	
+			}
+		}
+		
 		List<UserBookEntity> list = userBookService.findUser_userId_bookId(systemService.getCurrentUser().getId(), Integer.parseInt(bookId));
 		if(list.size()>0){
 			return ResultObject.warnMessage("练习本已经订阅");
