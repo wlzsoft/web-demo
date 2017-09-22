@@ -59,6 +59,10 @@ public class LoreCradService {
 	   return loreCradDao.findLoreCradById(loreCardId);
 	}
 	
+	public LoreCardEntity findLoreCrad(Integer loreCardId){
+		   return loreCradDao.findLoreCrad(loreCardId);
+	}
+	
 	public List<CardDto> findLoreCradByPointId(Integer lorePointId){
 		return loreCradDao.findLoreCradByPointId(lorePointId);
 	}

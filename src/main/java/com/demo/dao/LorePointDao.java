@@ -23,6 +23,8 @@ public interface LorePointDao {
 	
 	public PonitDto findById(@Param("id")Integer id);
 	
+	public LorePointEntity findLorePoint(Integer id);
+	
 	public List<PonitDto> searchAllLorePoint();
 	
 	/**
@@ -45,7 +47,7 @@ public interface LorePointDao {
 	 * 根据知识点ID ,练习本Id 新增【推送】到订阅用户
 	 * @param entityList
 	 */
-	public void addPointDetailList(List<LorePointExerciseDetailEntity> entityList);
+	public void addPointDetailList(@Param("entityList")List<LorePointExerciseDetailEntity> entityList);
 	
 	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
 	

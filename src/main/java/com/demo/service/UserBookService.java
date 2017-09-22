@@ -62,5 +62,14 @@ public class UserBookService {
 		return userBookDao.findUser(bookId);
 	}
 	
+	/**
+	 * 根据练习本ID ,用户ID 查询信息
+	 * @param userId
+	 * @param bookId
+	 */
+	public List<UserBookEntity> findUser_userId_bookId(Integer userId ,Integer bookId){
+		return userBookDao.findUser_userId_bookId(userId, bookId);
+	}
+	
 
 }

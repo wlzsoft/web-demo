@@ -92,10 +92,20 @@ public class ExcerciseBookController {
 		if(count==0){
 			return ResultObject.successMessage("无操作数据");
 		}
-		//同时删除用户练习本关联关系表数据
-		userBookService.delUserBookBybooKId(Integer.parseInt(bookId));
 		
-		return ResultObject.successMessage("删除成功");
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=entity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");
+		}else{
+			//同时删除用户练习本关联关系表数据
+			userBookService.delUserBookBybooKId(Integer.parseInt(bookId));	
+			return ResultObject.successMessage("删除成功");
+		}
+		
 	}
 	
 	/**
@@ -114,11 +124,20 @@ public class ExcerciseBookController {
 		if(null==entity.getBookName()||entity.getBookName().equals("")){
 			return ResultObject.warnMessage("练习本名称不能为空");
 		}
-		int count = excerciseService.editExcercise(entity);
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
+		
+		/**
+		 * 加操作权限
+		 * */
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=entity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");	
+		}else{
+			int count = excerciseService.editExcercise(entity);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+		  return ResultObject.successMessage("修改成功");		
 		}
-		return ResultObject.successMessage("修改成功");	
 	}
 	
 	/**
@@ -180,12 +199,17 @@ public class ExcerciseBookController {
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		UserBookEntity userBookEntity = new UserBookEntity();
-			userBookEntity.setBookId(Integer.parseInt(bookId));
-			userBookEntity.setUserId(systemService.getCurrentUser().getId());
-		userBookService.addUserBook(userBookEntity);
-		lorePointService.pushPoint(Integer.parseInt(bookId),systemService.getCurrentUser().getId());//根据bookId推送到订阅的用户
-		return ResultObject.successMessage("添加成功");
+		List<UserBookEntity> list = userBookService.findUser_userId_bookId(systemService.getCurrentUser().getId(), Integer.parseInt(bookId));
+		if(list.size()>0){
+			return ResultObject.warnMessage("练习本已经订阅");
+		}else{
+			UserBookEntity userBookEntity = new UserBookEntity();
+			  userBookEntity.setBookId(Integer.parseInt(bookId));
+			  userBookEntity.setUserId(systemService.getCurrentUser().getId());
+	    	userBookService.addUserBook(userBookEntity);
+		    lorePointService.pushPoint(Integer.parseInt(bookId),systemService.getCurrentUser().getId());//根据bookId推送到订阅的用户
+		   return ResultObject.successMessage("添加成功");
+		}
 	}
 	
 	/**

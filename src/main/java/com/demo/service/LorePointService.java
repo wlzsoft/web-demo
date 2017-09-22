@@ -96,6 +96,10 @@ public class LorePointService {
 		return lorePointDao.findById(id);
 	}
 	
+	public LorePointEntity findLorePoint(Integer id){
+		return lorePointDao.findLorePoint(id);
+	}
+	
 	public List<PonitDto> searchAllLorePoint(){
 		return lorePointDao.searchAllLorePoint();
 	}
@@ -112,14 +116,14 @@ public class LorePointService {
 	 * @param entityList 订阅该练习本下的所有用户
 	 */
 	public void pushAddPointToUser(Integer pointId ,Integer bookId,List<UserBookEntity> entityList){
-		if(null!= entityList){
+		if(entityList.size()>0){
 			List<LorePointExerciseDetailEntity> detailList = new ArrayList<>();
 			for(UserBookEntity entity :entityList){
 				//插入知识点练习明细
 			    LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
 					pointDetail.setUserId(entity.getUserId());
 					pointDetail.setPointId(pointId);
-					pointDetail.setBookId(pointDetail.getBookId());
+					pointDetail.setBookId(entity.getBookId());
 					pointDetail.setNextExerciseTime(new Date());
 					pointDetail.setExerciseCycle(0);
 			    detailList.add(pointDetail);
@@ -152,7 +156,7 @@ public class LorePointService {
 	public void pushPoint(Integer bookId,Integer userId){
 		//获取练习本下所有的知识点
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(bookId);
-		if(null!=entityList){
+		if(entityList.size()>0){
 			List<LorePointExerciseDetailEntity> detailList = new ArrayList<>();
 			for(PonitDto entity :entityList){
 				//插入知识点练习明细

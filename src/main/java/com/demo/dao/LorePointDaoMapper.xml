@@ -36,7 +36,8 @@
 			)
 	</insert>
 	
-	<insert id="addPointDetailList" parameterType="java.util.List">
+	<!-- <select id="addPointDetailList" parameterType="com.demo.entity.LorePointExerciseDetailEntity"> -->
+	<select id="addPointDetailList" parameterType="java.util.List">
 	      INSERT INTO pointExerciseDetail( 
 					userId,
 					exerciseCycle,
@@ -44,15 +45,15 @@
 					bookId,
 					nextExerciseTime
 			)VALUES
-			<foreach collection="list" item="item" index="index" separator=",">
-				(#{userId},
-				 #{exerciseCycle},
-				 #{pointId},
-				 #{bookId},
-				 #{nextExerciseTime}
+			<foreach collection="entityList" item="item" index="index" separator=",">
+				(#{item.userId},
+				 #{item.exerciseCycle},
+				 #{item.pointId},
+				 #{item.bookId},
+				 #{item.nextExerciseTime}
 				)
 			</foreach>
-	</insert>
+	</select>
 	
 	
 	<delete id="dellById" parameterType="java.lang.Integer">
@@ -86,6 +87,10 @@
 	</update>
 	
 	<select id="findById" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		select * from  point t where t.id=#{id}
+	</select>
+	
+	<select id="findLorePoint" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointEntity">
 		select * from  point t where t.id=#{id}
 	</select>
 	

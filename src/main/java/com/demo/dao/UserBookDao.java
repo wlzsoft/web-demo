@@ -41,5 +41,13 @@ public interface UserBookDao {
 	 * @return
 	 */
 	public List<UserBookEntity> findUser(@Param("bookId")Integer bookId);
+	
+	
+	/**
+	 * 根据练习本ID ,用户ID 查询信息
+	 * @param userId
+	 * @param bookId
+	 */
+	public List<UserBookEntity> findUser_userId_bookId(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
 
 }

@@ -62,10 +62,12 @@ public class ExcerciseBookService {
 	
 	/**
 	 * 获取所有共享类型练习本
+	 * 注：不包含自己所共享出现的练习本
 	 * @return
 	 */
 	public List<BookDto> getOpenBook(){
-		List<BookDto> list = excerciseBookDao.getOpenBook();
+		Integer userId =  systemService.getCurrentUser().getId();
+		List<BookDto> list = excerciseBookDao.getOpenBook(userId);
 		return list;
 	}
 	

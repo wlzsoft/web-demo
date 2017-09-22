@@ -23,6 +23,8 @@ public interface LoreCradDao {
 	
 	public CardDto findLoreCradById(@Param("id")Integer id);
 	
+	public LoreCardEntity findLoreCrad(@Param("cardId")Integer cardId);
+	
 	public List<CardDto> findLoreCradByPointId(@Param("pointId")Integer lorePointId);
 	
 	public List<LoreCardEntity> getOpenLoreCrad();

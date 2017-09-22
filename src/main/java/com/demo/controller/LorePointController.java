@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LorePointEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
+import com.demo.service.SystemService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -38,6 +40,9 @@ public class LorePointController {
 	@Autowired
 	private ChapterService chapterService;
 	
+	@Autowired
+	private SystemService systemService ;
+	
 	/**
 	 * 保存知识点信息
 	 * @param request
@@ -47,16 +52,28 @@ public class LorePointController {
 	 */
 	@RequestMapping("/addPoint")
 	public Result<?> savaLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
+		
+		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
 			return ResultObject.warnMessage("所属练习本ID不能为空");
 		}
 		
-		if(null==entity.getPointName()||entity.getPointName().equals("")){
-			return ResultObject.warnMessage("知识点名称不能为空");
+		/**
+		 * 加操作权限
+		 * */
+		Integer bookId = entity.getBookId();
+		ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(bookId.toString());
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=bookEntity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");
+		}else{
+			if(null==entity.getPointName()||entity.getPointName().equals("")){
+				return ResultObject.warnMessage("知识点名称不能为空");
+			}
+			
+			IdEntity identity = lorePointService.savaLorePoint(entity);
+			return ResultObject.successObject(identity,"保存成功");
 		}
-		
-		IdEntity identity = lorePointService.savaLorePoint(entity);
-		return ResultObject.successObject(identity,"保存成功");
 	}
 	
 	/**
@@ -78,11 +95,23 @@ public class LorePointController {
 		if(null==entity.getPointName()||entity.getPointName().equals("")){
 			return ResultObject.warnMessage("知识点名称不能为空");
 		}
-		int count = lorePointService.editLorePoint(entity);
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
+		
+		/**
+		 * 加操作权限
+		 * */
+		Integer bookId = entity.getBookId();
+		ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(bookId.toString());
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=bookEntity.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");
+		}else{
+			int count = lorePointService.editLorePoint(entity);
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+			return ResultObject.successMessage("修改成功");
 		}
-		return ResultObject.successMessage("修改成功");
+
 	}
 
 
@@ -117,11 +146,21 @@ public class LorePointController {
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		int count = lorePointService.delLorePoint(Integer.parseInt(pointId));
-		if(count==0){
-			return ResultObject.successMessage("无操作数据");
+		
+		/**
+		 * 加操作权限
+		 * */
+		LorePointEntity point = lorePointService.findLorePoint(Integer.parseInt(pointId));
+		Integer userId = systemService.getCurrentUser().getId();
+		if(userId!=point.getCreateId()){
+			return ResultObject.warnMessage("无操作权限");	
+		}else{
+			int count = lorePointService.delLorePoint(Integer.parseInt(pointId));
+			if(count==0){
+				return ResultObject.successMessage("无操作数据");
+			}
+			return ResultObject.successMessage("删除成功");
 		}
-		return ResultObject.successMessage("删除成功");
 	}
 	
 	

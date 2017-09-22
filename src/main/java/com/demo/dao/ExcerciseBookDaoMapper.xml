@@ -62,7 +62,7 @@
 			t.area ,
 			t.sharedType,
 			t.createId
-		from book t  where sharedType=1
+		from book t  where sharedType=1 and t.createId !=#{userId}
 	</select>
 	
 	

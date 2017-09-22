@@ -33,7 +33,7 @@ public interface ExcerciseBookDao {
 	 * 获取所有共享类型练习本
 	 * @return
 	 */
-	public List<BookDto> getOpenBook();
+	public List<BookDto> getOpenBook(@Param("userId")Integer userId);
 	
 	
 	public List<ExcerciseBookEntity> fidByName();

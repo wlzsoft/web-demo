@@ -28,8 +28,12 @@
 	   delete from userbook  where bookId=#{bookId} and userId=#{userId}
 	</delete>
 	
-	<select id="findUser" parameterType="java.lang.Integer">
+	<select id="findUser" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
 	   select * from userBook t where t.bookId=#{bookId}
+	</select>
+	
+	<select id="findUser_userId_bookId" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
+	   select * from userBook t where t.bookId=#{bookId} and t.userId=#{userId}
 	</select>
     
 </mapper>
