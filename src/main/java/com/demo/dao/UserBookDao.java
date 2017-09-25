@@ -26,14 +26,14 @@ public interface UserBookDao {
 	 * 根据练习本ID 删除
 	 * @param bookId
 	 */
-	public void delUserBookByBookId(@Param("bookId")Integer bookId);
+	public int delUserBookByBookId(@Param("bookId")Integer bookId);
 	
 	/**
 	 * 更加练习本ID 用户ID 删除
 	 * @param userId
 	 * @param bookId
 	 */
-	public void delUserBook(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
+	public int delUserBook(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
 	
 	/**
 	 * 根据练习本ID查询  订阅该练习本的所有用户

@@ -228,7 +228,7 @@ public class ExcerciseBookController {
 	 * @param bookId
 	 * @return
 	 */
-	@RequestMapping("/addShareBook")
+	@RequestMapping("/subscribe")
 	public Result<?> addUserBook(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
@@ -275,4 +275,31 @@ public class ExcerciseBookController {
 		List<BookDto> entityList = excerciseService.getOpenBook();
 		return ResultObject.successObject(entityList,null);
 	}
+	
+	
+	/**
+	 * 取消对练习本的订阅
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @return
+	 */
+	@RequestMapping("/unsubscribe")
+	public Result<?>  unsubscribe(HttpServletRequest request ,HttpServletResponse response ,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		Integer userId = systemService.getCurrentUser().getId();
+		int count = userBookService.delUserBook(userId,Integer.parseInt(bookId));
+		if(count==0){
+			return ResultObject.successMessage("该用户没有订阅");
+		}
+		return ResultObject.successMessage("取消订阅成功");
+	}
+	
+	
+	
+	
+	
+	
 }
