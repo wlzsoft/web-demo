@@ -40,8 +40,8 @@ public class UserBookService {
 	 * 根据练习本ID 删除
 	 * @param bookId
 	 */
-	public void delUserBookBybooKId(Integer bookId){
-		userBookDao.delUserBookByBookId(bookId);
+	public int delUserBookBybooKId(Integer bookId){
+		return userBookDao.delUserBookByBookId(bookId);
 	}
 	
 	/**
@@ -49,8 +49,8 @@ public class UserBookService {
 	 * @param userId
 	 * @param bookId
 	 */
-	public void delUserBook(Integer userId ,Integer bookId){
-		userBookDao.delUserBook(userId, bookId);
+	public int delUserBook(Integer userId ,Integer bookId){
+		return userBookDao.delUserBook(userId, bookId);
 	}
 	
 	/**
