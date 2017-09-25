@@ -14,6 +14,8 @@ public class BookDto {
 	public Integer  sharedType ;//共享类型 (0私有、1只读共享)
 	
 	public Integer  createId ;
+	
+	public String  createName; 
 
 	public Integer getId() {
 		return id;
@@ -61,6 +63,14 @@ public class BookDto {
 
 	public void setCreateId(Integer createId) {
 		this.createId = createId;
+	}
+
+	public String getCreateName() {
+		return createName;
+	}
+
+	public void setCreateName(String createName) {
+		this.createName = createName;
 	}
 	
 }
