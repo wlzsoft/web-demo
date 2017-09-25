@@ -16,10 +16,12 @@ import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
 import com.demo.entity.LorePointEntity;
+import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LoreCradService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
+import com.demo.service.UserBookService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -40,6 +42,10 @@ public class LoreCardController {
 	
 	@Autowired
 	private SystemService systemService ;
+	
+	
+	@Autowired
+	private UserBookService userBookService;
 	
 	/**
 	 * 保存知识卡片
@@ -158,9 +164,14 @@ public class LoreCardController {
 		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=BookEntity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, BookEntity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		
@@ -191,9 +202,14 @@ public class LoreCardController {
 		ExcerciseBookEntity BookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=BookEntity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, BookEntity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(pointId));
@@ -270,9 +286,14 @@ public class LoreCardController {
 		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=BookEntity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, BookEntity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(cardId));

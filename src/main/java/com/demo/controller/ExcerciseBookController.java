@@ -159,9 +159,14 @@ public class ExcerciseBookController {
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		return ResultObject.successObject(entity,null);	
@@ -201,9 +206,14 @@ public class ExcerciseBookController {
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		
@@ -231,9 +241,14 @@ public class ExcerciseBookController {
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		List<UserBookEntity> list = userBookService.findUser_userId_bookId(systemService.getCurrentUser().getId(), Integer.parseInt(bookId));

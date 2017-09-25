@@ -13,9 +13,11 @@ import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
+import com.demo.entity.UserBookEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.SystemService;
+import com.demo.service.UserBookService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -32,6 +34,9 @@ public class ChapterController {
 	
 	@Autowired
 	private SystemService systemService ;
+	
+	@Autowired
+	private UserBookService userBookService;
 	
 	/**
 	 * 新增 修改 章节信息
@@ -154,9 +159,14 @@ public class ChapterController {
 		ExcerciseBookEntity BookEntity = excerciseService.findExcerciseId(bookId);
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=BookEntity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		

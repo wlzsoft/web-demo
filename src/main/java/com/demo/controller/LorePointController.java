@@ -14,10 +14,12 @@ import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LorePointEntity;
+import com.demo.entity.UserBookEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
+import com.demo.service.UserBookService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -42,6 +44,9 @@ public class LorePointController {
 	
 	@Autowired
 	private SystemService systemService ;
+	
+	@Autowired
+	private UserBookService userBookService;
 	
 	/**
 	 * 保存知识点信息
@@ -176,9 +181,14 @@ public class LorePointController {
 		ExcerciseBookEntity BookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=BookEntity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, BookEntity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
@@ -210,9 +220,14 @@ public class LorePointController {
 		ExcerciseBookEntity entity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		PointExerciseDetailDto list = lorePointService.findPointIdByDetail(Integer.parseInt(pointId));
@@ -240,9 +255,14 @@ public class LorePointController {
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
+			
 		}
 		
 		List<PonitDto> list = chapterService.findChapterPoint(Integer.parseInt(chapterId),Integer.parseInt(bookId));
@@ -268,11 +288,15 @@ public class LorePointController {
 		 * 加操作权限
 		 * */
 		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
-		if(entity.getSharedType()==0){
-			Integer userId = systemService.getCurrentUser().getId();
-			if(userId!=entity.getCreateId()){
+		if(entity.getSharedType()==0){//0 私有
+ 			Integer userId = systemService.getCurrentUser().getId();
+ 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
+ 			if(list.size()==0){
+ 				return ResultObject.warnMessage("无操作权限");	
+ 			}
+ 			/*	if(userId!=entity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");	
-			}
+			}*/
 		}
 		
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));

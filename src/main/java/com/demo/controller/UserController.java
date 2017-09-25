@@ -47,6 +47,22 @@ public class UserController {
 	}
 	
 	
+	/**
+	 * 获取当前登录用户信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getUser")
+	public Result<?> getUser(HttpServletRequest request ,HttpServletResponse response){
+		
+		UserDto dto = systemService.getCurrentUser();
+		if(null==dto){
+			return ResultObject.warnMessage("请先登录");
+		}
+		return ResultObject.successObject(dto,null);
+	}
+	
 
 	/**
 	 * 修改用户信息
