@@ -260,7 +260,7 @@ public class ExcerciseBookController {
 			  userBookEntity.setUserId(systemService.getCurrentUser().getId());
 	    	userBookService.addUserBook(userBookEntity);
 		    lorePointService.pushPoint(Integer.parseInt(bookId),systemService.getCurrentUser().getId());//根据bookId推送到订阅的用户
-		   return ResultObject.successMessage("添加成功");
+		   return ResultObject.successMessage("订阅成功");
 		}
 	}
 	
