@@ -72,15 +72,8 @@ public class ReviewController {
 	@RequestMapping("/excercise")
 	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		
-		/**
-		 * 添加权限
-		 * **/
+
 		Integer userId =systemService.getCurrentUser().getId();
-		Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);
-		if(!flag){
-			return ResultObject.warnMessage("无操作权限");
-		}
-		
 		
 		List<CardDto> cardList = new ArrayList<>();
 		if(null==bookId||bookId.equals("")||bookId.equals("0")){
@@ -92,6 +85,13 @@ public class ReviewController {
 				}
 			}
 		}else{
+			/**
+			 * 添加权限
+			 * **/
+			Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);
+			if(!flag){
+				return ResultObject.warnMessage("无操作权限");
+			}
 			List<PonitDto> ponitDtoList = reviewService.excercise(userId,Integer.parseInt(bookId));
 			for(PonitDto dto: ponitDtoList){
 				CardDto cardDto = reviewService.roundCard(dto.getId());
