@@ -213,8 +213,22 @@ public class ReviewService {
 		 //当所有知识点都练习完了的时候，进行随即抽取
 		 
 		 if(listAll.size()<COUNT){
-			 List<PonitDto> ponitList = reviewDao.roundPoint(userId);
-			 if(ponitList.size()>0){
+			 Integer[] pointIdArray = new Integer[listAll.size()];
+			 for(int i=0;i<listAll.size();i++){
+				 Integer pointId = listAll.get(i).getId();
+				 pointIdArray[i]=pointId;
+			 }
+			 List<PonitDto> ponitList = reviewDao.roundPoint(userId,pointIdArray);
+			 
+			 if(ponitList.size()<=COUNT-listAll.size()){
+				 listAll.addAll(ponitList);
+			 }else{
+				for(int i=0;i<=COUNT-listAll.size();i++){
+					listAll.add(ponitList.get(i));
+				} 
+			 }
+			 
+/*			 if(ponitList.size()>0){
 				 java.util.Random random = new java.util.Random();
 				 if(ponitList.size()>listAll.size()){
 					 if(ponitList.size()>COUNT){
@@ -235,7 +249,7 @@ public class ReviewService {
 						 listAll.addAll(hset);
 					 }
 				 }
-			 }
+			 }*/
 		 }
 		 
 /*		 if(listAll.size()<COUNT){
