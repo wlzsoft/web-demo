@@ -290,6 +290,16 @@ public class ExcerciseBookController {
 			return ResultObject.warnMessage("参数不能为空");
 		}
 		Integer userId = systemService.getCurrentUser().getId();
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		if(entity.getCreateId()==userId){
+			return ResultObject.warnMessage("原创不能取消");	
+		}
+		
+		
 		int count = userBookService.delUserBook(userId,Integer.parseInt(bookId));
 		if(count==0){
 			return ResultObject.successMessage("该用户没有订阅");
