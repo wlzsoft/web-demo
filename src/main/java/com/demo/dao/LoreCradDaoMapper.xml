@@ -11,6 +11,7 @@
 				difficultyLevel,
 				titleText,
 				titleVoiceSrc,
+				titleVoiceFlag,
 				titleAutoPlay,
 				questionText,
 				questionVoiceSrc,
@@ -27,6 +28,7 @@
 				#{difficultyLevel},
 				#{titleText},
 				#{titleVoiceSrc},
+				#{titleVoiceFlag},
 				#{titleAutoPlay},
 				#{questionText},
 				#{questionVoiceSrc},
@@ -40,7 +42,7 @@
 	
   <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
           select t.id,t.pointId ,b.pointName ,t.questionType,
-                t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+                t.difficultyLevel,t.titleText,titleVoiceSrc,titleVoiceFlag,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.id=#{id}
   </select>
@@ -50,7 +52,7 @@
   </select>
    
    <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
-          select t.id,t.pointId ,b.pointName ,t.questionType,
+          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,
                 t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId}
@@ -71,6 +73,7 @@
 			   <if test="titleAutoPlay !=null">titleAutoPlay=#{titleAutoPlay},</if>
 			   <if test="questionText !=null">questionText=#{questionText},</if>
 			   <if test="questionVoiceSrc !=null">questionVoiceSrc=#{questionVoiceSrc},</if>
+			   <if test="titleVoiceFlag !=null">titleVoiceFlag=#{titleVoiceFlag},</if>
 			   <if test="questionAutoPlay !=null">questionAutoPlay=#{questionAutoPlay},</if>
 			   <if test="questionImages !=null">questionImages=#{questionImages},</if>
 			   <if test="answers !=null">answers=#{answers},</if>
