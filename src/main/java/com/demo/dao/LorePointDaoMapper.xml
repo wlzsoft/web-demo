@@ -119,7 +119,7 @@
 	</select>
 	
 	<select id="pointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
-		SELECT t.* FROM pointExerciseDetail t  WHERE t.pointId=#{id}
+		SELECT t.* FROM pointExerciseDetail t  WHERE t.pointId=#{pointId} and t.userId=#{userId}
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">

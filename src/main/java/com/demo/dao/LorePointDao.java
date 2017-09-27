@@ -34,12 +34,14 @@ public interface LorePointDao {
 	 */
 	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer id);
 	
+
 	/**
 	 * 根据知识点ID 获取知识点练习详情
-	 * @param id 知识点Id
+	 * @param pointId
+	 * @param userId
 	 * @return
 	 */
-	public PointExerciseDetailDto pointIdByDetail(@Param("id")Integer id);
+	public PointExerciseDetailDto pointIdByDetail(@Param("pointId")Integer pointId,@Param("userId")Integer userId);
 	
 	public void addPointDetail(LorePointExerciseDetailEntity entity);
 	
