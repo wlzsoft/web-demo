@@ -36,6 +36,9 @@ public class ReviewService {
 	@Autowired
 	private ExcerciseBookDao excerciseBookDao;
 	
+	@Autowired
+	private SystemService systemService ;
+	
 	private final int COUNT=20;
 	
 	@Transactional
@@ -52,7 +55,8 @@ public class ReviewService {
 			entity.setUserId(1);
 			reviewDao.savaUserExcerciseDetail(entity);
 		//更新用户知识点联系详情
-		PointExerciseDetailDto  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId));
+		Integer userId =systemService.getCurrentUser().getId();
+		PointExerciseDetailDto  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId),userId);
 		int exerciseNumber =detailEntity.getExerciseNumber();
 		 if(right==1){//正确
 			 int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());
