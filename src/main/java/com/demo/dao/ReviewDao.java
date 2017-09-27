@@ -28,7 +28,7 @@ public interface ReviewDao {
 	
 	public List<CardDto> roundCard(@Param("pointId")Integer pointId);
 	
-	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
+	public List<PonitDto> roundPoint(@Param("userId")Integer userId,@Param("pointIdArray")Integer[] pointIdArray);
 	
 	/**
 	 * 根据知识点pointId 获取是否有练习权限

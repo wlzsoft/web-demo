@@ -116,6 +116,10 @@
 	          WHERE t.id=a.pointId 
 	          AND t.number>0
 	          AND a.userId=#{userId}
+	          AND a.pointId not in
+				<foreach collection="pointIdArray" item="id" index="index" open="(" close=")" separator=",">
+					#{id,jdbcType=INTEGER}
+				</foreach>
 	   </select>
 	   
 	   <select id="getAuthByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
