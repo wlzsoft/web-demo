@@ -24,6 +24,9 @@ public class LoreCradService {
 	@Autowired
 	private SystemService systemService;
 	
+	@Autowired
+	private ExcerciseBookService excerciseService ;
+	
 	@Transactional
 	public IdEntity savaLoreCrad(LoreCardEntity entity){
 		   entity.setCreateId(systemService.getCurrentUser().getId());
@@ -37,6 +40,7 @@ public class LoreCradService {
 		 loreCradDao.savaCardExerciseDetail(cardExerciseDetail);
 		 IdEntity idEntity = new IdEntity();
 		 idEntity.setId(entity.getId());
+		 excerciseService.updateDetailByPointId(entity.getPointId());
 		 return idEntity;
 	}
 	
@@ -44,14 +48,16 @@ public class LoreCradService {
 	public int delLoreCrad(Integer loreCardId){
 		int count = loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
+		excerciseService.updateDetailBycardId(loreCardId);
 		return count;
 	}
 	
-	
+	@Transactional
 	public int editLoreCrad(LoreCardEntity entity){
 		 entity.setUpdateId(systemService.getCurrentUser().getId());
 		 entity.setUpdateTime(new Date());
 		int count = loreCradDao.editLoreCrad(entity);
+		excerciseService.updateDetailBycardId(entity.getId());
 		return count;
 	}
 	
@@ -78,16 +84,5 @@ public class LoreCradService {
 	public List<LoreCradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId){
 		return loreCradDao.getLoreCradAnswerByPointId(loreCardId);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

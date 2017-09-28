@@ -156,7 +156,7 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		BookDto entity = excerciseService.findBookById(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
  			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
