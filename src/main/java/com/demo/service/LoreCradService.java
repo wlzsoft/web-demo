@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dao.ExcerciseBookDao;
 import com.demo.dao.LoreCradDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
+import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
@@ -20,6 +22,9 @@ public class LoreCradService {
 
 	@Autowired
 	private LoreCradDao loreCradDao;
+	
+	@Autowired
+	private ExcerciseBookDao excerciseBookDao;
 	
 	@Autowired
 	private SystemService systemService;
@@ -46,9 +51,10 @@ public class LoreCradService {
 	
 	@Transactional
 	public int delLoreCrad(Integer loreCardId){
+		ExcerciseBookEntity entity = excerciseBookDao.findBookByCardId(loreCardId);
 		int count = loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
-		excerciseService.updateDetailBycardId(loreCardId);
+		excerciseService.updateDetailBybookId(entity.getId());
 		return count;
 	}
 	

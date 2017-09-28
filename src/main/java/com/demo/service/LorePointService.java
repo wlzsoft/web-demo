@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dao.ExcerciseBookDao;
 import com.demo.dao.LoreCradDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
 import com.demo.entity.UserBookEntity;
@@ -26,6 +28,9 @@ public class LorePointService {
 	
 	@Autowired
 	private LorePointDao lorePointDao;
+	
+	@Autowired
+	private ExcerciseBookDao excerciseBookDao;
 	
 	@Autowired
 	private LoreCradDao cardDao;
@@ -86,12 +91,13 @@ public class LorePointService {
 	
 	@Transactional
 	public int delLorePoint(Integer pointId){
+		ExcerciseBookEntity entity = excerciseBookDao.findBookByPointId(pointId);
 		int count = lorePointDao.dellById(pointId);
 		//同时删除该知识点下所有的知识卡片信息
 		cardDao.delCardByPointId(pointId);
 		//同时删除知识点对应的用户练习记录
 		delPoinDetailtByPointId(pointId);
-		excerciseService.updateDetailByPointId(pointId);//推到练习本更新
+		excerciseService.updateDetailBybookId(entity.getId());//推到练习本更新
 		return count ;
 	}
 
