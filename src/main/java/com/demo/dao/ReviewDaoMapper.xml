@@ -41,6 +41,7 @@
 		  	  t.id,
 		  	  t.bookName,
 		  	  t.sharedType,
+		  	  t.updateDetailTime,
 		  	  t.createId
 		  	 FROM book  t ,userbook a
 		  	 WHERE t.id = a.bookId

@@ -51,6 +51,7 @@
 			t.sharedType,
 			t.createId,
 			t.remark,
+			t.updateDetailTime,
 			a.username AS createName
 		from book t ,userinfo a  where  t.createId=a.id and t.id=#{bookId}
 	</select>
@@ -63,8 +64,10 @@
 			t.area ,
 			t.sharedType,
 			t.createId,
-			t.remark
-		from book t  ,userbook a where a.bookId=t.id and a.userId=#{userId}
+			t.updateDetailTime,
+			t.remark,
+			b.username AS createName
+		from book t  ,userbook a,userinfo b where a.bookId=t.id and t.createId=b.id and a.userId=#{userId}
 	</select>
 	
 	
@@ -77,6 +80,7 @@
 			t.sharedType,
 			t.createId,
 			t.remark,
+			t.updateDetailTime,
 			a.username AS createName
 		from book t ,userinfo a  where sharedType=1 AND t.createId=a.id
 	</select>
