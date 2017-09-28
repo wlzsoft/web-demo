@@ -42,12 +42,19 @@ public class ExcerciseBookService {
 	public int editExcercise(ExcerciseBookEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
+		entity.setUpdateDetailId(systemService.getCurrentUser().getId());
+		entity.setUpdateDetailTime(new Date());
 		int count = excerciseBookDao.editExcercise(entity);
 		return count;
 	}
 	
 	public ExcerciseBookEntity findExcerciseId(String id){
 		ExcerciseBookEntity entity = excerciseBookDao.findExcerciseId(Integer.parseInt(id));
+		return entity;
+	}
+	
+	public BookDto findBookById(String id){
+		BookDto entity = excerciseBookDao.findBookById(Integer.parseInt(id));
 		return entity;
 	}
 	
@@ -100,6 +107,30 @@ public class ExcerciseBookService {
     public ExcerciseBookEntity findBookByCardId(Integer cardId){
     	return excerciseBookDao.findBookByCardId(cardId);
 	}
+    
+    /**
+     * 如果创建者 更新了 练习下面的 知识点 或 卡片信息 练习本需要记录 更新时间
+     * 
+     * @param bookId
+     */
+    public void updateDetailBybookId(Integer bookId){
+    	Integer userId =  systemService.getCurrentUser().getId();
+    	excerciseBookDao.updateDetail(bookId, userId, new Date());
+    }
+    
+    public void updateDetailBycardId(Integer cardId){
+    	Integer userId =  systemService.getCurrentUser().getId();
+    	ExcerciseBookEntity entity = findBookByCardId(cardId);
+    	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
+    }
+    
+    public void updateDetailByPointId(Integer pointId){
+    	Integer userId =  systemService.getCurrentUser().getId();
+    	ExcerciseBookEntity entity = findBookByPointId(pointId);
+    	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
+    }
+    
+    
     
  
 

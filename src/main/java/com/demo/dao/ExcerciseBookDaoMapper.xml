@@ -42,6 +42,19 @@
 		select * from book t where t.id=#{bookId}
 	</select>
 	
+	<select id="findBookById" parameterType="java.lang.Integer" resultType="com.demo.dto.BookDto">
+	   select 
+			t.id ,
+			t.bookName,
+			t.`language`,
+			t.area ,
+			t.sharedType,
+			t.createId,
+			t.remark,
+			a.username AS createName
+		from book t ,userinfo a  where  t.createId=a.id and t.id=#{bookId}
+	</select>
+	
 	<select id="searchAllExcercise" resultType="com.demo.dto.BookDto">
 		select 
 			t.id ,
@@ -49,7 +62,8 @@
 			t.`language`,
 			t.area ,
 			t.sharedType,
-			t.createId
+			t.createId,
+			t.remark
 		from book t  ,userbook a where a.bookId=t.id and a.userId=#{userId}
 	</select>
 	
@@ -62,6 +76,7 @@
 			t.area ,
 			t.sharedType,
 			t.createId,
+			t.remark,
 			a.username AS createName
 		from book t ,userinfo a  where sharedType=1 AND t.createId=a.id
 	</select>
@@ -92,6 +107,13 @@
 		     AND b.bookId=a.id
 		     AND c.id=#{cardId}
 	</select>
+	
+	<update id="updateDetail" >
+		 UPDATE book set
+			  updateDetailTime=#{updateDetailTime},
+			  updateDetailId=#{updateDetailId}
+		   WHERE id=#{bookId}
+	</update>
 	
 
      

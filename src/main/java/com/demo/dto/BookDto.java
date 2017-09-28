@@ -1,5 +1,7 @@
 package com.demo.dto;
 
+import java.util.Date;
+
 
 public class BookDto {
 
@@ -16,6 +18,10 @@ public class BookDto {
 	public Integer  createId ;
 	
 	public String  createName; 
+	
+	public Date  updateDetailTime ;
+	
+	public String remark;
 
 	public Integer getId() {
 		return id;
@@ -71,6 +77,22 @@ public class BookDto {
 
 	public void setCreateName(String createName) {
 		this.createName = createName;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Date getUpdateDetailTime() {
+		return updateDetailTime;
+	}
+
+	public void setUpdateDetailTime(Date updateDetailTime) {
+		this.updateDetailTime = updateDetailTime;
 	}
 	
 }

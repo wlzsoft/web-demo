@@ -59,6 +59,7 @@ public class LorePointService {
 	    List<UserBookEntity> userBookEntity = userBookService.findUser(entity.getBookId());
 		pushAddPointToUser(entity.getId() ,entity.getBookId(),userBookEntity);
 		
+		excerciseService.updateDetailBybookId(entity.getBookId());//推到练习本更新
 		
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
@@ -70,6 +71,7 @@ public class LorePointService {
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
 		int count = lorePointDao.update(entity);
+		excerciseService.updateDetailBybookId(entity.getBookId());//推到练习本更新
 		return count;
 	}
 
@@ -89,6 +91,7 @@ public class LorePointService {
 		cardDao.delCardByPointId(pointId);
 		//同时删除知识点对应的用户练习记录
 		delPoinDetailtByPointId(pointId);
+		excerciseService.updateDetailByPointId(pointId);//推到练习本更新
 		return count ;
 	}
 

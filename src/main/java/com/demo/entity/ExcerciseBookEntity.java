@@ -27,6 +27,10 @@ public class ExcerciseBookEntity implements Serializable{
 	
 	public Integer  updateId ;
 	
+	public Date  updateDetailTime ;
+	
+	public Integer  updateDetailId ;
+	
 	public String  remark   ;
 
 	public Integer getId() {
@@ -108,6 +112,22 @@ public class ExcerciseBookEntity implements Serializable{
 
 	public void setUpdateId(Integer updateId) {
 		this.updateId = updateId;
+	}
+
+	public Date getUpdateDetailTime() {
+		return updateDetailTime;
+	}
+
+	public void setUpdateDetailTime(Date updateDetailTime) {
+		this.updateDetailTime = updateDetailTime;
+	}
+
+	public Integer getUpdateDetailId() {
+		return updateDetailId;
+	}
+
+	public void setUpdateDetailId(Integer updateDetailId) {
+		this.updateDetailId = updateDetailId;
 	}
 
 	public String getRemark() {

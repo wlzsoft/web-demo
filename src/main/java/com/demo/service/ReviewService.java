@@ -218,7 +218,13 @@ public class ReviewService {
 				 Integer pointId = listAll.get(i).getId();
 				 pointIdArray[i]=pointId;
 			 }
-			 List<PonitDto> ponitList = reviewDao.roundPoint(userId,pointIdArray);
+			 List<PonitDto> ponitList = null;
+			 if(pointIdArray.length>0){
+				 ponitList= reviewDao.roundPoint(userId,pointIdArray); 
+			 }else{
+				 ponitList= reviewDao.roundPointByUserId(userId); 
+			 }
+			
 			 
 			 if(ponitList.size()<=COUNT-listAll.size()){
 				 listAll.addAll(ponitList);
