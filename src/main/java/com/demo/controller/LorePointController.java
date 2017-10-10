@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -75,6 +77,15 @@ public class LorePointController {
 			if(null==entity.getPointName()||entity.getPointName().equals("")){
 				return ResultObject.warnMessage("知识点名称不能为空");
 			}
+			String pointName = entity.getPointName();
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+				entity.setPointName(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
+			
 			
 			IdEntity identity = lorePointService.savaLorePoint(entity);
 			return ResultObject.successObject(identity,"保存成功");
@@ -110,6 +121,17 @@ public class LorePointController {
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
+			
+			String pointName = entity.getPointName();
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+				entity.setPointName(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
 			int count = lorePointService.editLorePoint(entity);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
@@ -192,12 +214,31 @@ public class LorePointController {
 		}
 		
 		PonitDto entity = lorePointService.findLorePointId(Integer.parseInt(pointId));
+		
+		String pointName = entity.getPointName();
+		try {
+			pointName =EmojiUtil.emojiRecovery2(pointName);
+			entity.setPointName(pointName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return ResultObject.successObject(entity,null);
 	}
 	
 	@RequestMapping("/pointList")
 	public Result<List<PonitDto>> searchAllLorePoint(HttpServletRequest request ,HttpServletResponse response){
 		List<PonitDto> entityList = lorePointService.searchAllLorePoint();
+		
+		for(PonitDto entity:entityList){
+			String pointName = entity.getPointName();
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+				entity.setPointName(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return ResultObject.successObject(entityList,null);
 	}
 	
@@ -266,6 +307,18 @@ public class LorePointController {
 		}
 		
 		List<PonitDto> list = chapterService.findChapterPoint(Integer.parseInt(chapterId),Integer.parseInt(bookId));
+		
+		for(PonitDto dto:list){
+			String pointName = dto.getPointName();
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+				dto.setPointName(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		return ResultObject.successObject(list,null);
 	
 	}
@@ -300,6 +353,17 @@ public class LorePointController {
 		}
 		
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
+		
+		for(PonitDto dto:entityList){
+			String pointName = dto.getPointName();
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+				dto.setPointName(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return ResultObject.successObject(entityList,null); 
 	}
 

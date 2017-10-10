@@ -1,7 +1,10 @@
 package com.demo.entity;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+
+import com.smartframe.basics.util.EmojiUtil;
 
 public class LorePointEntity implements Serializable{
 
@@ -49,10 +52,20 @@ public class LorePointEntity implements Serializable{
 	}
 
 	public String getPointName() {
+		try {
+			pointName =  EmojiUtil.emojiConvert1(pointName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return pointName;
 	}
 
 	public void setPointName(String pointName) {
+		try {
+			pointName =EmojiUtil.emojiRecovery2(pointName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		this.pointName = pointName;
 	}
 
