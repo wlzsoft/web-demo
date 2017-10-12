@@ -8,6 +8,7 @@
 					bookId,
 					chapterId,
 					number,
+					sort,
 					createTime,
 					createId
 			)VALUES(
@@ -15,9 +16,32 @@
 					#{bookId},
 					#{chapterId},
 					#{number},
+					#{sort},
 					#{createTime},
 					#{createId}
 			)
+	</insert>
+	
+   <insert id="batchAdd" parameterType="java.util.List">
+	      INSERT INTO point( 
+					pointName,
+					bookId,
+					chapterId,
+					number,
+					sort,
+					createTime,
+					createId
+			)VALUES
+			<foreach collection="entityList" item="item" index="index" separator=",">
+				(#{item.pointName},
+				 #{item.bookId},
+				 #{item.chapterId},
+				 #{item.number},
+				 #{item.sort},
+				 #{item.createTime},
+				 #{item.createId}
+				)
+			</foreach>
 	</insert>
 	
 	<insert id="addPointDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
@@ -60,6 +84,11 @@
 		DELETE FROM  point  WHERE  id=#{id}
 	</delete>
 	
+	<delete id="delPointByBookId" parameterType="java.lang.Integer">
+		DELETE FROM  point  WHERE  bookId=#{bookId}
+	</delete>
+	
+	
 	<delete id="delPoinDetailtByPointId" parameterType="java.lang.Integer">
 	    DELETE FROM  pointExerciseDetail  WHERE  pointId=#{pointId}
 	</delete>
@@ -72,6 +101,7 @@
 		 UPDATE point set
 			   <if test="pointName !=null" >pointName=#{pointName},</if>
 			   <if test="number !=null">number=#{number},</if>
+			   <if test="sort !=null">sort=#{sort},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
 	    where id=#{id}
@@ -95,7 +125,7 @@
 	</select>
 	
 	<select id="searchAllLorePoint" resultType="com.demo.dto.PonitDto">
-		select t.id,t.pointName,t.number,t.bookId from  point t
+		select t.id,t.pointName,t.number,t.bookId ,t.sort from  point t
 	</select>
 	
 	<select id="findPointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
@@ -123,7 +153,7 @@
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
+	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,t.sort FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
 	</select>
 	
      

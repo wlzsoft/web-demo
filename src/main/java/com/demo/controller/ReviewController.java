@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.demo.dto.CardDto;
 import com.demo.dto.PonitDto;
 import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
+import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -66,7 +68,7 @@ public class ReviewController {
 	 * 用户复习算法
 	 * @param request
 	 * @param response
-	 * @param userId
+	 * @param bookId 0:全部练习本   ，有值时 指定练习本
 	 * @return
 	 */
 	@RequestMapping("/excercise")
@@ -88,7 +90,7 @@ public class ReviewController {
 			/**
 			 * 添加权限
 			 * **/
-			Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);
+			Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);//验证当前用户是否有 练习该练习本的权限
 			if(!flag){
 				return ResultObject.warnMessage("无操作权限");
 			}
@@ -98,6 +100,24 @@ public class ReviewController {
 				cardList.add(cardDto);
 			}
 		}
+		
+		//对emoji转换
+		for(CardDto dto :cardList){
+			try {
+				if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
+					String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
+					dto.setTitleText(titleText);
+				}
+				if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
+					String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
+					dto.setQuestionText(questionText);
+				}
+
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return ResultObject.successObject(cardList,null) ;
 	}
 	
@@ -124,6 +144,22 @@ public class ReviewController {
 		}
 		
 		CardDto cardDto = reviewService.roundCard(Integer.parseInt(pointId));
+		
+		//对emoji转换
+		try {
+			if(null!=cardDto.getTitleText()||cardDto.getTitleText().equals("")){
+				String	titleText = EmojiUtil.emojiRecovery2(cardDto.getTitleText());
+				cardDto.setTitleText(titleText);
+			}
+			if(null!=cardDto.getQuestionText()||cardDto.getQuestionText().equals("")){
+				String questionText =  EmojiUtil.emojiRecovery2(cardDto.getQuestionText());
+				cardDto.setQuestionText(questionText);
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 		return ResultObject.successObject(cardDto,null) ;
 	}
 

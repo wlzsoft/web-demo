@@ -1,10 +1,13 @@
 package com.demo.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import com.demo.service.LoreCradService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -29,6 +33,8 @@ import com.smartframe.dto.ResultObject;
 @Controller
 @RequestMapping("/card")
 public class LoreCardController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoreCardController.class);
 
 	@Autowired
 	private LoreCradService loreCradService;
@@ -66,6 +72,15 @@ public class LoreCardController {
 			return ResultObject.warnMessage("卡片答案不能为空");
 		}
 		
+		try {
+			String titleText =  EmojiUtil.emojiConvert1(loreCardEntity.getTitleText());
+			String questionText =  EmojiUtil.emojiConvert1(loreCardEntity.getQuestionText());
+			loreCardEntity.setTitleText(titleText);
+			loreCardEntity.setQuestionText(questionText);
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
+			e.printStackTrace();
+		}
 		
 		/**
 		 * 加操作权限
@@ -128,7 +143,6 @@ public class LoreCardController {
 			return ResultObject.warnMessage("卡片答案不能为空");
 		}
 		
-		
 		/**
 		 * 加操作权限
 		 * */
@@ -137,6 +151,20 @@ public class LoreCardController {
 		if(userId!=cardEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
+				try{
+					if(null!=entity.getTitleText()||entity.getTitleText().equals("")){
+						String	titleText = EmojiUtil.emojiConvert1(entity.getTitleText());
+						entity.setTitleText(titleText);
+					}
+					if(null!=entity.getQuestionText()||entity.getQuestionText().equals("")){
+						String questionText =  EmojiUtil.emojiConvert1(entity.getQuestionText());
+						entity.setQuestionText(questionText);
+					}
+				}catch (UnsupportedEncodingException e) {
+					LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
+					e.printStackTrace();
+				}
+			
 			int count = loreCradService.editLoreCrad(entity);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
@@ -179,6 +207,20 @@ public class LoreCardController {
 		CardDto entity = loreCradService.findLoreCradById(Integer.parseInt(cardId));
 		if(null ==entity){
 			return ResultObject.successMessage("没有数据");
+		}else{
+			try{
+				if(null!=entity.getTitleText()||entity.getTitleText().equals("")){
+					String	titleText = EmojiUtil.emojiRecovery2(entity.getTitleText());
+					entity.setTitleText(titleText);
+				}
+				if(null!=entity.getQuestionText()||entity.getQuestionText().equals("")){
+					String questionText =  EmojiUtil.emojiRecovery2(entity.getQuestionText());
+					entity.setQuestionText(questionText);
+				}
+			}catch (UnsupportedEncodingException e) {
+				LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
+				e.printStackTrace();
+			}
 		}
 		return ResultObject.successObject(entity,null);
 	}
@@ -215,6 +257,22 @@ public class LoreCardController {
 		List<CardDto> entityList = loreCradService.findLoreCradByPointId(Integer.parseInt(pointId));
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
+		}else{
+			for(CardDto dto :entityList){
+				try {
+					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
+						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
+						dto.setTitleText(titleText);
+					}
+					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
+						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
+						dto.setQuestionText(questionText);
+					}
+
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return ResultObject.successObject(entityList,null);
 	}

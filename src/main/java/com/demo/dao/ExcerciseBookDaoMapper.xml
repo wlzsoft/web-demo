@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ExcerciseBookDao">
 	
-	<insert id="excerciseSava" parameterType="com.demo.entity.ExcerciseBookEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="bookSava" parameterType="com.demo.entity.ExcerciseBookEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO book(
 					bookName,
 					language,
@@ -22,11 +22,11 @@
 			)
 	</insert>
 	
-	<delete id="delExcerciseById">
+	<delete id="delBookById">
 		DELETE FROM  book  WHERE  id=#{bookId}
 	</delete>
 	
-	<update id="editExcercise" parameterType="com.demo.entity.ExcerciseBookEntity">
+	<update id="editBook" parameterType="com.demo.entity.ExcerciseBookEntity">
 		 UPDATE book set
 			   <if test="bookName !=null" >bookName=#{bookName},</if>
 			   <if test="language !=null">language=#{language},</if>
@@ -38,7 +38,7 @@
 		   WHERE id=#{id}
 	</update>
 	
-	<select id="findExcerciseId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+	<select id="findBook" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
 		select * from book t where t.id=#{bookId}
 	</select>
 	
@@ -87,7 +87,7 @@
 	
 	
 	<select id="findExcerciseIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId FROM point t
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,t.sort FROM point t
 			 WHERE t.bookId=#{bookId}
 	</select>
 	

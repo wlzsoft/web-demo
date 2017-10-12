@@ -1,5 +1,9 @@
 package com.demo.dto;
 
+import java.io.UnsupportedEncodingException;
+
+import com.smartframe.basics.util.EmojiUtil;
+
 public class CardDto {
 	
 	public Integer id	;	
@@ -20,12 +24,26 @@ public class CardDto {
 	public void setPointId(Integer pointId) {
 		this.pointId = pointId;
 	}
+
 	public String getPointName() {
+		try {
+			pointName =  EmojiUtil.emojiConvert1(pointName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return pointName;
 	}
+
 	public void setPointName(String pointName) {
+		try {
+			pointName =EmojiUtil.emojiRecovery2(pointName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		this.pointName = pointName;
 	}
+	
+	
 	public Integer getId() {
 		return id;
 	}

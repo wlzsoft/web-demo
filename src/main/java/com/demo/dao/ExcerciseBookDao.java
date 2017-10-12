@@ -14,13 +14,13 @@ import com.demo.entity.ExcerciseBookEntity;
 @Repository
 public interface ExcerciseBookDao {
 
-	public void excerciseSava(ExcerciseBookEntity entity);
+	public void bookSava(ExcerciseBookEntity entity);
 	
-	public int delExcerciseById(@Param("bookId")String bookId);
+	public int delBookById(@Param("bookId")String bookId);
 	
-	public int editExcercise(ExcerciseBookEntity entity);
+	public int editBook(ExcerciseBookEntity entity);
 	
-	public ExcerciseBookEntity findExcerciseId(@Param("bookId")Integer bookId);
+	public ExcerciseBookEntity findBook(@Param("bookId")Integer bookId);
 	
 	public BookDto findBookById(@Param("bookId")Integer bookId);
 	

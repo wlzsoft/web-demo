@@ -68,7 +68,7 @@ public class ExcerciseBookController {
 			return ResultObject.warnMessage("领域不能为空");
 		}
 		
-		IdEntity identity = excerciseService.excerciseSava(entity);
+		IdEntity identity = excerciseService.bookSava(entity);
 		UserBookEntity userBookEntity = new UserBookEntity();
 					userBookEntity.setBookId(identity.getId());
 					userBookEntity.setUserId(systemService.getCurrentUser().getId());
@@ -91,12 +91,12 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=entity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
-			int count = excerciseService.delExcercise(bookId);
+			int count = excerciseService.delBook(bookId);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
 			}
@@ -115,7 +115,7 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/editBook")
-	public Result<?> editExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
+	public Result<?> editBook(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("主键ID不能为空");
 		}
@@ -127,12 +127,12 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getId().toString());
+		ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getId().toString());
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
-			int count = excerciseService.editExcercise(entity);
+			int count = excerciseService.editBook(entity);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
 			}
@@ -148,7 +148,7 @@ public class ExcerciseBookController {
 	 * @return
 	 */
 	@RequestMapping("/findBook")
-	public Result<?> findExcerciseId(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	public Result<?> findBook(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -203,7 +203,7 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
  			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
@@ -238,7 +238,7 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		if(entity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
  			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
@@ -294,7 +294,7 @@ public class ExcerciseBookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(bookId);
+		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		if(entity.getCreateId()==userId){
 			return ResultObject.warnMessage("原创不能取消");	
 		}
