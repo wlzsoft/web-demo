@@ -59,7 +59,7 @@ public class ChapterController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookBntity = excerciseService.findExcerciseId(entity.getBookId().toString());
+		ExcerciseBookEntity bookBntity = excerciseService.findBook(entity.getBookId().toString());
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookBntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
@@ -93,7 +93,7 @@ public class ChapterController {
 			/**
 			 * 加操作权限
 			 * */
-			ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getBookId().toString());
+			ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getBookId().toString());
 			Integer userId = systemService.getCurrentUser().getId();
 			if(userId!=bookEntity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");
@@ -125,7 +125,7 @@ public class ChapterController {
 			/**
 			 * 加操作权限
 			 * */
-			ExcerciseBookEntity bookEntity = excerciseService.findExcerciseId(entity.getId().toString());
+			ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getId().toString());
 			Integer userId = systemService.getCurrentUser().getId();
 			if(userId!=bookEntity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");
@@ -156,7 +156,7 @@ public class ChapterController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity BookEntity = excerciseService.findExcerciseId(bookId);
+		ExcerciseBookEntity BookEntity = excerciseService.findBook(bookId);
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
  			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));

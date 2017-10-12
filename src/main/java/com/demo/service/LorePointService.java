@@ -46,6 +46,10 @@ public class LorePointService {
 		  entity.setCreateId(systemService.getCurrentUser().getId());
 		  entity.setCreateTime(new Date());
 		  entity.setNumber(0);
+		  if(entity.getSort()==null||entity.getSort().equals("")){
+			  entity.setSort(0);  
+		  }
+		  
 		 lorePointDao.install(entity);
     /*	   
 		//插入知识点练习明细

@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import com.smartframe.basics.util.EmojiUtil;
+import com.smartframe.dto.ResultObject;
 
 public class LorePointEntity implements Serializable{
 
@@ -19,6 +20,8 @@ public class LorePointEntity implements Serializable{
 	 public String  pointName    ;//知识点名称
 	 
 	 public Integer  number      ;//知识点卡片数量
+	 
+	 public Integer sort; //排序
 	 
 	 public Date  createTime ;
 	 
@@ -52,19 +55,29 @@ public class LorePointEntity implements Serializable{
 	}
 
 	public String getPointName() {
-		try {
-			pointName =  EmojiUtil.emojiConvert1(pointName);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		
+		if(null==pointName||pointName.equals("")){
+			
+		}else{
+			try {
+				pointName =  EmojiUtil.emojiConvert1(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
+
 		return pointName;
 	}
 
 	public void setPointName(String pointName) {
-		try {
-			pointName =EmojiUtil.emojiRecovery2(pointName);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		if(null==pointName||pointName.equals("")){
+			
+		}else{
+			try {
+				pointName =EmojiUtil.emojiRecovery2(pointName);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}	
 		}
 		this.pointName = pointName;
 	}
@@ -75,6 +88,14 @@ public class LorePointEntity implements Serializable{
 
 	public void setNumber(Integer number) {
 		this.number = number;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public Date getCreateTime() {

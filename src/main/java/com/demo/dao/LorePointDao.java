@@ -15,6 +15,8 @@ public interface LorePointDao {
 	
 	public Integer install(LorePointEntity entity);
 	
+	public Integer batchAdd(@Param("entityList")List<LorePointExerciseDetailEntity> entityList);
+	
 	public int dellById(@Param("id")Integer id);
 	
 	public int update(LorePointEntity entity);
@@ -66,6 +68,12 @@ public interface LorePointDao {
 	 * @param bookId
 	 */
 	public void delPoinDetailtByBookId(@Param("bookId")Integer bookId);
+	
+	/**
+	 * 根据练习本Id 删除知识点
+	 * @param bookId
+	 */
+	public void delPointByBookId(@Param("bookId")Integer bookId);
 	
 	
 	

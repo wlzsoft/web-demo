@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ExcerciseBookDao;
+import com.demo.dao.LorePointDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
@@ -23,10 +25,13 @@ public class ExcerciseBookService {
 	@Autowired
 	private ExcerciseBookDao excerciseBookDao;
 	
-	public IdEntity excerciseSava(ExcerciseBookEntity entity){
+	@Autowired
+	private LorePointDao lorePointDao;
+	
+	public IdEntity bookSava(ExcerciseBookEntity entity){
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
-		excerciseBookDao.excerciseSava(entity);
+		excerciseBookDao.bookSava(entity);
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
 		//同时往用户-练习本 表插入一条关联数据
@@ -34,22 +39,30 @@ public class ExcerciseBookService {
 		return identity;
 	}
 	
-	public int delExcercise(String excerciseId){
-		int count = excerciseBookDao.delExcerciseById(excerciseId);
+	/**
+	 * 根据练习本ID 删除练习本
+	 * @param bookId
+	 * @return
+	 */
+	@Transactional
+	public int delBook(String bookId){
+		int count = excerciseBookDao.delBookById(bookId);
+		lorePointDao.delPoinDetailtByBookId(Integer.parseInt(bookId));
+		lorePointDao.delPointByBookId(Integer.parseInt(bookId));
 		return count;
 	}
 	
-	public int editExcercise(ExcerciseBookEntity entity){
+	public int editBook(ExcerciseBookEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
 		entity.setUpdateDetailId(systemService.getCurrentUser().getId());
 		entity.setUpdateDetailTime(new Date());
-		int count = excerciseBookDao.editExcercise(entity);
+		int count = excerciseBookDao.editBook(entity);
 		return count;
 	}
 	
-	public ExcerciseBookEntity findExcerciseId(String id){
-		ExcerciseBookEntity entity = excerciseBookDao.findExcerciseId(Integer.parseInt(id));
+	public ExcerciseBookEntity findBook(String id){
+		ExcerciseBookEntity entity = excerciseBookDao.findBook(Integer.parseInt(id));
 		return entity;
 	}
 	
