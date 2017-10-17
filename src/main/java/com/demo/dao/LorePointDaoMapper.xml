@@ -8,6 +8,7 @@
 					bookId,
 					chapterId,
 					number,
+					chapterSort,
 					sort,
 					createTime,
 					createId
@@ -16,6 +17,7 @@
 					#{bookId},
 					#{chapterId},
 					#{number},
+					#{chapterSort},
 					#{sort},
 					#{createTime},
 					#{createId}
@@ -28,6 +30,7 @@
 					bookId,
 					chapterId,
 					number,
+					chapterSort,
 					sort,
 					createTime,
 					createId
@@ -37,6 +40,7 @@
 				 #{item.bookId},
 				 #{item.chapterId},
 				 #{item.number},
+				 #{chapterSort},
 				 #{item.sort},
 				 #{item.createTime},
 				 #{item.createId}
@@ -94,13 +98,15 @@
 	</delete>
 		
 	<delete id="delPoinDetailtByBookId" parameterType="java.lang.Integer">
-	   DELETE FROM  point  pointExerciseDetail  bookId=#{bookId}
+	   DELETE FROM  pointExerciseDetail where  bookId=#{bookId}
 	</delete>
 	
 	<update id="update" parameterType="com.demo.entity.LorePointEntity">
 		 UPDATE point set
 			   <if test="pointName !=null" >pointName=#{pointName},</if>
 			   <if test="number !=null">number=#{number},</if>
+			   <if test="chapterSort !=null">chapterSort=#{chapterSort},</if>
+			   <if test="chapterId !=null">chapterId=#{chapterId},</if>
 			   <if test="sort !=null">sort=#{sort},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
@@ -132,6 +138,8 @@
 		SELECT t.userId ,
 			 t.bookId,
 			 a.pointName,
+			 a.sort,
+			 a.chapterSort,
              t.nextExerciseTime,
              t.exerciseCycle,
 			 t.conCorrectNumber,
@@ -155,6 +163,19 @@
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,t.sort FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
 	</select>
+	
+	<update id="updatePointChapterSort" parameterType="java.lang.Integer">
+		UPDATE point t set t.chapterSort=#{chapterSort} WHERE t.bookId=#{bookId} AND t.chapterId=#{chapterId}
+	</update>
+	
+	<update id="updateDelPointChapterSort" parameterType="java.lang.Integer">
+	   UPDATE point t set t.chapterId=NULL ,t.chapterSort=NULL 
+	     WHERE t.bookId=#{bookId} 
+	       AND t.chapterId NOT IN
+	       <foreach collection="chapterIds" item="chapterId" index="index" open="(" close=")" separator=",">
+			#{chapterId}
+		</foreach>
+	</update>
 	
      
 </mapper>

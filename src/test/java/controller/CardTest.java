@@ -54,7 +54,7 @@ public class CardTest {
 		entity.setLanguage(2);
 		entity.setArea(2);
 		entity.setQuestionType("checkbox ");
-		entity.setDifficultyLevel(8);
+		entity.setDifficultyLevel(null);
 		entity.setTitleText("下面问题那个是正确的");
 		entity.setQuestionText("魅族MRO111的发布日期");
 	    entity.setUpdateId(1);

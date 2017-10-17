@@ -43,10 +43,11 @@ public class ChapterController {
 	 * @param request
 	 * @param response
 	 * @param entity
+	 * @param chapterSort 序号
 	 * @return
-	 */
+	 */	 
 	@RequestMapping("/saveChapter")
-	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
+	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity,String chapterSorts){
 		
 		if(null==entity.getChapterJson()||entity.getChapterJson().equals("")){
 			return ResultObject.warnMessage("章节不能为空");
@@ -54,6 +55,10 @@ public class ChapterController {
 		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
 			return ResultObject.warnMessage("章节所属练习本ID不能为空");
+		}
+		
+		if(null==chapterSorts||chapterSorts.equals("")){
+			return ResultObject.warnMessage("章节所序号不能为空");
 		}
 		
 		/**
@@ -70,8 +75,15 @@ public class ChapterController {
 				IdEntity identity = chapterService.addChapter(entity);
 				return ResultObject.successObject(identity,"新增成功");
 			}else{
-			      chapterService.editChapter(entity);
-
+				String[] chapterIds = chapterSorts.split(",");
+				if(chapterIds.length>0){
+					chapterService.editChapter(entity);
+					chapterService.updateChapterSort(chapterIds, entity.getBookId());
+				}else{
+					return ResultObject.warnMessage("章节所序号不能为空"); 
+				}
+			     
+                  
 				return ResultObject.successMessage("修改成功") ;	
 			}
 		}

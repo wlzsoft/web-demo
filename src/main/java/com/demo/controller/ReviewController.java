@@ -72,13 +72,10 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/excercise")
-	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response,String bookId){
-		
-
+	public Result<?> excercise(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds){
 		Integer userId =systemService.getCurrentUser().getId();
-		
 		List<CardDto> cardList = new ArrayList<>();
-		if(null==bookId||bookId.equals("")||bookId.equals("0")){
+		if(null==bookId||bookId.equals("")||bookId.equals("0")){//-----------------复习用户下全部练习本
 			List<PonitDto> ponitDtoList = reviewService.excercise(userId);
 			for(PonitDto dto: ponitDtoList){
 				CardDto cardDto = reviewService.roundCard(dto.getId());
@@ -86,7 +83,7 @@ public class ReviewController {
 					cardList.add(cardDto);	
 				}
 			}
-		}else{
+		}else{//------------------根据练习本Id复习用户下指定练习本ID
 			/**
 			 * 添加权限
 			 * **/
@@ -94,12 +91,35 @@ public class ReviewController {
 			if(!flag){
 				return ResultObject.warnMessage("无操作权限");
 			}
-			List<PonitDto> ponitDtoList = reviewService.excercise(userId,Integer.parseInt(bookId));
-			for(PonitDto dto: ponitDtoList){
-				CardDto cardDto = reviewService.roundCard(dto.getId());
-				cardList.add(cardDto);
+			
+	       /* 修改于 2017-10-16	
+	        * if(null==chapterId||chapterId.equals("")){
+				   ponitDtoList = reviewService.excercise(userId,Integer.parseInt(bookId));//----根据练习本Id复习用户下指定练习本ID
+				}else{
+				   ponitDtoList	=reviewService.excerciseCard(userId,Integer.parseInt(bookId),chapterId); //--------指定练习本的章节进行练习
+				}
+				
+				for(PonitDto dto: ponitDtoList){
+					CardDto cardDto = reviewService.roundCard(dto.getId());
+					cardList.add(cardDto);
+				}
+			*/
+			if(null==chapterIds||chapterIds.equals("")){
+				List<CardDto> cardDto = reviewService.excerciseCard(userId, Integer.parseInt(bookId));
+				cardList.addAll(cardDto);
+			}else{
+				String[] chapterId = chapterIds.split(",");
+				if(chapterId.length>0){
+					Integer[] chapter = new Integer[chapterId.length];
+					for(int i=0;i<chapterId.length;i++){
+						chapter[i]=Integer.parseInt(chapterId[i]);
+					}
+					List<CardDto> cardDto = reviewService.excerciseCard(userId, Integer.parseInt(bookId), chapter);	
+					cardList.addAll(cardDto);
+				}
 			}
-		}
+		}			
+		
 		
 		//对emoji转换
 		for(CardDto dto :cardList){

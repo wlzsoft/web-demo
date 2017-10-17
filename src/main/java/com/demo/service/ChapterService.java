@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ChapterDao;
+import com.demo.dao.LorePointDao;
 import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
@@ -20,6 +22,9 @@ public class ChapterService {
 	
 	@Autowired
 	private ChapterDao chapterDao;
+	
+	@Autowired
+	private LorePointDao pointDao;
 	
 	/**
 	 * 新增章节信息
@@ -71,6 +76,24 @@ public class ChapterService {
 	 */
 	public ChapterDto bookChapterList(Integer bookId){
 		return chapterDao.bookChapterList(bookId);
+	}
+	
+	
+	/**
+	 * 更改知识点的章节序号
+	 * @param chapterSorts
+	 */
+	public void updateChapterSort(String[] chapterIds,Integer bookId){
+		if(chapterIds.length>0){
+			Integer[] chapterId = new Integer[chapterIds.length];
+			for(int i=0;i<chapterIds.length;i++){
+				chapterId[i]=Integer.parseInt(chapterIds[i]);
+				pointDao.updatePointChapterSort(bookId, chapterId[i], i+1);
+			}
+			
+			//批量处理上已经删除了的章节下的 知识点 章节序号
+			pointDao.updateDelPointChapterSort(bookId, chapterId);
+		}
 	}
 
 }

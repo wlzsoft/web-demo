@@ -51,7 +51,6 @@
 	  
 	  
 	 <select id="reviewPointAll" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	  
 		  	SELECT t.id ,
 		  		t.pointName,
 		  		t.chapterId,
@@ -64,11 +63,11 @@
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
-			ORDER BY a.pointId asc 
+			ORDER BY t.chapterSort,a.pointId asc 
+			<!-- a.nextExerciseTime, -->
 	  </select>
 	  
 	  <select id="reviewPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	  
 		  	SELECT t.id ,
 		  		t.pointName,
 		  		t.chapterId,
@@ -78,12 +77,18 @@
 			  point t ,
 			  pointExerciseDetail a
 			WHERE a.bookId=#{bookId}
+				  <if test="chapterId !=null and chapterId !='' ">
+				      and t.chapterId in 
+				      <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+						#{id}
+					  </foreach>
+				  </if>
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is not NULL
 			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
-			ORDER BY  a.nextExerciseTime asc 
+			ORDER BY t.chapterSort, t.sort  asc 
 	  </select>
 	  
 	  
@@ -97,11 +102,40 @@
 			  point t ,
 			  pointExerciseDetail a
 			WHERE a.bookId=#{bookId}
+			  <if test="chapterId !=null and chapterId !='' ">
+			      and t.chapterId in 
+			      <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+					#{id}
+				  </foreach>
+			  </if>
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is NULL
-			ORDER BY  t.id asc 
+			ORDER BY t.chapterSort, t.sort  asc 
+	  </select>
+	  
+	  <select id="reviewPointBefore" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		  	SELECT t.id ,
+		  		t.pointName,
+		  		t.chapterId,
+		  		t.number,
+		  		t.bookId
+		  	FROM
+			  point t ,
+			  pointExerciseDetail a
+			WHERE a.bookId=#{bookId}
+				  <if test="chapterId !=null and chapterId !='' ">
+				      and t.chapterId in 
+				      <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+						#{id}
+					  </foreach>
+				  </if>
+			  AND t.id = a.pointId 
+			  AND t.number>0
+			  AND a.userId=#{userId}
+			  AND a.nextExerciseTime <![CDATA[ > ]]> NOW()
+			ORDER BY t.chapterSort, t.sort asc 
 	  </select>
 	  
 	  <select id="roundCard" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">

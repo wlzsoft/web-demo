@@ -47,5 +47,5 @@ public interface ChapterDao {
 	 * @return
 	 */
 	public ChapterDto bookChapterList(@Param("bookId")Integer bookId);
-
+	
 }

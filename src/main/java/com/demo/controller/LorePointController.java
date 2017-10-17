@@ -372,7 +372,7 @@ public class LorePointController {
 	 * @return
 	 */
 	@RequestMapping("/pointDetail")
-	public Result<?> findPointIdByDetail(HttpServletRequest request ,HttpServletResponse response,String pointId){
+	public Result<?> pointDetail(HttpServletRequest request ,HttpServletResponse response,String pointId){
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -407,7 +407,7 @@ public class LorePointController {
 	 * @return
 	 */
 	@RequestMapping("/chapterPointList")
-	public Result<?> findChapterPoint(HttpServletRequest request ,HttpServletResponse response,String chapterId,String bookId){
+	public Result<?> chapterPointList(HttpServletRequest request ,HttpServletResponse response,String chapterId,String bookId){
 		if(null==chapterId||chapterId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -454,7 +454,7 @@ public class LorePointController {
 	 * @return
 	 */
 	@RequestMapping("/bookPointList")
-	public Result<?> findExcerciseIdToPonit(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	public Result<?> bookPointList(HttpServletRequest request ,HttpServletResponse response,String bookId){
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}

@@ -16,6 +16,8 @@ public class PointExerciseDetailDto implements Serializable {
 	  public Integer bookId;//练习本Id
 	  public Integer pointId        ; //知识点ID
 	  public String pointName ;//知识点名称
+	  public Integer sort;//知识点排序号
+	  public Integer chaperSort;//章节排序号
 	  public Date nextExerciseTime ;//'计划下次练习时间',
 	  public Integer exerciseCycle ;// '知识点当前练习周期',
 	  public Integer conCorrectNumber ;// '连续回答正确次数',
@@ -73,6 +75,13 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setPointId(Integer pointId) {
 		this.pointId = pointId;
 	}
+	
+	public Integer getChaperSort() {
+		return chaperSort;
+	}
+	public void setChaperSort(Integer chaperSort) {
+		this.chaperSort = chaperSort;
+	}
 	public Date getFirstExerciseDate() {
 		return firstExerciseDate;
 	}
@@ -121,5 +130,11 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setPointName(String pointName) {
 		this.pointName = pointName;
 	}
-
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+	
 }
