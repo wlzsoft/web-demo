@@ -374,6 +374,10 @@ public class ReviewService {
 							 con=COUNT; 
 						 }
 					 } 
+					  if(con>=COUNT){
+						  System.out.println("条件以满足无需再继续查找...........................");
+						 break; 
+					  }
 				}
 			}
 			//02:查询下次练习时间为null的数据
@@ -399,6 +403,10 @@ public class ReviewService {
 									 cardListAll.addAll(cardList_02.subList(0, COUNT-con-1));//取List的前几条数据
 									 con=COUNT; 
 								 } 
+						  }
+						  if(con>=COUNT){
+							  System.out.println("条件以满足无需再继续查找...........................");
+							 break; 
 						  }
 					  }
 				  }
@@ -428,6 +436,10 @@ public class ReviewService {
 								 con=COUNT; 
 							 } 
 					  }
+						  if(con>=COUNT){
+							  System.out.println("条件以满足无需再继续查找...........................");
+							 break; 
+						  }
 				   }
 			   }
 		  }
@@ -471,6 +483,10 @@ public class ReviewService {
 							 con=COUNT; 
 						 }
 					 } 
+					  if(con>=COUNT){
+						  System.out.println("条件以满足无需再继续查找...........................");
+						 break; 
+					  }
 				}
 			}
 			//02:查询下次练习时间为null的数据
@@ -496,6 +512,10 @@ public class ReviewService {
 									 cardListAll.addAll(cardList_02.subList(0, COUNT-con-1));//取List的前几条数据
 									 con=COUNT; 
 								 } 
+						  }
+						  if(con>=COUNT){
+							  System.out.println("条件以满足无需再继续查找...........................");
+							 break; 
 						  }
 					  }
 				  }
@@ -524,6 +544,10 @@ public class ReviewService {
 								 cardListAll.addAll(cardList_03.subList(0, COUNT-con-1));//取List的前几条数据
 								 con=COUNT; 
 							 } 
+					  }
+					  if(con>=COUNT){
+						  System.out.println("条件以满足无需再继续查找...........................");
+						 break; 
 					  }
 				   }
 			   }
