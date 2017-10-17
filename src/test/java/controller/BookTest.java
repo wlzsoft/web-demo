@@ -30,14 +30,14 @@ public class BookTest {
 			entity.setCreateTime(new Date());
 			entity.setBookName("魅族科技_"+i);
 			entity.setSharedType(0);
-			excerciseService.excerciseSava(entity);	
+			excerciseService.bookSava(entity);	
 		}
 	}
 	
 	@Test
 	public void delBook(){
 		String bookId = "1";
-		excerciseService.delExcercise(bookId);
+		excerciseService.delBook(bookId);
 	}
 	
 	@Test
@@ -49,14 +49,14 @@ public class BookTest {
 		entity.setSharedType(0);
 		entity.setUpdateId(2);
 		entity.setUpdateTime(new Date());
-		excerciseService.editExcercise(entity);
+		excerciseService.editBook(entity);
 	}
 	
 	
 	@Test
 	public void findbook(){
 		String excerciseId = "22";
-		ExcerciseBookEntity entity = excerciseService.findExcerciseId(excerciseId);
+		ExcerciseBookEntity entity = excerciseService.findBook(excerciseId);
 		System.out.println(entity.getId()+"_"+entity.getBookName());
 	}
 	

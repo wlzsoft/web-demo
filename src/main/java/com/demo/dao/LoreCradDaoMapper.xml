@@ -67,11 +67,11 @@
 			   <if test="language !=null" >language=#{language},</if>
 			   <if test="area !=null">area=#{area},</if>
 			   <if test="questionType !=null">questionType=#{questionType},</if>
-			   <if test="difficultyLevel !=null">difficultyLevel=#{difficultyLevel},</if>
-			   <if test="titleText !=null">titleText=#{titleText},</if>
-			   <if test="titleVoiceSrc !=null">titleVoiceSrc=#{titleVoiceSrc},</if>
+			   <if test="difficultyLevel !=null and difficultyLevel !='' ">difficultyLevel=#{difficultyLevel},</if>
+			   <if test="titleText !=null and titleText !='' ">titleText=#{titleText},</if>
+			   <if test="titleVoiceSrc !=null and titleVoiceSrc!='' ">titleVoiceSrc=#{titleVoiceSrc},</if>
 			   <if test="titleAutoPlay !=null">titleAutoPlay=#{titleAutoPlay},</if>
-			   <if test="questionText !=null">questionText=#{questionText},</if>
+			   <if test="questionText !=null and questionText !='' ">questionText=#{questionText},</if>
 			   <if test="questionVoiceSrc !=null">questionVoiceSrc=#{questionVoiceSrc},</if>
 			   <if test="titleVoiceFlag !=null">titleVoiceFlag=#{titleVoiceFlag},</if>
 			   <if test="questionAutoPlay !=null">questionAutoPlay=#{questionAutoPlay},</if>

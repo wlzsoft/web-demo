@@ -14,9 +14,9 @@
 	
 	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
 			 UPDATE chapter set
-			   <if test="chapterJson !=null">chapterJson=#{chapterJson},</if>
-			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
-			   <if test="updateId !=null">updateId=#{updateId}</if>
+			   <if test="chapterJson !=null ">chapterJson=#{chapterJson},</if>
+			   <if test="updateTime !=null ">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null  ">updateId=#{updateId}</if>
 		   WHERE bookId=#{bookId}
 	</update>
 	

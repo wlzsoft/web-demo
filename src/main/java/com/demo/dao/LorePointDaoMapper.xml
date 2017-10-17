@@ -94,13 +94,14 @@
 	</delete>
 		
 	<delete id="delPoinDetailtByBookId" parameterType="java.lang.Integer">
-	   DELETE FROM  point  pointExerciseDetail  bookId=#{bookId}
+	   DELETE FROM  pointExerciseDetail where  bookId=#{bookId}
 	</delete>
 	
 	<update id="update" parameterType="com.demo.entity.LorePointEntity">
 		 UPDATE point set
 			   <if test="pointName !=null" >pointName=#{pointName},</if>
 			   <if test="number !=null">number=#{number},</if>
+			   <if test="chapterId !=null">chapterId=#{chapterId},</if>
 			   <if test="sort !=null">sort=#{sort},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
