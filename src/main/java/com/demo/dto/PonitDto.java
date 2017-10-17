@@ -12,6 +12,8 @@ public class PonitDto {
 	
 	public Integer  chapterId ;//章节ID
 	
+	public Integer chapterSort;//章节序号
+	
 	public Integer  bookId ;//练习本ID
 	
 	public  Integer number; //知识点卡片数量

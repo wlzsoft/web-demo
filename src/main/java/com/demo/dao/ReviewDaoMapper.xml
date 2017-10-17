@@ -63,7 +63,7 @@
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
-			ORDER BY a.pointId asc 
+			ORDER BY t.chapterSort,a.pointId asc 
 			<!-- a.nextExerciseTime, -->
 	  </select>
 	  
@@ -88,7 +88,7 @@
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is not NULL
 			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
-			ORDER BY t.sort  asc 
+			ORDER BY t.chapterSort, t.sort  asc 
 	  </select>
 	  
 	  
@@ -112,7 +112,7 @@
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is NULL
-			ORDER BY t.sort  asc 
+			ORDER BY t.chapterSort, t.sort  asc 
 	  </select>
 	  
 	  <select id="reviewPointBefore" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -135,7 +135,7 @@
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime <![CDATA[ > ]]> NOW()
-			ORDER BY  t.sort asc 
+			ORDER BY t.chapterSort, t.sort asc 
 	  </select>
 	  
 	  <select id="roundCard" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">

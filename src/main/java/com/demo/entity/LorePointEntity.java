@@ -17,6 +17,8 @@ public class LorePointEntity implements Serializable{
 	 
 	 public Integer chapterId ;//章节主键ID
 	 
+	 public Integer chapterSort; //章节序号
+	 
 	 public String  pointName    ;//知识点名称
 	 
 	 public Integer  number      ;//知识点卡片数量
@@ -130,6 +132,13 @@ public class LorePointEntity implements Serializable{
 		this.updateId = updateId;
 	}
 
-    
+	public Integer getChapterSort() {
+		return chapterSort;
+	}
+
+	public void setChapterSort(Integer chapterSort) {
+		this.chapterSort = chapterSort;
+	}
+	
 	
 }

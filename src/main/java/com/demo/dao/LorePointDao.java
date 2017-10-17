@@ -76,5 +76,17 @@ public interface LorePointDao {
 	public void delPointByBookId(@Param("bookId")Integer bookId);
 	
 	
+	/**
+	 * 更新知识点章节的序号
+	 * @param bookId
+	 * @param pointId
+	 * @param chapterId
+	 * @param chapterSort
+	 */
+	public void updatePointChapterSort(@Param("bookId")Integer bookId ,@Param("chapterId")Integer chapterId ,@Param("chapterSort")Integer chapterSort);
+	
+	public void updateDelPointChapterSort(@Param("bookId")Integer bookId ,@Param("chapterIds")Integer[] chapterIds );
+	
+	
 	
 }
