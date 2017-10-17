@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import com.smartframe.basics.util.EmojiUtil;
-import com.smartframe.dto.ResultObject;
 
 public class LorePointEntity implements Serializable{
 

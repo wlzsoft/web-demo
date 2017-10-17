@@ -87,6 +87,8 @@ public interface LorePointDao {
 	
 	public void updateDelPointChapterSort(@Param("bookId")Integer bookId ,@Param("chapterIds")Integer[] chapterIds );
 	
+	public void updateDelPointChapterSortAll(@Param("bookId")Integer bookId );
+	
 	
 	
 }

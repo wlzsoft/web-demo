@@ -49,16 +49,16 @@ public class ChapterController {
 	@RequestMapping("/saveChapter")
 	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity,String chapterSorts){
 		
-		if(null==entity.getChapterJson()||entity.getChapterJson().equals("")){
-			return ResultObject.warnMessage("章节不能为空");
+		if(null!=entity.getChapterJson()||!entity.getChapterJson().equals("")){
+			 if(entity.getChapterJson().length()>10){
+				 if(null==chapterSorts||chapterSorts.equals("")){
+					 return ResultObject.warnMessage("章节ID不能为空");
+				 }
+			 }
 		}
 		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
-			return ResultObject.warnMessage("章节所属练习本ID不能为空");
-		}
-		
-		if(null==chapterSorts||chapterSorts.equals("")){
-			return ResultObject.warnMessage("章节所序号不能为空");
+			return ResultObject.warnMessage("练习本ID不能为空");
 		}
 		
 		/**
@@ -75,15 +75,20 @@ public class ChapterController {
 				IdEntity identity = chapterService.addChapter(entity);
 				return ResultObject.successObject(identity,"新增成功");
 			}else{
-				String[] chapterIds = chapterSorts.split(",");
-				if(chapterIds.length>0){
-					chapterService.editChapter(entity);
-					chapterService.updateChapterSort(chapterIds, entity.getBookId());
+				if(null==chapterSorts||chapterSorts.equals("")){
+					chapterService.updateChapterSort( entity.getBookId());	
 				}else{
-					return ResultObject.warnMessage("章节所序号不能为空"); 
+					String[] chapterIds = chapterSorts.split(",");
+					if(chapterIds.length>0){
+						chapterService.editChapter(entity);
+						chapterService.updateChapterSort(chapterIds, entity.getBookId());
+					}else{
+						if(entity.getChapterJson().length()<10){
+							chapterService.updateChapterSort( entity.getBookId());	
+						}
+					}
 				}
-			     
-                  
+	
 				return ResultObject.successMessage("修改成功") ;	
 			}
 		}

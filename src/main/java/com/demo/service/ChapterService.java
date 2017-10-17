@@ -95,5 +95,15 @@ public class ChapterService {
 			pointDao.updateDelPointChapterSort(bookId, chapterId);
 		}
 	}
+	
+	
+	/**
+	 * 更改知识点的章节序号
+	 * @param chapterSorts
+	 */
+	public void updateChapterSort(Integer bookId){
+			//批量处理上已经删除了的章节下的 知识点 章节序号
+			pointDao.updateDelPointChapterSortAll(bookId);
+	}
 
 }
