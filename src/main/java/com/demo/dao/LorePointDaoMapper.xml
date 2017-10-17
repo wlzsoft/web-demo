@@ -169,7 +169,7 @@
 	</update>
 	
 	<update id="updateDelPointChapterSort" parameterType="java.lang.Integer">
-	   UPDATE point t set t.chapterId=NULL ,t.chapterSort=NULL 
+	   UPDATE point t set t.chapterId=0 ,t.chapterSort=0 
 	     WHERE t.bookId=#{bookId} 
 	       AND t.chapterId NOT IN
 	       <foreach collection="chapterIds" item="chapterId" index="index" open="(" close=")" separator=",">
@@ -177,5 +177,9 @@
 		</foreach>
 	</update>
 	
+    <update id="updateDelPointChapterSortAll" parameterType="java.lang.Integer">
+	   UPDATE point t set t.chapterId=0 ,t.chapterSort=0 
+	     WHERE t.bookId=#{bookId} 
+	</update>
      
 </mapper>
