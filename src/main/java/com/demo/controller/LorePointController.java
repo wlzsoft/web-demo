@@ -142,11 +142,9 @@ public class LorePointController {
 				PonitBatchDto dto = new PonitBatchDto();
 				dto.setId(identity.getId());
 				dto.setPointName(pointName);
-				if(null==entity.getSort()||entity.getSort().equals("")){
-					dto.setSort(0);
-				}else{
-					dto.setSort(entity.getSort());
-				}
+				
+				dto.setChapterSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());
+				dto.setSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());
 				
 				idList.add(dto);
 			}
