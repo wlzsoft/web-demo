@@ -20,6 +20,7 @@ public class PointExerciseDetailDto implements Serializable {
 	  public Integer chaperSort;//章节排序号
 	  public Date nextExerciseTime ;//'计划下次练习时间',
 	  public Integer exerciseCycle ;// '知识点当前练习周期',
+	  public Integer skilled;//熟练度（0，1，2，3）
 	  public Integer conCorrectNumber ;// '连续回答正确次数',
 	  public Integer conErrorNumber ;// '连续回答错误次数',
 	  public Date firstExerciseDate  ;//首次练习日期
@@ -136,5 +137,10 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	
+	public Integer getSkilled() {
+		return skilled;
+	}
+	public void setSkilled(Integer skilled) {
+		this.skilled = skilled;
+	}
 }

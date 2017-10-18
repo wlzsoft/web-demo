@@ -18,6 +18,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	  public Integer pointId        ; //知识点ID
 	  public Date nextExerciseTime ;//'计划下次练习时间',
 	  public Integer exerciseCycle ;// '知识点当前练习周期',
+	  public Integer skilled;//熟练度（0，1，2，3）
 	  public Integer conCorrectNumber ;// '连续回答正确次数',
 	  public Integer conErrorNumber ;// '连续回答错误次数',
 	  public Date firstExerciseDate  ;//首次练习日期
@@ -35,6 +36,13 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getSkilled() {
+		return skilled;
+	}
+	public void setSkilled(Integer skilled) {
+		this.skilled = skilled;
 	}
 	public Integer getUserId() {
 		return userId;

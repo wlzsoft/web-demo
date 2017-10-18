@@ -3,86 +3,56 @@ package com.demo.util.enums;
 public enum LearningCycle {
 	
 	/**
-	 * 第一次练习
+	 * 第一次练习1天
 	 */
-	FIRST_TIME(3) ,
+	FIRST_TIME(24) ,
 	
 	/**
-	 * 第二次练习
+	 * 第二次练习2天
 	 */
-	SECOND_TIME(6),
-	
-	
-	/**
-	 * 第三次练习
-	 */
-	Third_TIME(12),
+	SECOND_TIME(48),
 	
 	
 	/**
-	 * 第四次练习
+	 * 第三次练习4天
+	 */
+	Third_TIME(96),
+	
+	
+	/**
+	 * 第四次练习8天
 	 */
 	FOURTH_TIME(24),
 	
 	
 	/**
-	 * 第五次练习
+	 * 第五次练习16天
 	 */
 	FIFTH_TIME(48),
 
 	
 	/**
-	 * 第六次练习
+	 * 第六次练习32天
 	 */
 	SIXTH_TIME(96),
 	
 	
 	/**
-	 * 第七次练习
+	 * 第七次练习64天
 	 */
     SEVENTH_TIME(192),	
 
     
 	/**
-	 * 第八次练习
+	 * 第八次练习128天
 	 */
     EIGHTH_TIME(384),
     
     
 	/**
-	 * 第九次练习
+	 * 第九次练习256天
 	 */
-    NINTH_TIME(764),
-    
-    
-	/**
-	 * 第十次练习
-	 */
-    TENTH_TIME(1536),
-    
-    
-	/**
-	 * 第十一次练习
-	 */
-    ELEVENTH_TIME(3072),
-    
-    
-	/**
-	 * 第十二次练习
-	 */
-    TWELFTH_TIME(6144),
-    
-    
-	/**
-	 * 第十三次练习
-	 */
-    THIRTEENTH_TIME(12288),
-	
-    
-	/**
-	 * 第十四次练习
-	 */
-    FOURTEENTH_TIME(24576);
+    NINTH_TIME(764);
 	
     
 	public final int timesanmp;

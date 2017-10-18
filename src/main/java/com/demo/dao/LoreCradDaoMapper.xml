@@ -14,6 +14,8 @@
 				titleVoiceFlag,
 				titleAutoPlay,
 				questionText,
+				questionLongText,
+				questionDescType,
 				questionVoiceSrc,
 				questionAutoPlay,
 				questionImages,
@@ -31,6 +33,8 @@
 				#{titleVoiceFlag},
 				#{titleAutoPlay},
 				#{questionText},
+				#{questionLongText},
+				#{questionDescType},
 				#{questionVoiceSrc},
 				#{questionAutoPlay},
 				#{questionImages},
@@ -42,7 +46,8 @@
 	
   <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
           select t.id,t.pointId ,b.pointName ,t.questionType,
-                t.difficultyLevel,t.titleText,titleVoiceSrc,titleVoiceFlag,t.questionText,t.questionImages,t.answers
+                t.difficultyLevel,t.titleText,titleVoiceSrc,t.questionLongText,
+				t.questionDescType,titleVoiceFlag,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.id=#{id}
   </select>
@@ -52,8 +57,8 @@
   </select>
    
    <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
-          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,
-                t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,t.questionLongText
+                t.questionDescType,t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId}
    </select>  
@@ -72,6 +77,8 @@
 			   <if test="titleVoiceSrc !=null and titleVoiceSrc!='' ">titleVoiceSrc=#{titleVoiceSrc},</if>
 			   <if test="titleAutoPlay !=null">titleAutoPlay=#{titleAutoPlay},</if>
 			   <if test="questionText !=null and questionText !='' ">questionText=#{questionText},</if>
+			   <if test="questionLongText !=null">questionLongText=#{questionLongText},</if>
+			   <if test="questionDescType !=null">questionDescType=#{questionDescType},</if>
 			   <if test="questionVoiceSrc !=null">questionVoiceSrc=#{questionVoiceSrc},</if>
 			   <if test="titleVoiceFlag !=null">titleVoiceFlag=#{titleVoiceFlag},</if>
 			   <if test="questionAutoPlay !=null">questionAutoPlay=#{questionAutoPlay},</if>

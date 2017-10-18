@@ -71,6 +71,7 @@
 					exerciseCycle,
 					pointId,
 					bookId,
+					skilled,
 					nextExerciseTime
 			)VALUES
 			<foreach collection="entityList" item="item" index="index" separator=",">
@@ -78,6 +79,7 @@
 				 #{item.exerciseCycle},
 				 #{item.pointId},
 				 #{item.bookId},
+				 #{skilled},
 				 #{item.nextExerciseTime}
 				)
 			</foreach>
@@ -150,6 +152,7 @@
 			 t.correctRate,
 			 t.correctNumber,
 			 t.errorNumber,
+			 t.skilled,
 			 t.avgConsumingTime
 		FROM pointExerciseDetail t ,point a 
 		WHERE  a.id=t.pointId

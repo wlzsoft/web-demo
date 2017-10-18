@@ -57,86 +57,76 @@ public class ReviewService {
 		//更新用户知识点联系详情
 		Integer userId =systemService.getCurrentUser().getId();
 		PointExerciseDetailDto  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId),userId);
-		int exerciseNumber =detailEntity.getExerciseNumber();
+		int exerciseCycle =detailEntity.getExerciseCycle();//获取练习周期
 		 if(right==1){//正确
-			 int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());
-			 if(cc!=-1){
-					 if(detailEntity.getConCorrectNumber()>=2){
-						 if(exerciseNumber==2){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIFTH_TIME.timesanmp));
-						 }else if(exerciseNumber==3){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SIXTH_TIME.timesanmp));
-						 }else if(exerciseNumber==4){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SEVENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==5){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.EIGHTH_TIME.timesanmp));
-						 }else if(exerciseNumber==6){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.NINTH_TIME.timesanmp));
-						 }else if(exerciseNumber==7){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.TENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==8){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.ELEVENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==9){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.TWELFTH_TIME.timesanmp));
-						 }else if(exerciseNumber==10){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.THIRTEENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==11){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTEENTH_TIME.timesanmp));
-						 } 
-						 
-						 detailEntity.setExerciseCycle(detailEntity.getExerciseCycle()+2);
-						 
-					 }else{
-						 if(exerciseNumber==0){
-							 detailEntity.setFirstExerciseDate(new Date());
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp));//下次练习时间
-						 }else if(exerciseNumber==1){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));
-						 }else if(exerciseNumber==2){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.Third_TIME.timesanmp));
-						 }else if(exerciseNumber==3){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTH_TIME.timesanmp));
-						 }else if(exerciseNumber==4){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIFTH_TIME.timesanmp));
-						 }else if(exerciseNumber==5){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SIXTH_TIME.timesanmp));
-						 }else if(exerciseNumber==6){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SEVENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==7){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.EIGHTH_TIME.timesanmp));
-						 }else if(exerciseNumber==8){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.NINTH_TIME.timesanmp));
-						 }else if(exerciseNumber==9){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.TENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==10){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.ELEVENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==11){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.TWELFTH_TIME.timesanmp));
-						 }else if(exerciseNumber==12){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.THIRTEENTH_TIME.timesanmp));
-						 }else if(exerciseNumber==13){
-							 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTEENTH_TIME.timesanmp));
-						 } 
-						 detailEntity.setExerciseCycle(detailEntity.getExerciseCycle()+1);
+			  /**
+			   * 如果答题错误 练习周期往前升一级，熟练度为 +1 ，熟练度最高为3 最低为0 
+			   * 
+			   * **/
+			  int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());//比较时间大小  -1:小于 ; 1: 大于; 0:相等
+			  if(cc!=-1){//***当前时间 大于 或 等于 下次练习时间，即 在这个周期之内
+					if(exerciseCycle==1){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));//计划下次练习时间
+					 }else if(exerciseCycle==2){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.Third_TIME.timesanmp));
+					 }else if(exerciseCycle==3){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTH_TIME.timesanmp));
+					 }else if(exerciseCycle==4){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIFTH_TIME.timesanmp));
+					 }else if(exerciseCycle==5){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SIXTH_TIME.timesanmp));
+					 }else if(exerciseCycle==6){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SEVENTH_TIME.timesanmp));
+					 }else if(exerciseCycle==7){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.EIGHTH_TIME.timesanmp));
+					 }else if(exerciseCycle==8){
+						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.NINTH_TIME.timesanmp));
 					 }
-					 
-					 detailEntity.setExerciseNumber(detailEntity.getExerciseNumber()+1); 
-					 detailEntity.setConCorrectNumber(detailEntity.getConCorrectNumber()+1);
-					 detailEntity.setConErrorNumber(0);
-					 detailEntity.setLastExerciseDate(new Date());
-					 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);
-				}
-		 }else{//错误
-			 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp)); 
-			 detailEntity.setExerciseNumber(detailEntity.getExerciseNumber()+1); 
-			 detailEntity.setExerciseCycle(1);
-			 detailEntity.setConCorrectNumber(0);
-			 detailEntity.setConErrorNumber(detailEntity.getConErrorNumber()+1);
-			 detailEntity.setErrorNumber(detailEntity.getErrorNumber()+1);
-			 detailEntity.setLastExerciseDate(new Date()); 
+					
+					 detailEntity.setExerciseCycle((exerciseCycle<9)?exerciseCycle+1:exerciseCycle);//练习周期 【周期最高为 9 】
+			  }
+			 detailEntity.setExerciseNumber(detailEntity.getExerciseNumber()+1); //练习次数
+			 detailEntity.setConCorrectNumber(detailEntity.getConCorrectNumber()+1);//连续回答正确次数
+			 detailEntity.setConErrorNumber(0);//连续回答错误次数
+			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
+			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
+			 detailEntity.setSkilled((detailEntity.getSkilled()<3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3）
+		
+		 }else{
+			     /** 错误
+			      * 如果答题错误 练习周期往后降一级，熟练度为 0 
+			      * 
+			      * **/
+				 if(exerciseCycle==2){//因为周期最少为1，所以从2开始
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp));//计划下次练习时间
+				 }else if(exerciseCycle==3){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));
+				 }else if(exerciseCycle==4){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.Third_TIME.timesanmp));
+				 }else if(exerciseCycle==5){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTH_TIME.timesanmp));
+				 }else if(exerciseCycle==6){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIFTH_TIME.timesanmp));
+				 }else if(exerciseCycle==7){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SIXTH_TIME.timesanmp));
+				 }else if(exerciseCycle==8){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SEVENTH_TIME.timesanmp));
+				 }else if(exerciseCycle==9){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.EIGHTH_TIME.timesanmp));
+				 }
+			 
+				 detailEntity.setExerciseCycle((detailEntity.getExerciseCycle()>1)?detailEntity.getExerciseCycle()-1:detailEntity.getExerciseCycle());//练习周期
+				 detailEntity.setExerciseNumber(detailEntity.getExerciseNumber()+1); //练习次数
+				 detailEntity.setSkilled(0);//熟练度（0，1，2，3）
+				 detailEntity.setConCorrectNumber(0);//连续回答正确次数
+				 detailEntity.setConErrorNumber(detailEntity.getConErrorNumber()+1);//连续回答错误次数
+				 detailEntity.setErrorNumber(detailEntity.getErrorNumber()+1);//错误数
+				 detailEntity.setLastExerciseDate(new Date()); //上一次练习的日期
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
 	}
+	
+	
 	
 	
 	/**
