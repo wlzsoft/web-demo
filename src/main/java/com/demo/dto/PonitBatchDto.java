@@ -7,6 +7,8 @@ public class PonitBatchDto {
 	public String pointName ;//知识点名称
 	
 	public Integer sort; //排序
+	
+	public Integer chapterSort;//章节排序号
 
 	public Integer getId() {
 		return id;
@@ -32,5 +34,12 @@ public class PonitBatchDto {
 		this.sort = sort;
 	}
 
+	public Integer getChapterSort() {
+		return chapterSort;
+	}
+
+	public void setChapterSort(Integer chapterSort) {
+		this.chapterSort = chapterSort;
+	}
 
 }
