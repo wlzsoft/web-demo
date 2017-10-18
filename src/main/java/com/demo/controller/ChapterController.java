@@ -76,6 +76,7 @@ public class ChapterController {
 				return ResultObject.successObject(identity,"新增成功");
 			}else{
 				if(null==chapterSorts||chapterSorts.equals("")){
+					chapterService.editChapter(entity);
 					chapterService.updateChapterSort( entity.getBookId());	
 				}else{
 					String[] chapterIds = chapterSorts.split(",");
