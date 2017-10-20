@@ -14,6 +14,7 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 
 @Service("excerciseService")
@@ -76,9 +77,10 @@ public class ExcerciseBookService {
 		return list;
 	}
 	
-	public List<PonitDto> findExcerciseIdToPonit(Integer excerciseId){
-		return excerciseBookDao.findExcerciseIdToPonit(excerciseId);
+	public List<PonitDto> findExcerciseIdToPonit(Integer bookId){
+		return excerciseBookDao.findExcerciseIdToPonit(bookId);
 	}
+
 	
 	/**
 	 * 获取所有共享类型练习本

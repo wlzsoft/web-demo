@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import com.smartframe.basics.util.EmojiUtil;
 
-public class PonitDto {
+public class PonitSkilledDto {
 	
 	public Integer id ;//知识点主键ID
 	
@@ -19,6 +19,10 @@ public class PonitDto {
 	public  Integer number; //知识点卡片数量
 	
 	public Integer sort; //排序
+	
+	public Integer exerciseCycle;//知识点当前练习周期
+	
+	public Integer skilled;//熟练度（0，1，2，3）
 
 	public Integer getId() {
 		return id;
@@ -83,7 +87,7 @@ public class PonitDto {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	
+
 	public Integer getChapterSort() {
 		return chapterSort;
 	}
@@ -92,59 +96,24 @@ public class PonitDto {
 		this.chapterSort = chapterSort;
 	}
 
+	public Integer getExerciseCycle() {
+		return exerciseCycle;
+	}
+
+	public void setExerciseCycle(Integer exerciseCycle) {
+		this.exerciseCycle = exerciseCycle;
+	}
+
+	public Integer getSkilled() {
+		return skilled;
+	}
+
+	public void setSkilled(Integer skilled) {
+		this.skilled = skilled;
+	}
+
 	public Integer getChapterId() {
 		return chapterId;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
-		result = prime * result
-				+ ((chapterId == null) ? 0 : chapterId.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((number == null) ? 0 : number.hashCode());
-		result = prime * result
-				+ ((pointName == null) ? 0 : pointName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PonitDto other = (PonitDto) obj;
-		if (bookId == null) {
-			if (other.bookId != null)
-				return false;
-		} else if (!bookId.equals(other.bookId))
-			return false;
-		if (chapterId == null) {
-			if (other.chapterId != null)
-				return false;
-		} else if (!chapterId.equals(other.chapterId))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (number == null) {
-			if (other.number != null)
-				return false;
-		} else if (!number.equals(other.number))
-			return false;
-		if (pointName == null) {
-			if (other.pointName != null)
-				return false;
-		} else if (!pointName.equals(other.pointName))
-			return false;
-		return true;
 	}
 
 }

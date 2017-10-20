@@ -16,7 +16,7 @@ public class CardDto {
 	public String titleVoiceSrc;//卡片标题语音地址
 	public String questionText	;//	问题提示
 	public String questionLongText;//问题描述：图片、音频、长文本
-	public Integer questionDescType;//问题描述类型(1:图片 2:音频 3:长文本)
+	public String questionDescType;//问题描述类型(text 文本 	image 图片 	audio 音频)
 	public String questionImages	;//问题图片组	
 	public String answers;//卡片答案	
 
@@ -108,10 +108,10 @@ public class CardDto {
 	public void setQuestionLongText(String questionLongText) {
 		this.questionLongText = questionLongText;
 	}
-	public Integer getQuestionDescType() {
+	public String getQuestionDescType() {
 		return questionDescType;
 	}
-	public void setQuestionDescType(Integer questionDescType) {
+	public void setQuestionDescType(String questionDescType) {
 		this.questionDescType = questionDescType;
 	}
 	

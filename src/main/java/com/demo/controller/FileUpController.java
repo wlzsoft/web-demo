@@ -27,7 +27,7 @@ import com.smartframe.dto.ResultObject;
 public class FileUpController {
 	
 	@RequestMapping("/uploadFile")
-	public Result<?> uploadImages(@RequestParam(value = "file") CommonsMultipartFile file,HttpServletRequest request ,HttpServletResponse response){
+	public Result<?> uploadImages(@RequestParam(value = "file") CommonsMultipartFile file,HttpServletRequest request ,HttpServletResponse response,String format){
 		
 		ImageUrlDto dto = new ImageUrlDto();
 		
@@ -39,15 +39,28 @@ public class FileUpController {
 		     String key = unixTimestamp+""+uuid;//上传到七牛后保存的文件名
              String prefix="";
              String contentType = file.getContentType();
-             if(contentType.equals("audio/mp3")){
-            	 prefix=".mp3";
-             }else if(contentType.equals("audio/wav")){
-            	 prefix=".wav";
-             }else if(contentType.equals("video/mpeg4")){
-            	 prefix=".m4a";
+             if(format.equals("audio")){
+                 if(contentType.equals("audio/mp3")){
+                	 prefix=".mp3";
+                 }else if(contentType.equals("audio/wav")){
+                	 prefix=".wav";
+                 }else if(contentType.equals("video/mpeg4")){
+                	 prefix=".m4a";
+                 }else{
+                	 ResultObject.warnMessage("不上传失败，请选择 mp3、wav 或 m4a 格式的音频");
+                 } 
+             }else if(format.equals("image")){
+                 if(contentType.equals("image/png")){
+                	 prefix=".png";
+                 }else if(contentType.equals("image/jpeg")){
+                	 prefix=".jpg";
+                 }else{
+                	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
+                 }
              }else{
-            	 ResultObject.warnMessage("不上传失败，请选择 mp3、wav 或 m4a 格式的音频");
+            	 ResultObject.warnMessage("不上传失败，文件类型错误"); 
              }
+
              
              key=key+prefix;//生成文件名
              

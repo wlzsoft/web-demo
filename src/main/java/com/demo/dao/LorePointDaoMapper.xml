@@ -79,7 +79,7 @@
 				 #{item.exerciseCycle},
 				 #{item.pointId},
 				 #{item.bookId},
-				 #{skilled},
+				 #{item.skilled},
 				 #{item.nextExerciseTime}
 				)
 			</foreach>
@@ -157,6 +157,7 @@
 		FROM pointExerciseDetail t ,point a 
 		WHERE  a.id=t.pointId
 		    AND t.pointId=#{id}
+		    AND t.userId=#{userId}
 	</select>
 	
 	<select id="pointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
@@ -184,5 +185,10 @@
 	   UPDATE point t set t.chapterId=0 ,t.chapterSort=0 
 	     WHERE t.bookId=#{bookId} 
 	</update>
+	
+	<select id="findBookIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,t.sort,t.chapterSort,a.exerciseCycle,a.skilled FROM point t ,pointExerciseDetail a 
+			 WHERE t.id=a.pointId and  t.bookId=#{bookId} and a.userId=#{userId}
+	</select>
      
 </mapper>
