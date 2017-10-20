@@ -140,7 +140,7 @@
 	  </select>
 	  
 	  <select id="roundCard" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
-          select t.id,t.pointId ,b.pointName ,t.questionType,t.titleVoiceSrc,t.titleVoiceFlag,t.questionDescType,t.questionLongText,
+          select t.id,t.pointId ,b.pointName ,t.questionType,t.titleVoiceSrc,t.titleVoiceFlag,t.questionDescType,t.questionLongText,t.questionVoiceSrc,
                 t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId} AND b.number>0
