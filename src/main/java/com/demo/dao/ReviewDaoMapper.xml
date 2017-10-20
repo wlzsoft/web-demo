@@ -32,6 +32,7 @@
 			   lastExerciseDate=#{lastExerciseDate},
 			   exerciseNumber=#{exerciseNumber},
 			   correctNumber=#{correctNumber},
+			   skilled=#{skilled},
 			   errorNumber=#{errorNumber}
 		     where pointId=#{pointId} and userId=#{userId}
 	  </update>
