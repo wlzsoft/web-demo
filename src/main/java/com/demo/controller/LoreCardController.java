@@ -61,7 +61,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/addCard")
-	public Result<?> savaLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
+	public Result<?> addCard(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
 		if(null==loreCardEntity.getPointId()||loreCardEntity.getPointId().equals("")){
 			return ResultObject.warnMessage("所属知识点ID不能为空");
 		}
@@ -103,7 +103,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/delCard")
-	public Result<?> delLoreCrad(HttpServletRequest request ,HttpServletResponse response,String cardId){
+	public Result<?> delCard(HttpServletRequest request ,HttpServletResponse response,String cardId){
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -132,7 +132,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/editCard")
-	public Result<?> editLoreCrad(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
+	public Result<?> editCard(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("ID不能为空");
 		}
@@ -181,7 +181,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/findCard")
-	public Result<?> findLoreCradById(HttpServletRequest request ,HttpServletResponse response,String cardId){
+	public Result<?> findCard(HttpServletRequest request ,HttpServletResponse response,String cardId){
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -233,7 +233,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/pointCardList")
-	public Result<?> findLoreCradByPointId(HttpServletRequest request ,HttpServletResponse response,String pointId){
+	public Result<?> pointCardList(HttpServletRequest request ,HttpServletResponse response,String pointId){
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -284,7 +284,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/openCard")
-	public Result<?> getOpenLoreCrad(HttpServletRequest request ,HttpServletResponse response){
+	public Result<?> openCard(HttpServletRequest request ,HttpServletResponse response){
 		List<LoreCardEntity> entityList = loreCradService.getOpenLoreCrad();
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
@@ -301,7 +301,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/getCardInfo")
-	public Result<?> getLoreCradDetailByPointId(HttpServletRequest request ,HttpServletResponse response,String cardId){
+	public Result<?> getCardInfo(HttpServletRequest request ,HttpServletResponse response,String cardId){
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -333,7 +333,7 @@ public class LoreCardController {
 	 * @return
 	 */
 	@RequestMapping("/getCardAnswer")
-	public Result<?> getLoreCradAnswerByPointId(HttpServletRequest request ,HttpServletResponse response,String cardId){
+	public Result<?> getCardAnswer(HttpServletRequest request ,HttpServletResponse response,String cardId){
 		if(null==cardId||cardId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
