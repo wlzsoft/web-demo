@@ -14,6 +14,7 @@ import com.demo.dao.LorePointDao;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
@@ -118,7 +119,9 @@ public class LorePointService {
 	}
 	
 	public PointExerciseDetailDto findPointIdByDetail(Integer id){
-		return lorePointDao.findPointIdByDetail(id);
+		Integer userId =systemService.getCurrentUser().getId();
+		
+		return lorePointDao.findPointIdByDetail(id,userId);
 	}
 	
 	
@@ -139,7 +142,7 @@ public class LorePointService {
 					pointDetail.setBookId(entity.getBookId());
 					pointDetail.setNextExerciseTime(new Date());
 					pointDetail.setSkilled(0);
-					pointDetail.setExerciseCycle(1);
+					pointDetail.setExerciseCycle(0);
 			    detailList.add(pointDetail);
 			}
 			lorePointDao.addPointDetailList(detailList);
@@ -180,7 +183,7 @@ public class LorePointService {
 					pointDetail.setBookId(bookId);
 					pointDetail.setNextExerciseTime(new Date());
 					pointDetail.setSkilled(0);
-					pointDetail.setExerciseCycle(1);
+					pointDetail.setExerciseCycle(0);
 			    detailList.add(pointDetail);
 			}
 			lorePointDao.addPointDetailList(detailList);
@@ -204,6 +207,18 @@ public class LorePointService {
 	 */
 	public void delPoinDetailtByBookId(Integer bookId){
 		lorePointDao.delPoinDetailtByBookId(bookId);
+	}
+	
+	
+	
+	/**
+	 * 根据练习本Id,查找用户对知识点的练习情况
+	 * @param bookId
+	 * @return
+	 */
+	public List<PonitSkilledDto> findBookIdToPonit(Integer bookId){
+		Integer userId =  systemService.getCurrentUser().getId();
+		return lorePointDao.findBookIdToPonit(bookId,userId);
 	}
 	
 }

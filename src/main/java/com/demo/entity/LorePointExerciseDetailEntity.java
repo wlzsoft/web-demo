@@ -143,5 +143,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	public void setGrasp(float grasp) {
 		this.grasp = grasp;
 	}
+	
+	
 	  
 }

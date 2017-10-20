@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.dto.BookDto;
 import com.demo.dto.PonitDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 
 

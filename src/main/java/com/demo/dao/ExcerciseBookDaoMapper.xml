@@ -91,6 +91,7 @@
 			 WHERE t.bookId=#{bookId}
 	</select>
 	
+	
 	<select id="bookProgress" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 	    SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId}
 	</select>

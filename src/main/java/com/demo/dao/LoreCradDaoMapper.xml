@@ -57,7 +57,7 @@
   </select>
    
    <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
-          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,t.questionLongText
+          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,t.questionLongText,
                 t.questionDescType,t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId}

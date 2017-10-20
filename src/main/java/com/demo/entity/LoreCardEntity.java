@@ -19,7 +19,7 @@ public class LoreCardEntity implements Serializable{
 	public boolean titleAutoPlay;// 卡片是否自动播放标题音频(1：是  0：否）				
 	public String questionText	;//	问题提示
 	public String questionLongText;//问题描述：图片、音频、长文本
-	public Integer questionDescType;//问题描述类型(1:图片 2:音频 3:长文本)
+	public String questionDescType;//问题描述类型(text 文本 	image 图片 	audio 音频)
 	public String questionVoiceSrc	;//问题描述音频源地址				
 	public boolean questionAutoPlay	;//问题是否自动播放音频(1：是  0：否）				
 	public String questionImages	;//问题图片组	
@@ -158,10 +158,10 @@ public class LoreCardEntity implements Serializable{
 	public void setQuestionLongText(String questionLongText) {
 		this.questionLongText = questionLongText;
 	}
-	public Integer getQuestionDescType() {
+	public String getQuestionDescType() {
 		return questionDescType;
 	}
-	public void setQuestionDescType(Integer questionDescType) {
+	public void setQuestionDescType(String questionDescType) {
 		this.questionDescType = questionDescType;
 	}
 	

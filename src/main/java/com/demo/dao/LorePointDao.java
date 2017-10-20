@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.LorePointExerciseDetailEntity;
 
@@ -30,11 +31,11 @@ public interface LorePointDao {
 	public List<PonitDto> searchAllLorePoint();
 	
 	/**
-	 * 根据知识点ID 获取知识点练习详情
+	 * 根据知识点ID 获取用户知识点练习详情
 	 * @param id 知识点Id
 	 * @return
 	 */
-	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer id);
+	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer id,@Param("userId")Integer userId);
 	
 
 	/**
@@ -88,6 +89,14 @@ public interface LorePointDao {
 	public void updateDelPointChapterSort(@Param("bookId")Integer bookId ,@Param("chapterIds")Integer[] chapterIds );
 	
 	public void updateDelPointChapterSortAll(@Param("bookId")Integer bookId );
+	
+	/**
+	 * 根据练习本Id,用户ID  查找用户对知识点的练习情况
+	 * @param bookId
+	 * @param userId
+	 * @return
+	 */
+	public List<PonitSkilledDto> findBookIdToPonit(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 	
 	

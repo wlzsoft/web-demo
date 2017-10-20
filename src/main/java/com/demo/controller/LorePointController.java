@@ -16,6 +16,7 @@ import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitBatchDto;
 import com.demo.dto.PonitDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.LorePointEntity;
 import com.demo.entity.UserBookEntity;
@@ -129,7 +130,7 @@ public class LorePointController {
 				}
 				String pointName = entity.getPointName();
 				try {
-					pointName =EmojiUtil.emojiRecovery2(pointName);
+					pointName =EmojiUtil.emojiConvert1(pointName);
 					entity.setPointName(pointName);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -141,8 +142,13 @@ public class LorePointController {
 				//拼装返回数据集
 				PonitBatchDto dto = new PonitBatchDto();
 				dto.setId(identity.getId());
-				dto.setPointName(pointName);
-				
+				try {
+					dto.setPointName(EmojiUtil.emojiRecovery2(pointName));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				dto.setSkilled(0);
+				dto.setExerciseCycle(0);
 				dto.setChapterSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());
 				dto.setSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());
 				
@@ -363,7 +369,7 @@ public class LorePointController {
 	}
 	
 	/**
-	 * 根据知识点ID 获取知识点练习详情
+	 * 根据知识点ID 获取用户知识点练习详情
 	 * @param request
 	 * @param response
 	 * @param pointId 知识点Id
@@ -472,9 +478,9 @@ public class LorePointController {
 			}*/
 		}
 		
-		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(Integer.parseInt(bookId));
+		List<PonitSkilledDto> ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
 		
-		for(PonitDto dto:entityList){
+		for(PonitSkilledDto dto:ponitSkilledList){
 			String pointName = dto.getPointName();
 			try {
 				pointName =EmojiUtil.emojiRecovery2(pointName);
@@ -484,7 +490,7 @@ public class LorePointController {
 			}
 		}
 		
-		return ResultObject.successObject(entityList,null); 
+		return ResultObject.successObject(ponitSkilledList,null); 
 	}
 
 }
