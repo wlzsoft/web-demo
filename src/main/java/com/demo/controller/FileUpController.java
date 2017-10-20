@@ -44,7 +44,7 @@ public class FileUpController {
                 	 prefix=".mp3";
                  }else if(contentType.equals("audio/wav")){
                 	 prefix=".wav";
-                 }else if(contentType.equals("video/mpeg4")){
+                 }else if(contentType.equals("audio/x-m4a")){
                 	 prefix=".m4a";
                  }else{
                 	 ResultObject.warnMessage("不上传失败，请选择 mp3、wav 或 m4a 格式的音频");
