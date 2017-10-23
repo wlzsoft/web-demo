@@ -93,7 +93,7 @@ public class ReviewService {
 			 detailEntity.setConErrorNumber(0);//连续回答错误次数
 			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
 			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
-			 detailEntity.setSkilled((detailEntity.getSkilled()<3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3）
+			 detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）
 		
 		 }else{
 			     /** 错误
