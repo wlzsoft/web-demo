@@ -9,6 +9,7 @@ import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.ErrorWarehouseEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 
 @Repository
@@ -20,8 +21,24 @@ public interface ReviewDao {
 	
 	public List<BookDto> bookList(@Param("userId")Integer userId);
 	
+	
 	/**
-	 * 查询所有知识点
+	 * 更新错题库里面错题状态
+	 */
+	public void updateErrorwarehouse(ErrorWarehouseEntity entity);
+	
+	/**
+	 * 往错题库里面查询错题信息
+	 */
+	public void installErrorwarehouse(Integer bookId,Integer pointId,Integer cardId,Integer right);
+	
+	/**
+	 * 往错题库里面查询错题信息
+	 */
+	public ErrorWarehouseEntity	 findErrorwarehouse(Integer bookId,Integer pointId,Integer cardId);
+	
+	/**
+	 * 查询所有知识点	
 	 * @param bookId
 	 * @param chapterId
 	 * @param userId

@@ -29,7 +29,7 @@ import com.smartframe.dto.ResultObject;
  */
 @Controller
 @RequestMapping("/book")
-public class ExcerciseBookController {
+public class BookController {
 	
 	@Autowired
 	private ExcerciseBookService excerciseService ;	

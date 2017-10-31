@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
 import com.demo.dto.PonitDto;
+import com.demo.service.ExcerciseService;
 import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
 import com.smartframe.basics.util.EmojiUtil;
@@ -28,6 +29,9 @@ public class ReviewController {
 	
 	@Autowired
 	private SystemService systemService ;
+	
+	@Autowired
+	private ExcerciseService excerciseService;
 	
 	/**
 	 * 复习保存
@@ -140,6 +144,152 @@ public class ReviewController {
 		
 		return ResultObject.successObject(cardList,null) ;
 	}
+	
+	
+	
+	/**
+	 * 复习错误的知识点 （错题，熟练度、知识点排序）
+	 * 
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	@RequestMapping("exError")
+	public Result<?> excerciseError(HttpServletRequest request ,HttpServletResponse response,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		Integer userId =systemService.getCurrentUser().getId();
+		/**
+		 * 添加权限
+		 * **/
+		Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);//验证当前用户是否有 练习该练习本的权限
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		List<CardDto> cardList = new ArrayList<>();
+		
+		cardList = excerciseService.excerciseError(bookId,userId);
+		
+		//对emoji转换
+		if(cardList.size()>0){
+			for(CardDto dto :cardList){
+				try {
+					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
+						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
+						dto.setTitleText(titleText);
+					}
+					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
+						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
+						dto.setQuestionText(questionText);
+					}
+
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
+	  return ResultObject.successObject(cardList,null) ;
+	} 
+	
+	/**
+	 * 复习新的的知识点 （学习新的知识点，周期为0的知识点，知识点排序）
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	@RequestMapping("exNew")
+	public Result<?> excerciseNew(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		Integer userId =systemService.getCurrentUser().getId();
+		/**
+		 * 添加权限
+		 * **/
+		Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);//验证当前用户是否有 练习该练习本的权限
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		List<CardDto> cardList = new ArrayList<>();
+		
+		cardList = excerciseService.excerciseNew(bookId, chapterIds, userId);
+		
+		//对emoji转换
+		if(cardList.size()>0){
+			for(CardDto dto :cardList){
+				try {
+					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
+						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
+						dto.setTitleText(titleText);
+					}
+					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
+						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
+						dto.setQuestionText(questionText);
+					}
+
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
+	  return ResultObject.successObject(cardList,null) ;
+	} 
+	
+	
+	/**
+	 * 巩固复习知识点（熟练度、知识点排序）
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	@RequestMapping("exStrenthen")
+	public Result<?> excerciseStrenthen(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		Integer userId =systemService.getCurrentUser().getId();
+		/**
+		 * 添加权限
+		 * **/
+		Boolean flag = reviewService.getAuthByBookId(Integer.parseInt(bookId), userId);//验证当前用户是否有 练习该练习本的权限
+		if(!flag){
+			return ResultObject.warnMessage("无操作权限");
+		}
+		List<CardDto> cardList = new ArrayList<>();
+		cardList = excerciseService.excerciseStrenthen(bookId, chapterIds, userId);
+		
+		//对emoji转换
+		if(cardList.size()>0){
+			for(CardDto dto :cardList){
+				try {
+					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
+						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
+						dto.setTitleText(titleText);
+					}
+					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
+						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
+						dto.setQuestionText(questionText);
+					}
+
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}	
+		}
+		
+	  return ResultObject.successObject(cardList,null) ;
+	} 
+	
+	
 	
 	/**
 	 * 根据知识点ID ，随机获取一个卡片信息

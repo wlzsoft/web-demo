@@ -23,6 +23,42 @@
 	  
 	  </insert>
 	  
+	  <insert id="installErrorwarehouse" parameterType="java.lang.Integer">
+	  	  	 INSERT INTO errorwarehouse(
+				bookId,
+				pointId,
+				cardId,
+				isRight,
+				userId,
+				createTime
+			)VALUES(
+				#{bookId},
+				#{pointId},
+				#{cardId},
+				#{isRight},
+				#{userId},
+				NOW()
+			)
+	  </insert>
+	  
+	  <update id="updateErrorwarehouse" parameterType="com.demo.entity.ErrorWarehouseEntity">
+	  	   UPDATE errorwarehouse set
+				bookId =#{bookId},
+				pointId=#{pointId},
+				cardId=#{cardId},
+				isRight=#{isRight},
+				userId=#{userId},
+				updateTime=NOW()
+		   WHERE id=#{id}
+	  </update>
+	  
+	  <select id="findErrorwarehouse" parameterType="java.lang.Integer" resultType="com.demo.entity.ErrorWarehouseEntity" >
+	      select * from errorwarehouse 
+	        where bookId=#{bookId}
+	           and pointId=#{pointId}
+	           and cardId=#{cardId}
+	  </select>
+	  
 	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.dto.PointExerciseDetailDto">
 	  		 UPDATE pointExerciseDetail set
 			   nextExerciseTime=#{nextExerciseTime},
@@ -64,7 +100,7 @@
 			  AND t.id = a.pointId 
 			  AND t.number>0
 			  AND a.userId=#{userId}
-			ORDER BY t.chapterSort,a.pointId asc 
+			ORDER BY t.chapterSort,t.id asc 
 			<!-- a.nextExerciseTime, -->
 	  </select>
 	  
@@ -89,7 +125,7 @@
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is not NULL
 			  AND a.nextExerciseTime <![CDATA[ <= ]]> NOW()
-			ORDER BY t.chapterSort, t.sort  asc 
+			ORDER BY t.chapterSort, t.sort ,t.id asc 
 	  </select>
 	  
 	  
@@ -113,7 +149,7 @@
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime is NULL
-			ORDER BY t.chapterSort, t.sort  asc 
+			ORDER BY t.chapterSort, t.sort ,t.id  asc 
 	  </select>
 	  
 	  <select id="reviewPointBefore" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -136,7 +172,7 @@
 			  AND t.number>0
 			  AND a.userId=#{userId}
 			  AND a.nextExerciseTime <![CDATA[ > ]]> NOW()
-			ORDER BY t.chapterSort, t.sort asc 
+			ORDER BY t.chapterSort, t.sort,t.id asc 
 	  </select>
 	  
 	  <select id="roundCard" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">

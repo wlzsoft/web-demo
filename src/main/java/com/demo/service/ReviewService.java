@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,12 +19,15 @@ import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.ErrorWarehouseEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.util.enums.LearningCycle;
 import com.smartframe.basics.util.DateUtil;
 
 @Service("reviewService")
 public class ReviewService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
 	
 	@Autowired
 	private ReviewDao reviewDao;
@@ -129,8 +134,34 @@ public class ReviewService {
 				 detailEntity.setLastExerciseDate(new Date()); //上一次练习的日期
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
+		 LOGGER.info("更新练习明细成功！");
+		 checkErrorCard(detailEntity.getBookId(),detailEntity.getPointId(),Integer.parseInt(cradId),right);
+		 LOGGER.info("处理错题库信息成功！");
 	}
 	
+	
+   /**
+    * 对错误库知识点进行处理
+	 * @param bookId
+	 * @param pointId
+	 * @param cardId
+	 * @param right
+   */
+public void checkErrorCard(Integer bookId,Integer pointId,Integer cardId,Integer right){
+	     //先检查错题库里面是否存在改卡片的数据信息
+	   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId);
+	    if(right==1){
+	    	 if(null!=entity){
+	    		 entity.setUpdateTime(new Date());
+	    		 entity.setIsRight(1);
+	    		 reviewDao.updateErrorwarehouse(entity); 
+	    	 }
+	    }else{
+	    	if(null==entity){
+	    		reviewDao.installErrorwarehouse(bookId, pointId, cardId,0);
+	    	}
+	    }
+   }	
 	
 	
 	

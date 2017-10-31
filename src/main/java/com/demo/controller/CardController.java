@@ -32,9 +32,9 @@ import com.smartframe.dto.ResultObject;
 
 @Controller
 @RequestMapping("/card")
-public class LoreCardController {
+public class CardController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoreCardController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CardController.class);
 
 	@Autowired
 	private LoreCradService loreCradService;
