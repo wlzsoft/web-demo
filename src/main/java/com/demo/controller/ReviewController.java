@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
+import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitDto;
 import com.demo.service.ExcerciseService;
 import com.demo.service.ReviewService;
@@ -288,6 +289,27 @@ public class ReviewController {
 		
 	  return ResultObject.successObject(cardList,null) ;
 	} 
+	
+	
+	
+	/**
+	 * 获取练习本中，复习，错题，新的 的数量
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @return
+	 */
+	@RequestMapping("pointNum")
+	public Result<?> pointNum(HttpServletRequest request ,HttpServletResponse response,Integer bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		
+		Integer userId =systemService.getCurrentUser().getId();
+		
+		PointNumDto dot = excerciseService.getPointNum(userId,bookId);
+		return ResultObject.successObject(dot,null) ;
+	}
 	
 	
 	

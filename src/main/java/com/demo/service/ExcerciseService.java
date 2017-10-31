@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
+import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitDto;
 
 @Service
@@ -136,6 +137,17 @@ public class ExcerciseService {
 		return cardListAll;
 	}
     
+	
+	public PointNumDto getPointNum(Integer userId,Integer bookId){
+		PointNumDto dto = new PointNumDto();
+		List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);
+		    dto.setExErrorNum(pointList_error.size());
+		List<PonitDto> pointList_new= excerciseDao.excerciseNew_bookId(bookId, userId);
+		    dto.setExNewNum(pointList_new.size());
+		List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
+			dto.setExStrenthenNum(pointList_strenthen.size());
+		return dto;
+	}
 	
 	
 }
