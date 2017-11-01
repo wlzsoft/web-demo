@@ -30,10 +30,26 @@ public class ExcerciseService {
 	 * @param chapterIds
 	 * @return
 	 */
-	public List<CardDto> excerciseError(String bookId,Integer userId){
+	public List<CardDto> excerciseError(String bookId,String chapterIds,Integer userId){
 		List<CardDto> cardListAll = new ArrayList<>();
 	    List<PonitDto> pointList = new ArrayList<>();
-		pointList =  excerciseDao.excerciseError_bookId(Integer.parseInt(bookId), userId);
+		
+		
+		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取新的的知识点练习
+			pointList =  excerciseDao.excerciseError_bookId(Integer.parseInt(bookId), userId);
+			
+		}else{
+			String[] chapterId = chapterIds.split(",");
+			if(chapterId.length>0){
+				Integer[] chapter = new Integer[chapterId.length];
+				for(int i=0;i<chapterId.length;i++){
+					chapter[i]=Integer.parseInt(chapterId[i]);
+				}
+				pointList =excerciseDao.excerciseError_chapterIds(Integer.parseInt(bookId), chapter, userId);
+				cardListAll =getCardAlgorithm_count(pointList,COUNT);
+			}
+		}
+		
 		
 	  return cardListAll;
 	} 
@@ -111,7 +127,6 @@ public class ExcerciseService {
 				List<CardDto> cardList = excerciseDao.findCardByPoindId(pointDao_fist.getId());//根据知识点Id获取知识点下所有的卡片信息
 				
 			}
-			
 		}
 		return null;
 	}
@@ -138,6 +153,12 @@ public class ExcerciseService {
 	}
     
 	
+	/**
+	 * 获取练习本中，复习，错题，新的 的数量
+	 * @param userId
+	 * @param bookId
+	 * @return
+	 */
 	public PointNumDto getPointNum(Integer userId,Integer bookId){
 		PointNumDto dto = new PointNumDto();
 		List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);

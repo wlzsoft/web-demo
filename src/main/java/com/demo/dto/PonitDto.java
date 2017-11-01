@@ -19,6 +19,8 @@ public class PonitDto {
 	public  Integer number; //知识点卡片数量
 	
 	public Integer sort; //排序
+	
+    public Integer state ;// state :答题状态（0：新增   1：上次答错    2：巩固）
 
 	public Integer getId() {
 		return id;
@@ -94,6 +96,15 @@ public class PonitDto {
 
 	public Integer getChapterId() {
 		return chapterId;
+	}
+	
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	@Override

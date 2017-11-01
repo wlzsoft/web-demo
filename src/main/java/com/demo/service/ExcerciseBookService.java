@@ -14,10 +14,9 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
-import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 
-@Service("excerciseService")
+@Service
 public class ExcerciseBookService {
 	
 	@Autowired

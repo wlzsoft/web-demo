@@ -158,7 +158,7 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("exError")
-	public Result<?> excerciseError(HttpServletRequest request ,HttpServletResponse response,String bookId){
+	public Result<?> excerciseError(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds){
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -172,7 +172,7 @@ public class ReviewController {
 		}
 		List<CardDto> cardList = new ArrayList<>();
 		
-		cardList = excerciseService.excerciseError(bookId,userId);
+		cardList = excerciseService.excerciseError(bookId,chapterIds,userId);
 		
 		//对emoji转换
 		if(cardList.size()>0){

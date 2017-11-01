@@ -72,7 +72,8 @@
 					pointId,
 					bookId,
 					skilled,
-					nextExerciseTime
+					nextExerciseTime,
+					state
 			)VALUES
 			<foreach collection="entityList" item="item" index="index" separator=",">
 				(#{item.userId},
@@ -81,6 +82,7 @@
 				 #{item.bookId},
 				 #{item.skilled},
 				 #{item.nextExerciseTime}
+				 #{item.state}
 				)
 			</foreach>
 	</select>
@@ -153,7 +155,8 @@
 			 t.correctNumber,
 			 t.errorNumber,
 			 t.skilled,
-			 t.avgConsumingTime
+			 t.avgConsumingTime,
+			 t.state
 		FROM pointExerciseDetail t ,point a 
 		WHERE  a.id=t.pointId
 		    AND t.pointId=#{id}
@@ -165,7 +168,7 @@
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,t.sort FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
+	   SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,t.sort ,a.state FROM point t ,pointExerciseDetail a WHERE t.id=a.pointId AND a.userId=#{userId}
 	</select>
 	
 	<update id="updatePointChapterSort" parameterType="java.lang.Integer">
@@ -187,8 +190,11 @@
 	</update>
 	
 	<select id="findBookIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,t.sort,t.chapterSort,a.exerciseCycle,a.skilled FROM point t ,pointExerciseDetail a 
-			 WHERE t.id=a.pointId and  t.bookId=#{bookId} and a.userId=#{userId}
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,
+			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
+			       a.state 
+			FROM point t ,pointExerciseDetail a 
+			WHERE t.id=a.pointId and  t.bookId=#{bookId} and a.userId=#{userId}
 	</select>
      
 </mapper>

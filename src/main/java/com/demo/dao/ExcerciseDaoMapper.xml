@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ExcerciseDao">
-   <select id="excerciseError_bookId" parameterType="java.lang.Interger" resultType="com.demo.dto.PonitDto">
+   <select id="excerciseError_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
 			a.id ,
 			a.pointName,
@@ -9,7 +9,8 @@
 			a.chapterId,
 			a.chapterSort,
 			a.number,
-			a.bookId
+			a.bookId,
+			b.state
 		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
 			 AND t.pointId= a.id
@@ -17,12 +18,40 @@
 			 AND t.userId=b.userId
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
-			<if test="bookId !=null">t.bookId=#{bookId}</if>
+			 AND t.bookId=#{bookId}
+		  GROUP BY t.bookId,t.pointId
+		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
+	</select>
+	
+	<select id="excerciseError_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			b.state
+		FROM errorwarehouse t ,point a,pointExerciseDetail b
+			WHERE t.userId=#{userId}
+			 AND t.pointId= a.id
+			 AND t.pointId=b.pointId
+			 AND t.userId=b.userId
+			 AND t.bookId=a.bookId
+			 AND t.isRight=0
+			 AND t.bookId=#{bookId}
+			<if test="chapterId !=null and chapterId !='' ">
+		        and t.chapterId in 
+		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
 		  GROUP BY t.bookId,t.pointId
 		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
 	</select>
   
-    <select id="excerciseNew_chapterIds" parameterType="java.lang.Interger" resultType="com.demo.dto.PonitDto">
+    <select id="excerciseNew_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		  SELECT 
 			a.id ,
 			a.pointName,
@@ -30,7 +59,8 @@
 			a.chapterId,
 			a.chapterSort,
 			a.number,
-			a.bookId
+			a.bookId,
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -48,7 +78,7 @@
 		  ORDER BY a.sort,a.id ASC 
     </select>
     
-    <select id="excerciseNew_bookId" parameterType="java.lang.Interger" resultType="com.demo.dto.PonitDto">
+    <select id="excerciseNew_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
          SELECT 
 			a.id ,
 			a.pointName,
@@ -56,7 +86,8 @@
 			a.chapterId,
 			a.chapterSort,
 			a.number,
-			a.bookId
+			a.bookId,
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -68,7 +99,7 @@
 		  ORDER BY a.sort,a.id ASC 
     </select>
     
-    <select id="excerciseStrenthen_chapterIds"  parameterType="java.lang.Interger" resultType="com.demo.dto.PonitDto">
+    <select id="excerciseStrenthen_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
 			a.id ,
 			a.pointName,
@@ -76,7 +107,8 @@
 			a.chapterId,
 			a.chapterSort,
 			a.number,
-			a.bookId
+			a.bookId,
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -94,7 +126,7 @@
 		  ORDER BY a.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
-    <select id="excerciseStrenthen_bookId"  parameterType="java.lang.Interger" resultType="com.demo.dto.PonitDto">
+    <select id="excerciseStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
 			a.id ,
 			a.pointName,
@@ -102,7 +134,8 @@
 			a.chapterId,
 			a.chapterSort,
 			a.number,
-			a.bookId
+			a.bookId,
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId

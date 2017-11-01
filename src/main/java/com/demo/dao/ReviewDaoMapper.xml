@@ -92,7 +92,8 @@
 		  		t.pointName,
 		  		t.chapterId,
 		  		t.number,
-		  		t.bookId
+		  		t.bookId,
+		  		a.state
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a
@@ -109,7 +110,8 @@
 		  		t.pointName,
 		  		t.chapterId,
 		  		t.number,
-		  		t.bookId
+		  		t.bookId,
+		  		a.state
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a
@@ -134,7 +136,8 @@
 		  		t.pointName,
 		  		t.chapterId,
 		  		t.number,
-		  		t.bookId
+		  		t.bookId,
+		  		a.state
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a
@@ -157,7 +160,8 @@
 		  		t.pointName,
 		  		t.chapterId,
 		  		t.number,
-		  		t.bookId
+		  		t.bookId,
+		  		a.state
 		  	FROM
 			  point t ,
 			  pointExerciseDetail a
@@ -183,7 +187,7 @@
        </select> 
        
        <select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	     SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId
+	     SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,a.state
 	         FROM point t ,pointExerciseDetail a
 	          WHERE t.id=a.pointId 
 	          AND t.number>0
@@ -195,7 +199,7 @@
 	   </select>
 	   
 	   <select id="roundPointByUserId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-	     SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId
+	     SELECT t.id,t.pointName,t.number,t.chapterId ,t.bookId,a.state
 	         FROM point t ,pointExerciseDetail a
 	          WHERE t.id=a.pointId 
 	          AND t.number>0

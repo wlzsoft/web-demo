@@ -13,6 +13,8 @@ public interface ExcerciseDao {
 		
 	public List<PonitDto> excerciseError_bookId(Integer bookId,Integer userId);
 	
+	public List<PonitDto> excerciseError_chapterIds(Integer bookId,Integer chapterId[],Integer userId);
+	
 	public List<PonitDto> excerciseNew_chapterIds(Integer bookId,Integer chapterId[],Integer userId);
 	
 	public List<PonitDto> excerciseNew_bookId(Integer bookId,Integer userId);

@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.demo.dto.IdEntity;
 import com.demo.entity.DiscussEntity;
 import com.demo.service.CommentService;
+import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -42,7 +44,19 @@ public class CommentController {
 					}
 				}
 			}
+			
+			if(null==entity.getContent()||entity.getContent().equals("")){
+				return ResultObject.successMessage("评论内容不能为null") ;
+			}else{
+				try {
+					String	content = EmojiUtil.emojiConvert1(entity.getContent());//emjoin 字符转换
+					entity.setContent(content);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		IdEntity identity = commentService.addDiscuss(entity);
 		return ResultObject.successObject(identity,"评论成功");
 	}

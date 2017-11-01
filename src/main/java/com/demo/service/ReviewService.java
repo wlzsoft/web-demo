@@ -99,6 +99,7 @@ public class ReviewService {
 			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
 			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
 			 detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）
+			 detailEntity.setState(2);//正确需要巩固
 		
 		 }else{
 			     /** 错误
@@ -132,6 +133,7 @@ public class ReviewService {
 				 detailEntity.setConErrorNumber(detailEntity.getConErrorNumber()+1);//连续回答错误次数
 				 detailEntity.setErrorNumber(detailEntity.getErrorNumber()+1);//错误数
 				 detailEntity.setLastExerciseDate(new Date()); //上一次练习的日期
+				 detailEntity.setState(1);//答错后 提示上次答错
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
 		 LOGGER.info("更新练习明细成功！");
