@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.CommentDao">
+	
+	<insert id="addDiscuss" parameterType="com.demo.entity.DiscussEntity" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO discuss(
+					bookId,
+					pointId,
+					cardId,
+					content,
+					createTime,
+					userId,
+					username
+			)VALUES(
+					#{bookId},
+					#{pointId},
+					#{cardId},
+					#{content},
+					#{createTime},
+					#{userId},
+					#{username}
+			)
+	</insert>
+	
+	<delete id="delDiscuss" parameterType="java.lang.Integer">
+		DELETE FROM  discuss  WHERE  id=#{id} and userId=#{userId}
+	</delete>
+	
+	<select id="discussBook" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+		select * from discuss t 
+		   where t.bookId=#{bookId} 
+		     and t.pointId is null
+		     and t.cardId is null
+	</select>
+	
+	<select id="discussPoint" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+		select * from discuss t 
+		   where t.bookId=#{bookId} 
+		     and t.pointId=#{pointId}
+		     and t.cardId is null
+	</select>
+	
+	<select id="discussCard" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+		select * from discuss t 
+		   where t.bookId=#{bookId} 
+		     and t.pointId=#{pointId}
+		     and t.cardId=#{cardId}
+	</select>
+	
+	
+
+     
+</mapper>

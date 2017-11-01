@@ -143,6 +143,7 @@ public class LorePointService {
 					pointDetail.setNextExerciseTime(new Date());
 					pointDetail.setSkilled(0);
 					pointDetail.setExerciseCycle(0);
+					pointDetail.setState(0);
 			    detailList.add(pointDetail);
 			}
 			lorePointDao.addPointDetailList(detailList);
@@ -184,6 +185,7 @@ public class LorePointService {
 					pointDetail.setNextExerciseTime(new Date());
 					pointDetail.setSkilled(0);
 					pointDetail.setExerciseCycle(0);
+					pointDetail.setState(0);
 			    detailList.add(pointDetail);
 			}
 			lorePointDao.addPointDetailList(detailList);

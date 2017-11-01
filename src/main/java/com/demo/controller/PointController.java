@@ -37,7 +37,7 @@ import com.smartframe.dto.ResultObject;
  */
 @Controller
 @RequestMapping("/point")
-public class LorePointController {
+public class PointController {
 	
 	@Autowired
 	private LorePointService lorePointService;

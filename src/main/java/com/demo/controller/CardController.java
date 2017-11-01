@@ -25,6 +25,7 @@ import com.demo.service.LoreCradService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.demo.service.UtilService;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -32,9 +33,9 @@ import com.smartframe.dto.ResultObject;
 
 @Controller
 @RequestMapping("/card")
-public class LoreCardController {
+public class CardController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoreCardController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CardController.class);
 
 	@Autowired
 	private LoreCradService loreCradService;
@@ -52,6 +53,10 @@ public class LoreCardController {
 	
 	@Autowired
 	private UserBookService userBookService;
+	
+	@Autowired
+	private UtilService utilService;
+	
 	
 	/**
 	 * 保存知识卡片
@@ -94,6 +99,9 @@ public class LoreCardController {
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
 			IdEntity idEntity =  loreCradService.savaLoreCrad(loreCardEntity);
+			 utilService.bookProgress(userId, point.getBookId());
+			 LOGGER.info("练习本进度计算统计完成");
+			
 			return ResultObject.successObject(idEntity, "保存成功");
 		}
 	}

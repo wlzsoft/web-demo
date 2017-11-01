@@ -30,6 +30,7 @@ public class PointExerciseDetailDto implements Serializable {
 	  public Integer  correctNumber ;//总正确数
 	  public Integer errorNumber   ;//总错误数
 	  public Date avgConsumingTime   ;//平均耗时
+	  public Integer state;// state :答题状态（0：新增   1：上次答错    2：巩固）
 	  
 	public Integer getUserId() {
 		return userId;
@@ -143,4 +144,11 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setSkilled(Integer skilled) {
 		this.skilled = skilled;
 	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	
 }

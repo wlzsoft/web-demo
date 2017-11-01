@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.ExcerciseBookDao;
-import com.demo.dao.LoreCradDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.BookDto;
@@ -24,6 +24,11 @@ import com.smartframe.basics.util.DateUtil;
 @Service("reviewService")
 public class ReviewService {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
+	
+	@Autowired
+	private UtilService utilService;
+	
 	@Autowired
 	private ReviewDao reviewDao;
 	
@@ -31,16 +36,17 @@ public class ReviewService {
 	private LorePointDao lorePointDao;
 	
 	@Autowired
-	private LoreCradDao loreCradDao;
-	
-	@Autowired
-	private ExcerciseBookDao excerciseBookDao;
-	
-	@Autowired
 	private SystemService systemService ;
 	
 	private final int COUNT=20;
 	
+	/**
+	 * 复习保存
+	 * @param lorePointId 知识点ID
+	 * @param cradId 卡片ID
+	 * @param right 回答是否正确 1：正确   0：错误
+	 * @return
+	 */
 	@Transactional
 	public void reviewCrad(String lorePointId,String cradId,Integer right){
 		
@@ -94,6 +100,7 @@ public class ReviewService {
 			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
 			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
 			 detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）
+			 detailEntity.setState(2);//正确需要巩固
 		
 		 }else{
 			     /** 错误
@@ -127,10 +134,16 @@ public class ReviewService {
 				 detailEntity.setConErrorNumber(detailEntity.getConErrorNumber()+1);//连续回答错误次数
 				 detailEntity.setErrorNumber(detailEntity.getErrorNumber()+1);//错误数
 				 detailEntity.setLastExerciseDate(new Date()); //上一次练习的日期
+				 detailEntity.setState(1);//答错后 提示上次答错
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
+		 LOGGER.info("更新练习明细成功！");
+		 utilService.checkErrorCard(detailEntity.getBookId(),detailEntity.getPointId(),Integer.parseInt(cradId),userId,right);
+		 LOGGER.info("处理错题库信息成功！");
+		 
+		 utilService.bookProgress(userId, detailEntity.getBookId());
+		 LOGGER.info("练习本进度计算统计完成");
 	}
-	
 	
 	
 	
@@ -549,62 +562,6 @@ public class ReviewService {
 		  }
 		return cardListAll ;
 	}
-	
-	
-	/**
-	 * 根据知识点ID ，随机获取一个卡片信息
-	 * @param request
-	 * @param response
-	 * @param pointId
-	 * @return
-	 */
-	public CardDto roundCard(Integer pointId){
-		  List<CardDto> cardList = reviewDao.roundCard(pointId);
-		  if(cardList.size()>0){
-		      java.util.Random random = new java.util.Random();
-		      int randomPos = random.nextInt(cardList.size()); 
-		      return cardList.get(randomPos);
-		  }else{
-			  return null;
-		  }
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * 根据知识点pointId 获取是否有练习权限
-	 * @param pointId
-	 * @param userId
-	 * @return
-	 */
-	public Boolean getAuthByPointId(Integer pointId,Integer userId){
-		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByPointId(pointId,userId);
-		if(dto.size()>0){
-			return true;
-		}else{
-		    return false;
-		}
-	}
-	
-	/**
-	 * 根据练习本 bookId 获取是否有练习权限
-	 * @param bookId
-	 * @param userId
-	 * @return
-	 */
-	public Boolean getAuthByBookId(Integer bookId,Integer userId){
-		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByBookId(bookId,userId);
-		if(dto.size()>0){
-			return true;
-		}else{
-		    return false;
-		}
-	}
-	
 	
 	
 	

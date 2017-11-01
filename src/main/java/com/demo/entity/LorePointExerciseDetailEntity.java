@@ -30,6 +30,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	  public Date avgConsumingTime   ;//平均耗时
 	  public float weights       ;//练习权重
 	  public float  grasp         ;//掌握值
+	  public Integer state ;// state :答题状态（0：新增   1：上次答错    2：巩固）
 	  
 	public Integer getId() {
 		return id;
@@ -143,7 +144,11 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	public void setGrasp(float grasp) {
 		this.grasp = grasp;
 	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	
-	
-	  
 }
