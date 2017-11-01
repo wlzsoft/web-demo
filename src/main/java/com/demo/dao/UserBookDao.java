@@ -10,6 +10,9 @@ import com.demo.entity.UserBookEntity;
 @Repository
 public interface UserBookDao {
 	
+	
+	public void updateUserBook(Integer bookId ,Integer userId,float progress);
+	
 	/**
 	 * 新增用户练习本关系
 	 * @param entity

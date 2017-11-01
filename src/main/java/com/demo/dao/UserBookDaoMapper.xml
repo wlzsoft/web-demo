@@ -6,15 +6,20 @@
 		  INSERT INTO userbook(
 					userId,
 					bookId,
+					progress,
 					createTime,
 					createId
 			)VALUES(
 					#{userId},
 					#{bookId},
+					#{progress},
 					#{createTime},
 					#{createId}
 			)
 	</insert>
+	<update id="updateUserBook">
+	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
+	</update>
 	
 	<delete id="delUserBookById" parameterType="java.lang.Integer">
 	   delete from userbook  where id=#{id}
