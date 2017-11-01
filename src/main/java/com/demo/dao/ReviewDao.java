@@ -28,14 +28,20 @@ public interface ReviewDao {
 	public void updateErrorwarehouse(ErrorWarehouseEntity entity);
 	
 	/**
-	 * 往错题库里面查询错题信息
+	 * 往错题库里面插入错题信息
 	 */
-	public void installErrorwarehouse(Integer bookId,Integer pointId,Integer cardId,Integer right);
+	public void installErrorwarehouse(@Param("bookId")Integer bookId,
+			                          @Param("pointId")Integer pointId,
+			                          @Param("cardId")Integer cardId,
+			                          @Param("userId")Integer userId ,
+			                          @Param("isRight")Integer right);
 	
 	/**
 	 * 往错题库里面查询错题信息
 	 */
-	public ErrorWarehouseEntity	 findErrorwarehouse(Integer bookId,Integer pointId,Integer cardId);
+	public ErrorWarehouseEntity	 findErrorwarehouse(@Param("bookId")Integer bookId,
+													@Param("pointId")Integer pointId,
+													@Param("cardId")Integer cardId);
 	
 	/**
 	 * 查询所有知识点	
@@ -44,7 +50,9 @@ public interface ReviewDao {
 	 * @param userId
 	 * @return
 	 */
-	public List<PonitDto> reviewPointAll(@Param("bookId")Integer bookId,@Param("chapterId")Integer[] chapterId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPointAll(@Param("bookId")Integer bookId,
+										 @Param("chapterId")Integer[] chapterId,
+										 @Param("userId")Integer userId);
 	
 	/**
 	 * 查询小于或等于 当前时间的知识点 (下次练习时间不为null的数据)
@@ -53,7 +61,9 @@ public interface ReviewDao {
 	 * @param userId
 	 * @return 返回知识点List
 	 */
-	public List<PonitDto> reviewPoint(@Param("bookId")Integer bookId,@Param("chapterId")Integer[] chapterId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPoint(@Param("bookId")Integer bookId,
+										@Param("chapterId")Integer[] chapterId,
+										@Param("userId")Integer userId);
 	
 	/**
 	 * 查询下次练习时间为null的数据 按 id升序排
@@ -62,7 +72,9 @@ public interface ReviewDao {
 	 * @param userId
 	 * @return
 	 */
-	public List<PonitDto> reviewPointNull(@Param("bookId")Integer bookId,@Param("chapterId")Integer[] chapterId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPointNull(@Param("bookId")Integer bookId,
+											@Param("chapterId")Integer[] chapterId,
+											@Param("userId")Integer userId);
 	
 	
 	/**
@@ -72,7 +84,9 @@ public interface ReviewDao {
 	 * @param userId
 	 * @return
 	 */
-	public List<PonitDto> reviewPointBefore(@Param("bookId")Integer bookId,@Param("chapterId")Integer[] chapterId,@Param("userId")Integer userId);
+	public List<PonitDto> reviewPointBefore(@Param("bookId")Integer bookId,
+											@Param("chapterId")Integer[] chapterId,
+											@Param("userId")Integer userId);
 	
 	
 	

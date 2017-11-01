@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ExcerciseBookDao;
 import com.demo.dao.LoreCradDao;
+import com.demo.dao.ReviewDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ExcerciseBookEntity;
@@ -19,6 +20,9 @@ import com.demo.entity.LoreCradAnswersEntity;
 
 @Service("loreCradService")
 public class LoreCradService {
+	
+	@Autowired
+	private ReviewDao reviewDao;
 
 	@Autowired
 	private LoreCradDao loreCradDao;
@@ -89,6 +93,24 @@ public class LoreCradService {
 	
 	public List<LoreCradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId){
 		return loreCradDao.getLoreCradAnswerByPointId(loreCardId);
+	}
+	
+	/**
+	 * 根据知识点ID ，随机获取一个卡片信息
+	 * @param request
+	 * @param response
+	 * @param pointId
+	 * @return
+	 */
+	public CardDto roundCard(Integer pointId){
+		  List<CardDto> cardList = reviewDao.roundCard(pointId);
+		  if(cardList.size()>0){
+		      java.util.Random random = new java.util.Random();
+		      int randomPos = random.nextInt(cardList.size()); 
+		      return cardList.get(randomPos);
+		  }else{
+			  return null;
+		  }
 	}
 	
 }

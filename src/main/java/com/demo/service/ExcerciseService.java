@@ -46,10 +46,9 @@ public class ExcerciseService {
 					chapter[i]=Integer.parseInt(chapterId[i]);
 				}
 				pointList =excerciseDao.excerciseError_chapterIds(Integer.parseInt(bookId), chapter, userId);
-				cardListAll =getCardAlgorithm_count(pointList,COUNT);
 			}
 		}
-		
+		cardListAll =getCardAlgorithm_count(pointList,COUNT);
 		
 	  return cardListAll;
 	} 
@@ -76,10 +75,9 @@ public class ExcerciseService {
 					chapter[i]=Integer.parseInt(chapterId[i]);
 				}
 				pointList =excerciseDao.excerciseNew_chapterIds(Integer.parseInt(bookId), chapter, userId);
-				cardListAll =getCardAlgorithm_count(pointList,COUNT);
 			}
 		}
-		
+		cardListAll =getCardAlgorithm_count(pointList,COUNT);
 	  return cardListAll;
 	} 
 	
@@ -105,10 +103,9 @@ public class ExcerciseService {
 					chapter[i]=Integer.parseInt(chapterId[i]);
 				}
 				pointList =excerciseDao.excerciseStrenthen_chapterIds(Integer.parseInt(bookId), chapter, userId);
-				cardListAll =getCardAlgorithm_count(pointList,COUNT);
 			}
 		}
-		
+		cardListAll =getCardAlgorithm_count(pointList,COUNT);
 	  return cardListAll;
 	} 
 	
@@ -166,7 +163,7 @@ public class ExcerciseService {
 		List<PonitDto> pointList_new= excerciseDao.excerciseNew_bookId(bookId, userId);
 		    dto.setExNewNum(pointList_new.size());
 		List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
-			dto.setExStrenthenNum(pointList_strenthen.size());
+			dto.setExStrengthenNum(pointList_strenthen.size());
 		return dto;
 	}
 	

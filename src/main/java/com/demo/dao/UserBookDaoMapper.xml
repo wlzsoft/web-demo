@@ -16,6 +16,10 @@
 			)
 	</insert>
 	
+	<update id="updateUserBook">
+	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
+	</update>
+	
 	<delete id="delUserBookById" parameterType="java.lang.Integer">
 	   delete from userbook  where id=#{id}
 	</delete>

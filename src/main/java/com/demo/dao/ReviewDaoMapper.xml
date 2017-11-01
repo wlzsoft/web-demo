@@ -69,6 +69,7 @@
 			   exerciseNumber=#{exerciseNumber},
 			   correctNumber=#{correctNumber},
 			   skilled=#{skilled},
+			   state=#{state},
 			   errorNumber=#{errorNumber}
 		     where pointId=#{pointId} and userId=#{userId}
 	  </update>

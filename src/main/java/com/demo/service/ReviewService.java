@@ -11,15 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.ExcerciseBookDao;
-import com.demo.dao.LoreCradDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ErrorWarehouseEntity;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.util.enums.LearningCycle;
 import com.smartframe.basics.util.DateUtil;
@@ -30,22 +27,26 @@ public class ReviewService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
 	
 	@Autowired
+	private UtilService utilService;
+	
+	@Autowired
 	private ReviewDao reviewDao;
 	
 	@Autowired
 	private LorePointDao lorePointDao;
 	
 	@Autowired
-	private LoreCradDao loreCradDao;
-	
-	@Autowired
-	private ExcerciseBookDao excerciseBookDao;
-	
-	@Autowired
 	private SystemService systemService ;
 	
 	private final int COUNT=20;
 	
+	/**
+	 * 复习保存
+	 * @param lorePointId 知识点ID
+	 * @param cradId 卡片ID
+	 * @param right 回答是否正确 1：正确   0：错误
+	 * @return
+	 */
 	@Transactional
 	public void reviewCrad(String lorePointId,String cradId,Integer right){
 		
@@ -137,33 +138,12 @@ public class ReviewService {
 		 }	
 		 reviewDao.updateLorePointExerciseDetail(detailEntity);
 		 LOGGER.info("更新练习明细成功！");
-		 checkErrorCard(detailEntity.getBookId(),detailEntity.getPointId(),Integer.parseInt(cradId),right);
+		 utilService.checkErrorCard(detailEntity.getBookId(),detailEntity.getPointId(),Integer.parseInt(cradId),userId,right);
 		 LOGGER.info("处理错题库信息成功！");
+		 
+		 utilService.bookProgress(userId, detailEntity.getBookId());
+		 LOGGER.info("练习本进度计算统计完成");
 	}
-	
-	
-   /**
-    * 对错误库知识点进行处理
-	 * @param bookId
-	 * @param pointId
-	 * @param cardId
-	 * @param right
-   */
-public void checkErrorCard(Integer bookId,Integer pointId,Integer cardId,Integer right){
-	     //先检查错题库里面是否存在改卡片的数据信息
-	   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId);
-	    if(right==1){
-	    	 if(null!=entity){
-	    		 entity.setUpdateTime(new Date());
-	    		 entity.setIsRight(1);
-	    		 reviewDao.updateErrorwarehouse(entity); 
-	    	 }
-	    }else{
-	    	if(null==entity){
-	    		reviewDao.installErrorwarehouse(bookId, pointId, cardId,0);
-	    	}
-	    }
-   }	
 	
 	
 	
@@ -582,62 +562,6 @@ public void checkErrorCard(Integer bookId,Integer pointId,Integer cardId,Integer
 		  }
 		return cardListAll ;
 	}
-	
-	
-	/**
-	 * 根据知识点ID ，随机获取一个卡片信息
-	 * @param request
-	 * @param response
-	 * @param pointId
-	 * @return
-	 */
-	public CardDto roundCard(Integer pointId){
-		  List<CardDto> cardList = reviewDao.roundCard(pointId);
-		  if(cardList.size()>0){
-		      java.util.Random random = new java.util.Random();
-		      int randomPos = random.nextInt(cardList.size()); 
-		      return cardList.get(randomPos);
-		  }else{
-			  return null;
-		  }
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * 根据知识点pointId 获取是否有练习权限
-	 * @param pointId
-	 * @param userId
-	 * @return
-	 */
-	public Boolean getAuthByPointId(Integer pointId,Integer userId){
-		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByPointId(pointId,userId);
-		if(dto.size()>0){
-			return true;
-		}else{
-		    return false;
-		}
-	}
-	
-	/**
-	 * 根据练习本 bookId 获取是否有练习权限
-	 * @param bookId
-	 * @param userId
-	 * @return
-	 */
-	public Boolean getAuthByBookId(Integer bookId,Integer userId){
-		List<PointExerciseDetailDto> dto  = reviewDao.getAuthByBookId(bookId,userId);
-		if(dto.size()>0){
-			return true;
-		}else{
-		    return false;
-		}
-	}
-	
 	
 	
 	

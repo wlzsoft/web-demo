@@ -10,7 +10,8 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			b.state
+			b.state,
+			b.skilled
 		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
 			 AND t.pointId= a.id
@@ -123,7 +124,7 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY a.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="excerciseStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -135,7 +136,8 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state
+			t.state,
+			t.skilled
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -144,7 +146,7 @@
 		    AND t.exerciseCycle>0
 		    AND t.skilled <![CDATA[ < ]]> 4
 		    AND a.number>0
-		  ORDER BY a.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="findCardByPoindId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">

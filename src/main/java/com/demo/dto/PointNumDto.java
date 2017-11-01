@@ -6,7 +6,7 @@ public class PointNumDto {
 	
 	public Integer exNewNum;
 	
-	public Integer exStrenthenNum;
+	public Integer exStrengthenNum;
 
 	public Integer getExErrorNum() {
 		return exErrorNum;
@@ -24,12 +24,12 @@ public class PointNumDto {
 		this.exNewNum = exNewNum;
 	}
 
-	public Integer getExStrenthenNum() {
-		return exStrenthenNum;
+	public Integer getExStrengthenNum() {
+		return exStrengthenNum;
 	}
 
-	public void setExStrenthenNum(Integer exStrenthenNum) {
-		this.exStrenthenNum = exStrenthenNum;
+	public void setExStrengthenNum(Integer exStrengthenNum) {
+		this.exStrengthenNum = exStrengthenNum;
 	}
 	
 }
