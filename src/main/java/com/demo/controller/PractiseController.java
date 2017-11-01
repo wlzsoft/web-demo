@@ -16,8 +16,9 @@ public class PractiseController {
 		attr.addAttribute("bookId", bookId);
 		attr.addAttribute("chapterIds", chapterIds);
 		attr.addAttribute("stata", stata);
-		
-		 if(stata.equals("0")){//进入 练新 算法
+		if(null==stata||stata.equals("0")){//进入智能推荐算法
+			return "redirect:/review/exRecommend.json";
+	     }else if(stata.equals("0")){//进入 练新 算法
 			 return "redirect:/review/exNew.json";
 		}else if(stata.equals("1")){//进入 错题 算法
 			return "redirect:/review/exError.json";
