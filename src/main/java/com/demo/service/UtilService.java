@@ -69,7 +69,7 @@ public class UtilService {
    */
     public void checkErrorCard(Integer bookId,Integer pointId,Integer cardId,Integer userId,Integer right){
 		     //先检查错题库里面是否存在改卡片的数据信息
-		   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId);
+		   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId,userId);
 		    if(right==1){
 		    	 if(null!=entity){
 		    		 entity.setUpdateTime(new Date());

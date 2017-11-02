@@ -81,8 +81,10 @@ public class PractiseController {
 				cardList = excerciseService.excerciseError(bookId,chapterIds,userId);
 				
 			}else if(state.equals("2")){//进入巩固 算法
-				cardList = excerciseService.excerciseStrenthen(bookId, chapterIds, userId);
-			
+				cardList = excerciseService.excerciseStrenthen_Button(bookId, chapterIds, userId);
+				if(cardList.size()==0){
+					cardList=excerciseService.excerciseStrenthenFull(bookId, chapterIds, userId);
+				}
 			}else{ //全部条件不符合：进入智能推荐算法
 				cardList = recommendService.excerciseCard(userId, Integer.parseInt(bookId), chapterIds);
 			}

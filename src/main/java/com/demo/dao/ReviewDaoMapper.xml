@@ -57,6 +57,7 @@
 	        where bookId=#{bookId}
 	           and pointId=#{pointId}
 	           and cardId=#{cardId}
+	           and userId=#{userId}
 	  </select>
 	  
 	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.dto.PointExerciseDetailDto">

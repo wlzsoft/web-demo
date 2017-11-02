@@ -41,7 +41,8 @@ public interface ReviewDao {
 	 */
 	public ErrorWarehouseEntity	 findErrorwarehouse(@Param("bookId")Integer bookId,
 													@Param("pointId")Integer pointId,
-													@Param("cardId")Integer cardId);
+													@Param("cardId")Integer cardId,
+													@Param("userId")Integer userId);
 	
 	/**
 	 * 查询所有知识点	

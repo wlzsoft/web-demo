@@ -74,6 +74,11 @@ public class PointController {
 		 * */
 		Integer bookId = entity.getBookId();
 		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		
+		if(null==bookEntity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
+		
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
@@ -119,6 +124,9 @@ public class PointController {
 		 * 加操作权限
 		 * */
 		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		if(null==bookEntity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
@@ -183,6 +191,9 @@ public class PointController {
 		 * */
 		Integer bookId = entity.getBookId();
 		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		if(null==bookEntity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
@@ -236,6 +247,9 @@ public class PointController {
 		 * 加操作权限
 		 * */
 		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId);
+		if(null==bookEntity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
@@ -488,17 +502,17 @@ public class PointController {
 		}
 
 		List<PonitSkilledDto> ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
-		
-		for(PonitSkilledDto dto:ponitSkilledList){
-			String pointName = dto.getPointName();
-			try {
-				pointName =EmojiUtil.emojiRecovery2(pointName);
-				dto.setPointName(pointName);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+		if(ponitSkilledList.size()>0){
+			for(PonitSkilledDto dto:ponitSkilledList){
+				String pointName = dto.getPointName();
+				try {
+					pointName =EmojiUtil.emojiRecovery2(pointName);
+					dto.setPointName(pointName);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		
 		return ResultObject.successObject(ponitSkilledList,null); 
 	}
 

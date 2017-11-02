@@ -81,7 +81,7 @@
 				 #{item.pointId},
 				 #{item.bookId},
 				 #{item.skilled},
-				 #{item.nextExerciseTime}
+				 #{item.nextExerciseTime},
 				 #{item.state}
 				)
 			</foreach>
