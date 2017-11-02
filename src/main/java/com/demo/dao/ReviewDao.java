@@ -41,7 +41,17 @@ public interface ReviewDao {
 	 */
 	public ErrorWarehouseEntity	 findErrorwarehouse(@Param("bookId")Integer bookId,
 													@Param("pointId")Integer pointId,
-													@Param("cardId")Integer cardId);
+													@Param("cardId")Integer cardId,
+													@Param("userId")Integer userId);
+	
+	
+	/**
+	 * 删除错题库里面错题
+	 */
+	public void delErrorwarehouse(@Param("bookId")Integer bookId,
+								  @Param("cardId")Integer cardId);
+	
+	
 	
 	/**
 	 * 查询所有知识点	

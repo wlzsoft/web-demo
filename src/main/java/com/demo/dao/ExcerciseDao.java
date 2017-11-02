@@ -23,6 +23,12 @@ public interface ExcerciseDao {
 	
 	public List<PonitDto> excerciseStrenthen_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
+	public List<PonitDto> excerciseStrenthenFull_chapterIds(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
+	
+	public List<PonitDto> excerciseStrenthenFull_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	
 	public List<CardDto> findCardByPoindId(@Param("pointId")Integer pointId);
+	
+	public List<PonitDto> findStrenthen_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 
 }

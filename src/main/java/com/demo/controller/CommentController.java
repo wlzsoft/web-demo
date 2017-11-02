@@ -46,7 +46,7 @@ public class CommentController {
 			}
 			
 			if(null==entity.getContent()||entity.getContent().equals("")){
-				return ResultObject.successMessage("评论内容不能为null") ;
+				return ResultObject.successMessage("评论内容不能为空") ;
 			}else{
 				try {
 					String	content = EmojiUtil.emojiConvert1(entity.getContent());//emjoin 字符转换

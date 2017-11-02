@@ -39,7 +39,7 @@ public class UtilService {
 	 */
 	public void bookProgress(Integer userId ,Integer bookId){
 		//1、查询练习本下所有知识点
-		List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit(bookId,userId);
+		List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(bookId,userId);
 		LOGGER.info("用户：【"+userId+"】在练习本"+bookId+"中总共有"+pointList1.size()+"个知识点");
 		//2、查询练习本下所有被练习的知识点
 		List<PonitSkilledDto> pointList2 =lorePointDao.findBookIdToPonit_ex(bookId, userId);
@@ -69,7 +69,7 @@ public class UtilService {
    */
     public void checkErrorCard(Integer bookId,Integer pointId,Integer cardId,Integer userId,Integer right){
 		     //先检查错题库里面是否存在改卡片的数据信息
-		   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId);
+		   ErrorWarehouseEntity entity= reviewDao.findErrorwarehouse(bookId, pointId, cardId,userId);
 		    if(right==1){
 		    	 if(null!=entity){
 		    		 entity.setUpdateTime(new Date());

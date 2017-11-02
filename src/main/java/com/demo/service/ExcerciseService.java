@@ -83,7 +83,21 @@ public class ExcerciseService {
 	
 	
 	/**
-	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度小于4的知识点，）
+	 * 巩固复习知识点
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	public List<CardDto> excerciseStrenthen_Button(String bookId,String chapterIds,Integer userId){
+		List<CardDto> cardListAll = excerciseStrenthen( bookId, chapterIds, userId);
+		return cardListAll;
+	}
+	
+	
+	/**
+	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度小于4的知识点，）【熟练度小于 4 的状态】
 	 * @param request
 	 * @param response
 	 * @param bookId
@@ -111,18 +125,64 @@ public class ExcerciseService {
 	
 	
 	/**
-	 * 根据知识点 获取知识点卡片算法(有穿插排序)
+	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度= 4的知识点，）【熟练度等于 4 的状态】
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	public List<CardDto> excerciseStrenthenFull(String bookId,String chapterIds,Integer userId){
+		List<CardDto> cardListAll = new ArrayList<>();
+		List<PonitDto> pointList = new ArrayList<>();
+		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取巩固复习知识点练习
+			pointList = excerciseDao.excerciseStrenthenFull_bookId(Integer.parseInt(bookId), userId);
+		}else{
+			String[] chapterId = chapterIds.split(",");
+			if(chapterId.length>0){
+				Integer[] chapter = new Integer[chapterId.length];
+				for(int i=0;i<chapterId.length;i++){
+					chapter[i]=Integer.parseInt(chapterId[i]);
+				}
+				pointList =excerciseDao.excerciseStrenthenFull_chapterIds(Integer.parseInt(bookId), chapter, userId);
+			}
+		}
+		cardListAll =getCardAlgorithm_count(pointList,COUNT);
+	  return cardListAll;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 根据知识点 获取知识点卡片算法(有穿插混合排序)
 	 * @param pointList
 	 * @return
 	 */
 	public List<CardDto> getCardAlgorithm(List<PonitDto> pointList){
+		List<CardDto> cardListAll = new ArrayList<>();
 		if(pointList.size()>0){
 			int coun =0;
 			for(int i=0;i<pointList.size();i++){
-				PonitDto pointDao_fist = pointList.get(i);
-				int j=i++;
-				List<CardDto> cardList = excerciseDao.findCardByPoindId(pointDao_fist.getId());//根据知识点Id获取知识点下所有的卡片信息
-				
+				PonitDto pointDao_A = pointList.get(i);
+				List<CardDto> cardList_A = excerciseDao.findCardByPoindId(pointDao_A.getId());//根据知识点Id获取知识点下所有的卡片信息
+				int jj=i;
+				if(cardList_A.size()>0){
+					for(int j=0;j<cardList_A.size();j++){
+						CardDto dto_a = cardList_A.get(j);
+						cardListAll.add(dto_a);
+						PonitDto pointDao_B = pointList.get(++jj);
+						List<CardDto> cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());//根据知识点Id获取知识点下所有的卡片信息
+						if(cardList_B.size()>0){
+							CardDto dto_b = cardList_A.get(j);
+							cardListAll.add(dto_b);
+						}
+						if(cardList_A.size()<cardList_B.size()){
+							
+						}
+					}
+				}
 			}
 		}
 		return null;

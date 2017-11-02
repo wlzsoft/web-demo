@@ -207,6 +207,9 @@ public class CardController {
 		 * 加操作权限
 		 * */
 		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		if(null==BookEntity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
 		if(BookEntity.getSharedType()==0){
 			Integer userId = systemService.getCurrentUser().getId();
  			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, BookEntity.getId());

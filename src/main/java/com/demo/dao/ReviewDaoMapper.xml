@@ -57,7 +57,15 @@
 	        where bookId=#{bookId}
 	           and pointId=#{pointId}
 	           and cardId=#{cardId}
+	           and userId=#{userId}
 	  </select>
+	  
+	  <delete id="delErrorwarehouse" parameterType="java.lang.Integer" >
+	     DELETE FROM errorwarehouse 
+                WHERE bookId=#{bookId}
+	               and cardId=#{cardId}
+	  </delete>
+	  
 	  
 	  <update id="updateLorePointExerciseDetail" parameterType="com.demo.dto.PointExerciseDetailDto">
 	  		 UPDATE pointExerciseDetail set

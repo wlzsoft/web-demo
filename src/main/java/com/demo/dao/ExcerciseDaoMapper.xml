@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ExcerciseDao">
+  
    <select id="excerciseError_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
 			a.id ,
@@ -43,7 +44,7 @@
 			 AND t.isRight=0
 			 AND t.bookId=#{bookId}
 			<if test="chapterId !=null and chapterId !='' ">
-		        and t.chapterId in 
+		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
 				  #{id}
 			   </foreach>
@@ -149,12 +150,85 @@
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
+    
+      <select id="excerciseStrenthenFull_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseCycle>0
+		    AND t.skilled =4
+    	    <if test="chapterId !=null and chapterId !='' ">
+		        and a.chapterId in 
+		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		    AND a.number>0
+		  ORDER BY t.lastExerciseDate ASC  
+    </select>
+    
+    <select id="excerciseStrenthenFull_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state,
+			t.skilled
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseCycle>0
+		    AND t.skilled =4
+		    AND a.number>0
+		  ORDER BY t.lastExerciseDate ASC 
+    </select>
+    
+    
     <select id="findCardByPoindId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
           select t.id,t.pointId ,b.pointName ,t.questionType,t.titleVoiceSrc,t.titleVoiceFlag,t.questionDescType,t.questionLongText,t.questionVoiceSrc,
                 t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId} AND b.number>0
     </select> 
+    
+    
+    <select id="findStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state,
+			t.skilled
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseCycle>0
+		    AND a.number>0
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+    </select>
 	
 	  
 </mapper>

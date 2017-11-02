@@ -59,6 +59,8 @@ public class LoreCradService {
 		int count = loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
 		excerciseService.updateDetailBybookId(entity.getId());
+		//同时删除 错题库里面的 卡片信息
+		reviewDao.delErrorwarehouse(entity.getId(), loreCardId);
 		return count;
 	}
 	

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -248,7 +249,7 @@ public class ReviewController {
 			return ResultObject.warnMessage("无操作权限");
 		}
 		List<CardDto> cardList = new ArrayList<>();
-		cardList = excerciseService.excerciseStrenthen(bookId, chapterIds, userId);
+		cardList = excerciseService.excerciseStrenthen_Button(bookId, chapterIds, userId);
 		
 		//对emoji转换
 		if(cardList.size()>0){
