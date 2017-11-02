@@ -98,6 +98,14 @@ public interface LorePointDao {
 	 */
 	public List<PonitSkilledDto> findBookIdToPonit(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
+	/**
+	 * 根据练习本Id,用户ID  查找用户对知识点的练习情况
+	 * @param bookId
+	 * @param userId
+	 * @return
+	 */
+	public List<PonitSkilledDto> findBookIdToPonit_card(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	
 	
 	/**
 	 * 根据练习本Id,用户ID  查找用户已经联系过的知识点的练习情况

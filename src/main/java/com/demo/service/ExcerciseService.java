@@ -165,18 +165,22 @@ public class ExcerciseService {
 		if(pointList.size()>0){
 			int coun =0;
 			for(int i=0;i<pointList.size();i++){
-				int j=i++;
 				PonitDto pointDao_A = pointList.get(i);
-				PonitDto pointDao_B = pointList.get(j);
 				List<CardDto> cardList_A = excerciseDao.findCardByPoindId(pointDao_A.getId());//根据知识点Id获取知识点下所有的卡片信息
-				List<CardDto> cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());//根据知识点Id获取知识点下所有的卡片信息
+				int jj=i;
 				if(cardList_A.size()>0){
-					cardListAll.add(cardList_A.get(i));
-					if(cardList_B.size()>0){
-						cardListAll.add(cardList_B.get(i));
-					}else{
-						pointDao_B=pointList.get(++j);
-						cardList_B=excerciseDao.findCardByPoindId(pointDao_B.getId());
+					for(int j=0;j<cardList_A.size();j++){
+						CardDto dto_a = cardList_A.get(j);
+						cardListAll.add(dto_a);
+						PonitDto pointDao_B = pointList.get(++jj);
+						List<CardDto> cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());//根据知识点Id获取知识点下所有的卡片信息
+						if(cardList_B.size()>0){
+							CardDto dto_b = cardList_A.get(j);
+							cardListAll.add(dto_b);
+						}
+						if(cardList_A.size()<cardList_B.size()){
+							
+						}
 					}
 				}
 			}
