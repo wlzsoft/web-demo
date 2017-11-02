@@ -43,7 +43,7 @@
 			 AND t.isRight=0
 			 AND t.bookId=#{bookId}
 			<if test="chapterId !=null and chapterId !='' ">
-		        and t.chapterId in 
+		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
 				  #{id}
 			   </foreach>
