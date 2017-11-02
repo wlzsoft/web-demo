@@ -6,20 +6,15 @@
 		  INSERT INTO userbook(
 					userId,
 					bookId,
-					progress,
 					createTime,
 					createId
 			)VALUES(
 					#{userId},
 					#{bookId},
-					#{progress},
 					#{createTime},
 					#{createId}
 			)
 	</insert>
-	<update id="updateUserBook">
-	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
-	</update>
 	
 	<update id="updateUserBook">
 	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
