@@ -23,21 +23,21 @@
 	</insert>
 	
 	<delete id="delDiscuss" parameterType="java.lang.Integer">
-		DELETE FROM  discuss  WHERE  id=#{id} and userId=#{userId}
+		DELETE FROM  discuss  WHERE  id=#{discussId} and userId=#{userId}
 	</delete>
 	
 	<select id="discussBook" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
 		select * from discuss t 
 		   where t.bookId=#{bookId} 
-		     and t.pointId is null
-		     and t.cardId is null
+		     and t.pointId is NULL OR t.pointId=''
+		     and t.cardId is NULL OR t.cardId=''
 	</select>
 	
 	<select id="discussPoint" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
 		select * from discuss t 
 		   where t.bookId=#{bookId} 
 		     and t.pointId=#{pointId}
-		     and t.cardId is null
+		     and t.cardId is NULL OR t.cardId=''
 	</select>
 	
 	<select id="discussCard" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">

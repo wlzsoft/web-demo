@@ -17,6 +17,7 @@ public class CommentService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommentService.class);
 	
+	@Autowired
 	private CommentDao commentDao;
 	
 	@Autowired

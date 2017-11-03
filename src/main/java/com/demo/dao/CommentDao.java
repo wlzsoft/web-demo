@@ -2,6 +2,7 @@ package com.demo.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.entity.DiscussEntity;
@@ -18,26 +19,26 @@ public interface CommentDao {
 	
 	/**删除评论
 	 */
-	public int delDiscuss(Integer discussId,Integer userId);
+	public int delDiscuss(@Param("discussId")Integer discussId,@Param("userId")Integer userId);
 	
 	/**
 	 * 查询练习本评论
 	 * @return
 	 */
-	public List<DiscussEntity> discussBook(Integer bookId);
+	public List<DiscussEntity> discussBook(@Param("bookId")Integer bookId);
 	
 	/**
 	 * 查询知识点本评论
 	 * @return
 	 */
-	public List<DiscussEntity> discussPoint(Integer bookId,Integer pointId);
+	public List<DiscussEntity> discussPoint(@Param("bookId")Integer bookId,@Param("pointId")Integer pointId);
 
 	
 	/**
 	 * 查询卡片评论
 	 * @return
 	 */
-	public List<DiscussEntity> discussCard(Integer bookId,Integer pointId,Integer cardId);
+	public List<DiscussEntity> discussCard(@Param("bookId")Integer bookId,@Param("pointId")Integer pointId,@Param("cardId")Integer cardId);
 	
 	
 	/**
@@ -45,6 +46,6 @@ public interface CommentDao {
 	 * @param discussId
 	 * @return
 	 */
-	public DiscussEntity findDiscuss(Integer discussId);
+	public DiscussEntity findDiscuss(@Param("discussId")Integer discussId);
 
 }

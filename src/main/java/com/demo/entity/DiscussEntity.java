@@ -87,4 +87,5 @@ public class DiscussEntity implements Serializable{
 		this.username = username;
 	}
 	
+	
 }
