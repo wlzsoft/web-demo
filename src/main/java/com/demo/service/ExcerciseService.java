@@ -20,6 +20,8 @@ public class ExcerciseService {
 	
 	private final int COUNT=20;
 	
+	private final String[] arrt={"A","B","C","D","E","F","G","H","I","J","K","L","M","I","O","P","Q","R","S","T","U","V","W","S","Y","Z"};
+	
 	
 	/**
 	 * 复习错误的知识点 （错题，熟练度、知识点排序）
@@ -164,19 +166,69 @@ public class ExcerciseService {
 	public List<CardDto> getCardAlgorithm(List<PonitDto> pointList){
 		List<CardDto> cardListAll = new ArrayList<>();
 		if(pointList.size()>0){
+			PonitDto pointDao_B = null;
+			List<CardDto> cardList_B =null;
+			boolean flag =true;
+			int j=0;
 			for(int i=0;i<pointList.size();i++){
 				PonitDto pointDao_A = pointList.get(i);
 				List<CardDto> cardList_A = excerciseDao.findCardByPoindId(pointDao_A.getId());
-				int j=0;
 				if(cardList_A.size()>0){
-					PonitDto pointDao_B = pointList.get(i);
-					List<CardDto> cardList_B = excerciseDao.findCardByPoindId(pointDao_A.getId());
+					if(true){
+						pointDao_B = pointList.get(++i);
+					    cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());	
+					}
 					
+					for(int a=0;a<cardList_A.size();a++){
+						CardDto dto_A = cardList_A.get(a);
+						if(a==cardList_A.size()){
+							break;
+						}else{
+							while(cardList_B.size()==0){//一直找到下一个知识点有卡片为止
+								pointDao_B = pointList.get(++i);
+								cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
+							}
+							//当A 的卡片个数比B 的多时
+							if(cardList_A.size()>cardList_B.size()-(j>0?j-1:j)){
+								  cardListAll.add(dto_A);
+								if(a<cardList_B.size()){
+								  cardListAll.add(cardList_B.get(j));	
+								  j++;
+								}else{
+									do{
+										pointDao_B = pointList.get(++i);
+										cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
+									}while(cardList_B.size()==0);//一直找到下一个知识点有卡片为止
+									
+									cardListAll.add(cardList_B.get(j)); 
+									j++;
+									if(cardList_A.size()<cardList_B.size()){
+										flag=false;
+									}
+								}
+								if(j==cardList_B.size()){
+									j=0;
+									flag=true;
+								}
+							}else if(cardList_A.size()<=cardList_B.size()-(j>0?j-1:j)){ //当A 的卡片个数比B 的少时
+								cardListAll.add(dto_A);
+								if(a<cardList_B.size()){
+								  cardListAll.add(cardList_B.get(j));	
+								  j++;
+								}
+								if(j==cardList_B.size()){
+									j=0;
+									flag=true;
+								}
+								flag=false;
+							}
+						}
+					}
 				}
 
 			}
 		}
-		return null;
+		return cardListAll;
 	}
 	
 	
