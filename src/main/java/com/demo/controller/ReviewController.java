@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
+import com.demo.dto.PonitDto;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LoreCradService;
 import com.demo.service.RecommendService;
@@ -46,6 +48,9 @@ public class ReviewController {
 	
 	@Autowired
 	private RecommendService recommendService;
+	
+	@Autowired
+	private ExcerciseDao excerciseDao;
 	
 	/**
 	 * 复习保存
@@ -337,5 +342,16 @@ public class ReviewController {
 		
 		return ResultObject.successObject(cardDto,null) ;
 	}
+	
+	@RequestMapping("/test")
+	public Result<?> test(HttpServletRequest request ,HttpServletResponse response ,String bookId ){
+		List<CardDto> cardList = new ArrayList<>();
+		List<PonitDto> pointList = new ArrayList<>();
+		Integer userId =systemService.getCurrentUser().getId();
+		pointList= excerciseDao.excerciseNew_bookId(Integer.parseInt(bookId), userId);
+		cardList = excerciseService.getCardAlgorithm(pointList, 0);
+		return ResultObject.successObject(cardList,null) ;
+	}
+	
 
 }

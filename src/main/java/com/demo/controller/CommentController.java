@@ -80,7 +80,7 @@ public class CommentController {
 		
 		 int con = commentService.delDiscuss(Integer.parseInt(commentId));
 		 if(con==0){
-			 return ResultObject.successMessage("没有权限删除") ;  
+			 return ResultObject.sucreMessage("没有权限删除") ;  
 		 }else{
 			 return ResultObject.successMessage("删除成功") ; 
 		 }
@@ -119,7 +119,7 @@ public class CommentController {
 		if(list.size()>0){
 			return ResultObject.successObject(list, null) ;	
 		}else{
-			return ResultObject.sucreMessage("没有评论数据");
+			return ResultObject.successMessage("没有评论数据");
 		}
 		
 	}
@@ -142,7 +142,7 @@ public class CommentController {
 		if(list.size()>0){
 			return ResultObject.successObject(list, null) ;	
 		}else{
-			return ResultObject.sucreMessage("没有评论数据");
+			return ResultObject.successMessage("没有评论数据");
 		}
 		
 	}
@@ -168,7 +168,7 @@ public class CommentController {
 		if(list.size()>0){
 			return ResultObject.successObject(list, null) ;	
 		}else{
-			return ResultObject.sucreMessage("没有评论数据");
+			return ResultObject.successMessage("没有评论数据");
 		}
 	}
 	
@@ -197,7 +197,7 @@ public class CommentController {
 		if(list.size()>0){
 			return ResultObject.successObject(list, null) ;	
 		}else{
-			return ResultObject.sucreMessage("没有评论数据");
+			return ResultObject.successMessage("没有评论数据");
 		}
 	}
 

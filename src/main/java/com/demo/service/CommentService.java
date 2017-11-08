@@ -31,13 +31,15 @@ public class CommentService {
 	public IdEntity addDiscuss(DiscussEntity entity){
 		Integer userId = systemService.getCurrentUser().getId();
 		String username = systemService.getCurrentUser().getUsername();
-		entity.setCreateTime(new Date());
+		Date createTime = new Date();
+		entity.setCreateTime(createTime);
 		entity.setUserId(userId);
 		entity.setUsername(username);
 		commentDao.addDiscuss(entity);
 		
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
+		identity.setCreateTime(createTime);
 		return identity;
 	}
 	
