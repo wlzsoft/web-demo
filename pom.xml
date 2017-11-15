@@ -7,6 +7,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>web-demo( 刻意练习demo)</name>
   <url>http://maven.apache.org</url>
+  
+ <properties>
+   <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+ </properties>
+  
+  
   <dependencies>
 <!--     <dependency>
 	  <groupId>com.smartframe</groupId>
@@ -61,7 +67,8 @@
 	
   </dependencies>
   <build>
-    <finalName>web-demo</finalName>
+   <!-- 打包时的文件名 :${project.artifactId}-${project.version}-${maven.build.timestamp}-->
+    <finalName>${project.artifactId}-${maven.build.timestamp}</finalName>
     <plugins>
         <!--引入JDK 版本插件 -->
 	    <plugin>
