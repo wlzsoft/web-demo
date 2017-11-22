@@ -223,5 +223,10 @@
 	</select>
 	
 	
+	<select id="searchLorePointByBookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
+		select t.id,t.pointName,t.chapterId,t.number,t.bookId , t.sort,t.chapterSort 
+		  from  point t ,book a where a.id=t.bookId and a.id=#{bookId}
+	</select>
+	
      
 </mapper>

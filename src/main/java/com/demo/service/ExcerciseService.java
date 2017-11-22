@@ -186,8 +186,13 @@ public class ExcerciseService {
 					List<CardDto> cardList_A = excerciseDao.findCardByPoindId(pointDao_A.getId());
 					if(cardList_A.size()>0){
 						if(flag){
-							pointDao_B = pointList.get(++i);
-						    cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());	
+							if((i+1)<pointList.size()){
+								pointDao_B = pointList.get(++i);
+							    cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());	
+							}else{
+								cardListAll.addAll(cardList_A);
+								break;
+							}
 						}
 						for(int a=0;a<cardList_A.size();a++){
 							CardDto dto_A = cardList_A.get(a);
@@ -195,11 +200,11 @@ public class ExcerciseService {
 								break;
 							}else{
 								 while(cardList_B.size()==0){//一直找到下一个知识点有卡片为止
-									if(i==pointList.size()){//防止数组越界
+									if(i>=pointList.size()){//防止数组越界
 										break;
-									}else{
+									}else if((i+1)<pointList.size()){
 										pointDao_B = pointList.get(++i);
-										cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());	
+										cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
 									}
 								 }
 								//当A 的卡片个数比B 的多时
@@ -237,8 +242,10 @@ public class ExcerciseService {
 									if(j==cardList_B.size()){
 										j=0;
 										flag=true;
+									}else{
+										flag=false;	
 									}
-									flag=false;
+									
 								}
 							}
 						}

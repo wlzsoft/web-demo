@@ -473,7 +473,7 @@ public class PointController {
 	
 	
 	/**
-	 * 根据练习本节点ID 查询该节点下所有知识点信息
+	 * 根据练习本节点ID 查询该用户订阅节点下所有知识点信息
 	 * @param request
 	 * @param response
 	 * @param bookId
@@ -485,6 +485,7 @@ public class PointController {
 			return ResultObject.warnMessage("参数不能为空");
 		}
 		
+		List<PonitSkilledDto> ponitSkilledList =null;
 		/**
 		 * 加操作权限
 		 * */
@@ -498,10 +499,12 @@ public class PointController {
 	 			if(list.size()==0){
 	 				return ResultObject.warnMessage("无操作权限");	
 	 			}
+	 			ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
+			}else{//共公
+				ponitSkilledList = lorePointService.searchLorePointByBookId(Integer.parseInt(bookId));
 			}
 		}
-
-		List<PonitSkilledDto> ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
+	    
 		if(ponitSkilledList.size()>0){
 			for(PonitSkilledDto dto:ponitSkilledList){
 				String pointName = dto.getPointName();
