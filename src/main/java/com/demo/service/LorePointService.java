@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -221,6 +222,15 @@ public class LorePointService {
 	public List<PonitSkilledDto> findBookIdToPonit(Integer bookId){
 		Integer userId =  systemService.getCurrentUser().getId();
 		return lorePointDao.findBookIdToPonit(bookId,userId);
+	}
+	
+	/**
+	 * 根据练习本Id，查找练习本下所有的知识点
+	 * @param bookId
+	 * @return
+	 */
+	public List<PonitSkilledDto> searchLorePointByBookId(Integer bookId){
+		return lorePointDao.searchLorePointByBookId(bookId);
 	}
 	
 }
