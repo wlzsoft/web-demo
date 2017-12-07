@@ -499,9 +499,17 @@ public class PointController {
 	 			if(list.size()==0){
 	 				return ResultObject.warnMessage("无操作权限");	
 	 			}
-	 			ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
+	 			
 			}else{//共公
-				ponitSkilledList = lorePointService.searchLorePointByBookId(Integer.parseInt(bookId));
+	 			Integer userId = systemService.getCurrentUser().getId();
+	 			//查看是否订阅或是否是自己创建的
+	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
+	 			if(list.size()==0){//没有订阅
+	 				ponitSkilledList = lorePointService.searchLorePointByBookId(Integer.parseInt(bookId));
+	 			}else{
+	 				ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
+	 			}
+				
 			}
 		}
 	    

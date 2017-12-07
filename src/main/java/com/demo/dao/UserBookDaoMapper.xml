@@ -16,7 +16,7 @@
 			)
 	</insert>
 	
-	<update id="updateUserBook">
+	<update id="updateUserBook" parameterType="hashmap">
 	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
 	</update>
 	

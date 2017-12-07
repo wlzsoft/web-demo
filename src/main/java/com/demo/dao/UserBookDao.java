@@ -1,6 +1,7 @@
 package com.demo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import com.demo.entity.UserBookEntity;
 @Repository
 public interface UserBookDao {
 	
-	public void updateUserBook(@Param("bookId")Integer bookId ,@Param("userId")Integer userId,@Param("progress")float progress);
+	public void updateUserBook(Map<String, Object> map);
 	
 	/**
 	 * 新增用户练习本关系
