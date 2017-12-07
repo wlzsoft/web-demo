@@ -2,7 +2,9 @@ package com.demo.service;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +58,12 @@ public class UtilService {
 			
 		}
 		LOGGER.info("用户：【"+userId+"】在练习本"+bookId+"的练习进度为："+progress);
-		userBookDao.updateUserBook(bookId, userId, progress);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("bookId", bookId);
+		map.put("progress", progress);
+		userBookDao.updateUserBook(map);
 	}
 	
 	
