@@ -499,7 +499,7 @@ public class PointController {
 	 			if(list.size()==0){
 	 				return ResultObject.warnMessage("无操作权限");	
 	 			}
-	 			
+	 			   ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
 			}else{//共公
 	 			Integer userId = systemService.getCurrentUser().getId();
 	 			//查看是否订阅或是否是自己创建的

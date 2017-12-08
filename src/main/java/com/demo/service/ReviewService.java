@@ -95,13 +95,17 @@ public class ReviewService {
 					 }
 					
 					 detailEntity.setExerciseCycle((exerciseCycle<9)?exerciseCycle+1:exerciseCycle);//练习周期 【周期最高为 9 】
+					 detailEntity.setSkilled(0); ////熟练度（0，1，2，3，4） 
+					 
+			  }else{
+				  detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）  
 			  }
 			 detailEntity.setExerciseNumber(detailEntity.getExerciseNumber()+1); //练习次数
 			 detailEntity.setConCorrectNumber(detailEntity.getConCorrectNumber()+1);//连续回答正确次数
 			 detailEntity.setConErrorNumber(0);//连续回答错误次数
 			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
 			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
-			 detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）
+			 
 			 detailEntity.setState(2);//正确需要巩固
 		
 		 }else{
@@ -110,23 +114,23 @@ public class ReviewService {
 			      * 
 			      * **/
 				 if(exerciseCycle==1){//因为周期最少为0，所以从1开始
-					 detailEntity.setNextExerciseTime(new Date());//计划下次练习时间
-				 }else if(exerciseCycle==2){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp));//计划下次练习时间
+				 }else if(exerciseCycle==2){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));//计划下次练习时间
 				 }else if(exerciseCycle==3){
-					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));
-				 }else if(exerciseCycle==4){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.Third_TIME.timesanmp));
-				 }else if(exerciseCycle==5){
+				 }else if(exerciseCycle==4){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FOURTH_TIME.timesanmp));
-				 }else if(exerciseCycle==6){
+				 }else if(exerciseCycle==5){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIFTH_TIME.timesanmp));
-				 }else if(exerciseCycle==7){
+				 }else if(exerciseCycle==6){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SIXTH_TIME.timesanmp));
-				 }else if(exerciseCycle==8){
+				 }else if(exerciseCycle==7){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SEVENTH_TIME.timesanmp));
-				 }else if(exerciseCycle==9){
+				 }else if(exerciseCycle==8){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.EIGHTH_TIME.timesanmp));
+				 }else if(exerciseCycle==9){
+					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.NINTH_TIME.timesanmp));
 				 }
 			 
 				 detailEntity.setExerciseCycle((detailEntity.getExerciseCycle()>1)?detailEntity.getExerciseCycle()-1:detailEntity.getExerciseCycle());//练习周期
