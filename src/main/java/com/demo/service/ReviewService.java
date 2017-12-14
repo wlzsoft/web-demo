@@ -71,8 +71,8 @@ public class ReviewService {
 			   * 如果答题错误 练习周期往前升一级，熟练度为 +1 ，熟练度最高为3 最低为0 
 			   * 
 			   * **/
-			  int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());//比较时间大小  -1:小于 ; 1: 大于; 0:相等
-			  if(cc!=-1){//***当前时间 大于 或 等于 下次练习时间，即 在这个周期之内
+			  int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());//比较时间    -1:小于 ;  1: 大于; 0:相等
+			  if(cc>-1){//***当前时间 大于 或 等于 下次练习时间，即 在这个周期之内
 					 
 				     if(exerciseCycle==0){
 						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp));//计划下次练习时间
@@ -93,10 +93,14 @@ public class ReviewService {
 					 }else if(exerciseCycle==8){
 						 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.NINTH_TIME.timesanmp));
 					 }
-					
 					 detailEntity.setExerciseCycle((exerciseCycle<9)?exerciseCycle+1:exerciseCycle);//练习周期 【周期最高为 9 】
-					 detailEntity.setSkilled(0); ////熟练度（0，1，2，3，4） 
 					 
+					 //熟练度（0，1，2，3，4） 
+                     if(exerciseCycle<9){
+                    	  detailEntity.setSkilled(1); 
+				     }else{
+				    	 detailEntity.setSkilled(detailEntity.getSkilled()>3?detailEntity.getSkilled()+1:4);
+				     }
 			  }else{
 				  detailEntity.setSkilled((detailEntity.getSkilled()<=3)?detailEntity.getSkilled()+1:detailEntity.getSkilled()); ////熟练度（0，1，2，3，4）  
 			  }
