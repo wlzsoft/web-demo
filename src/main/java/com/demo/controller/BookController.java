@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dao.LorePointDao;
 import com.demo.dto.BookDto;
+import com.demo.dto.BookNumDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
+import com.demo.dto.PointNumDto;
+import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
+import com.demo.service.ExcerciseService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
@@ -32,7 +38,11 @@ import com.smartframe.dto.ResultObject;
 public class BookController {
 	
 	@Autowired
-	private ExcerciseBookService excerciseService ;	
+	private ExcerciseBookService bookService ;	
+	
+	
+	@Autowired
+	private ExcerciseService excerciseService;
 	
 	
 	@Autowired
@@ -43,6 +53,9 @@ public class BookController {
 	
 	@Autowired
 	private LorePointService lorePointService;
+	
+	@Autowired
+	private LorePointDao lorePointDao;
 	
 	
 	/**
@@ -68,7 +81,7 @@ public class BookController {
 			return ResultObject.warnMessage("领域不能为空");
 		}
 		
-		IdEntity identity = excerciseService.bookSava(entity);
+		IdEntity identity = bookService.bookSava(entity);
 		UserBookEntity userBookEntity = new UserBookEntity();
 					userBookEntity.setBookId(identity.getId());
 					userBookEntity.setUserId(systemService.getCurrentUser().getId());
@@ -91,7 +104,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		ExcerciseBookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -99,7 +112,7 @@ public class BookController {
 		if(userId!=entity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
-			int count = excerciseService.delBook(bookId);
+			int count = bookService.delBook(bookId);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
 			}
@@ -130,7 +143,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getId().toString());
+		ExcerciseBookEntity bookEntity = bookService.findBook(entity.getId().toString());
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -138,7 +151,7 @@ public class BookController {
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
-			int count = excerciseService.editBook(entity);
+			int count = bookService.editBook(entity);
 			if(count==0){
 				return ResultObject.successMessage("无操作数据");
 			}
@@ -162,7 +175,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		BookDto entity = excerciseService.findBookById(bookId);
+		BookDto entity = bookService.findBookById(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
@@ -186,11 +199,55 @@ public class BookController {
 	 * @return
 	 */
 	@RequestMapping("/bookList")
-	public Result<List<BookDto>> searchAllExcercise(HttpServletRequest request ,HttpServletResponse response){
+	public Result<List<BookDto>> bookList(HttpServletRequest request ,HttpServletResponse response){
 		Integer userId =systemService.getCurrentUser().getId();
-		List<BookDto> entityList = excerciseService.searchAllExcercise(userId);
+		List<BookDto> entityList = bookService.searchAllExcercise(userId);
 		return ResultObject.successObject(entityList,null);
 	}
+	
+	
+	/**
+	 * 根据用户ID 查询用户练习练习本的信息
+	 * @param request
+	 * @param response
+	 * 
+	 * 【该方法需要优化】目前是根据 searchAllExcercise 查询用户所有练习本信息，可以直接查询 userBook表信息 速度更快
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/bookReviewInfo")
+	public Result<?> bookReviewInfo(HttpServletRequest request ,HttpServletResponse response){
+		Integer userId =systemService.getCurrentUser().getId();
+		List<BookDto> entityList = bookService.searchAllExcercise(userId);
+		if(entityList.size()>0){
+			String[] bookIds = new String[entityList.size()];
+			for(int i=0;i<entityList.size();i++){
+				BookDto dto =entityList.get(i); 
+				bookIds[i]=dto.getId().toString();
+			}
+			List<PointNumDto> dtoList = excerciseService.getPointNum(userId,bookIds);
+			List<BookNumDto> bookDtoList = new ArrayList<>();
+			for(PointNumDto dto:dtoList){
+				BookNumDto bookNum =new BookNumDto();
+				bookNum.setBookId(dto.getBookId());
+				bookNum.setContinueNum(0);
+				bookNum.setDailyGoals(0);
+				bookNum.setExErrorNum(dto.getExErrorNum());
+				bookNum.setExNewNum(dto.getExNewNum());
+				bookNum.setExStrengthenNum(dto.getExStrengthenNum());
+				//1、查询练习本下所有知识点
+				List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
+				bookNum.setPointNum(pointList1.size());
+				//2、查询练习本下所有被练习的知识点
+				List<PonitSkilledDto> pointList2 =lorePointDao.findBookIdToPonit_ex(dto.getBookId(), userId);
+				bookNum.setPointNumY(pointList2.size());
+				bookDtoList.add(bookNum);
+			}
+			return ResultObject.successObject(bookDtoList,null) ;
+		}
+		return ResultObject.warnMessage("没有练习本信息");
+	}
+	
 	
 
     
@@ -210,7 +267,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		ExcerciseBookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -227,7 +284,7 @@ public class BookController {
 		}
 		
 		
-		BookProgressDto bPentity = excerciseService.bookProgress(Integer.parseInt(bookId));
+		BookProgressDto bPentity = bookService.bookProgress(Integer.parseInt(bookId));
 		return ResultObject.successObject(bPentity,null); 
 	}
 	
@@ -248,7 +305,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		ExcerciseBookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -285,7 +342,7 @@ public class BookController {
 	 */
 	@RequestMapping("/getShareBook")
 	public Result<?> getShareBook(HttpServletRequest request ,HttpServletResponse response){
-		List<BookDto> entityList = excerciseService.getOpenBook();
+		List<BookDto> entityList = bookService.getOpenBook();
 		return ResultObject.successObject(entityList,null);
 	}
 	
@@ -307,7 +364,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		ExcerciseBookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
