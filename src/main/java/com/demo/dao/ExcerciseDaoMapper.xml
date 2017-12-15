@@ -229,6 +229,88 @@
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
+    
+     <!-- 添加APP 应用 -->
+    <select id="excerciseStrenthen_bookIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state,
+			t.skilled
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    <if test="bookId !=null and bookId !='' ">
+		        AND t.bookId in 
+		       <foreach collection="bookId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		    AND t.exerciseCycle>0
+		    AND t.skilled <![CDATA[ < ]]> 4
+		    AND a.number>0
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+    </select>
+    
+   <select id="excerciseError_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			b.state,
+			b.skilled
+		FROM errorwarehouse t ,point a,pointExerciseDetail b
+			WHERE t.userId=#{userId}
+			 AND t.pointId= a.id
+			 AND t.pointId=b.pointId
+			 AND t.userId=b.userId
+			 AND t.bookId=a.bookId
+			 AND t.isRight=0
+			<if test="bookId !=null and bookId !='' ">
+		        AND t.bookId in 
+		       <foreach collection="bookId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		  GROUP BY t.bookId,t.pointId
+		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
+	</select>
+	
+	<select id="excerciseNew_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+         SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    <if test="bookId !=null and bookId !='' ">
+		        AND t.bookId in 
+		       <foreach collection="bookId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		    AND t.exerciseCycle=0
+		    AND t.skilled=0
+		    AND a.number>0
+		  ORDER BY a.sort,a.id ASC 
+    </select>
 	
 	  
 </mapper>

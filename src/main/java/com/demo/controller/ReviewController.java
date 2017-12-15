@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
-import com.demo.dto.PonitDto;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LoreCradService;
 import com.demo.service.RecommendService;
@@ -288,15 +287,18 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("pointNum")
-	public Result<?> pointNum(HttpServletRequest request ,HttpServletResponse response,Integer bookId){
-		if(null==bookId||bookId.equals("")){
+	public Result<?> pointNum(HttpServletRequest request ,HttpServletResponse response,String bookIds){
+		if(null==bookIds||bookIds.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		
-		Integer userId =systemService.getCurrentUser().getId();
-		
-		PointNumDto dot = excerciseService.getPointNum(userId,bookId);
-		return ResultObject.successObject(dot,null) ;
+		String[] bookId_array =bookIds.split(",");
+		if(bookId_array.length>0){
+			Integer userId =systemService.getCurrentUser().getId();
+			List<PointNumDto> dot = excerciseService.getPointNum(userId,bookId_array);
+			return ResultObject.successObject(dot,null) ;	
+		}else{
+			return ResultObject.warnMessage("参数不能为空");
+		}
 	}
 	
 	
@@ -341,16 +343,6 @@ public class ReviewController {
 		}
 		
 		return ResultObject.successObject(cardDto,null) ;
-	}
-	
-	@RequestMapping("/test")
-	public Result<?> test(HttpServletRequest request ,HttpServletResponse response ,String bookId ){
-		List<CardDto> cardList = new ArrayList<>();
-		List<PonitDto> pointList = new ArrayList<>();
-		Integer userId =systemService.getCurrentUser().getId();
-		pointList= excerciseDao.excerciseNew_bookId(Integer.parseInt(bookId), userId);
-		cardList = excerciseService.getCardAlgorithm(pointList, 0);
-		return ResultObject.successObject(cardList,null) ;
 	}
 	
 
