@@ -2,6 +2,8 @@ package com.demo.dto;
 
 public class PointNumDto {
 	
+	public Integer bookId;
+	
 	public Integer exErrorNum;
 	
 	public Integer exNewNum;
@@ -30,6 +32,14 @@ public class PointNumDto {
 
 	public void setExStrengthenNum(Integer exStrengthenNum) {
 		this.exStrengthenNum = exStrengthenNum;
+	}
+
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
 	}
 	
 }

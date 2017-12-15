@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
@@ -287,15 +289,22 @@ public class ExcerciseService {
 	 * @param bookId
 	 * @return
 	 */
-	public PointNumDto getPointNum(Integer userId,Integer bookId){
-		PointNumDto dto = new PointNumDto();
-		List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);
-		    dto.setExErrorNum(pointList_error.size());
-		List<PonitDto> pointList_new= excerciseDao.excerciseNew_bookId(bookId, userId);
-		    dto.setExNewNum(pointList_new.size());
-		List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
-			dto.setExStrengthenNum(pointList_strenthen.size());
-		return dto;
+	public List<PointNumDto> getPointNum(Integer userId,String[] bookId_arry){
+		Integer[] bookIds = new Integer[bookId_arry.length];
+		List<PointNumDto> pintNumList =new ArrayList<>();
+		for(int i=0;i<bookId_arry.length;i++){
+			Integer bookId=Integer.parseInt(bookId_arry[i]);
+			PointNumDto dto = new PointNumDto();
+			List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);
+			    dto.setExErrorNum(pointList_error.size());
+			List<PonitDto> pointList_new= excerciseDao.excerciseNew_bookId(bookId, userId);
+			    dto.setExNewNum(pointList_new.size());
+			List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
+				dto.setExStrengthenNum(pointList_strenthen.size());
+				dto.setBookId(bookId);
+				pintNumList.add(dto);
+		}
+		return pintNumList;
 	}
 	
 	
