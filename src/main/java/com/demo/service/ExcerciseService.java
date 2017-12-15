@@ -290,7 +290,6 @@ public class ExcerciseService {
 	 * @return
 	 */
 	public List<PointNumDto> getPointNum(Integer userId,String[] bookId_arry){
-		Integer[] bookIds = new Integer[bookId_arry.length];
 		List<PointNumDto> pintNumList =new ArrayList<>();
 		for(int i=0;i<bookId_arry.length;i++){
 			Integer bookId=Integer.parseInt(bookId_arry[i]);
