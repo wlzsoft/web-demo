@@ -176,6 +176,7 @@ public class ExcerciseService {
 			PonitDto pointDao_B = null;
 			List<CardDto> cardList_B =null;
 			boolean flag =true;
+			Integer b_cardList=0;//用来标记 B 知识卡片的数量；
 			int j=0;
 			for(int i=0;i<=pointList.size();i++){
 				if(i==pointList.size()){
@@ -195,46 +196,61 @@ public class ExcerciseService {
 								cardListAll.addAll(cardList_A);
 								break;
 							}
+							b_cardList=cardList_B.size();
 						}
+						
+						//开始对A的 知识点 遍历 卡片
 						for(int a=0;a<cardList_A.size();a++){
 							CardDto dto_A = cardList_A.get(a);
 							if(a==cardList_A.size()){
 								break;
 							}else{
-								 while(cardList_B.size()==0){//一直找到下一个知识点有卡片为止
-									if(i>=pointList.size()){//防止数组越界
+								
+								while(b_cardList==0){//一直找到下一个知识点有卡片为止
+									if(i>=pointList.size()-1){//防止数组越界
+										b_cardList=0;
 										break;
-									}else if((i+1)<pointList.size()){
+									}else{
 										pointDao_B = pointList.get(++i);
 										cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
+										b_cardList=cardList_B.size();
 									}
 								 }
+								 
 								//当A 的卡片个数比B 的多时
-								if(cardList_A.size()>cardList_B.size()-(j>0?j-1:j)){
-									  cardListAll.add(dto_A);
-									if(a<cardList_B.size()){
+								if(cardList_A.size()>b_cardList-(j>0?j-1:j)){
+									  cardListAll.add(dto_A);// ------取  A知识点 卡片的数据
+									
+									if(a<b_cardList){
 									  cardListAll.add(cardList_B.get(j));	
 									  j++;
 									}else{
 										do{
-											if(i>=pointList.size()){//防止数组越界
+											if(i>=pointList.size()-1){//防止数组越界
+												b_cardList=0;
 												break;
-											}else if((i+1)<pointList.size()){
+											}else{
 												pointDao_B = pointList.get(++i);
 												cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
+												b_cardList=cardList_B.size();
 											}
-										}while(cardList_B.size()==0);//一直找到下一个知识点有卡片为止
+										}while(b_cardList==0);//一直找到下一个知识点有卡片为止
 										
-										cardListAll.add(cardList_B.get(j)); 
+										if(b_cardList>0){
+											cardListAll.add(cardList_B.get(j)); 	
+										}
+										
 										j++;
-										if(cardList_A.size()<cardList_B.size()){
+										if(cardList_A.size()<b_cardList){
 											flag=false;
 										}
 									}
-									if(j==cardList_B.size()){
+									if(j==b_cardList){
 										j=0;
 										flag=true;
+										b_cardList=0;
 									}
+									
 								}else if(cardList_A.size()<=cardList_B.size()-(j>0?j-1:j)){ //当A 的卡片个数比B 的少时
 									cardListAll.add(dto_A);
 									if(a<cardList_B.size()){
