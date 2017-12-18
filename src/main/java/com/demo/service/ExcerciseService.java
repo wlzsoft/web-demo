@@ -217,9 +217,9 @@ public class ExcerciseService {
 									  j++;
 									}else{
 										do{
-											if(i==pointList.size()){//防止数组越界
+											if(i>=pointList.size()){//防止数组越界
 												break;
-											}else{
+											}else if((i+1)<pointList.size()){
 												pointDao_B = pointList.get(++i);
 												cardList_B = excerciseDao.findCardByPoindId(pointDao_B.getId());
 											}
