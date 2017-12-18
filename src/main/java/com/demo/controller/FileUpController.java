@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.demo.comm.ConstantsUrl;
 import com.demo.dto.ImageUrlDto;
 import com.demo.qiniu.UploadManager;
 import com.qiniu.common.QiniuException;
@@ -90,7 +91,7 @@ public class FileUpController {
 	        }
 	        
 			dto.setFileName(key);
-			dto.setFileUrl("https://ebird.res.simfun.net/"+key);
+			dto.setFileUrl(ConstantsUrl.FILE_UPLOAD_URL+key);
 		} catch (RuntimeException e2) {
 			e2.printStackTrace();
 		}
