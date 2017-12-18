@@ -116,7 +116,7 @@
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
-		    AND t.exerciseCycle>0
+		    AND t.exerciseNumber>0
 		    AND t.skilled <![CDATA[ < ]]> 4
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
@@ -144,7 +144,8 @@
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
-		    AND t.exerciseCycle>0
+		    AND t.exerciseCycle>=0
+		    AND T.nextExerciseTime NOT NULL
 		    AND t.skilled <![CDATA[ < ]]> 4
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
@@ -252,7 +253,7 @@
 				  #{id}
 			   </foreach>
 		    </if>
-		    AND t.exerciseCycle>0
+		    AND t.exerciseNumber>=0
 		    AND t.skilled <![CDATA[ < ]]> 4
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 

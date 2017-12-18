@@ -117,7 +117,9 @@ public class ReviewService {
 			      * 如果答题错误 练习周期往后降一级，熟练度为 0 
 			      * 
 			      * **/
-				 if(exerciseCycle==1){//因为周期最少为0，所以从1开始
+				 if(exerciseCycle==0){//因为周期最少为0，所以从1开始
+					 detailEntity.setNextExerciseTime(new Date());//计划下次练习时间
+				 }else if(exerciseCycle==1){//因为周期最少为0，所以从1开始
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.FIRST_TIME.timesanmp));//计划下次练习时间
 				 }else if(exerciseCycle==2){
 					 detailEntity.setNextExerciseTime(DateUtil.addOrSubHour(new Date(), LearningCycle.SECOND_TIME.timesanmp));//计划下次练习时间
