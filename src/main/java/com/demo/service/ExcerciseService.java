@@ -180,10 +180,12 @@ public class ExcerciseService {
 			int j=0;
 			for(int i=0;i<=pointList.size();i++){
 				if(i==pointList.size()){
-					for(int b=j;b<cardList_B.size();b++){
-						cardListAll.add(cardList_B.get(b));
+					if(b_cardList>0){
+						for(int b=j;b<cardList_B.size();b++){
+							cardListAll.add(cardList_B.get(b));
+							
+						}
 					}
-					break;
 				}else{
 					PonitDto pointDao_A = pointList.get(i);
 					List<CardDto> cardList_A = excerciseDao.findCardByPoindId(pointDao_A.getId());
@@ -260,6 +262,7 @@ public class ExcerciseService {
 									if(j==cardList_B.size()){
 										j=0;
 										flag=true;
+										b_cardList=0;
 									}else{
 										flag=false;	
 									}
