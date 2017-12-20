@@ -9,6 +9,8 @@ public class BookNumDto extends PointNumDto {
 	
 	public Integer dailyGoals;//每日目标
 	
+	public Integer completeNumber;//每日完成数
+	
 	public Integer continueNum; //连续天数
 	
 	public Integer pointNum; //总共知识点数量
@@ -25,6 +27,14 @@ public class BookNumDto extends PointNumDto {
 
 	public Integer getContinueNum() {
 		return continueNum;
+	}
+	
+	public Integer getCompleteNumber() {
+		return completeNumber;
+	}
+
+	public void setCompleteNumber(Integer completeNumber) {
+		this.completeNumber = completeNumber;
 	}
 
 	public void setContinueNum(Integer continueNum) {

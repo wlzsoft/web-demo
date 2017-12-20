@@ -52,7 +52,8 @@
 		  GROUP BY t.bookId,t.pointId
 		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
 	</select>
-  
+	
+	<!-- =================新知识训练    ================================================= --> 
     <select id="excerciseNew_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		  SELECT 
 			a.id ,
@@ -74,7 +75,8 @@
 				  #{id}
 			   </foreach>
 		    </if>
-		    AND t.exerciseCycle=0
+		    AND t.exerciseNumber=0
+		    AND t.state=0
 		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
@@ -95,11 +97,14 @@
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
-		    AND t.exerciseCycle=0
+		    AND t.exerciseNumber=0
+		    AND t.state=0
 		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
     </select>
+    
+    <!-- =================巩固训练    ================================================= --> 
     
     <select id="excerciseStrenthen_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
@@ -117,7 +122,8 @@
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
-		    AND t.skilled <![CDATA[ < ]]> 4
+		    AND t.state=2
+		    AND t.skilled <![CDATA[ <= ]]> 1
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -145,13 +151,14 @@
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
-		    AND t.skilled <![CDATA[ < ]]> 4
+		    AND t.skilled <![CDATA[ <= ]]> 1
+		    AND t.state=2
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
-    
-      <select id="excerciseStrenthenFull_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+   <!-- =================强化训练    ================================================= --> 
+   <select id="excerciseIntensifyFull_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
 			a.id ,
 			a.pointName,
@@ -178,7 +185,7 @@
 		  ORDER BY t.lastExerciseDate ASC  
     </select>
     
-    <select id="excerciseStrenthenFull_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    <select id="excerciseIntensifyFull_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
 			a.id ,
 			a.pointName,
@@ -198,6 +205,57 @@
 		    AND t.skilled =4
 		    AND a.number>0
 		  ORDER BY t.lastExerciseDate ASC 
+    </select>
+    
+      <select id="excerciseIntensify_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseNumber>0
+		    AND t.state=3
+		    AND t.skilled <![CDATA[ > ]]> 1
+    	    <if test="chapterId !=null and chapterId !='' ">
+		        and a.chapterId in 
+		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		    AND a.number>0
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+    </select>
+    
+    <select id="excerciseIntensify_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state,
+			t.skilled
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseNumber>0
+		    AND t.state=3
+		    AND t.skilled <![CDATA[ > ]]> 1
+		    AND a.number>0
+		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     

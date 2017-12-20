@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookNumDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ExcerciseBookEntity;
@@ -22,6 +24,7 @@ import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LorePointService;
+import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
 import com.smartframe.dto.Result;
@@ -44,6 +47,8 @@ public class BookController {
 	@Autowired
 	private ExcerciseService excerciseService;
 	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@Autowired
 	private SystemService systemService ;
@@ -241,6 +246,15 @@ public class BookController {
 				//2、查询练习本下所有被练习的知识点
 				List<PonitSkilledDto> pointList2 =lorePointDao.findBookIdToPonit_ex(dto.getBookId(), userId);
 				bookNum.setPointNumY(pointList2.size());
+				//3、查询今日练习新的题目 数量
+				List<PointExerciseDetailDto> list = reviewService.getDailyGoals(new Date(), dto.getBookId());
+				//4、查询练习本设置的
+				List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, dto.getBookId());
+				if(userBookList.size()>0){
+					Integer dailyGoals = userBookList.get(0).getDailyGoals();
+					bookNum.setDailyGoals(dailyGoals);
+				}
+				bookNum.setCompleteNumber(list.size());
 				bookDtoList.add(bookNum);
 			}
 			return ResultObject.successObject(bookDtoList,null) ;

@@ -19,13 +19,16 @@ public interface ExcerciseDao {
 	//
 	public List<PonitDto> excerciseNew_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
+	//巩固练习 熟练度 =1
 	public List<PonitDto> excerciseStrenthen_chapterIds(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
-	//
 	public List<PonitDto> excerciseStrenthen_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+
+	//强化训练 熟练度>1
+	public List<PonitDto> excerciseIntensify_chapterIds(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
+	public List<PonitDto> excerciseIntensify_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	public List<PonitDto> excerciseIntensifyFull_chapterIds(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
+	public List<PonitDto> excerciseIntensifyFull_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
-	public List<PonitDto> excerciseStrenthenFull_chapterIds(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
-	
-	public List<PonitDto> excerciseStrenthenFull_bookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 	public List<CardDto> findCardByPoindId(@Param("pointId")Integer pointId);
 	

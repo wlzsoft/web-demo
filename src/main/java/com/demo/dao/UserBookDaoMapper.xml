@@ -17,7 +17,7 @@
 	</insert>
 	
 	<update id="updateUserBook" parameterType="hashmap">
-	    update userbook set progress=#{progress} where userId=#{userId} and bookId=#{bookId}
+	    update userbook set progress=#{progress} ,lastTime=#{lastTime}  where userId=#{userId} and bookId=#{bookId}
 	</update>
 	
 	<delete id="delUserBookById" parameterType="java.lang.Integer">

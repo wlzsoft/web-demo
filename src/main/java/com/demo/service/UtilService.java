@@ -63,6 +63,7 @@ public class UtilService {
 		map.put("userId", userId);
 		map.put("bookId", bookId);
 		map.put("progress", progress);
+		map.put("lastTime", new Date());
 		userBookDao.updateUserBook(map);
 	}
 	

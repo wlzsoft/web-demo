@@ -67,6 +67,7 @@
 			t.updateDetailTime,
 			t.remark,
 			a.progress,
+			a.lastTime,
 			b.username AS createName
 		from book t  ,userbook a,userinfo b where a.bookId=t.id and t.createId=b.id and a.userId=#{userId}
 	</select>
