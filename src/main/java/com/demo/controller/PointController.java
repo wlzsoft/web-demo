@@ -320,12 +320,12 @@ public class PointController {
 		LorePointEntity point = lorePointService.findLorePoint(Integer.parseInt(pointId));
 		
 		if(null==point){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}
 		
 		Integer userId = systemService.getCurrentUser().getId();
 		if(userId!=point.getCreateId()){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}else{
 			int count = lorePointService.delLorePoint(Integer.parseInt(pointId));
 			if(count==0){
@@ -348,13 +348,13 @@ public class PointController {
 		ExcerciseBookEntity bookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		
 		if(null==bookEntity){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}else{
 			if(bookEntity.getSharedType()==0){
 				Integer userId = systemService.getCurrentUser().getId();
 	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, bookEntity.getId());
 	 			if(list.size()==0){
-	 				return ResultObject.warnMessage("无操作权限");	
+	 				return ResultObject.sucreMessage("无操作权限");	
 	 			}
 			}
 		}
@@ -407,13 +407,13 @@ public class PointController {
 		 * */
 		ExcerciseBookEntity entity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		if(null==entity){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}else{
 			if(entity.getSharedType()==0){
 				Integer userId = systemService.getCurrentUser().getId();
 	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
 	 			if(list.size()==0){
-	 				return ResultObject.warnMessage("无操作权限");	
+	 				return ResultObject.sucreMessage("无操作权限");	
 	 			}
 			}
 		}
@@ -442,13 +442,13 @@ public class PointController {
 		 * */
 		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		if(null==entity){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}else{
 			if(entity.getSharedType()==0){
 				Integer userId = systemService.getCurrentUser().getId();
 	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
 	 			if(list.size()==0){
-	 				return ResultObject.warnMessage("无操作权限");	
+	 				return ResultObject.sucreMessage("无操作权限");	
 	 			}
 			}
 		}
@@ -491,13 +491,13 @@ public class PointController {
 		 * */
 		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
 		if(null==entity){
-			return ResultObject.warnMessage("无操作权限");	
+			return ResultObject.sucreMessage("无操作权限");	
 		}else{
 			if(entity.getSharedType()==0){//0 私有
 	 			Integer userId = systemService.getCurrentUser().getId();
 	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
 	 			if(list.size()==0){
-	 				return ResultObject.warnMessage("无操作权限");	
+	 				return ResultObject.sucreMessage("无操作权限");	
 	 			}
 	 			   ponitSkilledList = lorePointService.findBookIdToPonit(Integer.parseInt(bookId));
 			}else{//共公
