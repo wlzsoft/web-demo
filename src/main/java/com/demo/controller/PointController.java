@@ -540,6 +540,16 @@ public class PointController {
 	 */
 	@RequestMapping("/hidePoint")
 	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String bookId,String pointIds,Integer hidden){
+		
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		
+		if(null==hidden||hidden.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		
+		
 		/**
 		 * 加操作权限
 		 * */
