@@ -217,7 +217,12 @@
 	   </select>
 	   
 	   <select id="getAuthByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
-	       SELECT * FROM pointexercisedetail t WHERE t.pointId=#{pointId} AND t.userId=#{userId}
+	       SELECT * FROM pointexercisedetail t WHERE
+	         	      t.pointId  in
+				<foreach collection="pointIds" item="id" index="index" open="(" close=")" separator=",">
+					#{id,jdbcType=INTEGER}
+				</foreach>
+	        AND t.userId=#{userId}
 	   </select>
 	   
 	   <select id="getAuthByBookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto" >
