@@ -31,7 +31,7 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	  public float weights       ;//练习权重
 	  public float  grasp         ;//掌握值
 	  public Integer state ;// state :答题状态（0：新增   1：上次答错    2：巩固）
-	  
+	  public Integer hidden;// 0 显示 1 隐藏
 	public Integer getId() {
 		return id;
 	}
@@ -149,6 +149,12 @@ public class LorePointExerciseDetailEntity implements Serializable {
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	public Integer getHidden() {
+		return hidden;
+	}
+	public void setHidden(Integer hidden) {
+		this.hidden = hidden;
 	}
 	
 }

@@ -24,6 +24,8 @@ public class BookDto {
 	public String remark;
 	
 	public float progress;//练习本进度
+	
+	public Date lastTime;//上次练习时间
 
 	public Integer getId() {
 		return id;
@@ -103,6 +105,14 @@ public class BookDto {
 
 	public void setProgress(float progress) {
 		this.progress = progress;
+	}
+
+	public Date getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(Date lastTime) {
+		this.lastTime = lastTime;
 	}
 	
 }

@@ -2,10 +2,8 @@ package com.demo.service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +19,7 @@ import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.util.enums.LearningCycle;
+import com.smartframe.basics.util.DateFormatEnum;
 import com.smartframe.basics.util.DateUtil;
 
 @Service("reviewService")
@@ -66,6 +65,11 @@ public class ReviewService {
 		
 		PointExerciseDetailDto  detailEntity = lorePointDao.pointIdByDetail(Integer.parseInt(lorePointId),userId);
 		int exerciseCycle =detailEntity.getExerciseCycle();//获取练习周期
+		
+		if(detailEntity.getExerciseNumber()==0){
+			detailEntity.setFirstExerciseDate(new Date());// 设置第一次练习时间
+		}
+		
 		 if(right==1){//正确
 			  /**
 			   * 如果答题错误 练习周期往前升一级，熟练度为 +1 ，熟练度最高为3 最低为0 
@@ -110,7 +114,12 @@ public class ReviewService {
 			 detailEntity.setLastExerciseDate(new Date());//上一次练习的日期
 			 detailEntity.setCorrectNumber(detailEntity.getCorrectNumber()+1);//正确数
 			 
-			 detailEntity.setState(2);//正确需要巩固
+			 if(detailEntity.getSkilled()>1){
+				 detailEntity.setState(3);//正确需要强化[熟练度大于1时 就不需要巩固 ]
+			 }else {
+				 detailEntity.setState(2);//正确需要巩固
+			 }
+			 
 		
 		 }else{
 			     /** 错误
@@ -575,7 +584,18 @@ public class ReviewService {
 		return cardListAll ;
 	}
 	
-	
+	/**
+	 * 查询用户指定日期内 练习新题的数量
+	 * @param toDate
+	 * @param bookId
+	 * @param ueserId
+	 * @return
+	 */
+	public List<PointExerciseDetailDto> getDailyGoals(Date toDate,Integer bookId){
+		Integer userId =systemService.getCurrentUser().getId();
+		List<PointExerciseDetailDto>  list = reviewDao.getDailyGoals(DateUtil.format(toDate, DateFormatEnum.YEAR_TO_DAY), bookId, userId);
+		return list;
+	}
 	
 	public static void main(String[] args){
 		Date date = new Date(); 

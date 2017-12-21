@@ -31,7 +31,7 @@ public class RecommendService {
 	private ExcerciseService excerciseService;
 	
 	/**
-	 * 根据指定练习本的章节进行练习
+	 * 根据指定练习本的章节进行练习【用户智能推荐复习算法】
 	 * @param userId 用户ID
 	 * @param bookId 练习本ID
 	 * @param chapterId 章节ID数组
@@ -49,7 +49,7 @@ public class RecommendService {
 				 return cardListAll;
 			 }
 			 
-		   //****2、再查询是否有需要复习的知识点
+		   //****2、再查询是否有需要巩固复习的知识点
 			 List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
 			 List<CardDto> cardList_strenthen = excerciseService.getCardAlgorithm_count(pointList_strenthen, COUNT-cardListAll.size());
 			 cardListAll.addAll(cardList_strenthen);
@@ -63,8 +63,17 @@ public class RecommendService {
 			 if(cardListAll.size()>=COUNT){
 				 return cardListAll; 
 			 }
-		   //****4、最后查询熟练度满分的知识点
-			 List<PonitDto> pointList_full = excerciseDao.excerciseStrenthenFull_bookId(bookId, userId);
+			 
+			//****4、最后查询新的知识点
+			List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_bookId(bookId, userId);
+			List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm_count(pointList_new, COUNT-cardListAll.size());
+			cardListAll.addAll(cardList_intensify);
+			 if(cardListAll.size()>=COUNT){
+				 return cardListAll; 
+			 }		 
+			 
+		   //****5、最后查询熟练度满分的知识点
+			 List<PonitDto> pointList_full = excerciseDao.excerciseIntensifyFull_bookId(bookId, userId);
 			 List<CardDto> cardList_full = excerciseService.getCardAlgorithm_count(pointList_full, COUNT-cardListAll.size());
 			 cardListAll.addAll(cardList_full);
 		}else{
@@ -83,7 +92,7 @@ public class RecommendService {
 					if(cardListAll.size()>=COUNT){
 						 return cardListAll;
 					 }
-			    //****2、再查询是否有需要复习的知识点
+			    //****2、再查询是否有需要巩固的知识点
 					List<PonitDto> pointList_strenthen =excerciseDao.excerciseStrenthen_chapterIds(bookId, chapter, userId);
 					List<CardDto> cardList_strenthen = excerciseService.getCardAlgorithm_count(pointList_strenthen, COUNT-cardListAll.size());
 					 cardListAll.addAll(cardList_strenthen);
@@ -97,9 +106,18 @@ public class RecommendService {
 					 if(cardListAll.size()>=COUNT){
 						 return cardListAll; 
 					 }
-					
-			    //****4、最后查询熟练度满分的知识点
-				    List<PonitDto> pointList_full = excerciseDao.excerciseStrenthenFull_chapterIds(bookId, chapter, userId);
+				
+				//****4、最后查询新的知识点
+				List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_chapterIds(bookId, chapter, userId);
+				List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm_count(pointList_new, COUNT-cardListAll.size());
+				cardListAll.addAll(cardList_intensify);
+				 if(cardListAll.size()>=COUNT){
+					 return cardListAll; 
+				 }		 
+					 
+					 
+			    //****5、最后查询熟练度满分的知识点
+				    List<PonitDto> pointList_full = excerciseDao.excerciseIntensifyFull_chapterIds(bookId, chapter, userId);
 				    List<CardDto> cardList_full = excerciseService.getCardAlgorithm_count(pointList_full, COUNT-cardListAll.size());
 				   cardListAll.addAll(cardList_full);
 			}

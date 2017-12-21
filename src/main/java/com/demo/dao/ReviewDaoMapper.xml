@@ -76,6 +76,7 @@
 			   lastExerciseDate=#{lastExerciseDate},
 			   exerciseNumber=#{exerciseNumber},
 			   correctNumber=#{correctNumber},
+			   firstExerciseDate=#{firstExerciseDate},
 			   skilled=#{skilled},
 			   state=#{state},
 			   errorNumber=#{errorNumber}
@@ -222,5 +223,13 @@
 	   <select id="getAuthByBookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto" >
 	        SELECT * FROM pointexercisedetail t WHERE t.bookId=#{bookId} AND t.userId=#{userId}
 	   </select>
+	  
+	  <select id="getDailyGoals" resultType="com.demo.dto.PointExerciseDetailDto">
+	      SELECT * FROM pointexercisedetail a 
+		  WHERE a.firstExerciseDate=#{toDate}
+		   AND a.userId=#{userId}
+		   AND a.bookId=#{bookId}
+	  </select>
+	  
 	  
 </mapper>

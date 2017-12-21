@@ -527,4 +527,22 @@ public class PointController {
 		return ResultObject.successObject(ponitSkilledList,null); 
 	}
 
+	/**
+	 * 隐藏知识点 【让在复习时不出现在 答题列中】
+	 * @param request
+	 * @param response
+	 * @param pointIds
+	 * @return
+	 */
+	@RequestMapping("/hidePoint")
+	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String pointIds,Integer hidden){
+		String [] pointIdArray= pointIds.split(",");
+		if(pointIdArray.length>0){
+			lorePointService.hidePoint(pointIdArray,hidden);
+		}else{
+			return ResultObject.warnMessage("知识点ID不能为空");
+		}
+        return ResultObject.successMessage("成功");
+	} 
+	
 }

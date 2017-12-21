@@ -16,6 +16,10 @@ public class UserBookEntity implements Serializable {
 	
 	public Integer userId;
 	
+	public Date lastTime;
+	
+	public Integer dailyGoals;//练习本 每日联系目标
+	
 	public Integer createId ;
 	
 	public Date createTime;
@@ -46,6 +50,14 @@ public class UserBookEntity implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Date getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(Date lastTime) {
+		this.lastTime = lastTime;
 	}
 
 	public Integer getCreateId() {
@@ -79,6 +91,13 @@ public class UserBookEntity implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
+	public Integer getDailyGoals() {
+		return dailyGoals;
+	}
+
+	public void setDailyGoals(Integer dailyGoals) {
+		this.dailyGoals = dailyGoals;
+	}
 
 }

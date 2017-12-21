@@ -233,4 +233,20 @@ public class LorePointService {
 		return lorePointDao.searchLorePointByBookId(bookId);
 	}
 	
+	
+	/**
+	 * 隐藏知识点
+	 * @param pointIdArray
+	 * @return
+	 */
+	public int hidePoint(String[] pointIdArray,Integer state){
+		Integer userId =  systemService.getCurrentUser().getId();
+		Integer[] points =new Integer[pointIdArray.length];
+		for (int i=0;i<pointIdArray.length;i++){
+			points[i]=Integer.parseInt(pointIdArray[i]);
+		}
+		int count = lorePointDao.hidePoint(points,state,userId);
+		return count;
+	}
+	
 }

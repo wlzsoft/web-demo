@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
@@ -192,7 +191,7 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("exNew")
-	public Result<?> excerciseNew(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds){
+	public Result<?> excerciseNew(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds,String count){
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -205,6 +204,10 @@ public class ReviewController {
 			return ResultObject.warnMessage("无操作权限");
 		}
 		List<CardDto> cardList = new ArrayList<>();
+		
+    	if(null==count||count.equals("")){
+    		count="5";// 
+    	}
 		
 		cardList = excerciseService.excerciseNew(bookId, chapterIds, userId);
 		
@@ -253,7 +256,7 @@ public class ReviewController {
 			return ResultObject.warnMessage("无操作权限");
 		}
 		List<CardDto> cardList = new ArrayList<>();
-		cardList = excerciseService.excerciseStrenthen_Button(bookId, chapterIds, userId);
+		cardList = excerciseService.excerciseStrenthen(bookId, chapterIds, userId);
 		
 		//对emoji转换
 		if(cardList.size()>0){

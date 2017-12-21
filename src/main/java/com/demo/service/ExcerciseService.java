@@ -6,12 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitDto;
+import com.demo.entity.UserBookEntity;
 
 @Service
 public class ExcerciseService {
@@ -20,10 +19,10 @@ public class ExcerciseService {
 	@Autowired
 	private ExcerciseDao excerciseDao;
 	
+	@Autowired
+	private UserBookService userBookService;
+	
 	private final int COUNT=20;
-	
-	private final String[] arrt={"A","B","C","D","E","F","G","H","I","J","K","L","M","I","O","P","Q","R","S","T","U","V","W","S","Y","Z"};
-	
 	
 	/**
 	 * 复习错误的知识点 （错题，熟练度、知识点排序）
@@ -69,6 +68,15 @@ public class ExcerciseService {
 	public List<CardDto> excerciseNew(String bookId,String chapterIds,Integer userId){
 		 List<CardDto> cardListAll = new ArrayList<>();
 		 List<PonitDto> pointList = new ArrayList<>();
+		 
+		//获取练习本练习目标 默认目标为 5  个知识点
+		 Integer count = 5;
+		List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
+		if(userBookList.size()>0){
+			 count = userBookList.get(0).getDailyGoals();
+		}
+		
+		
 		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取新的的知识点练习
 			pointList= excerciseDao.excerciseNew_bookId(Integer.parseInt(bookId), userId);
 			
@@ -82,28 +90,23 @@ public class ExcerciseService {
 				pointList =excerciseDao.excerciseNew_chapterIds(Integer.parseInt(bookId), chapter, userId);
 			}
 		}
-		//cardListAll =getCardAlgorithm_count(pointList,COUNT);//根据知识点 获取知识点卡片算法(无穿插排序,有数量限制)
-		cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		//获取每日目标量 默认为5个知识点
+		List<PonitDto> pointCountList = new ArrayList<PonitDto>();
+		if(pointList.size()>count){
+			for(int i=0;i<count;i++){
+				pointCountList.add(pointList.get(i));
+			}	
+		}else if(pointList.size()<=count){
+			pointCountList.addAll(pointList);
+		}
+
+		cardListAll =getCardAlgorithm(pointCountList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
 	  return cardListAll;
 	} 
 	
 	
 	/**
-	 * 巩固复习知识点
-	 * @param request
-	 * @param response
-	 * @param bookId
-	 * @param chapterIds
-	 * @return
-	 */
-	public List<CardDto> excerciseStrenthen_Button(String bookId,String chapterIds,Integer userId){
-		List<CardDto> cardListAll = excerciseStrenthen( bookId, chapterIds, userId);
-		return cardListAll;
-	}
-	
-	
-	/**
-	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度小于4的知识点，）【熟练度小于 4 的状态】
+	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度 等于 1 的知识点，）【熟练度等于 1 的状态】
 	 * @param request
 	 * @param response
 	 * @param bookId
@@ -132,18 +135,18 @@ public class ExcerciseService {
 	
 	
 	/**
-	 * 巩固复习知识点（熟练度、知识点排序 、复习熟悉度= 4的知识点，）【熟练度等于 4 的状态】
+	 * 强化训练知识点（熟练度、知识点排序 、复习熟悉度= 4的知识点，）【熟练度等于 4 的状态】
 	 * @param request
 	 * @param response
 	 * @param bookId
 	 * @param chapterIds
 	 * @return
 	 */
-	public List<CardDto> excerciseStrenthenFull(String bookId,String chapterIds,Integer userId){
+	public List<CardDto> excerciseIntensifyFull(String bookId,String chapterIds,Integer userId){
 		List<CardDto> cardListAll = new ArrayList<>();
 		List<PonitDto> pointList = new ArrayList<>();
 		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取巩固复习知识点练习
-			pointList = excerciseDao.excerciseStrenthenFull_bookId(Integer.parseInt(bookId), userId);
+			pointList = excerciseDao.excerciseIntensifyFull_bookId(Integer.parseInt(bookId), userId);
 		}else{
 			String[] chapterId = chapterIds.split(",");
 			if(chapterId.length>0){
@@ -151,7 +154,7 @@ public class ExcerciseService {
 				for(int i=0;i<chapterId.length;i++){
 					chapter[i]=Integer.parseInt(chapterId[i]);
 				}
-				pointList =excerciseDao.excerciseStrenthenFull_chapterIds(Integer.parseInt(bookId), chapter, userId);
+				pointList =excerciseDao.excerciseIntensifyFull_chapterIds(Integer.parseInt(bookId), chapter, userId);
 			}
 		}
 		//cardListAll =getCardAlgorithm_count(pointList,COUNT);//根据知识点 获取知识点卡片算法(无穿插排序,有数量限制)
@@ -159,6 +162,33 @@ public class ExcerciseService {
 	  return cardListAll;
 	}
 	
+	
+	/**
+	 * 强化训练知识点（熟练度、知识点排序 、复习熟悉度大于1的知识点，）【熟练度大于 1  的状态】
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	public List<CardDto> excerciseIntensify(String bookId,String chapterIds,Integer userId){
+		List<CardDto> cardListAll = new ArrayList<>();
+		List<PonitDto> pointList = new ArrayList<>();
+		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取巩固复习知识点练习
+			pointList = excerciseDao.excerciseIntensify_bookId(Integer.parseInt(bookId), userId);
+		}else{
+			String[] chapterId = chapterIds.split(",");
+			if(chapterId.length>0){
+				Integer[] chapter = new Integer[chapterId.length];
+				for(int i=0;i<chapterId.length;i++){
+					chapter[i]=Integer.parseInt(chapterId[i]);
+				}
+				pointList =excerciseDao.excerciseIntensify_chapterIds(Integer.parseInt(bookId), chapter, userId);
+			}
+		}
+		cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+	  return cardListAll;
+	} 
 	
 	
 	
@@ -319,11 +349,16 @@ public class ExcerciseService {
 			    dto.setExNewNum(pointList_new.size());
 			List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
 				dto.setExStrengthenNum(pointList_strenthen.size());
+			List<PonitDto> pointList_intensify = excerciseDao.excerciseIntensify_bookId(bookId, userId);
+			    dto.setExIntensifyNum(pointList_intensify.size());
 				dto.setBookId(bookId);
 				pintNumList.add(dto);
 		}
 		return pintNumList;
 	}
+	
+	
+	
 	
 	
 }

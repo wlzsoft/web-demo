@@ -20,6 +20,7 @@ public class CardDto {
 	public String questionVoiceSrc;//问题描述音频源地址
 	public String questionImages	;//问题图片组	
 	public String answers;//卡片答案	
+	public Integer pointSate;//卡片知识点状态
 
 	public Integer getPointId() {
 		return pointId;
@@ -121,5 +122,12 @@ public class CardDto {
 	public void setQuestionVoiceSrc(String questionVoiceSrc) {
 		this.questionVoiceSrc = questionVoiceSrc;
 	}
+	public Integer getPointSate() {
+		return pointSate;
+	}
+	public void setPointSate(Integer pointSate) {
+		this.pointSate = pointSate;
+	}
+	
 	
 }

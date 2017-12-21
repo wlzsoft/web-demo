@@ -36,23 +36,6 @@ public class PractiseController {
 	@Autowired
 	private ExcerciseService excerciseService;
 	
-/*	@RequestMapping("/exCardList")
-	public String exCardList(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds,String stata,RedirectAttributes attr){
-		attr.addAttribute("bookId", bookId);
-		attr.addAttribute("chapterIds", chapterIds);
-		attr.addAttribute("stata", stata);
-		if(null==stata||stata.equals("0")){//进入智能推荐算法
-			return "redirect:/review/exRecommend.json";
-	     }else if(stata.equals("0")){//进入 练新 算法
-			 return "redirect:/review/exNew.json";
-		}else if(stata.equals("1")){//进入 错题 算法
-			return "redirect:/review/exError.json";
-		}else if(stata.equals("2")){//进入巩固 算法
-			return "redirect:/review/exStrengthen.json";
-		}else{//进入智能推荐算法
-			return "redirect:/review/exRecommend.json";
-		}
-	}*/
 	
 	@RequestMapping("/exCardList")
 	public Result<?> exCardList(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds,String state){
@@ -74,18 +57,19 @@ public class PractiseController {
 				cardList = recommendService.excerciseCard(userId, Integer.parseInt(bookId), chapterIds);
 				
 		    }else if(state.equals("0")){//进入 练新 算法
-		    	
 		    	cardList = excerciseService.excerciseNew(bookId, chapterIds, userId);
-		    	
 			}else if(state.equals("1")){//进入 错题 算法
 				cardList = excerciseService.excerciseError(bookId,chapterIds,userId);
 				
-			}else if(state.equals("2")){//进入巩固 算法
-				cardList = excerciseService.excerciseStrenthen_Button(bookId, chapterIds, userId);
+			}else if(state.equals("2")){//进入巩固 算法 ..只练习熟练度 为0 的 并且是已经练习过的
+				cardList = excerciseService.excerciseStrenthen(bookId, chapterIds, userId);
+			}else if(state.equals("3")){//强化练习 ..练习熟练度 大于0 的
+				cardList = excerciseService.excerciseIntensify(bookId, chapterIds, userId);
 				if(cardList.size()==0){
-					cardList=excerciseService.excerciseStrenthenFull(bookId, chapterIds, userId);
+					cardList=excerciseService.excerciseIntensifyFull(bookId, chapterIds, userId);
 				}
-			}else{ //全部条件不符合：进入智能推荐算法
+				
+			} else{ //全部条件不符合：进入智能推荐算法
 				cardList = recommendService.excerciseCard(userId, Integer.parseInt(bookId), chapterIds);
 			}
 		}

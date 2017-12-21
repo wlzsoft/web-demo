@@ -1,5 +1,6 @@
 package com.demo.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -122,6 +123,16 @@ public interface ReviewDao {
 	 * @return
 	 */
 	public List<PointExerciseDetailDto> getAuthByBookId(@Param("bookId")Integer bookId,@Param("userId")Integer userId);
+	
+	
+	/**
+	 * 查询用户指定日期内 练习新题的数量
+	 * @param toDate
+	 * @param bookId
+	 * @param ueserId
+	 * @return
+	 */
+	public List<PointExerciseDetailDto> getDailyGoals(@Param("toDate")String toDate,@Param("bookId")Integer bookId,@Param("userId")Integer userId);
 	
 
 }
