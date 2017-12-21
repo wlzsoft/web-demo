@@ -25,7 +25,7 @@ public class BookDto {
 	
 	public float progress;//练习本进度
 	
-	public Date lastTime;
+	public Date lastTime;//上次练习时间
 
 	public Integer getId() {
 		return id;

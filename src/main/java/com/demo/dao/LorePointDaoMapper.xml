@@ -190,7 +190,7 @@
 	</update>
 	
 	<select id="findBookIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hideState,
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
 			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
@@ -200,7 +200,7 @@
 	</select>
 	
 	<select id="findBookIdToPonit_card" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hideState
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden
 			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
@@ -211,7 +211,7 @@
 	</select>
 	
     <select id="findBookIdToPonit_ex" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hideState,
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
 			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
@@ -230,7 +230,7 @@
 	
 	
     <update id="hidePoint" parameterType="java.lang.Integer">
-         UPDATE pointExerciseDetail t SET  t.hideState=#{state} WHERE
+         UPDATE pointExerciseDetail t SET  t.hidden=#{state} WHERE
 		    pointId  in
 			<foreach collection="pointIdArray" item="id" index="index" open="(" close=")" separator=",">
 				#{id,jdbcType=INTEGER}

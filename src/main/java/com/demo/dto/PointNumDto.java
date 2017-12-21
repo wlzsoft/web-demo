@@ -10,7 +10,7 @@ public class PointNumDto {
 	
 	public Integer exStrengthenNum;//巩固数量
 	
-	public Integer intensify; //强化练习数
+	public Integer exIntensifyNum; //强化练习数
 
 	public Integer getExErrorNum() {
 		return exErrorNum;
@@ -44,12 +44,12 @@ public class PointNumDto {
 		this.bookId = bookId;
 	}
 
-	public Integer getIntensify() {
-		return intensify;
+	public Integer getExIntensifyNum() {
+		return exIntensifyNum;
 	}
 
-	public void setIntensify(Integer intensify) {
-		this.intensify = intensify;
+	public void setExIntensifyNum(Integer exIntensifyNum) {
+		this.exIntensifyNum = exIntensifyNum;
 	}
 	
 }

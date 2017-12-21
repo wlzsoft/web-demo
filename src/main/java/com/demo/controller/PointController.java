@@ -535,10 +535,10 @@ public class PointController {
 	 * @return
 	 */
 	@RequestMapping("/hidePoint")
-	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String pointIds,Integer state){
+	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String pointIds,Integer hidden){
 		String [] pointIdArray= pointIds.split(",");
 		if(pointIdArray.length>0){
-			lorePointService.hidePoint(pointIdArray,state);
+			lorePointService.hidePoint(pointIdArray,hidden);
 		}else{
 			return ResultObject.warnMessage("知识点ID不能为空");
 		}

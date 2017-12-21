@@ -350,7 +350,7 @@ public class ExcerciseService {
 			List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
 				dto.setExStrengthenNum(pointList_strenthen.size());
 			List<PonitDto> pointList_intensify = excerciseDao.excerciseIntensify_bookId(bookId, userId);
-			    dto.setIntensify(pointList_intensify.size());
+			    dto.setExIntensifyNum(pointList_intensify.size());
 				dto.setBookId(bookId);
 				pintNumList.add(dto);
 		}
