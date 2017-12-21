@@ -21,6 +21,7 @@
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
 			 AND t.bookId=#{bookId}
+			 AND b.hideState=0
 		  GROUP BY t.bookId,t.pointId
 		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
 	</select>
@@ -42,6 +43,7 @@
 			 AND t.userId=b.userId
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
+			 AND b.hideState=0
 			 AND t.bookId=#{bookId}
 			<if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
@@ -69,6 +71,7 @@
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
+		    AND t.hideState=0
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -99,6 +102,7 @@
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber=0
 		    AND t.state=0
+		    AND t.hideState=0
 		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
@@ -123,6 +127,7 @@
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND t.state=2
+		    AND t.hideState=0
 		    AND t.skilled <![CDATA[ <= ]]> 1
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
@@ -147,6 +152,7 @@
 			t.skilled
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
+		    AND t.hideState=0
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
@@ -170,6 +176,7 @@
 			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
+		    AND t.hideState=0
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
@@ -198,6 +205,7 @@
 			t.skilled
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
+		    AND t.hideState=0
 		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
@@ -220,6 +228,7 @@
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
+		    AND t.hideState=0
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -253,6 +262,7 @@
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND t.state=3
+		    AND t.hideState=0
 		    AND t.skilled <![CDATA[ > ]]> 1
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
@@ -281,6 +291,7 @@
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
+		    AND t.hideState=0
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -303,6 +314,7 @@
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
+		    AND t.hideState=0
 		    AND t.userId=#{userId}
 		    <if test="bookId !=null and bookId !='' ">
 		        AND t.bookId in 
@@ -332,6 +344,7 @@
 			 AND t.pointId= a.id
 			 AND t.pointId=b.pointId
 			 AND t.userId=b.userId
+			 AND t.hideState=0
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
 			<if test="bookId !=null and bookId !='' ">
@@ -357,6 +370,7 @@
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
+		    AND t.hideState=0
 		    AND t.userId=#{userId}
 		    <if test="bookId !=null and bookId !='' ">
 		        AND t.bookId in 

@@ -124,5 +124,14 @@ public interface LorePointDao {
 	public List<PonitSkilledDto> searchLorePointByBookId(@Param("bookId")Integer bookId);
 	
 	
+	/**
+	 * 隐藏知识点
+	 * @param pointIdArray
+	 * @param userId
+	 * @return
+	 */
+	public int hidePoint(@Param("pointIdArray")Integer[] pointIdArray,@Param("state") Integer state,@Param("userId")Integer userId);
+	
+	
 	
 }

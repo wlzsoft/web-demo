@@ -25,6 +25,8 @@ public class PonitSkilledDto {
 	public Integer skilled;//熟练度（0，1，2，3）
 	
 	public Integer state ;// state :答题状态（0：新增   1：上次答错    2：巩固）
+	
+	public Integer hideState;//隐藏状态   0：不隐藏    1：隐藏
 
 	public Integer getId() {
 		return id;
@@ -125,4 +127,13 @@ public class PonitSkilledDto {
 	public void setState(Integer state) {
 		this.state = state;
 	}
+
+	public Integer getHideState() {
+		return hideState;
+	}
+
+	public void setHideState(Integer hideState) {
+		this.hideState = hideState;
+	}
+	
 }
