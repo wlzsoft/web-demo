@@ -114,7 +114,7 @@ public interface ReviewDao {
 	 * @param userId
 	 * @return
 	 */
-	public List<PointExerciseDetailDto> getAuthByPointId(@Param("pointId")Integer pointId,@Param("userId")Integer userId);
+	public List<PointExerciseDetailDto> getAuthByPointId(@Param("pointIds")Integer[] pointIds,@Param("userId")Integer userId);
 	
 	/**
 	 * 根据练习本 bookId 获取是否有练习权限

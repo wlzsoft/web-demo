@@ -102,9 +102,9 @@ public class UtilService {
 		 * @param userId
 		 * @return
 		 */
-		public Boolean getAuthByPointId(Integer pointId,Integer userId){
-			List<PointExerciseDetailDto> dto  = reviewDao.getAuthByPointId(pointId,userId);
-			if(dto.size()>0){
+		public Boolean getAuthByPointId(Integer[] pointIds,Integer userId){
+			List<PointExerciseDetailDto> dto  = reviewDao.getAuthByPointId(pointIds,userId);
+			if(dto.size()==pointIds.length){
 				return true;
 			}else{
 			    return false;

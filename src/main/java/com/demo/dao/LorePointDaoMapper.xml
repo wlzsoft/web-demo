@@ -200,7 +200,7 @@
 	</select>
 	
 	<select id="findBookIdToPonit_card" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
-			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden
+			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
 			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 

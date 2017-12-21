@@ -239,8 +239,7 @@ public class LorePointService {
 	 * @param pointIdArray
 	 * @return
 	 */
-	public int hidePoint(String[] pointIdArray,Integer state){
-		Integer userId =  systemService.getCurrentUser().getId();
+	public int hidePoint(String[] pointIdArray,Integer state,Integer userId){
 		Integer[] points =new Integer[pointIdArray.length];
 		for (int i=0;i<pointIdArray.length;i++){
 			points[i]=Integer.parseInt(pointIdArray[i]);

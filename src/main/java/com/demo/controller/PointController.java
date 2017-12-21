@@ -25,6 +25,7 @@ import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.demo.service.UtilService;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -53,6 +54,9 @@ public class PointController {
 	
 	@Autowired
 	private UserBookService userBookService;
+	
+	@Autowired
+	private UtilService utilService;	
 	
 	/**
 	 * 保存知识点信息
@@ -329,7 +333,7 @@ public class PointController {
 		}else{
 			int count = lorePointService.delLorePoint(Integer.parseInt(pointId));
 			if(count==0){
-				return ResultObject.successMessage("无操作数据");
+				return ResultObject.warnMessage("无操作数据");
 			}
 			return ResultObject.successMessage("删除成功");
 		}
@@ -448,7 +452,7 @@ public class PointController {
 				Integer userId = systemService.getCurrentUser().getId();
 	 			List<UserBookEntity>  list = userBookService.findUser_userId_bookId(userId, entity.getId());
 	 			if(list.size()==0){
-	 				return ResultObject.warnMessage("无操作权限");	
+	 				return ResultObject.sucreMessage("无操作权限");	
 	 			}
 			}
 		}
@@ -535,12 +539,31 @@ public class PointController {
 	 * @return
 	 */
 	@RequestMapping("/hidePoint")
-	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String pointIds,Integer hidden){
-		String [] pointIdArray= pointIds.split(",");
-		if(pointIdArray.length>0){
-			lorePointService.hidePoint(pointIdArray,hidden);
+	public Result<?> hidePoint(HttpServletRequest request ,HttpServletResponse response,String bookId,String pointIds,Integer hidden){
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		if(null==entity){
+			return ResultObject.warnMessage("无操作权限");	
 		}else{
-			return ResultObject.warnMessage("知识点ID不能为空");
+			Integer userId =  systemService.getCurrentUser().getId();
+			String [] pointIdArray= pointIds.split(",");
+			if(pointIdArray.length>0){
+				//1、判断 pointId 是否在同一个book上
+				Integer[] pointId = new Integer[pointIdArray.length];
+				for(int i=0;i<pointIdArray.length;i++){
+					pointId[i]=Integer.parseInt(pointIdArray[i]);
+				}
+				Boolean flag = utilService.getAuthByPointId(pointId, userId);//判断知识点是否可以修改
+				if(flag){
+					lorePointService.hidePoint(pointIdArray,hidden,userId);
+				}else{
+					return ResultObject.warnMessage("知识点ID有异常");	
+				}
+			}else{
+				return ResultObject.warnMessage("知识点ID不能为空");
+			}
 		}
         return ResultObject.successMessage("成功");
 	} 
