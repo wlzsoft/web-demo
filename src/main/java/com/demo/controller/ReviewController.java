@@ -75,7 +75,7 @@ public class ReviewController {
 		 * 添加权限
 		 * **/
 		Integer userId =systemService.getCurrentUser().getId();
-		Integer[] pointIds = new Integer[Integer.parseInt(pointId)];
+		Integer[] pointIds = {Integer.parseInt(pointId)};
 		Boolean flag = utilService.getAuthByPointId(pointIds, userId);
 		if(!flag){
 			return ResultObject.warnMessage("无操作权限");
@@ -324,7 +324,7 @@ public class ReviewController {
 		 * 添加权限
 		 * **/
 		Integer userId =systemService.getCurrentUser().getId();
-		Integer[] pointIds = new Integer[Integer.parseInt(pointId)];
+		Integer[] pointIds ={Integer.parseInt(pointId)};
 		Boolean flag = utilService.getAuthByPointId(pointIds, userId);
 		if(!flag){
 			return ResultObject.warnMessage("无操作权限");
