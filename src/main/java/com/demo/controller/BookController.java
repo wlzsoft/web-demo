@@ -240,6 +240,7 @@ public class BookController {
 				bookNum.setExErrorNum(dto.getExErrorNum());
 				bookNum.setExNewNum(dto.getExNewNum());
 				bookNum.setExStrengthenNum(dto.getExStrengthenNum());
+				bookNum.setExIntensifyNum(dto.getExIntensifyNum());
 				//1、查询练习本下所有知识点
 				List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
 				bookNum.setPointNum(pointList1.size());

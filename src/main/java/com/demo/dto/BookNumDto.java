@@ -9,7 +9,7 @@ public class BookNumDto extends PointNumDto {
 	
 	public Integer dailyGoals;//每日目标
 	
-	public Integer completeNumber;//每日完成数
+	public Integer completeNumber;//今日完成数
 	
 	public Integer continueNum; //连续天数
 	

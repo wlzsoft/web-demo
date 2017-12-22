@@ -108,7 +108,7 @@ public interface LorePointDao {
 	
 	
 	/**
-	 * 根据练习本Id,用户ID  查找用户已经联系过的知识点的练习情况
+	 * 根据练习本Id,用户ID  查找用户已经练习过的知识点的练习情况
 	 * @param bookId
 	 * @param userId
 	 * @return

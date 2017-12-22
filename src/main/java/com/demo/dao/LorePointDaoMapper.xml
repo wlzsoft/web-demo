@@ -217,7 +217,7 @@
 			FROM point t ,pointExerciseDetail a 
 			WHERE t.id=a.pointId 
 			   and t.number>0
-			   and a.state in (1,2)
+			   and a.exerciseNumber>0
 			   and  t.bookId=#{bookId} 
 			   and a.userId=#{userId}
 	</select>
