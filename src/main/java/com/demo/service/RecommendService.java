@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.ExcerciseDao;
+import com.demo.dao.ReviewDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PonitDto;
 
@@ -29,6 +30,9 @@ public class RecommendService {
 	
 	@Autowired
 	private ExcerciseService excerciseService;
+	
+	@Autowired
+	private UtilService utilService;
 	
 	/**
 	 * 根据指定练习本的章节进行练习【用户智能推荐复习算法】
@@ -57,16 +61,41 @@ public class RecommendService {
 				 return cardListAll; 
 			 }
 		   //****3、再查询新的知识点
-			 List<PonitDto> pointList_new = excerciseDao.excerciseNew_bookId(bookId, userId);
-			 List<CardDto> cardList_new = excerciseService.getCardAlgorithm(pointList_new, COUNT-cardListAll.size());
-			 cardListAll.addAll(cardList_new);
-			 if(cardListAll.size()>=COUNT){
-				 return cardListAll; 
+		     //判断今日是否完成目标
+			 Boolean flag = utilService.getIsComplete(userId, bookId);//返回 true 标示完成  ,false 标示未完成
+			 if(flag){
+				 LOGGER.info("用户："+userId+" 练习本:"+bookId+" 今日目标已经完成不需要练习新的知识点");
+			 }else{
+				 
+				//获取练习本练习目标数量
+				 Integer dailyGoalsNumber = utilService.getDailyGoalsNumber(userId, bookId);
+				//获取今日完成数量
+				 Integer completeNuber = utilService.getCompleteNumber(userId, bookId);
+				//还继续需要完成 知识点的数量
+				 Integer count=dailyGoalsNumber-completeNuber; 
+				 
+				 List<PonitDto> pointList_new = excerciseDao.excerciseNew_bookId(bookId, userId);
+				 
+				 List<PonitDto> pointCountList = new ArrayList<PonitDto>();
+				 if(pointList_new.size()>count){
+						for(int i=0;i<count;i++){
+							pointCountList.add(pointList_new.get(i));
+						}	
+					}else if(pointList_new.size()<=count){
+						pointCountList.addAll(pointList_new);
+				 }
+				 
+				 List<CardDto> cardList_new = excerciseService.getCardAlgorithm(pointCountList, COUNT-cardListAll.size());
+				 cardListAll.addAll(cardList_new);
+				 if(cardListAll.size()>=COUNT){
+					 return cardListAll; 
+				 }
 			 }
+
 			 
-			//****4、最后查询新的知识点
+			//****4、最后查询强化知识点
 			List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_bookId(bookId, userId);
-			List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_new, COUNT-cardListAll.size());
+			List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_intensify, COUNT-cardListAll.size());
 			cardListAll.addAll(cardList_intensify);
 			 if(cardListAll.size()>=COUNT){
 				 return cardListAll; 
@@ -100,20 +129,45 @@ public class RecommendService {
 						 return cardListAll; 
 					 }
 				//****3、最后查询新的知识点
-					List<PonitDto> pointList_new =excerciseDao.excerciseNew_chapterIds(bookId, chapter, userId);
-					List<CardDto> cardList_new = excerciseService.getCardAlgorithm(pointList_new, COUNT-cardListAll.size());
-					cardListAll.addAll(cardList_new);
-					 if(cardListAll.size()>=COUNT){
-						 return cardListAll; 
+				     //判断今日是否完成目标
+					 Boolean flag = utilService.getIsComplete(userId, bookId);//返回 true 标示完成  ,false 标示未完成
+					 if(flag){
+						 LOGGER.info("用户："+userId+" 练习本:"+bookId+" 今日目标已经完成不需要练习新的知识点");
+					 }else{
+						 
+						//获取练习本练习目标数量
+						 Integer dailyGoalsNumber = utilService.getDailyGoalsNumber(userId, bookId);
+						//获取今日完成数量
+						 Integer completeNuber = utilService.getCompleteNumber(userId, bookId);
+						//还继续需要完成 知识点的数量
+						 Integer count=dailyGoalsNumber-completeNuber; 
+						 
+						 List<PonitDto> pointList_new =excerciseDao.excerciseNew_chapterIds(bookId, chapter, userId);
+						 
+						 List<PonitDto> pointCountList = new ArrayList<PonitDto>();
+						 if(pointList_new.size()>count){
+								for(int i=0;i<count;i++){
+									pointCountList.add(pointList_new.get(i));
+								}	
+							}else if(pointList_new.size()<=count){
+								pointCountList.addAll(pointList_new);
+						 }
+						 
+						
+						List<CardDto> cardList_new = excerciseService.getCardAlgorithm(pointCountList, COUNT-cardListAll.size());
+						cardListAll.addAll(cardList_new);
+						 if(cardListAll.size()>=COUNT){
+							 return cardListAll; 
+						 } 
 					 }
 				
-				//****4、最后查询新的知识点
-				List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_chapterIds(bookId, chapter, userId);
-				List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_new, COUNT-cardListAll.size());
-				cardListAll.addAll(cardList_intensify);
-				 if(cardListAll.size()>=COUNT){
-					 return cardListAll; 
-				 }		 
+			   //****4、最后查询强化知识点
+					List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_chapterIds(bookId, chapter, userId);
+					List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_intensify, COUNT-cardListAll.size());
+					cardListAll.addAll(cardList_intensify);
+					 if(cardListAll.size()>=COUNT){
+						 return cardListAll; 
+					 }		 
 					 
 					 
 			    //****5、最后查询熟练度满分的知识点

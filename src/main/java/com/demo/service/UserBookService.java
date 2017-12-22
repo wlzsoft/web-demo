@@ -28,6 +28,16 @@ public class UserBookService {
 		userBookDao.addUserBook(entity);
 	}
 	
+	public void updateUserBook(UserBookEntity entity){
+		Integer userId = systemService.getCurrentUser().getId();
+		entity.setUserId(userId);
+		entity.setUpdateId(systemService.getCurrentUser().getId());
+		entity.setUpdateTime(new Date());
+		userBookDao.updateUser_Book(entity);
+	}
+	
+	
+	
 	/**
 	 * 根据id删除
 	 * @param id

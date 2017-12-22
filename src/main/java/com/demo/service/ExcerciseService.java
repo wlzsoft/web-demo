@@ -10,7 +10,6 @@ import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.UserBookEntity;
 
 @Service
 public class ExcerciseService {
@@ -21,6 +20,9 @@ public class ExcerciseService {
 	
 	@Autowired
 	private UserBookService userBookService;
+	
+	@Autowired
+	private UtilService utilService;
 	
 	private final int COUNT=20;
 	
@@ -69,17 +71,8 @@ public class ExcerciseService {
 		 List<CardDto> cardListAll = new ArrayList<>();
 		 List<PonitDto> pointList = new ArrayList<>();
 		 
-		//获取练习本练习目标 默认目标为 5  个知识点
-		 Integer count = 5;
-		List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, Integer.parseInt(bookId));
-		if(userBookList.size()>0){
-			 count = userBookList.get(0).getDailyGoals();
-		}
-		
-		
 		if(null==chapterIds||chapterIds.equals("")){//如果章节为 null，则根据练习本bookId来获取新的的知识点练习
 			pointList= excerciseDao.excerciseNew_bookId(Integer.parseInt(bookId), userId);
-			
 		}else{
 			String[] chapterId = chapterIds.split(",");
 			if(chapterId.length>0){
@@ -90,7 +83,11 @@ public class ExcerciseService {
 				pointList =excerciseDao.excerciseNew_chapterIds(Integer.parseInt(bookId), chapter, userId);
 			}
 		}
-		//获取每日目标量 默认为5个知识点
+		
+		//获取练习本练习目标 数量
+		Integer count = utilService.getDailyGoalsNumber(userId, Integer.parseInt(bookId));
+
+		
 		List<PonitDto> pointCountList = new ArrayList<PonitDto>();
 		if(pointList.size()>count){
 			for(int i=0;i<count;i++){

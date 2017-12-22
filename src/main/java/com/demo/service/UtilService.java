@@ -17,6 +17,9 @@ import com.demo.dao.UserBookDao;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitSkilledDto;
 import com.demo.entity.ErrorWarehouseEntity;
+import com.demo.entity.UserBookEntity;
+import com.smartframe.basics.util.DateFormatEnum;
+import com.smartframe.basics.util.DateUtil;
 
 @Service
 public class UtilService {
@@ -31,6 +34,9 @@ public class UtilService {
 	
 	@Autowired
 	private ReviewDao reviewDao;
+	
+	@Autowired
+	private UserBookService userBookService;
 	
 	
 	/**
@@ -125,4 +131,62 @@ public class UtilService {
 			    return false;
 			}
 		}
+		
+		
+		/**
+		 * 判断是否完成了 今日目标
+		 * @param userId
+		 * @return  true 标示完成  ,false 标示未完成
+		 */
+		public Boolean getIsComplete(Integer userId,Integer bookId){
+			//获取设定目标
+			List<UserBookEntity> listUserBook = userBookService.findUser_userId_bookId(userId, bookId);
+			if(listUserBook.size()>0){
+				Integer dailyGoals = listUserBook.get(0).getDailyGoals();//练习本的目标
+				//获取今日完成数量
+				List<PointExerciseDetailDto>  list = reviewDao.getDailyGoals(DateUtil.format(new Date(), DateFormatEnum.YEAR_TO_DAY), bookId, userId);
+				Integer complete = list.size();
+				if(complete>=dailyGoals){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return true;
+			}
+		}
+		
+		
+		/**
+		 * 获取用户练习本的目标数量
+		 * @param userId
+		 * @param bookId
+		 * @return
+		 */
+		public Integer getDailyGoalsNumber(Integer userId,Integer bookId){
+			//获取练习本练习目标 默认目标为 5  个知识点
+			 Integer count = 5;
+			 List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, bookId);
+			 if(userBookList.size()>0){
+				 count = userBookList.get(0).getDailyGoals();
+			 }
+			 return count;
+		}
+		
+		/**
+		 * 获取用户今日完成数量
+		 * @param userId
+		 * @param bookId
+		 * @return
+		 */
+		public Integer getCompleteNumber(Integer userId,Integer bookId){
+			//获取今日完成数量
+			List<PointExerciseDetailDto>  list = reviewDao.getDailyGoals(DateUtil.format(new Date(), DateFormatEnum.YEAR_TO_DAY), bookId, userId);
+			if(list.size()>0){
+				return list.size();
+			}else{
+				return 0;
+			}
+		}
+		
 }

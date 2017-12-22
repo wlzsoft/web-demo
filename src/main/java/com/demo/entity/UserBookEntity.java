@@ -20,6 +20,10 @@ public class UserBookEntity implements Serializable {
 	
 	public Integer dailyGoals;//练习本 每日联系目标
 	
+	public Boolean hidden;//是否隐藏
+	
+	public String remark;//备注
+	
 	public Integer createId ;
 	
 	public Date createTime;
@@ -100,4 +104,21 @@ public class UserBookEntity implements Serializable {
 		this.dailyGoals = dailyGoals;
 	}
 
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	
 }

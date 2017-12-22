@@ -37,6 +37,15 @@ public class PractiseController {
 	private ExcerciseService excerciseService;
 	
 	
+	/**
+	 * @param request
+	 * @param response
+	 * @param bookId
+	 * @param chapterIds
+	 * @param state
+	 * @param isContinue // true 1 继续，  false 0 不继续   默认不继续 0
+ 	 * @return
+	 */
 	@RequestMapping("/exCardList")
 	public Result<?> exCardList(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds,String state){
 		List<CardDto> cardList = new ArrayList<>();

@@ -14,6 +14,7 @@ public class UserExerciseDetailEntity implements Serializable {
 	  public Date  exerciseDate    ;//练习日期
 	  public Date  startExerciseTime     ;//练习开始时间
 	  public Date  endExerciseTime      ;//练习结束时间
+	  public Integer duration;//本次答题总耗时（毫秒）
 	  public Integer  exerciseUpshot          ;//练习结果(1：正确:  2：错误)
 	  
 	  
@@ -66,5 +67,11 @@ public class UserExerciseDetailEntity implements Serializable {
 	public void setExerciseUpshot(Integer exerciseUpshot) {
 		this.exerciseUpshot = exerciseUpshot;
 	}
-	  
+	public Integer getDuration() {
+		return duration;
+	}
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	
 }

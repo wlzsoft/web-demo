@@ -10,6 +10,7 @@
 				exerciseDate,
 				startExerciseTime,
 				endExerciseTime,
+				duration,
 				exerciseUpshot
 		)VALUES(
 				#{userId},
@@ -18,6 +19,7 @@
 				#{exerciseDate},
 				#{startExerciseTime},
 				#{endExerciseTime},
+				#{duration},
 				#{exerciseUpshot}
 		)
 	  

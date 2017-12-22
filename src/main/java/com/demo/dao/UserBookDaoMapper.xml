@@ -20,6 +20,16 @@
 	    update userbook set progress=#{progress} ,lastTime=#{lastTime}  where userId=#{userId} and bookId=#{bookId}
 	</update>
 	
+	<update id="updateUser_Book" parameterType="com.demo.entity.UserEntity">
+        UPDATE userbook set
+               hidden=#{hidden},
+               dailyGoals=#{dailyGoals},
+               remark=#{remark},
+			   updateTime=#{updateTime},
+			   updateId=#{updateId}
+        WHERE userId=#{userId} and bookId=#{bookId}
+     </update>
+	
 	<delete id="delUserBookById" parameterType="java.lang.Integer">
 	   delete from userbook  where id=#{id}
 	</delete>

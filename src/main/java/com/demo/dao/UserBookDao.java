@@ -14,6 +14,8 @@ public interface UserBookDao {
 
 	public void updateUserBook(Map<String, Object> map);
 	
+	public void updateUser_Book(UserBookEntity entity);
+	
 	/**
 	 * 新增用户练习本关系
 	 * @param entity

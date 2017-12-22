@@ -60,7 +60,7 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping("/addReview")
-	public Result<?> reviewCard(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right){
+	public Result<?> reviewCard(HttpServletRequest request ,HttpServletResponse response,String pointId,String cardId,Integer right,Integer duration){
 		if(null==pointId||pointId.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
@@ -68,6 +68,9 @@ public class ReviewController {
 			return ResultObject.warnMessage("参数不能为空");
 		}
 		if(null==right||right.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		if(null==duration||duration.equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
 		
@@ -81,7 +84,7 @@ public class ReviewController {
 			return ResultObject.warnMessage("无操作权限");
 		}
 		
-		reviewService.reviewCrad(pointId, cardId, right);
+		reviewService.reviewCrad(pointId, cardId, right,duration);
 		
 		return ResultObject.successMessage("保存成功") ;
 	}

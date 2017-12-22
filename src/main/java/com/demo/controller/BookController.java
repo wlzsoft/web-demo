@@ -387,7 +387,6 @@ public class BookController {
 			return ResultObject.warnMessage("原创不能取消");	
 		}
 		
-		
 		int count = userBookService.delUserBook(userId,Integer.parseInt(bookId));
 		if(count==0){
 			return ResultObject.successMessage("该用户没有订阅");
@@ -395,7 +394,29 @@ public class BookController {
 		return ResultObject.successMessage("取消订阅成功");
 	}
 	
-	
+	/**
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping("/updateUserBook")
+	public Result<?> updateUserBook(HttpServletRequest request ,HttpServletResponse response ,UserBookEntity entity){
+		if(null==entity.getBookId()||entity.getBookId().equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		if(null==entity.getDailyGoals()||entity.getDailyGoals().equals("")){
+			entity.setDailyGoals(5);
+		}
+		
+		if(null==entity.getHidden()||entity.getHidden().equals("")){
+			entity.setHidden(false);//默认不隐藏
+		}
+		
+		userBookService.updateUserBook(entity);
+		
+		return ResultObject.successMessage("修改成功");
+	}
 	
 	
 	

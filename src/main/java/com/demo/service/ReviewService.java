@@ -49,7 +49,7 @@ public class ReviewService {
 	 * @return
 	 */
 	@Transactional
-	public void reviewCrad(String lorePointId,String cradId,Integer right){
+	public void reviewCrad(String lorePointId,String cradId,Integer right,Integer duration){
 		Integer userId =systemService.getCurrentUser().getId();
 		//保存用户练习流水
 		UserExerciseDetailEntity entity = new UserExerciseDetailEntity();
@@ -60,6 +60,7 @@ public class ReviewService {
 			entity.setCardId(Integer.parseInt(cradId));
 			entity.setPointId(Integer.parseInt(lorePointId));
 			entity.setUserId(userId);
+			entity.setDuration(duration);
 			reviewDao.savaUserExcerciseDetail(entity);
 		//更新用户知识点联系详情
 		
