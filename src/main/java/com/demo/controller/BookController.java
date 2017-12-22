@@ -395,6 +395,7 @@ public class BookController {
 	}
 	
 	/**
+	 * 修改用户练习本 目标数量、练习本是否隐藏
 	 * @param request
 	 * @param response
 	 * @param entity
@@ -410,7 +411,7 @@ public class BookController {
 		}
 		
 		if(null==entity.getHidden()||entity.getHidden().equals("")){
-			entity.setHidden(false);//默认不隐藏
+			entity.setHidden(0);//默认不隐藏
 		}
 		
 		userBookService.updateUserBook(entity);
