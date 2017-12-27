@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dao.LorePointDao;
 import com.demo.dto.CardDto;
+import com.demo.dto.PointExerciseDetailDto;
 import com.demo.service.ExcerciseService;
 import com.demo.service.RecommendService;
 import com.demo.service.SystemService;
@@ -36,6 +38,9 @@ public class PractiseController {
 	@Autowired
 	private ExcerciseService excerciseService;
 	
+	@Autowired
+	private LorePointDao pointDao;
+	
 	
 	/**
 	 * @param request
@@ -49,10 +54,11 @@ public class PractiseController {
 	@RequestMapping("/exCardList")
 	public Result<?> exCardList(HttpServletRequest request ,HttpServletResponse response,String bookId,String chapterIds,String state){
 		List<CardDto> cardList = new ArrayList<>();
+		Integer userId =systemService.getCurrentUser().getId();
 		if(null==bookId||bookId.equals("")){
 			return ResultObject.warnMessage("练习本ID不能为空");
 		}else{
-			Integer userId =systemService.getCurrentUser().getId();
+			
 			/**
 			 * 添加权限
 			 * **/
@@ -94,7 +100,8 @@ public class PractiseController {
 					String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
 					dto.setQuestionText(questionText);
 				}
-
+				PointExerciseDetailDto entity = pointDao.pointIdByDetail(dto.getPointId(),userId);
+				dto.setPointState(entity.getState());
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

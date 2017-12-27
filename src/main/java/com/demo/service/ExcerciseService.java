@@ -86,7 +86,7 @@ public class ExcerciseService {
 		
 		//获取练习本练习目标 数量
 		Integer count = utilService.getDailyGoalsNumber(userId, Integer.parseInt(bookId));
-
+		//Integer completeNum  = utilService.getCompleteNumber(userId, Integer.parseInt(bookId));//获取每日完成
 		
 		List<PonitDto> pointCountList = new ArrayList<PonitDto>();
 		if(pointList.size()>count){

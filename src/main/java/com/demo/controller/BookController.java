@@ -246,20 +246,6 @@ public class BookController {
 				BookNumDto bookNum =new BookNumDto();
 				bookNum.setBookId(dto.getBookId());
 				
-				if(dto.getExErrorNum()>0){
-					bookNum.setExNum(dto.getExErrorNum());//错题	
-					bookNum.setState(1); //状态  0：新增   1：上次答错    2：巩固    3：强化   
-				}else if(dto.getExStrengthenNum()>0){
-					bookNum.setExNum(dto.getExStrengthenNum());//巩固
-					bookNum.setState(2); //状态  0：新增   1：上次答错    2：巩固    3：强化   
-				}else if(dto.getExNewNum()>0){
-					bookNum.setExNum(dto.getExNewNum());//练新
-					bookNum.setState(0); //状态  0：新增   1：上次答错    2：巩固     3：强化   
-				}else{
-					bookNum.setExNum(dto.getExIntensifyNum());//强化
-					bookNum.setState(3 ); //状态  0：新增   1：上次答错    2：巩固   3：强化   
-				}
-				
 				//1、查询练习本下所有知识点
 				List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
 				bookNum.setPointNum(pointList1.size());
@@ -267,15 +253,31 @@ public class BookController {
 				List<PonitSkilledDto> pointList2 =lorePointDao.findBookIdToPonit_ex(dto.getBookId(), userId);
 				bookNum.setPointNumY(pointList2.size());
 				//3、查询今日练习新的题目 数量
-				List<PointExerciseDetailDto> list = reviewService.getDailyGoals(new Date(), dto.getBookId());
-				bookNum.setCompleteNum(list.size());
+				List<PointExerciseDetailDto> list_new = reviewService.getDailyGoals(new Date(), dto.getBookId());
+				bookNum.setCompleteNum(list_new.size());
 				//4、查询练习本设置的
 				List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, dto.getBookId());
 				if(userBookList.size()>0){
 					Integer dailyGoals = userBookList.get(0).getDailyGoal();
 					bookNum.setDailyGoal(dailyGoals);
 				}
-	
+				
+				
+				if(dto.getExErrorNum()>0){
+					bookNum.setExNum(dto.getExErrorNum());//错题	
+					bookNum.setState(1); //状态  0：新增   1：上次答错    2：巩固    3：强化   
+				}else if(dto.getExStrengthenNum()>0){
+					bookNum.setExNum(dto.getExStrengthenNum());//巩固
+					bookNum.setState(2); //状态  0：新增   1：上次答错    2：巩固    3：强化   
+				}else if(dto.getExNewNum()<bookNum.getDailyGoal()){
+					Integer exnum = bookNum.getDailyGoal()-dto.getExNewNum();//剩余需要练习的数量
+					bookNum.setExNum(exnum);//练新
+					bookNum.setState(0); //状态  0：新增   1：上次答错    2：巩固     3：强化   
+				}else{
+					bookNum.setExNum(dto.getExIntensifyNum());//强化
+					bookNum.setState(3 ); //状态  0：新增   1：上次答错    2：巩固   3：强化   
+				}
+				
 				bookNum.setContinueNum(0);
 				bookDtoList.add(bookNum);
 			}
