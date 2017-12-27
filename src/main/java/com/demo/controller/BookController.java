@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.demo.dao.ExcerciseDao;
 import com.demo.dao.LorePointDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.BookNumDto;
@@ -18,7 +19,9 @@ import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PointNumDto;
+import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
+import com.demo.dto.UserBookDto;
 import com.demo.entity.ExcerciseBookEntity;
 import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
@@ -27,6 +30,7 @@ import com.demo.service.LorePointService;
 import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.demo.service.UtilService;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -61,6 +65,12 @@ public class BookController {
 	
 	@Autowired
 	private LorePointDao lorePointDao;
+	
+	@Autowired
+	private UtilService utilService;
+	
+	@Autowired
+	private ExcerciseDao excerciseDao;
 	
 	
 	/**
@@ -235,12 +245,21 @@ public class BookController {
 			for(PointNumDto dto:dtoList){
 				BookNumDto bookNum =new BookNumDto();
 				bookNum.setBookId(dto.getBookId());
-				bookNum.setContinueNum(0);
-				bookNum.setDailyGoals(0);
-				bookNum.setExErrorNum(dto.getExErrorNum());
-				bookNum.setExNewNum(dto.getExNewNum());
-				bookNum.setExStrengthenNum(dto.getExStrengthenNum());
-				bookNum.setExIntensifyNum(dto.getExIntensifyNum());
+				
+				if(dto.getExErrorNum()>0){
+					bookNum.setExNum(dto.getExErrorNum());//错题	
+					bookNum.setState(1); //状态  0：新增   1：上次答错    2：巩固    3：强化   
+				}else if(dto.getExStrengthenNum()>0){
+					bookNum.setExNum(dto.getExStrengthenNum());//巩固
+					bookNum.setState(2); //状态  0：新增   1：上次答错    2：巩固    3：强化   
+				}else if(dto.getExNewNum()>0){
+					bookNum.setExNum(dto.getExNewNum());//练新
+					bookNum.setState(0); //状态  0：新增   1：上次答错    2：巩固     3：强化   
+				}else{
+					bookNum.setExNum(dto.getExIntensifyNum());//强化
+					bookNum.setState(3 ); //状态  0：新增   1：上次答错    2：巩固   3：强化   
+				}
+				
 				//1、查询练习本下所有知识点
 				List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
 				bookNum.setPointNum(pointList1.size());
@@ -249,13 +268,15 @@ public class BookController {
 				bookNum.setPointNumY(pointList2.size());
 				//3、查询今日练习新的题目 数量
 				List<PointExerciseDetailDto> list = reviewService.getDailyGoals(new Date(), dto.getBookId());
+				bookNum.setCompleteNum(list.size());
 				//4、查询练习本设置的
 				List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, dto.getBookId());
 				if(userBookList.size()>0){
-					Integer dailyGoals = userBookList.get(0).getDailyGoals();
-					bookNum.setDailyGoals(dailyGoals);
+					Integer dailyGoals = userBookList.get(0).getDailyGoal();
+					bookNum.setDailyGoal(dailyGoals);
 				}
-				bookNum.setCompleteNumber(list.size());
+	
+				bookNum.setContinueNum(0);
 				bookDtoList.add(bookNum);
 			}
 			return ResultObject.successObject(bookDtoList,null) ;
@@ -406,8 +427,8 @@ public class BookController {
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
 			return ResultObject.warnMessage("参数不能为空");
 		}
-		if(null==entity.getDailyGoals()||entity.getDailyGoals().equals("")){
-			entity.setDailyGoals(5);
+		if(null==entity.getDailyGoal()||entity.getDailyGoal().equals("")){
+			entity.setDailyGoal(5);
 		}
 		
 		if(null==entity.getHidden()||entity.getHidden().equals("")){
@@ -417,6 +438,52 @@ public class BookController {
 		userBookService.updateUserBook(entity);
 		
 		return ResultObject.successMessage("修改成功");
+	}
+	
+	
+	/**
+	 * 获取用户练习本 目标数量、练习本是否隐藏
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping("/getUserBook")
+	public Result<?> getUserBook(HttpServletRequest request ,HttpServletResponse response ,String bookId){
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("参数不能为空");
+		}
+		
+		/**
+		 * 加操作权限
+		 * */
+		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		if(null==entity){
+			return ResultObject.warnMessage("无操作权限");	
+		}
+		
+		Integer userId = systemService.getCurrentUser().getId();
+		UserBookDto dto =  userBookService.findUserBook(userId , Integer.parseInt(bookId));
+		if(null!=dto){
+			//1、查询练习本下所有知识点
+			List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
+			Integer pointNum= 0;
+			 if(pointList1.size()>0){
+				 pointNum= pointList1.size();
+			 }
+			//2、查询练习本下所有被练习的知识点
+			List<PonitSkilledDto> pointList2 =lorePointDao.findBookIdToPonit_ex(dto.getBookId(), userId);
+			Integer pointNumY =0;
+			 if(pointList2.size()>0){
+				 pointNumY= pointList2.size();
+			 }
+			 Integer pointNumRemain =pointNum- pointNumY;
+			 dto.setPointNumRemain(pointNumRemain);
+			return ResultObject.successObject(dto, null);
+		}else{
+			return ResultObject.successMessage("没有数据");
+		}
+		
 	}
 	
 	

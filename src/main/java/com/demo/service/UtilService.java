@@ -142,7 +142,7 @@ public class UtilService {
 			//获取设定目标
 			List<UserBookEntity> listUserBook = userBookService.findUser_userId_bookId(userId, bookId);
 			if(listUserBook.size()>0){
-				Integer dailyGoals = listUserBook.get(0).getDailyGoals();//练习本的目标
+				Integer dailyGoals = listUserBook.get(0).getDailyGoal();//练习本的目标
 				//获取今日完成数量
 				List<PointExerciseDetailDto>  list = reviewDao.getDailyGoals(DateUtil.format(new Date(), DateFormatEnum.YEAR_TO_DAY), bookId, userId);
 				Integer complete = list.size();
@@ -168,7 +168,7 @@ public class UtilService {
 			 Integer count = 5;
 			 List<UserBookEntity> userBookList = userBookService.findUser_userId_bookId(userId, bookId);
 			 if(userBookList.size()>0){
-				 count = userBookList.get(0).getDailyGoals();
+				 count = userBookList.get(0).getDailyGoal();
 			 }
 			 return count;
 		}

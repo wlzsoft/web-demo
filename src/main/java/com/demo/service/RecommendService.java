@@ -94,17 +94,22 @@ public class RecommendService {
 
 			 
 			//****4、最后查询强化知识点
+/*			 
 			List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_bookId(bookId, userId);
 			List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_intensify, COUNT-cardListAll.size());
 			cardListAll.addAll(cardList_intensify);
 			 if(cardListAll.size()>=COUNT){
 				 return cardListAll; 
-			 }		 
+			 }	
+			 
+	*/		 
 			 
 		   //****5、最后查询熟练度满分的知识点
+/*			 
 			 List<PonitDto> pointList_full = excerciseDao.excerciseIntensifyFull_bookId(bookId, userId);
 			 List<CardDto> cardList_full = excerciseService.getCardAlgorithm(pointList_full, COUNT-cardListAll.size());
 			 cardListAll.addAll(cardList_full);
+*/		
 		}else{
 			LOGGER.info("按练习本+章节 来获取练习本知识点.....");
 			String[] chapterId_arry = chapterIds.split(",");
@@ -162,6 +167,7 @@ public class RecommendService {
 					 }
 				
 			   //****4、最后查询强化知识点
+/*					 
 					List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_chapterIds(bookId, chapter, userId);
 					List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_intensify, COUNT-cardListAll.size());
 					cardListAll.addAll(cardList_intensify);
@@ -169,12 +175,14 @@ public class RecommendService {
 						 return cardListAll; 
 					 }		 
 					 
-					 
+*/					 
 			    //****5、最后查询熟练度满分的知识点
+/*					 
 				    List<PonitDto> pointList_full = excerciseDao.excerciseIntensifyFull_chapterIds(bookId, chapter, userId);
 				    List<CardDto> cardList_full = excerciseService.getCardAlgorithm(pointList_full, COUNT-cardListAll.size());
-				   cardListAll.addAll(cardList_full);
-			}
+				    cardListAll.addAll(cardList_full);
+*/		
+					 }
 		}
 		return cardListAll;	
 	}

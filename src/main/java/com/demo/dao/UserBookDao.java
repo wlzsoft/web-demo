@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.demo.dto.UserBookDto;
 import com.demo.entity.UserBookEntity;
 
 @Repository
@@ -55,5 +56,12 @@ public interface UserBookDao {
 	 * @param bookId
 	 */
 	public List<UserBookEntity> findUser_userId_bookId(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
+	
+	/**
+	 * 根据练习本ID ,用户ID 查询信息
+	 * @param userId
+	 * @param bookId
+	 */
+	public UserBookDto findUserBook(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
 
 }

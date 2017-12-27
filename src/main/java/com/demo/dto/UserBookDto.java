@@ -1,22 +1,14 @@
-package com.demo.entity;
+package com.demo.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Administrator on 2017-09-19.
- */
-public class UserBookEntity implements Serializable {
-	
-	private static final long serialVersionUID = 4599543678350818379L;
+public class UserBookDto {
 
-	public Integer id;
-	
 	public Integer bookId;
 	
-	public Integer userId;
+	public String bookName;
 	
-	public Date lastTime;
+	public Date lastTime;//最后练习时间
 	
 	public Integer dailyGoal;//练习本 每日练习目标
 	
@@ -28,21 +20,7 @@ public class UserBookEntity implements Serializable {
 	
 	public String notificationTime;// 提醒时间，使用 , 号分隔，每条记
 	
-	public Integer createId ;
-	
-	public Date createTime;
-	
-	public Integer updateId;
-	
-	public Date updateTime;
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	public Integer pointNumRemain;//知识点未练习数量
 
 	public Integer getBookId() {
 		return bookId;
@@ -52,12 +30,12 @@ public class UserBookEntity implements Serializable {
 		this.bookId = bookId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
 	public Date getLastTime() {
@@ -66,38 +44,6 @@ public class UserBookEntity implements Serializable {
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
-	}
-
-	public Integer getCreateId() {
-		return createId;
-	}
-
-	public void setCreateId(Integer createId) {
-		this.createId = createId;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Integer getUpdateId() {
-		return updateId;
-	}
-
-	public void setUpdateId(Integer updateId) {
-		this.updateId = updateId;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 
 	public Integer getDailyGoal() {
@@ -140,6 +86,13 @@ public class UserBookEntity implements Serializable {
 		this.notificationTime = notificationTime;
 	}
 
+	public Integer getPointNumRemain() {
+		return pointNumRemain;
+	}
+
+	public void setPointNumRemain(Integer pointNumRemain) {
+		this.pointNumRemain = pointNumRemain;
+	}
 	
-	
+
 }

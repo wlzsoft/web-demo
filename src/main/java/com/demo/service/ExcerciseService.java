@@ -341,13 +341,13 @@ public class ExcerciseService {
 			Integer bookId=Integer.parseInt(bookId_arry[i]);
 			PointNumDto dto = new PointNumDto();
 			List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);
-			    dto.setExErrorNum(pointList_error.size());
+			    dto.setExErrorNum(pointList_error.size());//错题
 			List<PonitDto> pointList_new= excerciseDao.excerciseNew_bookId(bookId, userId);
-			    dto.setExNewNum(pointList_new.size());
+			    dto.setExNewNum(pointList_new.size());//练新
 			List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
-				dto.setExStrengthenNum(pointList_strenthen.size());
+				dto.setExStrengthenNum(pointList_strenthen.size());//巩固
 			List<PonitDto> pointList_intensify = excerciseDao.excerciseIntensify_bookId(bookId, userId);
-			    dto.setExIntensifyNum(pointList_intensify.size());
+			    dto.setExIntensifyNum(pointList_intensify.size());//强化
 				dto.setBookId(bookId);
 				pintNumList.add(dto);
 		}

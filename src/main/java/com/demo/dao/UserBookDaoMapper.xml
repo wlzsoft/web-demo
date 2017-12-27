@@ -20,11 +20,13 @@
 	    update userbook set progress=#{progress} ,lastTime=#{lastTime}  where userId=#{userId} and bookId=#{bookId}
 	</update>
 	
-	<update id="updateUser_Book" parameterType="com.demo.entity.UserEntity">
+	<update id="updateUser_Book" parameterType="com.demo.entity.UserBookEntity">
         UPDATE userbook set
-               hidden=#{hidden},
-               dailyGoals=#{dailyGoals},
-               remark=#{remark},
+                <if test="hidden !=null" >hidden=#{hidden},</if>
+               <if test="dailyGoal !=null" > dailyGoal=#{dailyGoal},</if>
+               <if test="remark !=null" > remark=#{remark},</if>
+               <if test="notification !=null" > notification=#{notification},</if>
+               <if test="notificationTime !=null" > notificationTime=#{notificationTime},</if>
 			   updateTime=#{updateTime},
 			   updateId=#{updateId}
         WHERE userId=#{userId} and bookId=#{bookId}
@@ -46,8 +48,24 @@
 	   select * from userBook t where t.bookId=#{bookId}
 	</select>
 	
-	<select id="findUser_userId_bookId" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
+    <select id="findUser_userId_bookId" parameterType="java.lang.Integer" resultType="com.demo.entity.UserBookEntity">
 	   select * from userBook t where t.bookId=#{bookId} and t.userId=#{userId}
+	</select>
+	
+	<select id="findUserBook" parameterType="java.lang.Integer" resultType="com.demo.dto.UserBookDto">
+	   select 
+	     t.bookId,
+	     a.bookName,   
+	     t.lastTime,
+	     t.dailyGoal,
+	     t.hidden, 
+	     t.remark,
+	     t.notification,
+	     t.notificationTime
+	   from userBook t ,book a 
+	   where a.id = t.bookId
+	     and t.bookId=#{bookId} 
+	     and t.userId=#{userId}
 	</select>
     
 </mapper>

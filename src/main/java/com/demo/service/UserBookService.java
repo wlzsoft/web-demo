@@ -3,10 +3,12 @@ package com.demo.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.UserBookDao;
+import com.demo.dto.UserBookDto;
 import com.demo.entity.UserBookEntity;
 
 @Service
@@ -79,6 +81,16 @@ public class UserBookService {
 	 */
 	public List<UserBookEntity> findUser_userId_bookId(Integer userId ,Integer bookId){
 		return userBookDao.findUser_userId_bookId(userId, bookId);
+	}
+	
+
+	/**
+	 * 根据练习本ID ,用户ID 查询信息
+	 * @param userId
+	 * @param bookId
+	 */
+	public UserBookDto findUserBook(Integer userId ,Integer bookId){
+		return userBookDao.findUserBook(userId, bookId);
 	}
 	
 
