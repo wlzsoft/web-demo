@@ -262,20 +262,25 @@ public class BookController {
 					bookNum.setDailyGoal(dailyGoals);
 				}
 				
-				
+				//状态  0：新增   1：上次答错    2：巩固   3：强化 
 				if(dto.getExErrorNum()>0){
 					bookNum.setExNum(dto.getExErrorNum());//错题	
-					bookNum.setState(1); //状态  0：新增   1：上次答错    2：巩固    3：强化   
+					bookNum.setState(1); // 1：上次答错       
 				}else if(dto.getExStrengthenNum()>0){
 					bookNum.setExNum(dto.getExStrengthenNum());//巩固
-					bookNum.setState(2); //状态  0：新增   1：上次答错    2：巩固    3：强化   
-				}else if(dto.getExNewNum()<bookNum.getDailyGoal()){
-					Integer exnum = bookNum.getDailyGoal()-dto.getExNewNum();//剩余需要练习的数量
-					bookNum.setExNum(exnum);//练新
-					bookNum.setState(0); //状态  0：新增   1：上次答错    2：巩固     3：强化   
+					bookNum.setState(2); // 2：巩固      
+				}else if(dto.getExNewNum()>0){
+					if(bookNum.getCompleteNum()<bookNum.getDailyGoal()){
+						Integer exnum = bookNum.getDailyGoal()-bookNum.getCompleteNum();//剩余需要练习的数量
+						bookNum.setExNum(exnum);//练新
+						bookNum.setState(0); //0：新增   	
+					}else{
+						bookNum.setExNum(dto.getExIntensifyNum());//强化
+						bookNum.setState(3 ); //3：强化   
+					}
 				}else{
 					bookNum.setExNum(dto.getExIntensifyNum());//强化
-					bookNum.setState(3 ); //状态  0：新增   1：上次答错    2：巩固   3：强化   
+					bookNum.setState(3 ); // 3：强化   
 				}
 				
 				bookNum.setContinueNum(0);
