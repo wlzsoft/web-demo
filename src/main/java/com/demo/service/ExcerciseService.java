@@ -84,9 +84,15 @@ public class ExcerciseService {
 			}
 		}
 		
-		//获取练习本练习目标 数量
-		Integer count = utilService.getDailyGoalsNumber(userId, Integer.parseInt(bookId));
-		//Integer completeNum  = utilService.getCompleteNumber(userId, Integer.parseInt(bookId));//获取每日完成
+		Integer count=5;//默认练新 为5个
+		Integer dailyGoalNum = utilService.getDailyGoalsNumber(userId, Integer.parseInt(bookId));//获取练习本练习目标 数量
+		Integer completeNum  = utilService.getCompleteNumber(userId, Integer.parseInt(bookId));//获取每日完成目标数
+		
+		if(completeNum>=dailyGoalNum){
+			count=dailyGoalNum;
+		}else{
+			count=dailyGoalNum-completeNum;
+		}
 		
 		List<PonitDto> pointCountList = new ArrayList<PonitDto>();
 		if(pointList.size()>count){
