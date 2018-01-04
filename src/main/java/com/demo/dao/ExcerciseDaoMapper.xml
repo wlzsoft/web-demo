@@ -233,7 +233,7 @@
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND t.state=3
-		    AND t.skilled <![CDATA[ > ]]> 1
+		    <!-- AND t.skilled <![CDATA[ > ]]> 1 -->
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -263,7 +263,7 @@
 		    AND t.exerciseNumber>0
 		    AND t.state=3
 		    AND t.hidden=0
-		    AND t.skilled <![CDATA[ > ]]> 1
+<!-- 		    AND t.skilled <![CDATA[ > ]]> 1 -->
 		    AND a.number>0
 		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
     </select>
