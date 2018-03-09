@@ -3,7 +3,7 @@ package com.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LoreCardEntity implements Serializable{
+public class LoreCardEntity_old implements Serializable{
 
 	private static final long serialVersionUID = 461079389536773396L;
 	

@@ -6,28 +6,26 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.CardDto;
-import com.demo.entity.LoreCardEntity;
+import com.demo.entity.CardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
 
 @Repository
 public interface LoreCradDao {
     
-	public Integer savaLoreCrad(LoreCardEntity entity); 
-	
-	public void install(LoreCardEntity entity);
-	
+	public Integer savaLoreCrad(CardEntity entity); 
+
 	public int dellById(@Param("id")Integer id);
 	
-	public int editLoreCrad(LoreCardEntity entity);
+	public int editLoreCrad(CardEntity entity);
 	
 	public CardDto findLoreCradById(@Param("id")Integer id);
 	
-	public LoreCardEntity findLoreCrad(@Param("cardId")Integer cardId);
+	public CardEntity findLoreCrad(@Param("cardId")Integer cardId);
 	
 	public List<CardDto> findLoreCradByPointId(@Param("pointId")Integer lorePointId);
 	
-	public List<LoreCardEntity> getOpenLoreCrad();
+	public List<CardEntity> getOpenLoreCrad();
 	
 	public LoreCardExerciseDetailEntity getLoreCradDetailByPointId(Integer loreCardId);
 	

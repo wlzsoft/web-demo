@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
+import com.demo.entity.CardEntity;
 import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
 import com.demo.entity.LorePointEntity;
@@ -66,22 +66,15 @@ public class CardController {
 	 * @return
 	 */
 	@RequestMapping("/addCard")
-	public Result<?> addCard(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity loreCardEntity ){
-		if(null==loreCardEntity.getPointId()||loreCardEntity.getPointId().equals("")){
+	public Result<?> addCard(HttpServletRequest request ,HttpServletResponse response,CardEntity cardEntity ){
+		if(null==cardEntity.getPointId()||cardEntity.getPointId().equals("")){
 			return ResultObject.warnMessage("所属知识点ID不能为空");
 		}
-		if(null==loreCardEntity.getQuestionType()||loreCardEntity.getQuestionType().equals("")){
-			return ResultObject.warnMessage("卡片题型不能为空");
-		}
-		if(null==loreCardEntity.getAnswers()||loreCardEntity.getAnswers().equals("")){
-			return ResultObject.warnMessage("卡片答案不能为空");
-		}
+
 		
 		try {
-			String titleText =  EmojiUtil.emojiConvert1(loreCardEntity.getTitleText());
-			String questionText =  EmojiUtil.emojiConvert1(loreCardEntity.getQuestionText());
-			loreCardEntity.setTitleText(titleText);
-			loreCardEntity.setQuestionText(questionText);
+			String cardData =  EmojiUtil.emojiConvert1(cardEntity.getCardData());
+			cardEntity.setCardData(cardData);
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
 			e.printStackTrace();
@@ -90,7 +83,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		LorePointEntity point = lorePointService.findLorePoint(loreCardEntity.getPointId());
+		LorePointEntity point = lorePointService.findLorePoint(cardEntity.getPointId());
 		if(null==point){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -98,7 +91,7 @@ public class CardController {
 		if(userId!=point.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
-			IdEntity idEntity =  loreCradService.savaLoreCrad(loreCardEntity);
+			IdEntity idEntity =  loreCradService.savaLoreCrad(cardEntity);
 			 utilService.bookProgress(userId, point.getBookId());
 			 LOGGER.info("练习本进度计算统计完成");
 			
@@ -122,7 +115,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		LoreCardEntity entity = loreCradService.findLoreCrad(Integer.parseInt(cardId));
+		CardEntity entity = loreCradService.findLoreCrad(Integer.parseInt(cardId));
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -146,21 +139,19 @@ public class CardController {
 	 * @return
 	 */
 	@RequestMapping("/editCard")
-	public Result<?> editCard(HttpServletRequest request ,HttpServletResponse response,LoreCardEntity entity ){
+	public Result<?> editCard(HttpServletRequest request ,HttpServletResponse response,CardEntity entity ){
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("ID不能为空");
 		}
-		if(null==entity.getQuestionType()||entity.getQuestionType().equals("")){
-			return ResultObject.warnMessage("卡片题型不能为空");
-		}
-		if(null==entity.getAnswers()||entity.getAnswers().equals("")){
+
+/*		if(null==entity.getAnswers()||entity.getAnswers().equals("")){
 			return ResultObject.warnMessage("卡片答案不能为空");
-		}
+		}*/
 		
 		/**
 		 * 加操作权限
 		 * */
-		LoreCardEntity cardEntity = loreCradService.findLoreCrad(entity.getId());
+		CardEntity cardEntity = loreCradService.findLoreCrad(entity.getId());
 		if(null==cardEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -169,14 +160,8 @@ public class CardController {
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
 				try{
-					if(null!=entity.getTitleText()||entity.getTitleText().equals("")){
-						String	titleText = EmojiUtil.emojiConvert1(entity.getTitleText());
-						entity.setTitleText(titleText);
-					}
-					if(null!=entity.getQuestionText()||entity.getQuestionText().equals("")){
-						String questionText =  EmojiUtil.emojiConvert1(entity.getQuestionText());
-						entity.setQuestionText(questionText);
-					}
+					String cardData =  EmojiUtil.emojiConvert1(entity.getCardData());
+					entity.setCardData(cardData);
 				}catch (UnsupportedEncodingException e) {
 					LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
 					e.printStackTrace();
@@ -229,14 +214,8 @@ public class CardController {
 			return ResultObject.successMessage("没有数据");
 		}else{
 			try{
-				if(null!=entity.getTitleText()||entity.getTitleText().equals("")){
-					String	titleText = EmojiUtil.emojiRecovery2(entity.getTitleText());
-					entity.setTitleText(titleText);
-				}
-				if(null!=entity.getQuestionText()||entity.getQuestionText().equals("")){
-					String questionText =  EmojiUtil.emojiRecovery2(entity.getQuestionText());
-					entity.setQuestionText(questionText);
-				}
+				String cardData =  EmojiUtil.emojiConvert1(entity.getCardData());
+				entity.setCardData(cardData);
 			}catch (UnsupportedEncodingException e) {
 				LOGGER.error("知识点标题描述 emoji 表情符 转换异常");
 				e.printStackTrace();
@@ -283,14 +262,11 @@ public class CardController {
 		}else{
 			for(CardDto dto :entityList){
 				try {
-					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-						dto.setTitleText(titleText);
+					if(null==dto.getCardData()||dto.getCardData().equals("")){
+						return ResultObject.successMessage("没有数据");
 					}
-					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-						dto.setQuestionText(questionText);
-					}
+					String cardData =  EmojiUtil.emojiConvert1(dto.getCardData());
+					dto.setCardData(cardData);
 
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -308,7 +284,7 @@ public class CardController {
 	 */
 	@RequestMapping("/openCard")
 	public Result<?> openCard(HttpServletRequest request ,HttpServletResponse response){
-		List<LoreCardEntity> entityList = loreCradService.getOpenLoreCrad();
+		List<CardEntity> entityList = loreCradService.getOpenLoreCrad();
 		if(entityList.size()==0){
 			return ResultObject.successMessage("没有数据");
 		}

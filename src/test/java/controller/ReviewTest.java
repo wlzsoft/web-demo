@@ -22,7 +22,7 @@ public class ReviewTest {
 		String lorePointId="17";
 		String cradId="10";
 		Integer right=1 ;
-		reviewService.reviewCrad(lorePointId, cradId, right);
+		//reviewService.reviewCrad(lorePointId, cradId, right);
 	}
 	
 	
@@ -32,7 +32,7 @@ public class ReviewTest {
 		String lorePointId="17";
 		String cradId="10";
 		Integer right=1 ;
-		reviewService.reviewCrad(lorePointId, cradId, right);
+		//reviewService.reviewCrad(lorePointId, cradId, right);
 	}
 
 	

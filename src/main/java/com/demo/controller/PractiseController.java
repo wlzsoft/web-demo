@@ -92,14 +92,11 @@ public class PractiseController {
 		//对emoji转换
 		for(CardDto dto :cardList){
 			try {
-				if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-					String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-					dto.setTitleText(titleText);
+				if(null!=dto.getCardData()||dto.getCardData().equals("")){
+					String	cardData = EmojiUtil.emojiRecovery2(dto.getCardData());
+					dto.setCardData(cardData);
 				}
-				if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-					String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-					dto.setQuestionText(questionText);
-				}
+				
 				PointExerciseDetailDto entity = pointDao.pointIdByDetail(dto.getPointId(),userId);
 				dto.setPointState(entity.getState());
 			} catch (UnsupportedEncodingException e) {

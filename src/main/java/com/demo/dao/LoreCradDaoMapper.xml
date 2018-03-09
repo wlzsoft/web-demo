@@ -2,63 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.LoreCradDao">
 	
-  <insert id="savaLoreCrad" parameterType="com.demo.entity.LoreCardEntity" useGeneratedKeys="true" keyProperty="id">
+  <insert id="savaLoreCrad" parameterType="com.demo.entity.CardEntity" useGeneratedKeys="true" keyProperty="id">
  	  INSERT INTO card(
 				pointId,
-				language,
-				area,
-				questionType,
-				difficultyLevel,
-				titleText,
-				titleVoiceSrc,
-				titleVoiceFlag,
-				titleAutoPlay,
-				questionText,
-				questionLongText,
-				questionDescType,
-				questionVoiceSrc,
-				questionAutoPlay,
-				questionImages,
-				answers,
+                cardData,
 				createTime,
 				createId
 		)VALUES(
 				#{pointId},
-				#{language},
-				#{area},
-				#{questionType},
-				#{difficultyLevel},
-				#{titleText},
-				#{titleVoiceSrc},
-				#{titleVoiceFlag},
-				#{titleAutoPlay},
-				#{questionText},
-				#{questionLongText},
-				#{questionDescType},
-				#{questionVoiceSrc},
-				#{questionAutoPlay},
-				#{questionImages},
-				#{answers},
+				#{cardData},
 				#{createTime},
 				#{createId}
 		)
   </insert>	
 	
   <select id="findLoreCradById" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
-          select t.id,t.pointId ,b.pointName ,t.questionType,t.questionVoiceSrc,
-                t.difficultyLevel,t.titleText,titleVoiceSrc,t.questionLongText,
-				t.questionDescType,titleVoiceFlag,t.questionText,t.questionImages,t.answers
-          from card t ,point b  
+          select t.id,t.pointId ,t.cardData,b.pointName 
+            from card t ,point b  
           where  t.pointId=b.id and t.id=#{id}
   </select>
   
-  <select id="findLoreCrad" parameterType="java.lang.Integer" resultType="com.demo.entity.LoreCardEntity">
+  <select id="findLoreCrad" parameterType="java.lang.Integer" resultType="com.demo.entity.CardEntity">
             select * from card t where t.id=#{cardId}
   </select>
    
    <select id="findLoreCradByPointId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto"> 
-          select t.id,t.pointId ,b.pointName ,t.questionType,titleVoiceSrc,titleVoiceFlag,t.questionLongText,t.questionVoiceSrc,
-                t.questionDescType,t.difficultyLevel,t.titleText,t.questionText,t.questionImages,t.answers
+          select t.id,t.pointId ,t.cardData,b.pointName 
           from card t ,point b  
           where  t.pointId=b.id and t.pointId=#{pointId}
    </select>  
@@ -67,24 +36,9 @@
      delete from card where id=#{id}
    </delete>
    
-   <update id="editLoreCrad" parameterType="com.demo.entity.LoreCardEntity">
+   <update id="editLoreCrad" parameterType="com.demo.entity.CardEntity">
    		 UPDATE card set
-			   <if test="language !=null" >language=#{language},</if>
-			   <if test="area !=null">area=#{area},</if>
-			   <if test="questionType !=null">questionType=#{questionType},</if>
-			   <if test="difficultyLevel !=null and difficultyLevel !='' ">difficultyLevel=#{difficultyLevel},</if>
-			   <if test="titleText !=null and titleText !='' ">titleText=#{titleText},</if>
-			   <if test="titleVoiceSrc !=null and titleVoiceSrc!='' ">titleVoiceSrc=#{titleVoiceSrc},</if>
-			   <if test="titleAutoPlay !=null">titleAutoPlay=#{titleAutoPlay},</if>
-			   <if test="questionText !=null and questionText !='' ">questionText=#{questionText},</if>
-			   <if test="questionLongText !=null">questionLongText=#{questionLongText},</if>
-			   <if test="questionDescType !=null">questionDescType=#{questionDescType},</if>
-			   <if test="questionVoiceSrc !=null">questionVoiceSrc=#{questionVoiceSrc},</if>
-			   <if test="titleVoiceFlag !=null">titleVoiceFlag=#{titleVoiceFlag},</if>
-			   <if test="questionAutoPlay !=null">questionAutoPlay=#{questionAutoPlay},</if>
-			   <if test="questionImages !=null">questionImages=#{questionImages},</if>
-			   <if test="answers !=null">answers=#{answers},</if>
-			   <if test="isOpen !=null">isOpen=#{isOpen},</if>
+			   <if test="cardData !=null">cardData=#{cardData},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
 	    where id=#{id}

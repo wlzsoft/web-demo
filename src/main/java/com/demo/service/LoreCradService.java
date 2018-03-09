@@ -12,8 +12,8 @@ import com.demo.dao.LoreCradDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
+import com.demo.entity.CardEntity;
 import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LoreCardEntity;
 import com.demo.entity.LoreCardExerciseDetailEntity;
 import com.demo.entity.LoreCradAnswersEntity;
 
@@ -37,7 +37,7 @@ public class LoreCradService {
 	private ExcerciseBookService excerciseService ;
 	
 	@Transactional
-	public IdEntity savaLoreCrad(LoreCardEntity entity){
+	public IdEntity savaLoreCrad(CardEntity entity){
 		   entity.setCreateId(systemService.getCurrentUser().getId());
 		   entity.setCreateTime(new Date());
 		 loreCradDao.addPonitNumber(entity.getPointId());
@@ -65,7 +65,7 @@ public class LoreCradService {
 	}
 	
 	@Transactional
-	public int editLoreCrad(LoreCardEntity entity){
+	public int editLoreCrad(CardEntity entity){
 		 entity.setUpdateId(systemService.getCurrentUser().getId());
 		 entity.setUpdateTime(new Date());
 		int count = loreCradDao.editLoreCrad(entity);
@@ -77,7 +77,7 @@ public class LoreCradService {
 	   return loreCradDao.findLoreCradById(loreCardId);
 	}
 	
-	public LoreCardEntity findLoreCrad(Integer loreCardId){
+	public CardEntity findLoreCrad(Integer loreCardId){
 		   return loreCradDao.findLoreCrad(loreCardId);
 	}
 	
@@ -85,7 +85,7 @@ public class LoreCradService {
 		return loreCradDao.findLoreCradByPointId(lorePointId);
 	}
 	
-	public List<LoreCardEntity> getOpenLoreCrad(){
+	public List<CardEntity> getOpenLoreCrad(){
 		return loreCradDao.getOpenLoreCrad();
 	}
 	

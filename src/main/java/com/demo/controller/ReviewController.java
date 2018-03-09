@@ -118,15 +118,10 @@ public class ReviewController {
 		//对emoji转换
 		for(CardDto dto :cardList){
 			try {
-				if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-					String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-					dto.setTitleText(titleText);
+				if(null!=dto.getCardData()||dto.getCardData().equals("")){
+					String	cardData = EmojiUtil.emojiRecovery2(dto.getCardData());
+					dto.setCardData(cardData);
 				}
-				if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-					String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-					dto.setQuestionText(questionText);
-				}
-
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
@@ -168,15 +163,10 @@ public class ReviewController {
 		if(cardList.size()>0){
 			for(CardDto dto :cardList){
 				try {
-					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-						dto.setTitleText(titleText);
+					if(null!=dto.getCardData()||dto.getCardData().equals("")){
+						String	cardData = EmojiUtil.emojiRecovery2(dto.getCardData());
+						dto.setCardData(cardData);
 					}
-					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-						dto.setQuestionText(questionText);
-					}
-
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -219,15 +209,10 @@ public class ReviewController {
 		if(cardList.size()>0){
 			for(CardDto dto :cardList){
 				try {
-					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-						dto.setTitleText(titleText);
+					if(null!=dto.getCardData()||dto.getCardData().equals("")){
+						String	cardData = EmojiUtil.emojiRecovery2(dto.getCardData());
+						dto.setCardData(cardData);
 					}
-					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-						dto.setQuestionText(questionText);
-					}
-
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -266,13 +251,9 @@ public class ReviewController {
 		if(cardList.size()>0){
 			for(CardDto dto :cardList){
 				try {
-					if(null!=dto.getTitleText()||dto.getTitleText().equals("")){
-						String	titleText = EmojiUtil.emojiRecovery2(dto.getTitleText());
-						dto.setTitleText(titleText);
-					}
-					if(null!=dto.getQuestionText()||dto.getQuestionText().equals("")){
-						String questionText =  EmojiUtil.emojiRecovery2(dto.getQuestionText());
-						dto.setQuestionText(questionText);
+					if(null!=dto.getCardData()||dto.getCardData().equals("")){
+						String	cardData = EmojiUtil.emojiRecovery2(dto.getCardData());
+						dto.setCardData(cardData);
 					}
 
 				} catch (UnsupportedEncodingException e) {
@@ -337,14 +318,12 @@ public class ReviewController {
 		
 		//对emoji转换
 		try {
-			if(null!=cardDto.getTitleText()||cardDto.getTitleText().equals("")){
-				String	titleText = EmojiUtil.emojiRecovery2(cardDto.getTitleText());
-				cardDto.setTitleText(titleText);
+			if(null!=cardDto.getCardData()||cardDto.getCardData().equals("")){
+				String	cardData = EmojiUtil.emojiRecovery2(cardDto.getCardData());
+				cardDto.setCardData(cardData);
 			}
-			if(null!=cardDto.getQuestionText()||cardDto.getQuestionText().equals("")){
-				String questionText =  EmojiUtil.emojiRecovery2(cardDto.getQuestionText());
-				cardDto.setQuestionText(questionText);
-			}
+			
+			
 
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
