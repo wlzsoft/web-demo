@@ -4,21 +4,56 @@
 	
 	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity"  useGeneratedKeys="true" keyProperty="id">
 	   INSERT INTO chapter(
-				chapterJson,
-				bookId
+				parentId,
+				name,
+				bookId,
+				sort,
+				level,
+				isOpen,
+				createId,
+				createTime
+				
 		)VALUES(
-				#{chapterJson},
-				#{bookId}
+				#{parentId},
+				#{name},
+				#{bookId},
+				#{sort},
+				#{level},
+				#{isOpen},
+				#{createId},
+				#{createTime}
 		)
 	</insert>
 	
 	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
 			 UPDATE chapter set
-			   <if test="chapterJson !=null ">chapterJson=#{chapterJson},</if>
-			   <if test="updateTime !=null ">updateTime=#{updateTime},</if>
-			   <if test="updateId !=null  ">updateId=#{updateId}</if>
-		   WHERE bookId=#{bookId}
+			 	parentId=#{parentId},
+			 	name=#{name},
+			 	bookId=#{bookId},
+			 	sort=#{sort},
+			 	level=#{level},
+			 	isOpen=#{isOpen},
+			 	updateTime=#{updateTime},
+			 	updateId=#{updateId}
+		   WHERE id=#{id}
 	</update>
+	
+	
+	<delete id="delChapter" parameterType="java.lang.Integer">
+         delete from chapter  where 
+              id in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+	</delete>
+	
+	<select id="findChapterById" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity" >
+	         select * from chapter  where 
+              id in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+	</select>
 	
 	<select id="findChapterPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 			SELECT t.id,t.pointName,t.chapterId,t.number ,t.bookId
@@ -26,11 +61,29 @@
 			 WHERE t.chapterId=#{chapterId} and t.bookId=#{bookId}
 	</select>
 	
-   <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.dto.ChapterDto">
+   <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
 			SELECT 
-			  a.chapterJson,a.bookId
+			  *
 			FROM chapter a
 			WHERE a.bookId=#{bookId}
 	</select>
+	
+    <select id="findChapterSort" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
+        select * from chapter t where
+               t.parentId=#{parentId}
+             and t.bookId=#{bookId}
+             and t.sort > #{nextSort}
+             
+    </select>
+    
+    <update id="upateChapterSort" parameterType="com.demo.entity.ChapterEntity">
+			 UPDATE chapter set
+			 	sort=#{sort}
+		   WHERE id=#{id}
+	</update>	
+	
+	
+	
+	
      
 </mapper>

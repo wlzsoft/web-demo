@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.entity.ChapterEntity;
 import com.demo.entity.ExcerciseBookEntity;
@@ -47,14 +46,10 @@ public class ChapterController {
 	 * @return
 	 */	 
 	@RequestMapping("/saveChapter")
-	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity,String chapterSorts){
+	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
 		
-		if(null!=entity.getChapterJson()||!entity.getChapterJson().equals("")){
-			 if(entity.getChapterJson().length()>10){
-				 if(null==chapterSorts||chapterSorts.equals("")){
-					 return ResultObject.warnMessage("章节ID不能为空");
-				 }
-			 }
+		if(null==entity.getName()||entity.getName().equals("")){
+			return ResultObject.warnMessage("章节名称不能为空");
 		}
 		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
@@ -72,29 +67,9 @@ public class ChapterController {
 		if(userId!=bookBntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
-			ChapterDto chapterDto = chapterService.bookChapterList(entity.getBookId());//判断bookId 在章节表中是否存在
 			
-			if(null==chapterDto){
-				IdEntity identity = chapterService.addChapter(entity);
-				return ResultObject.successObject(identity,"新增成功");
-			}else{
-				if(null==chapterSorts||chapterSorts.equals("")){
-					chapterService.editChapter(entity);
-					chapterService.updateChapterSort( entity.getBookId());	
-				}else{
-					String[] chapterIds = chapterSorts.split(",");
-					if(chapterIds.length>0){
-						chapterService.editChapter(entity);
-						chapterService.updateChapterSort(chapterIds, entity.getBookId());
-					}else{
-						if(entity.getChapterJson().length()<10){
-							chapterService.updateChapterSort( entity.getBookId());	
-						}
-					}
-				}
-	
-				return ResultObject.successMessage("修改成功") ;	
-			}
+			IdEntity identity = chapterService.addChapter(entity);
+			return ResultObject.successObject(identity,"新增成功");
 		}
 	}
 	
@@ -144,19 +119,23 @@ public class ChapterController {
 	 * 删除章节信息
 	 * @param request
 	 * @param response
-	 * @param entity
+	 * @param chapterIds 章节ID 集
 	 * @return
 	 */
 	@RequestMapping("/delChapter")
-	public Result<?> delChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
-		if(null==entity.getId()||entity.getId().equals("")){
-			return ResultObject.warnMessage("主键ID不能为空");
-		}else{
-			
+	public Result<?> delChapter(HttpServletRequest request ,HttpServletResponse response,String[] chapterIds,String bookId ){
+		if(null==chapterIds||chapterIds.equals("")){
+			return ResultObject.warnMessage("ID不能为空");
+		}
+		
+		if(null==bookId||bookId.equals("")){
+			return ResultObject.warnMessage("练习本ID不能为空");
+		}
+		
 			/**
 			 * 加操作权限
 			 * */
-			ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getId().toString());
+			ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId);
 			if(null==bookEntity){
 				return ResultObject.warnMessage("无操作权限");	
 			}
@@ -164,13 +143,12 @@ public class ChapterController {
 			if(userId!=bookEntity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");
 			}else{
-				int count = chapterService.editChapter(entity);
+				int count = chapterService.delChapter(chapterIds);
 				if(count==0){
 					return ResultObject.successMessage("无操作数据");
 				}
-				return ResultObject.successMessage("修改成功") ;
+				return ResultObject.successMessage("删除成功") ;
 			}
-		}
 	}
 	
 	
@@ -207,11 +185,11 @@ public class ChapterController {
 		}
 		
 		
-		ChapterDto entityList = chapterService.bookChapterList(Integer.parseInt(bookId));
+		List<ChapterEntity> entityList = chapterService.bookChapterList(Integer.parseInt(bookId));
 		if(null==entityList){
 			return ResultObject.successObject(null,null); 
 		}else{
-			return ResultObject.successObject(entityList.getChapterJson(),null); 
+			return ResultObject.successObject(entityList,null); 
 		}
 	}
 	

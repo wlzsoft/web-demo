@@ -7,10 +7,16 @@ public class ChapterEntity implements Serializable {
 
 	private static final long serialVersionUID = 9059527466326065039L;
 	public Integer	id	;//主键ID
-	public Integer	 bookId;//所属练习本ID
-	public String chapterJson;//章节Json
-	public Integer updateId;
-	public Date updateTime;
+	public Integer bookId;//所属练习本ID
+	public String name;//章节名称
+	public Integer level; //章节层级
+	public Integer parentId ;//父级章节id
+	public Integer sort;//排序
+	public Integer isOpen;//是否公开试读
+	public Date createTime	;//创建时间				
+	public Integer createId	;//创建人ID				
+	public Date updateTime	;//修改时间				
+	public Integer updateId	;//修改人ID	
 	
 	public Integer getId() {
 		return id;
@@ -24,17 +30,41 @@ public class ChapterEntity implements Serializable {
 	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
-	public String getChapterJson() {
-		return chapterJson;
+	public String getName() {
+		return name;
 	}
-	public void setChapterJson(String chapterJson) {
-		this.chapterJson = chapterJson;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Integer getUpdateId() {
-		return updateId;
+	public Integer getLevel() {
+		return level;
 	}
-	public void setUpdateId(Integer updateId) {
-		this.updateId = updateId;
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Integer getCreateId() {
+		return createId;
+	}
+	public void setCreateId(Integer createId) {
+		this.createId = createId;
 	}
 	public Date getUpdateTime() {
 		return updateTime;
@@ -42,5 +72,18 @@ public class ChapterEntity implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	public Integer getUpdateId() {
+		return updateId;
+	}
+	public void setUpdateId(Integer updateId) {
+		this.updateId = updateId;
+	}
+	public Integer getIsOpen() {
+		return isOpen;
+	}
+	public void setIsOpen(Integer isOpen) {
+		this.isOpen = isOpen;
+	}
+	
 	
 }

@@ -33,12 +33,44 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
+	@Transactional
 	public IdEntity addChapter(ChapterEntity entity){
+		Integer sort=entity.getSort();
+		this.updateChapterSort(entity.getParentId(),entity.getBookId(),sort,1);
+		entity.setCreateId(systemService.getCurrentUser().getId());
+		entity.setCreateTime(new Date());
+		entity.setSort(sort+1);
 		chapterDao.addChapter(entity);
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
 	  return identity;
 	}
+	
+	
+	
+	/**
+	 * 
+	 * 方法用途: 修改章节排序sort 号
+	 * 操作步骤: TODO<br>
+	 * @param chapterParentId 章节父Id
+	 * @param bookId 练习本ID
+	 * @param nextSort 新增|删除章节的节点id sort值
+	 * @param flag 操作标示: 1新增  0删除
+	 * @return
+	 */
+	@Transactional
+	public void updateChapterSort(Integer chapterParentId,Integer bookId ,Integer nextSort,Integer flag){
+		List<ChapterEntity> list = chapterDao.findChapterSort(chapterParentId, bookId, nextSort);
+			for(ChapterEntity entity :list){
+				if(flag==1){
+					entity.setSort(entity.getSort()+1);
+					chapterDao.upateChapterSort(entity);
+				}else{
+					entity.setSort(entity.getSort()-1);
+					chapterDao.upateChapterSort(entity);
+				}
+			}
+    }
 	
 	
 	/**
@@ -53,6 +85,27 @@ public class ChapterService {
 		entity.setUpdateTime(new Date());
 		int count = chapterDao.editChapter(entity);
 		return count;
+	}
+	
+	/**
+	 * 删除章节信息
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	public int delChapter(String[] chapterIds){
+		if(chapterIds.length>0){
+			Integer[] chapterId = new Integer[chapterIds.length];
+			for(int i=0;i<chapterIds.length;i++){
+				chapterId[i]=Integer.parseInt(chapterIds[i]);
+			}
+			int count = chapterDao.delChapter(chapterId);
+			//List<ChapterEntity> list = chapterDao.findChapterById(chapterId);
+			return count;
+		}else{
+			return 0;	
+		}
 	}
 	
 	
@@ -74,7 +127,7 @@ public class ChapterService {
 	 * @param bookId
 	 * @return
 	 */
-	public ChapterDto bookChapterList(Integer bookId){
+	public List<ChapterEntity> bookChapterList(Integer bookId){
 		return chapterDao.bookChapterList(bookId);
 	}
 	

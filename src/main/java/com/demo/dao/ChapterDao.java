@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.demo.dto.ChapterDto;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
 
@@ -32,6 +31,15 @@ public interface ChapterDao {
 	public int editChapter(ChapterEntity entity);
 	
 	/**
+	 * 
+	 * 方法用途: 删除章节信息
+	 * 操作步骤: TODO<br>
+	 * @param chapterIds
+	 * @return
+	 */
+	public int delChapter(@Param("chapterIds")Integer[] chapterIds);
+	
+	/**
 	 * 根据章节Id 查询章节下面所有知识点
 	 * @param request
 	 * @param response
@@ -46,6 +54,14 @@ public interface ChapterDao {
 	 * @param bookId
 	 * @return
 	 */
-	public ChapterDto bookChapterList(@Param("bookId")Integer bookId);
+	public List<ChapterEntity> bookChapterList(@Param("bookId")Integer bookId);
+	
+	
+	public List<ChapterEntity> findChapterSort(@Param("parentId")Integer chapterParentId,@Param("bookId")Integer bookId ,@Param("nextSort")Integer nextSort);
+	
+	public void upateChapterSort(ChapterEntity entity);
+	
+	public List<ChapterEntity> findChapterById(@Param("chapterIds")Integer[] chapterIds);
+	
 	
 }
