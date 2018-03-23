@@ -55,7 +55,7 @@ public class ChapterService {
 	 * @param chapterParentId 章节父Id
 	 * @param bookId 练习本ID
 	 * @param nextSort 新增|删除章节的节点id sort值
-	 * @param flag 操作标示: 1新增  0删除
+	 * @param flag 操作标示: 1新增  0删除 2编辑
 	 * @return
 	 */
 	@Transactional
@@ -65,9 +65,11 @@ public class ChapterService {
 				if(flag==1){
 					entity.setSort(entity.getSort()+1);
 					chapterDao.upateChapterSort(entity);
-				}else{
+				}else if(flag==0){
 					entity.setSort(entity.getSort()-1);
 					chapterDao.upateChapterSort(entity);
+				}else{
+					
 				}
 			}
     }
@@ -80,7 +82,11 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public int editChapter(ChapterEntity entity){
+	public int editChapter(ChapterEntity entity,Integer oldSort){
+		Integer sort=entity.getSort();
+		if(oldSort!=entity.getSort()){
+			this.updateChapterSort(entity.getParentId(),entity.getBookId(),sort,1);
+		}
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
 		int count = chapterDao.editChapter(entity);

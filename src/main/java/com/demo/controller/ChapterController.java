@@ -82,9 +82,13 @@ public class ChapterController {
 	 * @return
 	 */
 	@RequestMapping("/editChapter")
-	public Result<?> editChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
+	public Result<?> editChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity,Integer oldSort){
 		
 		if(null==entity){
+			return ResultObject.successMessage("参数不能为空");
+		}
+		
+		if(null==oldSort){
 			return ResultObject.successMessage("参数不能为空");
 		}
 		
@@ -104,7 +108,7 @@ public class ChapterController {
 			if(userId!=bookEntity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");
 			}else{
-				int count = chapterService.editChapter(entity);
+				int count = chapterService.editChapter(entity, oldSort);
 				if(count==0){
 					return ResultObject.successMessage("无操作数据");
 				}
