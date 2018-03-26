@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.IdEntity;
-import com.demo.entity.ChapterEntity;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.UserBookEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.ChapterEntity;
+import com.pmp.entity.UserBookEntity;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -59,7 +59,7 @@ public class ChapterController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookBntity = excerciseService.findBook(entity.getBookId().toString());
+		BookEntity bookBntity = excerciseService.findBook(entity.getBookId().toString());
 		if(null==bookBntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -98,7 +98,7 @@ public class ChapterController {
 			/**
 			 * 加操作权限
 			 * */
-			ExcerciseBookEntity bookEntity = excerciseService.findBook(entity.getBookId().toString());
+			BookEntity bookEntity = excerciseService.findBook(entity.getBookId().toString());
 			
 			if(null==bookEntity){
 				return ResultObject.warnMessage("无操作权限");	
@@ -139,7 +139,7 @@ public class ChapterController {
 			/**
 			 * 加操作权限
 			 * */
-			ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId);
+			BookEntity bookEntity = excerciseService.findBook(bookId);
 			if(null==bookEntity){
 				return ResultObject.warnMessage("无操作权限");	
 			}
@@ -172,7 +172,7 @@ public class ChapterController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity BookEntity = excerciseService.findBook(bookId);
+		BookEntity BookEntity = excerciseService.findBook(bookId);
 		if(null==BookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.dao.ExcerciseBookDao">
+<mapper namespace="com.demo.dao.BookDao">
 	
-	<insert id="bookSava" parameterType="com.demo.entity.ExcerciseBookEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="bookSava" parameterType="com.pmp.entity.BookEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO book(
 					bookName,
 					language,
-					area,
 					sharedType,
 					createTime,
 					createId,
@@ -14,7 +13,6 @@
 			)VALUES(
 					#{bookName},
 					#{language},
-					#{area},
 					#{sharedType},
 					#{createTime},
 					#{createId},
@@ -26,19 +24,18 @@
 		DELETE FROM  book  WHERE  id=#{bookId}
 	</delete>
 	
-	<update id="editBook" parameterType="com.demo.entity.ExcerciseBookEntity">
+	<update id="editBook" parameterType="com.pmp.entity.BookEntity">
 		 UPDATE book set
 			   <if test="bookName !=null" >bookName=#{bookName},</if>
 			   <if test="language !=null">language=#{language},</if>
 			   <if test="sharedType !=null">sharedType=#{sharedType},</if>
-			   <if test="area !=null">area=#{area},</if>
 			   <if test="remark !=null">remark=#{remark},</if>
 			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
 			   <if test="updateId !=null">updateId=#{updateId}</if>
 		   WHERE id=#{id}
 	</update>
 	
-	<select id="findBook" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+	<select id="findBook" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity">
 		select * from book t where t.id=#{bookId}
 	</select>
 	
@@ -47,7 +44,6 @@
 			t.id ,
 			t.bookName,
 			t.`language`,
-			t.area ,
 			t.sharedType,
 			t.createId,
 			t.remark,
@@ -61,7 +57,6 @@
 			t.id ,
 			t.bookName,
 			t.`language`,
-			t.area ,
 			t.sharedType,
 			t.createId,
 			t.updateDetailTime,
@@ -78,7 +73,6 @@
 			t.id ,
 			t.bookName,
 			t.`language`,
-			t.area ,
 			t.sharedType,
 			t.createId,
 			t.remark,
@@ -102,13 +96,13 @@
 	   SELECT COUNT(*) progress FROM pointExerciseDetail t WHERE t.userId=#{userId}  AND t.bookId=#{bookId} AND t.exerciseNumber>0
 	</select>
 	
-	<select id="findBookByPointId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+	<select id="findBookByPointId" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity">
 		SELECT a.* FROM book a ,point b
  			WHERE a.id =b.bookId
   			 AND b.id=#{pointId}
 	</select>
 	
-	<select id="findBookByCardId" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity" >
+	<select id="findBookByCardId" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity" >
 	    SELECT a.* FROM book a ,point b ,card c
             WHERE c.pointId=b.id
 		     AND b.bookId=a.id

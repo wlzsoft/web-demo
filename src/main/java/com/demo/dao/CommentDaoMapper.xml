@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.CommentDao">
 	
-	<insert id="addDiscuss" parameterType="com.demo.entity.DiscussEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="addDiscuss" parameterType="com.pmp.entity.DiscussEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO discuss(
 					bookId,
 					pointId,
@@ -26,21 +26,21 @@
 		DELETE FROM  discuss  WHERE  id=#{discussId} and userId=#{userId}
 	</delete>
 	
-	<select id="discussBook" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+	<select id="discussBook" parameterType="java.lang.Integer" resultType="com.pmp.entity.DiscussEntity">
 		select * from discuss t 
 		   where t.bookId=#{bookId} 
 		     and t.pointId is NULL OR t.pointId=''
 		     and t.cardId is NULL OR t.cardId=''
 	</select>
 	
-	<select id="discussPoint" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+	<select id="discussPoint" parameterType="java.lang.Integer" resultType="com.pmp.entity.DiscussEntity">
 		select * from discuss t 
 		   where t.bookId=#{bookId} 
 		     and t.pointId=#{pointId}
 		     and t.cardId is NULL OR t.cardId=''
 	</select>
 	
-	<select id="discussCard" parameterType="java.lang.Integer" resultType="com.demo.entity.DiscussEntity">
+	<select id="discussCard" parameterType="java.lang.Integer" resultType="com.pmp.entity.DiscussEntity">
 		select * from discuss t 
 		   where t.bookId=#{bookId} 
 		     and t.pointId=#{pointId}

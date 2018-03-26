@@ -17,15 +17,15 @@ import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitBatchDto;
 import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LorePointEntity;
-import com.demo.entity.UserBookEntity;
 import com.demo.service.ChapterService;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
 import com.demo.service.UtilService;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.PointEntity;
+import com.pmp.entity.UserBookEntity;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -66,7 +66,7 @@ public class PointController {
 	 * @return
 	 */
 	@RequestMapping("/addPoint")
-	public Result<?> savaLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
+	public Result<?> savaLorePoint(HttpServletRequest request ,HttpServletResponse response,PointEntity entity){
 		
 		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
@@ -77,7 +77,7 @@ public class PointController {
 		 * 加操作权限
 		 * */
 		Integer bookId = entity.getBookId();
-		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		BookEntity bookEntity = excerciseService.findBook(bookId.toString());
 		
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
@@ -118,7 +118,7 @@ public class PointController {
 			return ResultObject.warnMessage("更新数据不能为空");
 		}
 		
-		List<LorePointEntity> entityList = (List<LorePointEntity>) JSONArray.parseArray(entityJson, LorePointEntity.class);
+		List<PointEntity> entityList = (List<PointEntity>) JSONArray.parseArray(entityJson, PointEntity.class);
 		
 		if(entityList.size()==0){
 			return ResultObject.warnMessage("更新数据不能为空");
@@ -127,7 +127,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		BookEntity bookEntity = excerciseService.findBook(bookId.toString());
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -136,7 +136,7 @@ public class PointController {
 			return ResultObject.warnMessage("无操作权限");
 		}else{
 			List<PonitBatchDto> idList = new ArrayList<>();
-			for(LorePointEntity entity :entityList){
+			for(PointEntity entity :entityList){
 				if(null==entity.getPointName()||entity.getPointName().equals("")){
 					return ResultObject.warnMessage("知识点名称不能为空");
 				}
@@ -178,7 +178,7 @@ public class PointController {
 	 * @return
 	 */
 	@RequestMapping("/editPoint")
-	public Result<?> editLorePoint(HttpServletRequest request ,HttpServletResponse response,LorePointEntity entity){
+	public Result<?> editLorePoint(HttpServletRequest request ,HttpServletResponse response,PointEntity entity){
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("主键ID不能为空");
 		}
@@ -194,7 +194,7 @@ public class PointController {
 		 * 加操作权限
 		 * */
 		Integer bookId = entity.getBookId();
-		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId.toString());
+		BookEntity bookEntity = excerciseService.findBook(bookId.toString());
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -241,7 +241,7 @@ public class PointController {
 			return ResultObject.warnMessage("更新数据不能为空");
 		}
 		
-		List<LorePointEntity> entityList = (List<LorePointEntity>) JSONArray.parseArray(entityJson, LorePointEntity.class);
+		List<PointEntity> entityList = (List<PointEntity>) JSONArray.parseArray(entityJson, PointEntity.class);
 		
 		if(entityList.size()==0){
 			return ResultObject.warnMessage("更新数据不能为空");
@@ -250,7 +250,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBook(bookId);
+		BookEntity bookEntity = excerciseService.findBook(bookId);
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -258,7 +258,7 @@ public class PointController {
 		if(userId!=bookEntity.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");
 		}else{
-			for(LorePointEntity entity : entityList ){
+			for(PointEntity entity : entityList ){
 				if(null==entity.getId()||entity.getId().equals("")){
 					return ResultObject.warnMessage("主键ID不能为空");
 				}
@@ -321,7 +321,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		LorePointEntity point = lorePointService.findLorePoint(Integer.parseInt(pointId));
+		PointEntity point = lorePointService.findLorePoint(Integer.parseInt(pointId));
 		
 		if(null==point){
 			return ResultObject.warnMessage("无操作权限");	
@@ -349,7 +349,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		BookEntity bookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
@@ -409,7 +409,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		BookEntity entity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
@@ -444,7 +444,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		BookEntity entity = excerciseService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
@@ -493,7 +493,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		BookEntity entity = excerciseService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
@@ -553,7 +553,7 @@ public class PointController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = excerciseService.findBook(bookId);
+		BookEntity entity = excerciseService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{

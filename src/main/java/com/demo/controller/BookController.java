@@ -12,18 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dao.ExcerciseDao;
-import com.demo.dao.LorePointDao;
+import com.demo.dao.PointDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.BookNumDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PointNumDto;
-import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
 import com.demo.dto.UserBookDto;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LorePointService;
@@ -31,6 +28,8 @@ import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
 import com.demo.service.UtilService;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.UserBookEntity;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 
@@ -64,7 +63,7 @@ public class BookController {
 	private LorePointService lorePointService;
 	
 	@Autowired
-	private LorePointDao lorePointDao;
+	private PointDao lorePointDao;
 	
 	@Autowired
 	private UtilService utilService;
@@ -82,7 +81,7 @@ public class BookController {
 	 * @return
 	 */
 	@RequestMapping("/addBook")
-	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
+	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,BookEntity entity){
 		
 		if(null==entity.getBookName()||entity.getBookName().equals("")){
 			return ResultObject.warnMessage("练习本名称不能为空");
@@ -90,10 +89,6 @@ public class BookController {
 		
 		if(null==entity.getLanguage()||entity.getLanguage().equals("")){
 			return ResultObject.warnMessage("语言不能为空");
-		}
-		
-		if(null==entity.getArea()||entity.getArea().equals("")){
-			return ResultObject.warnMessage("领域不能为空");
 		}
 		
 		IdEntity identity = bookService.bookSava(entity);
@@ -119,7 +114,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		BookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -146,7 +141,7 @@ public class BookController {
 	 * @return
 	 */
 	@RequestMapping("/editBook")
-	public Result<?> editBook(HttpServletRequest request ,HttpServletResponse response,ExcerciseBookEntity entity){
+	public Result<?> editBook(HttpServletRequest request ,HttpServletResponse response,BookEntity entity){
 		if(null==entity.getId()||entity.getId().equals("")){
 			return ResultObject.warnMessage("主键ID不能为空");
 		}
@@ -158,7 +153,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = bookService.findBook(entity.getId().toString());
+		BookEntity bookEntity = bookService.findBook(entity.getId().toString());
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -310,7 +305,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		BookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -348,7 +343,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		BookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -407,7 +402,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		BookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -464,7 +459,7 @@ public class BookController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity entity = bookService.findBook(bookId);
+		BookEntity entity = bookService.findBook(bookId);
 		if(null==entity){
 			return ResultObject.warnMessage("无操作权限");	
 		}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.dao.LorePointDao">
+<mapper namespace="com.demo.dao.PointDao">
 	
-	<insert id="install" parameterType="com.demo.entity.LorePointEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="install" parameterType="com.pmp.entity.PointEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO point(
 					pointName,
 					bookId,
@@ -48,7 +48,7 @@
 			</foreach>
 	</insert>
 	
-	<insert id="addPointDetail" parameterType="com.demo.entity.LorePointExerciseDetailEntity">
+	<insert id="addPointDetail" parameterType="com.pmp.entity.PointExerciseDetailEntity">
 		  INSERT INTO pointExerciseDetail( 
 					userId,
 					exerciseCycle,
@@ -64,7 +64,7 @@
 			)
 	</insert>
 	
-	<!-- <select id="addPointDetailList" parameterType="com.demo.entity.LorePointExerciseDetailEntity"> -->
+	<!-- <select id="addPointDetailList" parameterType="com.pmp.entity.LorePointExerciseDetailEntity"> -->
 	<select id="addPointDetailList" parameterType="java.util.List">
 	      INSERT INTO pointExerciseDetail( 
 					userId,
@@ -105,7 +105,7 @@
 	   DELETE FROM  pointExerciseDetail where  bookId=#{bookId}
 	</delete>
 	
-	<update id="update" parameterType="com.demo.entity.LorePointEntity">
+	<update id="update" parameterType="com.pmp.entity.PointEntity">
 		 UPDATE point set
 			   <if test="pointName !=null" >pointName=#{pointName},</if>
 			   <if test="number !=null">number=#{number},</if>
@@ -130,7 +130,7 @@
 		select * from  point t where t.id=#{id}
 	</select>
 	
-	<select id="findLorePoint" parameterType="java.lang.Integer" resultType="com.demo.entity.LorePointEntity">
+	<select id="findLorePoint" parameterType="java.lang.Integer" resultType="com.pmp.entity.PointEntity">
 		select * from  point t where t.id=#{id}
 	</select>
 	

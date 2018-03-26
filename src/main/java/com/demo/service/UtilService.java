@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.demo.dao.LorePointDao;
+import com.demo.dao.PointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dao.UserBookDao;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitSkilledDto;
-import com.demo.entity.ErrorWarehouseEntity;
-import com.demo.entity.UserBookEntity;
+import com.pmp.entity.ErrorWarehouseEntity;
+import com.pmp.entity.UserBookEntity;
 import com.smartframe.basics.util.DateFormatEnum;
 import com.smartframe.basics.util.DateUtil;
 
@@ -27,7 +27,7 @@ public class UtilService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UtilService.class);
 	
 	@Autowired
-	private LorePointDao lorePointDao;
+	private PointDao lorePointDao;
 	
 	@Autowired
 	private UserBookDao userBookDao;

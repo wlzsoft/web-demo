@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.IdEntity;
-import com.demo.entity.DiscussEntity;
 import com.demo.service.CommentService;
 import com.demo.service.ReviewService;
+import com.pmp.entity.DiscussEntity;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;

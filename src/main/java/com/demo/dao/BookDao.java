@@ -8,20 +8,19 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.dto.BookDto;
 import com.demo.dto.PonitDto;
-import com.demo.dto.PonitSkilledDto;
-import com.demo.entity.ExcerciseBookEntity;
+import com.pmp.entity.BookEntity;
 
 
 @Repository
-public interface ExcerciseBookDao {
+public interface BookDao {
 
-	public void bookSava(ExcerciseBookEntity entity);
+	public void bookSava(BookEntity entity);
 	
 	public int delBookById(@Param("bookId")String bookId);
 	
-	public int editBook(ExcerciseBookEntity entity);
+	public int editBook(BookEntity entity);
 	
-	public ExcerciseBookEntity findBook(@Param("bookId")Integer bookId);
+	public BookEntity findBook(@Param("bookId")Integer bookId);
 	
 	public BookDto findBookById(@Param("bookId")Integer bookId);
 	
@@ -40,7 +39,7 @@ public interface ExcerciseBookDao {
 	public List<BookDto> getOpenBook(@Param("userId")Integer userId);
 	
 	
-	public List<ExcerciseBookEntity> fidByName();
+	public List<BookEntity> fidByName();
 	
 	public List<PonitDto> findExcerciseIdToPonit(@Param("bookId")Integer bookId);
 	
@@ -53,14 +52,14 @@ public interface ExcerciseBookDao {
 	 * @param pointId
 	 * @return
 	 */
-	public ExcerciseBookEntity findBookByPointId(@Param("pointId")Integer pointId);
+	public BookEntity findBookByPointId(@Param("pointId")Integer pointId);
 	
     /**
      * 根据 cardId 查询 卡片所属练习本信息
      * @param cardId
      * @return
      */
-    public ExcerciseBookEntity findBookByCardId(@Param("cardId")Integer cardId);
+    public BookEntity findBookByCardId(@Param("cardId")Integer cardId);
     
     
     /**

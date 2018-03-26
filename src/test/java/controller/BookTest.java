@@ -10,8 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo.dto.BookDto;
-import com.demo.entity.ExcerciseBookEntity;
 import com.demo.service.ExcerciseBookService;
+import com.pmp.entity.BookEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class) 
@@ -24,7 +24,7 @@ public class BookTest {
 	@Test
 	public void savaBook(){
 		for(int i=10;i>0;i--){
-			ExcerciseBookEntity entity = new ExcerciseBookEntity();
+			BookEntity entity = new BookEntity();
 			entity.setLanguage("en");
 			entity.setCreateId(1);
 			entity.setCreateTime(new Date());
@@ -42,10 +42,9 @@ public class BookTest {
 	
 	@Test
 	public void editbook(){
-		ExcerciseBookEntity entity = new ExcerciseBookEntity();
+		BookEntity entity = new BookEntity();
 		entity.setId(22);
 		entity.setBookName("魅族科技_22");
-		entity.setArea("{'数学','奥数'}");
 		entity.setSharedType(0);
 		entity.setUpdateId(2);
 		entity.setUpdateTime(new Date());
@@ -56,7 +55,7 @@ public class BookTest {
 	@Test
 	public void findbook(){
 		String excerciseId = "22";
-		ExcerciseBookEntity entity = excerciseService.findBook(excerciseId);
+		BookEntity entity = excerciseService.findBook(excerciseId);
 		System.out.println(entity.getId()+"_"+entity.getBookName());
 	}
 	

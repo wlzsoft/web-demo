@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.demo.entity.LorePointEntity;
 import com.demo.service.LorePointService;
+import com.pmp.entity.PointEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class) 
@@ -22,7 +22,7 @@ public class PointTest {
 	@Test
 	public void savaPoint(){
 		for(int i=1;i<=5;i++){
-			LorePointEntity entity = new LorePointEntity();
+			PointEntity entity = new PointEntity();
 			entity.setCreateId(1);
 			entity.setCreateTime(new Date());
 			entity.setPointName("魅族PRO_"+i);
@@ -34,7 +34,7 @@ public class PointTest {
 	
 	@Test
 	public void editPoint(){
-		LorePointEntity entity = new LorePointEntity();
+		PointEntity entity = new PointEntity();
 		entity.setId(7);
 		entity.setUpdateId(1);
 		entity.setUpdateTime(new Date());

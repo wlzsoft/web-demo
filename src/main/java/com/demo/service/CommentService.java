@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.dao.CommentDao;
 import com.demo.dto.IdEntity;
-import com.demo.entity.DiscussEntity;
+import com.pmp.entity.DiscussEntity;
 
 @Service
 public class CommentService {

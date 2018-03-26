@@ -12,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.UserDto;
-import com.demo.entity.UserEntity;
-import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.service.SystemService;
 import com.demo.service.UserService;
+import com.pmp.entity.UserEntity;
+import com.pmp.entity.UserExerciseDetailEntity;
 import com.smartframe.basics.util.DES;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;

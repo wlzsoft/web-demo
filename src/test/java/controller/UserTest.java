@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.demo.entity.UserEntity;
 import com.demo.service.UserService;
+import com.pmp.entity.UserEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class) 

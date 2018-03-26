@@ -8,25 +8,25 @@ import org.springframework.stereotype.Repository;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
-import com.demo.entity.LorePointEntity;
-import com.demo.entity.LorePointExerciseDetailEntity;
+import com.pmp.entity.PointEntity;
+import com.pmp.entity.PointExerciseDetailEntity;
 
 @Repository
-public interface LorePointDao {
+public interface PointDao {
 	
-	public Integer install(LorePointEntity entity);
+	public Integer install(PointEntity entity);
 	
-	public Integer batchAdd(@Param("entityList")List<LorePointExerciseDetailEntity> entityList);
+	public Integer batchAdd(@Param("entityList")List<PointExerciseDetailEntity> entityList);
 	
 	public int dellById(@Param("id")Integer id);
 	
-	public int update(LorePointEntity entity);
+	public int update(PointEntity entity);
 
 	public int batchUpdate(@Param("pointIdArray")Integer[] pointIdArray,@Param("chapterId") Integer chapterId);
 	
 	public PonitDto findById(@Param("id")Integer id);
 	
-	public LorePointEntity findLorePoint(Integer id);
+	public PointEntity findLorePoint(Integer id);
 	
 	public List<PonitDto> searchAllLorePoint();
 	
@@ -46,13 +46,13 @@ public interface LorePointDao {
 	 */
 	public PointExerciseDetailDto pointIdByDetail(@Param("pointId")Integer pointId,@Param("userId")Integer userId);
 	
-	public void addPointDetail(LorePointExerciseDetailEntity entity);
+	public void addPointDetail(PointExerciseDetailEntity entity);
 	
 	/**
 	 * 根据知识点ID ,练习本Id 新增【推送】到订阅用户
 	 * @param entityList
 	 */
-	public void addPointDetailList(@Param("entityList")List<LorePointExerciseDetailEntity> entityList);
+	public void addPointDetailList(@Param("entityList")List<PointExerciseDetailEntity> entityList);
 	
 	public List<PonitDto> roundPoint(@Param("userId")Integer userId);
 	

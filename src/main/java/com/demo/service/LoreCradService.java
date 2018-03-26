@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.ExcerciseBookDao;
-import com.demo.dao.LoreCradDao;
+import com.demo.dao.BookDao;
+import com.demo.dao.CradDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
-import com.demo.entity.CardEntity;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LoreCardExerciseDetailEntity;
-import com.demo.entity.LoreCradAnswersEntity;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.CardEntity;
+import com.pmp.entity.CardExerciseDetailEntity;
+import com.pmp.entity.CradAnswersEntity;
 
 
 @Service("loreCradService")
@@ -25,10 +25,10 @@ public class LoreCradService {
 	private ReviewDao reviewDao;
 
 	@Autowired
-	private LoreCradDao loreCradDao;
+	private CradDao loreCradDao;
 	
 	@Autowired
-	private ExcerciseBookDao excerciseBookDao;
+	private BookDao excerciseBookDao;
 	
 	@Autowired
 	private SystemService systemService;
@@ -43,7 +43,7 @@ public class LoreCradService {
 		 loreCradDao.addPonitNumber(entity.getPointId());
 		 loreCradDao.savaLoreCrad(entity);
 		 //保存卡片的联系详情
-		 LoreCardExerciseDetailEntity cardExerciseDetail = new LoreCardExerciseDetailEntity();
+		 CardExerciseDetailEntity cardExerciseDetail = new CardExerciseDetailEntity();
 		   cardExerciseDetail.setUserId(systemService.getCurrentUser().getId()); //-============该处需要需求 后面修改为 该卡片练习人的ID
 		   cardExerciseDetail.setCardId(entity.getId());
 		 loreCradDao.savaCardExerciseDetail(cardExerciseDetail);
@@ -55,7 +55,7 @@ public class LoreCradService {
 	
 	@Transactional
 	public int delLoreCrad(Integer loreCardId){
-		ExcerciseBookEntity entity = excerciseBookDao.findBookByCardId(loreCardId);
+		BookEntity entity = excerciseBookDao.findBookByCardId(loreCardId);
 		int count = loreCradDao.delPonitNumber(loreCardId);
 		loreCradDao.dellById(loreCardId);
 		excerciseService.updateDetailBybookId(entity.getId());
@@ -89,11 +89,11 @@ public class LoreCradService {
 		return loreCradDao.getOpenLoreCrad();
 	}
 	
-	public LoreCardExerciseDetailEntity getLoreCradDetailByPointId(Integer loreCardId){
+	public CardExerciseDetailEntity getLoreCradDetailByPointId(Integer loreCardId){
 		return loreCradDao.getLoreCradDetailByPointId(loreCardId);
 	}
 	
-	public List<LoreCradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId){
+	public List<CradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId){
 		return loreCradDao.getLoreCradAnswerByPointId(loreCardId);
 	}
 	

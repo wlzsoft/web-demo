@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.UserDto;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.UserEntity;
-import com.demo.entity.UserExerciseDetailEntity;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.UserEntity;
+import com.pmp.entity.UserExerciseDetailEntity;
 
 @Repository
 public interface UserDao {
@@ -26,7 +26,7 @@ public interface UserDao {
 	 
 	 public List<UserExerciseDetailEntity> findUserExerciseDetailById(@Param("userId")Integer userId);
 	 
-	 public List<ExcerciseBookEntity> findExerciseById(@Param("userId")Integer userId);
+	 public List<BookEntity> findExerciseById(@Param("userId")Integer userId);
 	 
 	 public  List<UserEntity> getUserByName(@Param("username")String userName);
 	 

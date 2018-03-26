@@ -3,13 +3,12 @@ package com.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.UserBookDao;
 import com.demo.dto.UserBookDto;
-import com.demo.entity.UserBookEntity;
+import com.pmp.entity.UserBookEntity;
 
 @Service
 public class UserBookService {
@@ -27,6 +26,7 @@ public class UserBookService {
 	public void addUserBook(UserBookEntity entity){
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
+		entity.setSubTime(new Date());
 		userBookDao.addUserBook(entity);
 	}
 	

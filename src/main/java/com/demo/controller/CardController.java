@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.CardDto;
 import com.demo.dto.IdEntity;
-import com.demo.entity.CardEntity;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LoreCardExerciseDetailEntity;
-import com.demo.entity.LoreCradAnswersEntity;
-import com.demo.entity.LorePointEntity;
-import com.demo.entity.UserBookEntity;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.LoreCradService;
 import com.demo.service.LorePointService;
 import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
 import com.demo.service.UtilService;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.CardEntity;
+import com.pmp.entity.CardExerciseDetailEntity;
+import com.pmp.entity.CradAnswersEntity;
+import com.pmp.entity.PointEntity;
+import com.pmp.entity.UserBookEntity;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -83,7 +83,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		LorePointEntity point = lorePointService.findLorePoint(cardEntity.getPointId());
+		PointEntity point = lorePointService.findLorePoint(cardEntity.getPointId());
 		if(null==point){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -191,7 +191,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		BookEntity BookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
 		if(null==BookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}
@@ -240,7 +240,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
+		BookEntity bookEntity = excerciseService.findBookByPointId(Integer.parseInt(pointId));
 		
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
@@ -308,7 +308,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		BookEntity bookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
@@ -320,7 +320,7 @@ public class CardController {
 			}
 		}
 
-		LoreCardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(cardId));
+		CardExerciseDetailEntity entity = loreCradService.getLoreCradDetailByPointId(Integer.parseInt(cardId));
 		if(null==entity){
 			return ResultObject.successMessage("没有数据");
 		}
@@ -343,7 +343,7 @@ public class CardController {
 		/**
 		 * 加操作权限
 		 * */
-		ExcerciseBookEntity bookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
+		BookEntity bookEntity = excerciseService.findBookByCardId(Integer.parseInt(cardId));
 		if(null==bookEntity){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
@@ -357,7 +357,7 @@ public class CardController {
 		}
 
 		
-		List<LoreCradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(cardId));
+		List<CradAnswersEntity> entityList = loreCradService.getLoreCradAnswerByPointId(Integer.parseInt(cardId));
 		if(entityList.size()<1){
 			return ResultObject.successMessage("没有数据");
 		}

@@ -6,12 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.CardDto;
-import com.demo.entity.CardEntity;
-import com.demo.entity.LoreCardExerciseDetailEntity;
-import com.demo.entity.LoreCradAnswersEntity;
+import com.pmp.entity.CardEntity;
+import com.pmp.entity.CardExerciseDetailEntity;
+import com.pmp.entity.CradAnswersEntity;
 
 @Repository
-public interface LoreCradDao {
+public interface CradDao {
     
 	public Integer savaLoreCrad(CardEntity entity); 
 
@@ -27,13 +27,13 @@ public interface LoreCradDao {
 	
 	public List<CardEntity> getOpenLoreCrad();
 	
-	public LoreCardExerciseDetailEntity getLoreCradDetailByPointId(Integer loreCardId);
+	public CardExerciseDetailEntity getLoreCradDetailByPointId(Integer loreCardId);
 	
-	public List<LoreCradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId);
+	public List<CradAnswersEntity> getLoreCradAnswerByPointId(Integer loreCardId);
 	
-	public void savaCradAnswers(LoreCradAnswersEntity entity);
+	public void savaCradAnswers(CradAnswersEntity entity);
 	
-	public void savaCardExerciseDetail(LoreCardExerciseDetailEntity entity);
+	public void savaCardExerciseDetail(CardExerciseDetailEntity entity);
 	
 	public void addPonitNumber(@Param("id")Integer id);
 	

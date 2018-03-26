@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.demo.dao.UserDao;
 import com.demo.dto.UserDto;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.UserEntity;
-import com.demo.entity.UserExerciseDetailEntity;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.UserEntity;
+import com.pmp.entity.UserExerciseDetailEntity;
 import com.smartframe.basics.util.DES;
 
 @Service("userService")
@@ -54,7 +54,7 @@ public class UserService {
 		return userDao.findUserExerciseDetailById(userId);
 	}
 	
-	public List<ExcerciseBookEntity> findExerciseById(Integer userId){
+	public List<BookEntity> findExerciseById(Integer userId){
 		return userDao.findExerciseById(userId);
 	}
 	

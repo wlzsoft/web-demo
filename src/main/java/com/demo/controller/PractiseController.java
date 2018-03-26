@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.dao.LorePointDao;
+import com.demo.dao.PointDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.service.ExcerciseService;
@@ -39,7 +39,7 @@ public class PractiseController {
 	private ExcerciseService excerciseService;
 	
 	@Autowired
-	private LorePointDao pointDao;
+	private PointDao pointDao;
 	
 	
 	/**

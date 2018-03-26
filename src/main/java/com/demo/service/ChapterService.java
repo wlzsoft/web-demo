@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ChapterDao;
-import com.demo.dao.LorePointDao;
-import com.demo.dto.ChapterDto;
+import com.demo.dao.PointDao;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ChapterEntity;
+import com.pmp.entity.ChapterEntity;
 
 @Service
 public class ChapterService {
@@ -24,7 +23,7 @@ public class ChapterService {
 	private ChapterDao chapterDao;
 	
 	@Autowired
-	private LorePointDao pointDao;
+	private PointDao pointDao;
 	
 	/**
 	 * 新增章节信息

@@ -14,7 +14,7 @@
         FROM userInfo t WHERE  t.username=#{username} AND t.password=#{password}  
      </select>
      
-     <insert id="savaUser" parameterType="com.demo.entity.UserEntity">
+     <insert id="savaUser" parameterType="com.pmp.entity.UserEntity">
 		     INSERT INTO userInfo(
 					birthday,
 					username,
@@ -38,7 +38,7 @@
 			 )
      </insert>
      
-     <update id="editUser" parameterType="com.demo.entity.UserEntity">
+     <update id="editUser" parameterType="com.pmp.entity.UserEntity">
         UPDATE userInfo set
           	   <if test="birthday !=null">birthday=#{birthday},</if>
 			   <if test="username !=null">username=#{username},</if>
@@ -56,19 +56,19 @@
          WHERE id=#{id}
     </update>
      
-    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserEntity">
+    <select id="getUserById" parameterType="java.lang.Integer" resultType="com.pmp.entity.UserEntity">
         SELECT * from userInfo where id=#{userId}
     </select>
      
-     <select id="findUserExerciseDetailById" parameterType="java.lang.Integer" resultType="com.demo.entity.UserExerciseDetailEntity">
+     <select id="findUserExerciseDetailById" parameterType="java.lang.Integer" resultType="com.pmp.entity.UserExerciseDetailEntity">
      		SELECT * FROM userExerciseDetail t WHERE t.userId=#{userId}
      </select>
      
-     <select id="findExerciseById" parameterType="java.lang.Integer" resultType="com.demo.entity.ExcerciseBookEntity">
+     <select id="findExerciseById" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity">
      		SELECT * FROM book t WHERE t.userId=#{userId}
      </select>
      
-     <select id="getUserByName" parameterType="java.lang.String"  resultType="com.demo.entity.UserEntity">
+     <select id="getUserByName" parameterType="java.lang.String"  resultType="com.pmp.entity.UserEntity">
          select * from userInfo t where t.username=#{username}
      </select>
      

@@ -9,8 +9,8 @@ import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ErrorWarehouseEntity;
-import com.demo.entity.UserExerciseDetailEntity;
+import com.pmp.entity.ErrorWarehouseEntity;
+import com.pmp.entity.UserExerciseDetailEntity;
 
 @Repository
 public interface ReviewDao {

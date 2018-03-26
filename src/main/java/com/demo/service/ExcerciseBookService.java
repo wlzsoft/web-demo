@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.ExcerciseBookDao;
-import com.demo.dao.LorePointDao;
+import com.demo.dao.BookDao;
+import com.demo.dao.PointDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
-import com.demo.entity.ExcerciseBookEntity;
+import com.pmp.entity.BookEntity;
 
 @Service
 public class ExcerciseBookService {
@@ -23,12 +23,12 @@ public class ExcerciseBookService {
 	private SystemService systemService ;
 	
 	@Autowired
-	private ExcerciseBookDao excerciseBookDao;
+	private BookDao excerciseBookDao;
 	
 	@Autowired
-	private LorePointDao lorePointDao;
+	private PointDao lorePointDao;
 	
-	public IdEntity bookSava(ExcerciseBookEntity entity){
+	public IdEntity bookSava(BookEntity entity){
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
 		excerciseBookDao.bookSava(entity);
@@ -52,7 +52,7 @@ public class ExcerciseBookService {
 		return count;
 	}
 	
-	public int editBook(ExcerciseBookEntity entity){
+	public int editBook(BookEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
 		entity.setUpdateDetailId(systemService.getCurrentUser().getId());
@@ -61,8 +61,8 @@ public class ExcerciseBookService {
 		return count;
 	}
 	
-	public ExcerciseBookEntity findBook(String id){
-		ExcerciseBookEntity entity = excerciseBookDao.findBook(Integer.parseInt(id));
+	public BookEntity findBook(String id){
+		BookEntity entity = excerciseBookDao.findBook(Integer.parseInt(id));
 		return entity;
 	}
 	
@@ -109,7 +109,7 @@ public class ExcerciseBookService {
 	 * @param pointId
 	 * @return
 	 */
-	public ExcerciseBookEntity findBookByPointId(Integer pointId){
+	public BookEntity findBookByPointId(Integer pointId){
 		return excerciseBookDao.findBookByPointId(pointId);
 	}
 	
@@ -118,7 +118,7 @@ public class ExcerciseBookService {
      * @param cardId
      * @return
      */
-    public ExcerciseBookEntity findBookByCardId(Integer cardId){
+    public BookEntity findBookByCardId(Integer cardId){
     	return excerciseBookDao.findBookByCardId(cardId);
 	}
     
@@ -134,13 +134,13 @@ public class ExcerciseBookService {
     
     public void updateDetailBycardId(Integer cardId){
     	Integer userId =  systemService.getCurrentUser().getId();
-    	ExcerciseBookEntity entity = findBookByCardId(cardId);
+    	BookEntity entity = findBookByCardId(cardId);
     	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
     }
     
     public void updateDetailByPointId(Integer pointId){
     	Integer userId =  systemService.getCurrentUser().getId();
-    	ExcerciseBookEntity entity = findBookByPointId(pointId);
+    	BookEntity entity = findBookByPointId(pointId);
     	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
     }
     

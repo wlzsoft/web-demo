@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.UserBookDto;
-import com.demo.entity.UserBookEntity;
+import com.pmp.entity.UserBookEntity;
 
 @Repository
 public interface UserBookDao {

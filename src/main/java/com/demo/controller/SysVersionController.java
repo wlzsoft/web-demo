@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.entity.DeviceEntity;
-import com.demo.entity.SystemInfoEntity;
 import com.demo.service.SysVersionServier;
+import com.pmp.entity.DeviceEntity;
+import com.pmp.entity.SystemInfoEntity;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 

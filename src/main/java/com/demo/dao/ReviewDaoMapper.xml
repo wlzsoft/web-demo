@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ReviewDao">
 	
-	  <insert id="savaUserExcerciseDetail" parameterType="com.demo.entity.UserExerciseDetailEntity">
+	  <insert id="savaUserExcerciseDetail" parameterType="com.pmp.entity.UserExerciseDetailEntity">
 	  	 INSERT INTO userExerciseDetail(
 				userId,
 				cardId,
@@ -43,7 +43,7 @@
 			)
 	  </insert>
 	  
-	  <update id="updateErrorwarehouse" parameterType="com.demo.entity.ErrorWarehouseEntity">
+	  <update id="updateErrorwarehouse" parameterType="com.pmp.entity.ErrorWarehouseEntity">
 	  	   UPDATE errorwarehouse set
 				bookId =#{bookId},
 				pointId=#{pointId},
@@ -54,7 +54,7 @@
 		   WHERE id=#{id}
 	  </update>
 	  
-	  <select id="findErrorwarehouse" parameterType="java.lang.Integer" resultType="com.demo.entity.ErrorWarehouseEntity" >
+	  <select id="findErrorwarehouse" parameterType="java.lang.Integer" resultType="com.pmp.entity.ErrorWarehouseEntity" >
 	      select * from errorwarehouse 
 	        where bookId=#{bookId}
 	           and pointId=#{pointId}

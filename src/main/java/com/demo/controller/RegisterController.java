@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.entity.UserEntity;
 import com.demo.service.UserService;
+import com.pmp.entity.UserEntity;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
 

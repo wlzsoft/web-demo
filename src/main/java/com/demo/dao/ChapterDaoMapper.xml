@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.demo.dao.ChapterDao">
 	
-	<insert id="addChapter" parameterType="com.demo.entity.ChapterEntity"  useGeneratedKeys="true" keyProperty="id">
+	<insert id="addChapter" parameterType="com.pmp.entity.ChapterEntity"  useGeneratedKeys="true" keyProperty="id">
 	   INSERT INTO chapter(
 				parentId,
 				name,
@@ -25,7 +25,7 @@
 		)
 	</insert>
 	
-	<update id="editChapter" parameterType="com.demo.entity.ChapterEntity">
+	<update id="editChapter" parameterType="com.pmp.entity.ChapterEntity">
 			 UPDATE chapter set
 			 	parentId=#{parentId},
 			 	name=#{name},
@@ -47,7 +47,7 @@
 			</foreach>
 	</delete>
 	
-	<select id="findChapterById" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity" >
+	<select id="findChapterById" parameterType="java.lang.Integer" resultType="com.pmp.entity.ChapterEntity" >
 	         select * from chapter  where 
               id in
 			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
@@ -61,14 +61,14 @@
 			 WHERE t.chapterId=#{chapterId} and t.bookId=#{bookId}
 	</select>
 	
-   <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
+   <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.pmp.entity.ChapterEntity">
 			SELECT 
 			  *
 			FROM chapter a
 			WHERE a.bookId=#{bookId}
 	</select>
 	
-    <select id="findChapterSort" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
+    <select id="findChapterSort" parameterType="java.lang.Integer" resultType="com.pmp.entity.ChapterEntity">
         select * from chapter t where
                t.parentId=#{parentId}
              and t.bookId=#{bookId}
@@ -76,7 +76,7 @@
              
     </select>
     
-    <update id="upateChapterSort" parameterType="com.demo.entity.ChapterEntity">
+    <update id="upateChapterSort" parameterType="com.pmp.entity.ChapterEntity">
 			 UPDATE chapter set
 			 	sort=#{sort}
 		   WHERE id=#{id}

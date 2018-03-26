@@ -8,17 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.ExcerciseBookDao;
-import com.demo.dao.LoreCradDao;
-import com.demo.dao.LorePointDao;
+import com.demo.dao.BookDao;
+import com.demo.dao.CradDao;
+import com.demo.dao.PointDao;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
-import com.demo.entity.ExcerciseBookEntity;
-import com.demo.entity.LorePointEntity;
-import com.demo.entity.LorePointExerciseDetailEntity;
-import com.demo.entity.UserBookEntity;
+import com.pmp.entity.BookEntity;
+import com.pmp.entity.PointEntity;
+import com.pmp.entity.PointExerciseDetailEntity;
+import com.pmp.entity.UserBookEntity;
 
 
 @Service("lorePointService")
@@ -28,13 +28,13 @@ public class LorePointService {
 	private SystemService systemService ;
 	
 	@Autowired
-	private LorePointDao lorePointDao;
+	private PointDao lorePointDao;
 		
 	@Autowired
-	private ExcerciseBookDao excerciseBookDao;
+	private BookDao excerciseBookDao;
 	
 	@Autowired
-	private LoreCradDao cardDao;
+	private CradDao cardDao;
 	
 	@Autowired
 	private UserBookService userBookService;
@@ -43,7 +43,7 @@ public class LorePointService {
 	private ExcerciseBookService excerciseService ;	
 	
 	@Transactional
-	public IdEntity savaLorePoint(LorePointEntity entity){
+	public IdEntity savaLorePoint(PointEntity entity){
 		  entity.setCreateId(systemService.getCurrentUser().getId());
 		  entity.setCreateTime(new Date());
 		  entity.setNumber(0);
@@ -77,7 +77,7 @@ public class LorePointService {
 	}
 	
 	@Transactional
-	public int editLorePoint(LorePointEntity entity){
+	public int editLorePoint(PointEntity entity){
 		entity.setUpdateId(systemService.getCurrentUser().getId());
 		entity.setUpdateTime(new Date());
 		int count = lorePointDao.update(entity);
@@ -96,7 +96,7 @@ public class LorePointService {
 	
 	@Transactional
 	public int delLorePoint(Integer pointId){
-		ExcerciseBookEntity entity = excerciseBookDao.findBookByPointId(pointId);
+		BookEntity entity = excerciseBookDao.findBookByPointId(pointId);
 		int count = lorePointDao.dellById(pointId);
 		//同时删除该知识点下所有的知识卡片信息
 		cardDao.delCardByPointId(pointId);
@@ -110,7 +110,7 @@ public class LorePointService {
 		return lorePointDao.findById(id);
 	}
 	
-	public LorePointEntity findLorePoint(Integer id){
+	public PointEntity findLorePoint(Integer id){
 		return lorePointDao.findLorePoint(id);
 	}
 	
@@ -133,10 +133,10 @@ public class LorePointService {
 	 */
 	public void pushAddPointToUser(Integer pointId ,Integer bookId,List<UserBookEntity> entityList){
 		if(entityList.size()>0){
-			List<LorePointExerciseDetailEntity> detailList = new ArrayList<>();
+			List<PointExerciseDetailEntity> detailList = new ArrayList<>();
 			for(UserBookEntity entity :entityList){
 				//插入知识点练习明细
-			    LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
+			    PointExerciseDetailEntity pointDetail = new PointExerciseDetailEntity();
 					pointDetail.setUserId(entity.getUserId());
 					pointDetail.setPointId(pointId);
 					pointDetail.setBookId(entity.getBookId());
@@ -175,10 +175,10 @@ public class LorePointService {
 		//获取练习本下所有的知识点
 		List<PonitDto> entityList = excerciseService.findExcerciseIdToPonit(bookId);
 		if(entityList.size()>0){
-			List<LorePointExerciseDetailEntity> detailList = new ArrayList<>();
+			List<PointExerciseDetailEntity> detailList = new ArrayList<>();
 			for(PonitDto entity :entityList){
 				//插入知识点练习明细
-			    LorePointExerciseDetailEntity pointDetail = new LorePointExerciseDetailEntity();
+			    PointExerciseDetailEntity pointDetail = new PointExerciseDetailEntity();
 					pointDetail.setUserId(userId);
 					pointDetail.setPointId(entity.getId());
 					pointDetail.setBookId(bookId);

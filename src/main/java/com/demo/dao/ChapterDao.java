@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.PonitDto;
-import com.demo.entity.ChapterEntity;
+import com.pmp.entity.ChapterEntity;
 
 
 @Repository

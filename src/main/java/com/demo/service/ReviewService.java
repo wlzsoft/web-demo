@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.dao.LorePointDao;
+import com.demo.dao.PointDao;
 import com.demo.dao.ReviewDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
-import com.demo.entity.UserExerciseDetailEntity;
 import com.demo.util.enums.LearningCycle;
+import com.pmp.entity.UserExerciseDetailEntity;
 import com.smartframe.basics.util.DateFormatEnum;
 import com.smartframe.basics.util.DateUtil;
 
@@ -34,7 +34,7 @@ public class ReviewService {
 	private ReviewDao reviewDao;
 	
 	@Autowired
-	private LorePointDao lorePointDao;
+	private PointDao lorePointDao;
 	
 	@Autowired
 	private SystemService systemService ;

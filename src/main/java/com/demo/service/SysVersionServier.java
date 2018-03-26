@@ -3,8 +3,8 @@ package com.demo.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.demo.entity.DeviceEntity;
-import com.demo.entity.SystemInfoEntity;
+import com.pmp.entity.DeviceEntity;
+import com.pmp.entity.SystemInfoEntity;
 
 @Service
 public class SysVersionServier {
