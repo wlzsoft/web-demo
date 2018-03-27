@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.ExcerciseDao;
-import com.demo.dao.ReviewDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PonitDto;
 
