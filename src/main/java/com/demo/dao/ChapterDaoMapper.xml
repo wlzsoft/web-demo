@@ -10,6 +10,7 @@
 				sort,
 				level,
 				isOpen,
+				isDel,
 				createId,
 				createTime
 				
@@ -20,6 +21,7 @@
 				#{sort},
 				#{level},
 				#{isOpen},
+				#{isDel},
 				#{createId},
 				#{createTime}
 		)
@@ -40,8 +42,12 @@
 	
 	
 	<delete id="delChapter" parameterType="java.lang.Integer">
-         delete from chapter  where 
+         UPDATE chapter set isDel=1 where bookId=#{bookId} and
               id in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+			or parentId in
 			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
 				#{id,jdbcType=INTEGER}
 			</foreach>
@@ -55,11 +61,39 @@
 			</foreach>
 	</select>
 	
+	<!-- 查询章节 和 付付章节下所有的章节信息 -->
+	<select id="findChapterByIds" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity" >
+         select * from chapter  where bookId=#{bookId} and
+              id in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+			or parentId in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+	</select>
+	
 	<select id="findChapterPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 			SELECT t.id,t.pointName,t.chapterId,t.number ,t.bookId
 			 FROM point t 
 			 WHERE t.chapterId=#{chapterId} and t.bookId=#{bookId}
 	</select>
+	
+	<select id="findChapterPointByIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+			SELECT t.id,t.pointName,t.chapterId,t.number ,t.bookId
+		 	FROM point t LEFT JOIN chapter a  ON (t.chapterId =a.id)
+  		    WHERE  a.bookId=#{bookId} and
+  		     a.id IN
+  			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+			or a.parentId in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+	</select>
+	
 	
    <select id="bookChapterList" parameterType="java.lang.Integer" resultType="com.demo.entity.ChapterEntity">
 			SELECT 

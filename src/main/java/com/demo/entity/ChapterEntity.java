@@ -12,7 +12,8 @@ public class ChapterEntity implements Serializable {
 	public Integer level; //章节层级
 	public Integer parentId ;//父级章节id
 	public Integer sort;//排序
-	public Integer isOpen;//是否公开试读
+	public Integer isOpen;//是否公开试读  1:是  0：否
+	public Integer isDel;//是否删除  1:是  0：否
 	public Date createTime	;//创建时间				
 	public Integer createId	;//创建人ID				
 	public Date updateTime	;//修改时间				
@@ -84,6 +85,11 @@ public class ChapterEntity implements Serializable {
 	public void setIsOpen(Integer isOpen) {
 		this.isOpen = isOpen;
 	}
-	
+	public Integer getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
+	}
 	
 }

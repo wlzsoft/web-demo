@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.demo.comm.ConstantsUrl;
 import com.demo.dto.ImageUrlDto;
+import com.demo.entity.ImageResEntity;
 import com.demo.qiniu.UploadManager;
+import com.demo.service.ImageResService;
+import com.demo.util.image.MD5Util;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -26,6 +30,9 @@ import com.smartframe.dto.ResultObject;
 @Controller
 @RequestMapping("/file")
 public class FileUpController {
+	
+	@Autowired
+	private ImageResService imageResService;
 	
 	@RequestMapping("/uploadFile")
 	public Result<?> uploadImages(@RequestParam(value = "file") CommonsMultipartFile file,HttpServletRequest request ,HttpServletResponse response,String format){
@@ -62,36 +69,54 @@ public class FileUpController {
             	 ResultObject.warnMessage("不上传失败，文件类型错误"); 
              }
 
+             /*
+              * 检查文件是否已经存在
+              * 如果存在就不再上传
+              * */
+             String md5Name = MD5Util.getMD5(file.getBytes());
              
-             key=key+prefix;//生成文件名
+             ImageResEntity imageResEntity = imageResService.getImageRes(md5Name);
              
-		    //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
-		    Zone z = Zone.autoZone();
-		    Configuration c = new Configuration(z);
-		    //创建上传对象
-		    UploadManager uploadManager = new UploadManager(c);
-		
-	        try {
-	            //调用put方法上传
-	        	
-	            Response res = uploadManager.put(file.getBytes(), key, getUpToken());
-	              
-	            //打印返回的信息
-	            System.out.println(res.bodyString());
-	        } catch (QiniuException e) {
-	            Response r = e.response;
-	            // 请求失败时打印的异常的信息
-	            System.out.println(r.toString());
-	            try {
-	                //响应的文本信息
-	                System.out.println(r.bodyString());
-	            } catch (QiniuException e1) {
-	                //ignore
-	            }
-	        }
-	        
-			dto.setFileName(key);
-			dto.setFileUrl(ConstantsUrl.FILE_UPLOAD_URL+key);
+             if(null!=imageResEntity){
+      			dto.setFileName(imageResEntity.getFileName());
+      			dto.setFileUrl(imageResEntity.getResourcesUrl()); 
+             }else{
+                 key=key+prefix;//生成文件名
+     		    //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
+     		    Zone z = Zone.autoZone();
+     		    Configuration c = new Configuration(z);
+     		    //创建上传对象
+     		    UploadManager uploadManager = new UploadManager(c);
+     		
+     	        try {
+     	            //调用put方法上传
+     	        	
+     	            Response res = uploadManager.put(file.getBytes(), key, getUpToken());
+     	              
+     	            //打印返回的信息
+     	            System.out.println(res.bodyString());
+     	        } catch (QiniuException e) {
+     	            Response r = e.response;
+     	            // 请求失败时打印的异常的信息
+     	            System.out.println(r.toString());
+     	            try {
+     	                //响应的文本信息
+     	                System.out.println(r.bodyString());
+     	            } catch (QiniuException e1) {
+     	                //ignore
+     	            }
+     	        }
+     	        
+     			dto.setFileName(key);
+     			dto.setFileUrl(ConstantsUrl.FILE_UPLOAD_URL+key); 
+     			ImageResEntity entity = new ImageResEntity();
+     			entity.setFileName(key);
+     			entity.setMd5Key(md5Name);
+     			entity.setResourcesUrl(ConstantsUrl.FILE_UPLOAD_URL+key);
+     			imageResService.addImageRes(entity);
+             }
+             
+
 		} catch (RuntimeException e2) {
 			e2.printStackTrace();
 		}

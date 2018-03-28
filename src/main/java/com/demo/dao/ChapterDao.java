@@ -37,7 +37,11 @@ public interface ChapterDao {
 	 * @param chapterIds
 	 * @return
 	 */
-	public int delChapter(@Param("chapterIds")Integer[] chapterIds);
+	public int delChapter(@Param("chapterIds")Integer[] chapterIds,@Param("bookId")Integer bookId);
+	
+	
+	
+	public void updateChapterId(@Param("chapterIds")Integer[] chapterIds);
 	
 	/**
 	 * 根据章节Id 查询章节下面所有知识点
@@ -47,6 +51,16 @@ public interface ChapterDao {
 	 * @return
 	 */
 	public List<PonitDto> findChapterPoint(@Param("chapterId")Integer chapterId,@Param("bookId")Integer bookId);
+	
+	/**
+	 * 根据章节Ids 查询章节下面所有知识点
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	public List<PonitDto> findChapterPointByIds(@Param("chapterIds")Integer[] chapterId,@Param("bookId")Integer bookId);
+	
 	
 	
 	/**

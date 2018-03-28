@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.ChapterDao;
 import com.demo.dao.LorePointDao;
-import com.demo.dto.ChapterDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
 import com.demo.entity.ChapterEntity;
+import com.demo.entity.ExcerciseBookEntity;
 
 @Service
 public class ChapterService {
@@ -25,6 +25,9 @@ public class ChapterService {
 	
 	@Autowired
 	private LorePointDao pointDao;
+	
+	@Autowired
+	private LorePointService lorePointService;
 	
 	/**
 	 * 新增章节信息
@@ -40,6 +43,7 @@ public class ChapterService {
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
 		entity.setSort(sort+1);
+		entity.setIsDel(0);
 		chapterDao.addChapter(entity);
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
@@ -100,14 +104,18 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public int delChapter(String[] chapterIds){
+	public int delChapter(String[] chapterIds,String bookId ){
 		if(chapterIds.length>0){
 			Integer[] chapterId = new Integer[chapterIds.length];
 			for(int i=0;i<chapterIds.length;i++){
 				chapterId[i]=Integer.parseInt(chapterIds[i]);
 			}
-			int count = chapterDao.delChapter(chapterId);
-			//List<ChapterEntity> list = chapterDao.findChapterById(chapterId);
+			int count = chapterDao.delChapter(chapterId,Integer.parseInt(bookId));
+			
+/*			List<PonitDto> pointList =chapterDao.findChapterPointByIds(chapterId, Integer.parseInt(bookId));
+			for(PonitDto entity:pointList){
+				lorePointService.delLorePoint(entity.getId());
+			}*/
 			return count;
 		}else{
 			return 0;	
@@ -124,7 +132,6 @@ public class ChapterService {
 	 */
 	public List<PonitDto> findChapterPoint(Integer chapterId,Integer bookId){
 		return chapterDao.findChapterPoint(chapterId,bookId);
-	
 	}
 	
 	
