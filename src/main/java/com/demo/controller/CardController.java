@@ -262,9 +262,9 @@ public class CardController {
 		}else{
 			for(CardDto dto :entityList){
 				try {
-					if(null==dto.getCardData()||dto.getCardData().equals("")){
+/*					if(null==dto.getCardData()||dto.getCardData().equals("")){
 						return ResultObject.successMessage("没有数据");
-					}
+					}*/
 					String cardData =  EmojiUtil.emojiConvert1(dto.getCardData());
 					dto.setCardData(cardData);
 
