@@ -84,4 +84,19 @@ public class MD5Util {
         }  
         return name;  
     } 
+    
+    public static String getMD5(byte[] input){          
+    	String name="";  
+    	try {
+         MessageDigest messagedigest;
+		 messagedigest = MessageDigest.getInstance("MD5");
+		 messagedigest.update(input);
+		 byte[] resultByteArray = messagedigest.digest();
+		 name = MD5Util.bufferToHex(resultByteArray);
+		 System.out.println("MD5:"+name);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+        return name;  
+    } 
 }

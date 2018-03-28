@@ -17,9 +17,9 @@ public class TestImage {
 	
     @Test
     public void testCompare() throws IOException{
-        String url_1="d:\\tmp\\111.png";
-        String url_2="d:\\tmp\\asdfasdfasdfasdffs.png";
-        String url_3="d:\\tmp\\113.png";
+        String url_1="d:\\tmp\\112.jpg";
+        String url_2="d:\\tmp\\113.jpg";
+        String url_3="d:\\tmp\\114.jpg";
         System.out.println("url_1:"+getMD5(url_1));
         System.out.println("url_2:"+getMD5(url_2));
         System.out.println("url_3:"+getMD5(url_3));

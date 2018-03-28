@@ -5,16 +5,18 @@
 	<insert id="addImageRes" parameterType="com.pmp.entity.ImageResEntity" useGeneratedKeys="true" keyProperty="id">
 			INSERT INTO imageres(
 					md5Key,
+					fileName,
 					resourcesUrl
 			)VALUES(
 					#{md5Key},
+					#{fileName},
 					#{resourcesUrl}
 			)
 	</insert>
 	
 	
 	
-	<select id="getImageRes" parameterType="java.lang.Integer" resultType="com.pmp.entity.ImageResEntity" >
+	<select id="getImageRes" parameterType="java.lang.String" resultType="com.pmp.entity.ImageResEntity" >
 	    SELECT * FROM imageres a 
             WHERE a.md5Key=#{md5Key}
 	</select>
