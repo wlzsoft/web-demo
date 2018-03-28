@@ -262,10 +262,11 @@ public class CardController {
 		}else{
 			for(CardDto dto :entityList){
 				try {
-/*					if(null==dto.getCardData()||dto.getCardData().equals("")){
-						return ResultObject.successMessage("没有数据");
-					}*/
-					String cardData =  EmojiUtil.emojiConvert1(dto.getCardData());
+					String cardData = "";
+					if(null!=dto.getCardData()){
+						cardData=dto.getCardData();
+					}
+					cardData= EmojiUtil.emojiConvert1(cardData);
 					dto.setCardData(cardData);
 
 				} catch (UnsupportedEncodingException e) {
