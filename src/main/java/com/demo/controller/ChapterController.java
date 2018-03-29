@@ -45,8 +45,8 @@ public class ChapterController {
 	 * @param chapterSort 序号
 	 * @return
 	 */	 
-	@RequestMapping("/saveChapter")
-	public Result<?> saveChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
+	@RequestMapping("/addChapter")
+	public Result<?> addChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity){
 		
 		if(null==entity.getName()||entity.getName().equals("")){
 			return ResultObject.warnMessage("章节名称不能为空");
@@ -147,7 +147,7 @@ public class ChapterController {
 			if(userId!=bookEntity.getCreateId()){
 				return ResultObject.warnMessage("无操作权限");
 			}else{
-				int count = chapterService.delChapter(chapterIds);
+				int count = chapterService.delChapter(chapterIds, bookId);
 				if(count==0){
 					return ResultObject.successMessage("无操作数据");
 				}

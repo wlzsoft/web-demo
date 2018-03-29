@@ -68,5 +68,15 @@ public interface BookDao {
      * @param bookId
      */
     public void updateDetail(@Param("bookId")Integer bookId,@Param("updateDetailId")Integer updateDetailId,@Param("updateDetailTime")Date updateDetailTime);
+    
+    
+    public void addBook_class(@Param("bookId")Integer bookId,@Param("bookClassKeys")String[] bookClassKeys);
+    
+    public void delBook_class(@Param("bookId")Integer bookId);
+    
+    
+    
+    
+    
 	
 }

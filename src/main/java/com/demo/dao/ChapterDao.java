@@ -37,7 +37,7 @@ public interface ChapterDao {
 	 * @param chapterIds
 	 * @return
 	 */
-	public int delChapter(@Param("chapterIds")Integer[] chapterIds);
+	public int delChapter(@Param("chapterIds")Integer[] chapterIds,@Param("bookId")Integer bookId);
 	
 	/**
 	 * 根据章节Id 查询章节下面所有知识点

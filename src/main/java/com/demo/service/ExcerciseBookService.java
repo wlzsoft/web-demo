@@ -14,6 +14,7 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
+import com.demo.util.ToolUtil;
 import com.pmp.entity.BookEntity;
 
 @Service
@@ -28,13 +29,20 @@ public class ExcerciseBookService {
 	@Autowired
 	private PointDao lorePointDao;
 	
+	@Transactional
 	public IdEntity bookSava(BookEntity entity){
 		entity.setCreateId(systemService.getCurrentUser().getId());
 		entity.setCreateTime(new Date());
 		excerciseBookDao.bookSava(entity);
 		IdEntity identity = new IdEntity();	
 		identity.setId(entity.getId());
-		//同时往用户-练习本 表插入一条关联数据
+
+		//建立练习本和 练习本分类关系
+		String bookClass = entity.getArea();
+		String[] bookClassKeys = ToolUtil.toStringArry(bookClass);
+		if(bookClassKeys.length>0){
+			excerciseBookDao.addBook_class(entity.getId(), bookClassKeys);	
+		}
 		
 		return identity;
 	}
@@ -49,6 +57,7 @@ public class ExcerciseBookService {
 		int count = excerciseBookDao.delBookById(bookId);
 		lorePointDao.delPoinDetailtByBookId(Integer.parseInt(bookId));
 		lorePointDao.delPointByBookId(Integer.parseInt(bookId));
+		excerciseBookDao.delBook_class(Integer.parseInt(bookId));
 		return count;
 	}
 	
@@ -58,6 +67,14 @@ public class ExcerciseBookService {
 		entity.setUpdateDetailId(systemService.getCurrentUser().getId());
 		entity.setUpdateDetailTime(new Date());
 		int count = excerciseBookDao.editBook(entity);
+		//更新练习本对应的分类关系
+		excerciseBookDao.delBook_class(entity.getId());
+		//建立练习本和 练习本分类关系
+		String bookClass = entity.getArea();
+		String[] bookClassKeys = ToolUtil.toStringArry(bookClass);
+		if(bookClassKeys.length>0){
+			excerciseBookDao.addBook_class(entity.getId(), bookClassKeys);	
+		}
 		return count;
 	}
 	

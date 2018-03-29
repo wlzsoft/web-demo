@@ -8,7 +8,7 @@ import com.pmp.entity.ImageResEntity;
 @Repository
 public interface ImageResDao {
 
-	 public ImageResEntity getImageRes(@Param("mdsKey")String mdsKey);
+	 public ImageResEntity getImageRes(@Param("md5Key")String mdsKey);
 	   
 	 public void addImageRes(ImageResEntity entity);
 }

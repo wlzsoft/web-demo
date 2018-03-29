@@ -40,8 +40,12 @@
 	
 	
 	<delete id="delChapter" parameterType="java.lang.Integer">
-         delete from chapter  where 
+         UPDATE chapter set isDel=1 where bookId=#{bookId} and
               id in
+			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
+				#{id,jdbcType=INTEGER}
+			</foreach>
+			or parentId in
 			<foreach collection="chapterIds" item="id" index="index" open="(" close=")" separator=",">
 				#{id,jdbcType=INTEGER}
 			</foreach>

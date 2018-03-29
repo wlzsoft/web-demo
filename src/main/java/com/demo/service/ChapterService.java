@@ -99,13 +99,13 @@ public class ChapterService {
 	 * @param entity
 	 * @return
 	 */
-	public int delChapter(String[] chapterIds){
+	public int delChapter(String[] chapterIds,String bookId ){
 		if(chapterIds.length>0){
 			Integer[] chapterId = new Integer[chapterIds.length];
 			for(int i=0;i<chapterIds.length;i++){
 				chapterId[i]=Integer.parseInt(chapterIds[i]);
 			}
-			int count = chapterDao.delChapter(chapterId);
+			int count = chapterDao.delChapter(chapterId,Integer.parseInt(bookId));
 			//List<ChapterEntity> list = chapterDao.findChapterById(chapterId);
 			return count;
 		}else{
