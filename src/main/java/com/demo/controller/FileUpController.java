@@ -61,6 +61,16 @@ public class FileUpController {
                 	 prefix=".png";
                  }else if(contentType.equals("image/jpeg")){
                 	 prefix=".jpg";
+                 }else if(contentType.equals("image/gif")){
+                	 prefix=".gif";
+                 }else{
+                	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
+                 }
+             }else if(format.equals("video")){
+            	 if(contentType.equals("video/mpeg4")){
+                	 prefix=".mp4";
+                 }else if(contentType.equals("video/mp4")){
+                	 prefix=".mp4";
                  }else{
                 	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
                  }

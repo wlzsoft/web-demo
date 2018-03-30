@@ -85,11 +85,11 @@ public class ChapterController {
 	public Result<?> editChapter(HttpServletRequest request ,HttpServletResponse response,ChapterEntity entity,Integer oldSort){
 		
 		if(null==entity){
-			return ResultObject.successMessage("参数不能为空");
+			return ResultObject.warnMessage("参数不能为空");
 		}
 		
 		if(null==oldSort){
-			return ResultObject.successMessage("参数不能为空");
+			return ResultObject.warnMessage("参数不能为空");
 		}
 		
 		if(null==entity.getBookId()||entity.getBookId().equals("")){
