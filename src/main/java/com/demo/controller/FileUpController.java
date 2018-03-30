@@ -54,8 +54,6 @@ public class FileUpController {
                 	 prefix=".wav";
                  }else if(contentType.equals("audio/x-m4a")){
                 	 prefix=".m4a";
-                 }else if(contentType.equals("video/mpeg4")){
-                	 prefix=".mp4";
                  }else{
                 	 ResultObject.warnMessage("不上传失败，请选择 mp3、wav 或 m4a 格式的音频");
                  } 
@@ -66,6 +64,14 @@ public class FileUpController {
                 	 prefix=".jpg";
                  }else if(contentType.equals("image/gif")){
                 	 prefix=".gif";
+                 }else{
+                	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
+                 }
+             }else if(format.equals("video")){
+            	 if(contentType.equals("video/mpeg4")){
+                	 prefix=".mp4";
+                 }else if(contentType.equals("video/mp4")){
+                	 prefix=".mp4";
                  }else{
                 	 ResultObject.warnMessage("不上传失败，请选择 jpg 或 png 格式的图片");
                  }
