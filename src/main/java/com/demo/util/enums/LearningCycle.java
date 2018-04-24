@@ -1,58 +1,78 @@
 package com.demo.util.enums;
 
+/**
+ * 记忆等级 (练习间隔时间) 小时
+ * @author Administrator
+ *
+ */
 public enum LearningCycle {
 	
 	/**
-	 * 第一次练习1天
+	 * 等级 1 (0.25天)
 	 */
-	FIRST_TIME(24) ,
+	FIRST_TIME(6) ,
 	
 	/**
-	 * 第二次练习2天
+	 * 等级 2 (0.5天)
 	 */
-	SECOND_TIME(48),
-	
-	
-	/**
-	 * 第三次练习4天
-	 */
-	Third_TIME(96),
+	SECOND_TIME(12),
 	
 	
 	/**
-	 * 第四次练习8天
+	 * 等级 3 (1天)
 	 */
-	FOURTH_TIME(24),
+	Third_TIME(24),
 	
 	
 	/**
-	 * 第五次练习16天
+	 * 等级 4 (2天)
 	 */
-	FIFTH_TIME(48),
+	FOURTH_TIME(48),
+	
+	
+	/**
+	 * 等级 5 (4天)
+	 */
+	FIFTH_TIME(96),
 
 	
 	/**
-	 * 第六次练习32天
+	 * 等级 6 (8天)
 	 */
-	SIXTH_TIME(96),
+	SIXTH_TIME(192),
 	
 	
 	/**
-	 * 第七次练习64天
+	 * 等级 7 (16天)
 	 */
-    SEVENTH_TIME(192),	
+    SEVENTH_TIME(384),	
 
     
 	/**
-	 * 第八次练习128天
+	 * 等级 8 (32天)
 	 */
-    EIGHTH_TIME(384),
+    EIGHTH_TIME(764),
     
     
 	/**
-	 * 第九次练习256天
+	 * 等级 9 (64天)
 	 */
-    NINTH_TIME(764);
+    NINTH_TIME(1536),
+	
+	/**
+	 * 等级 10 (128天)
+	 */
+    TEN_TIME(3072),
+	
+	/**
+	 * 等级 11 (256天)
+	 */
+    ELEVEN_TIME(6144),
+	
+	/**
+	 * 等级 12 (512天)
+	 */
+    TWELVE_TIME(12288);
 	
     
 	public final int timesanmp;

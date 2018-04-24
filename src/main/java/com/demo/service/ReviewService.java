@@ -2,7 +2,6 @@ package com.demo.service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -46,8 +45,11 @@ public class ReviewService {
 	 * @param lorePointId 知识点ID
 	 * @param cradId 卡片ID
 	 * @param right 回答是否正确 1：正确   0：错误
+	 * @param duration 本次答题耗时(毫秒)
 	 * @return
 	 */
+	
+/*	
 	@Transactional
 	public void reviewCrad(String lorePointId,String cradId,Integer right,Integer duration){
 		Integer userId =systemService.getCurrentUser().getId();
@@ -72,10 +74,10 @@ public class ReviewService {
 		}
 		
 		 if(right==1){//正确
-			  /**
+			  *//**
 			   * 如果答题错误 练习周期往前升一级，熟练度为 +1 ，熟练度最高为3 最低为0 
 			   * 
-			   * **/
+			   * **//*
 			  int cc =  DateUtil.compareDate(new Date(),detailEntity.getNextExerciseTime());//比较时间    -1:小于 ;  1: 大于; 0:相等
 			  if(cc>-1){//***当前时间 大于 或 等于 下次练习时间，即 在这个周期之内
 					 
@@ -123,10 +125,10 @@ public class ReviewService {
 			 
 		
 		 }else{
-			     /** 错误
+			     *//** 错误
 			      * 如果答题错误 练习周期往后降一级，熟练度为 0 
 			      * 
-			      * **/
+			      * **//*
 				 if(exerciseCycle==0){//因为周期最少为0，所以从1开始
 					 detailEntity.setNextExerciseTime(new Date());//计划下次练习时间
 				 }else if(exerciseCycle==1){//因为周期最少为0，所以从1开始
@@ -167,7 +169,7 @@ public class ReviewService {
 		 LOGGER.info("练习本进度计算统计完成");
 	}
 	
-	
+	**/
 	
 	/**
 	 * 复习用户下全部练习本
@@ -267,103 +269,6 @@ public class ReviewService {
 				for(int i=0;i<=COUNT-listAll.size();i++){
 					listAll.add(ponitList.get(i));
 				} 
-			 }
-		 }
-		 
-		 System.out.println("数据大小为--------------："+listAll.size());
-		return listAll ;
-	}
-	
-	
-	/**
-	 * 根据练习本ID 来计算获取知识点
-	 * 注：由于使用知识点中的sort进行排序 此方法废弃 2017-10-17
-	 * @param userId
-	 * @param bookId
-	 * @return
-	 */
-	public List<PonitDto> excercise(Integer userId,Integer bookId){
-
-		 List<PonitDto> listAll = new ArrayList<PonitDto>();
-		 int con = 0;//用于记录查询知识点的个数
-		 List<PonitDto> pointList = reviewDao.reviewPoint(bookId,null,userId); //查询小于或等于 当前时间的知识点 (下次练习时间不为null的数据)
-		 
-		 if(pointList.size()>0){
-				if(listAll.size()==0){
-					 if(pointList.size()<=COUNT){
-						 listAll.addAll(pointList); 
-						 con=con+pointList.size();
-					 }else{
-						 for(int i=0;i<COUNT;i++){
-							 listAll.add(pointList.get(i)) ;
-						 }
-						 con=COUNT;
-					 }
-				 }else{
-					 if(pointList.size()<=(COUNT-con)){
-						 listAll.addAll(pointList); 
-						 con=con+pointList.size();
-					 }else{
-						 for(int i=0;i<(COUNT-con);i++){
-							 listAll.add(pointList.get(i)) ;
-						 }
-						 con=COUNT; 
-					 }
-				 } 
-		}
-		 
-		if(listAll.size()<COUNT){
-		     List<PonitDto> pointList_2 = reviewDao.reviewPointNull(bookId,null,userId); //查询下次练习时间为null的数据 按 id升序排
-			 if(pointList_2.size()>0){
-				 if(listAll.size()==0){
-					 if(pointList_2.size()<=COUNT){
-						 listAll.addAll(pointList_2); 
-						 con=con+pointList_2.size();
-					 }else{
-						 for(int i=0;i<COUNT;i++){
-							 listAll.add(pointList_2.get(i)) ;
-						 }
-						 con=COUNT;
-					 }
-				 }else{
-					 if(pointList_2.size()<=(COUNT-con)){
-						 listAll.addAll(pointList_2); 
-						 con=con+pointList_2.size();
-					 }else{
-						 for(int i=0;i<(COUNT-con);i++){
-							 listAll.add(pointList_2.get(i)) ;
-						 }
-						 con=COUNT; 
-					 }
-				 } 
-			 }
-				 
-	   }
-		
-	 //当所有条件查询还没有满【COUNT】的练习数量时，就查询练习本下所有的知识点 进行随机抽取	 	 
-	 if(listAll.size()<COUNT){
-			 List<PonitDto> ponitList = reviewDao.reviewPointAll(bookId,null,userId); //查询所有知识点
-			 if(ponitList.size()>0){
-				 java.util.Random random = new java.util.Random();
-				 if(ponitList.size()>listAll.size()){
-					 if(ponitList.size()>COUNT){
-						 do{
-							 int randomPos = random.nextInt(ponitList.size());
-							 listAll.add(ponitList.get(randomPos));
-							 ponitList.remove(randomPos);
-							 
-							 HashSet<PonitDto> hset = new HashSet<>(listAll);      
-							 listAll.clear();      
-							 listAll.addAll(hset);
-							 
-						 } while(listAll.size()<COUNT);
-					 }else{
-						 listAll.addAll(ponitList);
-						 HashSet hset = new HashSet(listAll);      
-						 listAll.clear();      
-						 listAll.addAll(hset);
-					 }
-				 }
 			 }
 		 }
 		 

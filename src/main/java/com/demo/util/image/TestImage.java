@@ -1,13 +1,9 @@
 package com.demo.util.image;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -17,9 +13,10 @@ public class TestImage {
 	
     @Test
     public void testCompare() throws IOException{
-        String url_1="d:\\tmp\\112.jpg";
-        String url_2="d:\\tmp\\113.jpg";
-        String url_3="d:\\tmp\\114.jpg";
+        String url_1="d:\\tmp\\1.jpg";
+        String url_2="d:\\tmp\\图片1.jpg";
+        String url_3="d:\\tmp\\1-1.jpg";
+        
         System.out.println("url_1:"+getMD5(url_1));
         System.out.println("url_2:"+getMD5(url_2));
         System.out.println("url_3:"+getMD5(url_3));

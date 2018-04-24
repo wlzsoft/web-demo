@@ -33,6 +33,38 @@ public class RecommendService {
 	@Autowired
 	private UtilService utilService;
 	
+	
+	
+	/**只能排序算法修改（2018-04-24）
+	 * @param userId
+	 * @param bookId
+	 * @param chapterIds
+	 * @return
+	 */
+	public List<CardDto> excercise_Card(Integer userId,Integer bookId,String chapterIds){
+		List<CardDto> cardListAll = new ArrayList<>();
+		if(null==chapterIds||chapterIds.equals("")){
+			LOGGER.info("按练习本来获取练习本知识点.....");
+			List<PonitDto> pointList = excerciseDao.excercisePoint(bookId, null, userId);
+			List<CardDto> cardList = excerciseService.getCardAlgorithm(pointList, COUNT);
+			cardListAll.addAll(cardList);
+		}else{
+			LOGGER.info("按练习本+章节 来获取练习本知识点.....");
+			String[] chapterId_arry = chapterIds.split(",");
+			if(chapterId_arry.length>0){
+				Integer[] chapter = new Integer[chapterId_arry.length];
+				for(int i=0;i<chapterId_arry.length;i++){
+					chapter[i]=Integer.parseInt(chapterId_arry[i]);
+				}
+			 List<PonitDto> pointList_cp=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId);
+			 List<CardDto> cardList_cp = excerciseService.getCardAlgorithm(pointList_cp, COUNT);
+			 cardListAll.addAll(cardList_cp);
+			}
+		}
+		return cardListAll;
+	}
+	
+	
 	/**
 	 * 根据指定练习本的章节进行练习【用户智能推荐复习算法】
 	 * @param userId 用户ID
@@ -90,25 +122,7 @@ public class RecommendService {
 					 return cardListAll; 
 				 }
 			 }
-
-			 
-			//****4、最后查询强化知识点
-/*			 
-			List<PonitDto> pointList_intensify =excerciseDao.excerciseIntensify_bookId(bookId, userId);
-			List<CardDto> cardList_intensify = excerciseService.getCardAlgorithm(pointList_intensify, COUNT-cardListAll.size());
-			cardListAll.addAll(cardList_intensify);
-			 if(cardListAll.size()>=COUNT){
-				 return cardListAll; 
-			 }	
-			 
-	*/		 
-			 
-		   //****5、最后查询熟练度满分的知识点
-/*			 
-			 List<PonitDto> pointList_full = excerciseDao.excerciseIntensifyFull_bookId(bookId, userId);
-			 List<CardDto> cardList_full = excerciseService.getCardAlgorithm(pointList_full, COUNT-cardListAll.size());
-			 cardListAll.addAll(cardList_full);
-*/		
+	
 		}else{
 			LOGGER.info("按练习本+章节 来获取练习本知识点.....");
 			String[] chapterId_arry = chapterIds.split(",");

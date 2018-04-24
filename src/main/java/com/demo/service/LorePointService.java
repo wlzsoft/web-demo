@@ -141,7 +141,7 @@ public class LorePointService {
 					pointDetail.setPointId(pointId);
 					pointDetail.setBookId(entity.getBookId());
 					pointDetail.setNextExerciseTime(new Date());
-					pointDetail.setSkilled(0);
+				  //pointDetail.setSkilled(0);
 					pointDetail.setExerciseCycle(0);
 					pointDetail.setState(0);
 			    detailList.add(pointDetail);
@@ -183,7 +183,7 @@ public class LorePointService {
 					pointDetail.setPointId(entity.getId());
 					pointDetail.setBookId(bookId);
 					pointDetail.setNextExerciseTime(new Date());
-					pointDetail.setSkilled(0);
+					//pointDetail.setSkilled(0);
 					pointDetail.setExerciseCycle(0);
 					pointDetail.setState(0);
 			    detailList.add(pointDetail);
@@ -199,7 +199,7 @@ public class LorePointService {
 	 * @param bookId
 	 */
 	public void delPoinDetailtByPointId(Integer pointId){
-		lorePointDao.delPoinDetailtByPointId(pointId);
+		lorePointDao.delPoinDetailtByPointId(pointId); 
 	}
 	
 	/**

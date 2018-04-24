@@ -383,5 +383,31 @@
 		  ORDER BY a.sort,a.id ASC 
     </select>
 	
+   <select id="excercisePoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+		SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			b.state,
+			b.skilled
+		FROM point a,pointExerciseDetail b
+		WHERE b.userId=#{userId}
+			 AND b.pointId= a.id
+			 AND b.bookId=a.bookId
+			 AND a.bookId=#{bookId}
+			 AND b.hidden=0
+			<if test="chapterId !=null and chapterId !='' ">
+		        and a.chapterId in 
+		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		ORDER BY b.nextExerciseTime ASC
+	</select>  
+	  
 	  
 </mapper>

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.demo.dto.IdEntity;
 import com.demo.service.CommentService;
-import com.demo.service.ReviewService;
 import com.pmp.entity.DiscussEntity;
 import com.smartframe.basics.util.EmojiUtil;
 import com.smartframe.dto.Result;
@@ -25,7 +24,7 @@ import com.smartframe.dto.ResultObject;
 @RequestMapping("/comment")
 public class CommentController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
 	private CommentService commentService;	

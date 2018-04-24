@@ -18,13 +18,18 @@ public class PointExerciseDetailDto implements Serializable {
 	  public String pointName ;//知识点名称
 	  public Integer sort;//知识点排序号
 	  public Integer chaperSort;//章节排序号
-	  public Date nextExerciseTime ;//'计划下次练习时间',
+	  
+	  public Date firstExerciseTime  ;//首次练习时间
+	  public Date lastExerciseTime   ;//上一次练习时间
+	  public Date nextExerciseTime ;//'下一次练习时间',
+	  
 	  public Integer exerciseCycle ;// '知识点当前练习周期',
-	  public Integer skilled;//熟练度（0，1，2，3）
 	  public Integer conCorrectNumber ;// '连续回答正确次数',
 	  public Integer conErrorNumber ;// '连续回答错误次数',
-	  public Date firstExerciseDate  ;//首次练习日期
-	  public Date lastExerciseDate   ;//上一次练习日期
+	  
+	  public Date lastUpdateTime;//上次记忆等级更新时间
+	  public Date nextUpdateTime;//下次记忆等级更新时间
+	  
 	  public Integer exerciseNumber;//练习总次数
 	  public float  correctRate   ;//正确率
 	  public Integer  correctNumber ;//总正确数
@@ -84,17 +89,18 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setChaperSort(Integer chaperSort) {
 		this.chaperSort = chaperSort;
 	}
-	public Date getFirstExerciseDate() {
-		return firstExerciseDate;
+
+	public Date getFirstExerciseTime() {
+		return firstExerciseTime;
 	}
-	public void setFirstExerciseDate(Date firstExerciseDate) {
-		this.firstExerciseDate = firstExerciseDate;
+	public void setFirstExerciseTime(Date firstExerciseTime) {
+		this.firstExerciseTime = firstExerciseTime;
 	}
-	public Date getLastExerciseDate() {
-		return lastExerciseDate;
+	public Date getLastExerciseTime() {
+		return lastExerciseTime;
 	}
-	public void setLastExerciseDate(Date lastExerciseDate) {
-		this.lastExerciseDate = lastExerciseDate;
+	public void setLastExerciseTime(Date lastExerciseTime) {
+		this.lastExerciseTime = lastExerciseTime;
 	}
 	public Integer getExerciseNumber() {
 		return exerciseNumber;
@@ -138,17 +144,23 @@ public class PointExerciseDetailDto implements Serializable {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	public Integer getSkilled() {
-		return skilled;
-	}
-	public void setSkilled(Integer skilled) {
-		this.skilled = skilled;
-	}
 	public Integer getState() {
 		return state;
 	}
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	
+
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+	public Date getNextUpdateTime() {
+		return nextUpdateTime;
+	}
+	public void setNextUpdateTime(Date nextUpdateTime) {
+		this.nextUpdateTime = nextUpdateTime;
+	}
 }

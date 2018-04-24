@@ -69,7 +69,7 @@ public class PractiseController {
 			
 			if(null==state||state.equals("")){//进入智能推荐算法
 				
-				cardList = recommendService.excerciseCard(userId, Integer.parseInt(bookId), chapterIds);
+				cardList = recommendService.excercise_Card(userId, Integer.parseInt(bookId), chapterIds);
 				
 		    }else if(state.equals("0")){//进入 练新 算法
 		    	cardList = excerciseService.excerciseNew(bookId, chapterIds, userId);

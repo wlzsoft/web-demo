@@ -44,6 +44,7 @@ public interface ExcerciseDao {
 	public List<PonitDto> excerciseStrenthen_bookIds(@Param("bookId")Integer[] bookIds,@Param("userId")Integer userId);
 	
 	
+	public List<PonitDto> excercisePoint(@Param("bookId")Integer bookId,@Param("chapterId")Integer chapterId[],@Param("userId")Integer userId);
 	
 	
 	

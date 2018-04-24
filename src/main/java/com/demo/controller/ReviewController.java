@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
+import com.demo.service.AnswerService;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LoreCradService;
 import com.demo.service.RecommendService;
-import com.demo.service.ReviewService;
 import com.demo.service.SystemService;
 import com.demo.service.UtilService;
 import com.smartframe.basics.util.EmojiUtil;
@@ -30,7 +30,7 @@ import com.smartframe.dto.ResultObject;
 public class ReviewController {
 	
 	@Autowired
-	private ReviewService reviewService;
+	private AnswerService answerService;
 	
 	@Autowired
 	private UtilService utilService;
@@ -84,14 +84,14 @@ public class ReviewController {
 			return ResultObject.warnMessage("无操作权限");
 		}
 		
-		reviewService.reviewCrad(pointId, cardId, right,duration);
+		answerService.cardAnswer(pointId, cardId, right,duration);
 		
 		return ResultObject.successMessage("保存成功") ;
 	}
 	
 	
 	/**
-	 * 用户智能推荐复习算法
+	 * 用户智能推荐复习算法【停用】
 	 * @param request
 	 * @param response
 	 * @param bookId 
@@ -133,7 +133,7 @@ public class ReviewController {
 	
 	
 	/**
-	 * 复习错误的知识点 （错题，熟练度、知识点排序）
+	 * 复习错误的知识点 （错题，熟练度、知识点排序）【停用】
 	 * 
 	 * @param request
 	 * @param response
@@ -177,7 +177,7 @@ public class ReviewController {
 	} 
 	
 	/**
-	 * 复习新的的知识点 （学习新的知识点，周期为0的知识点，知识点排序）
+	 * 复习新的的知识点 （学习新的知识点，周期为0的知识点，知识点排序）【停用】
 	 * @param request
 	 * @param response
 	 * @param bookId
@@ -224,7 +224,7 @@ public class ReviewController {
 	
 	
 	/**
-	 * 巩固复习知识点（熟练度、知识点排序）
+	 * 巩固复习知识点（熟练度、知识点排序）【停用】
 	 * @param request
 	 * @param response
 	 * @param bookId
@@ -322,8 +322,6 @@ public class ReviewController {
 				String	cardData = EmojiUtil.emojiRecovery2(cardDto.getCardData());
 				cardDto.setCardData(cardData);
 			}
-			
-			
 
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
