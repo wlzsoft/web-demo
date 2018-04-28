@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.PointDao;
 import com.demo.dao.ReviewDao;
@@ -16,8 +15,6 @@ import com.demo.dto.BookDto;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
-import com.demo.util.enums.LearningCycle;
-import com.pmp.entity.UserExerciseDetailEntity;
 import com.smartframe.basics.util.DateFormatEnum;
 import com.smartframe.basics.util.DateUtil;
 

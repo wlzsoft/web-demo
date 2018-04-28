@@ -31,9 +31,11 @@ public class UserService {
 		return userDao.findUserLogin(userName, password);
 	}
 	
-	public void savaUser(UserEntity entity){
+	public Integer savaUser(UserEntity entity){
+		entity.setUsername(entity.getNickName());
 		entity.setRegisterTime(new Date());
 		userDao.savaUser(entity);
+		return entity.getId();
 	}
 	
 	public void editUser(UserEntity entity){
@@ -78,5 +80,13 @@ public class UserService {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**根据OpenId查询用户
+	 * @param openId
+	 * @return
+	 */
+	public UserEntity getUserByopenId(String openId){
+		return userDao.getUserByopenId(openId);
 	}
 }

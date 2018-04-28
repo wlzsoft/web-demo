@@ -71,7 +71,6 @@
 					exerciseCycle,
 					pointId,
 					bookId,
-					skilled,
 					nextExerciseTime,
 					state
 			)VALUES
@@ -80,7 +79,6 @@
 				 #{item.exerciseCycle},
 				 #{item.pointId},
 				 #{item.bookId},
-				 #{item.skilled},
 				 #{item.nextExerciseTime},
 				 #{item.state}
 				)
@@ -191,7 +189,7 @@
 	
 	<select id="findBookIdToPonit" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
 			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
-			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
+			       t.sort,t.chapterSort,a.exerciseCycle,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
 			WHERE t.id=a.pointId 
@@ -201,7 +199,7 @@
 	
 	<select id="findBookIdToPonit_card" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
 			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
-			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
+			       t.sort,t.chapterSort,a.exerciseCycle,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
 			WHERE t.id=a.pointId 
@@ -212,7 +210,7 @@
 	
     <select id="findBookIdToPonit_ex" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitSkilledDto">
 			SELECT t.id,t.pointName,t.chapterId,t.number,t.bookId ,a.hidden,
-			       t.sort,t.chapterSort,a.exerciseCycle,a.skilled ,
+			       t.sort,t.chapterSort,a.exerciseCycle,
 			       a.state 
 			FROM point t ,pointExerciseDetail a 
 			WHERE t.id=a.pointId 

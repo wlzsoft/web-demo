@@ -24,6 +24,9 @@ public class ExcerciseService {
 	@Autowired
 	private UtilService utilService;
 	
+	@Autowired
+	private LoreCradService cradService;
+	
 	private final int COUNT=20;
 	
 	/**
@@ -54,7 +57,8 @@ public class ExcerciseService {
 			}
 		}
 		//cardListAll =getCardAlgorithm_count(pointList,COUNT);//根据知识点 获取知识点卡片算法(无穿插排序,有数量限制)
-		cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+	    //cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		cardListAll =getRoundCard(pointList,COUNT);//随机获取知识点卡片
 		
 	  return cardListAll;
 	} 
@@ -103,7 +107,8 @@ public class ExcerciseService {
 			pointCountList.addAll(pointList);
 		}
 
-		cardListAll =getCardAlgorithm(pointCountList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		//cardListAll =getCardAlgorithm(pointCountList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		 cardListAll =getRoundCard(pointCountList,COUNT);//随机获取知识点卡片
 	  return cardListAll;
 	} 
 	
@@ -132,7 +137,8 @@ public class ExcerciseService {
 			}
 		}
 		//cardListAll =getCardAlgorithm_count(pointList,COUNT);//根据知识点 获取知识点卡片算法(无穿插排序,有数量限制)
-		cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		//cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		cardListAll =getRoundCard(pointList,COUNT);//随机获取知识点卡片
 	  return cardListAll;
 	} 
 	
@@ -161,7 +167,8 @@ public class ExcerciseService {
 			}
 		}
 		//cardListAll =getCardAlgorithm_count(pointList,COUNT);//根据知识点 获取知识点卡片算法(无穿插排序,有数量限制)
-		cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		//cardListAll =getCardAlgorithm(pointList,COUNT);//根据知识点 获取知识点卡片算法(有穿插混合排序)
+		cardListAll =getRoundCard(pointList,COUNT);//随机获取知识点卡片
 	  return cardListAll;
 	}
 	
@@ -334,6 +341,24 @@ public class ExcerciseService {
 		return cardListAll;
 	}
     
+	/**
+	 * 随机获取知识点卡片
+	 * @param pointList
+	 * @param count 卡片数量
+	 * @return
+	 */
+	public List<CardDto> getRoundCard(List<PonitDto> pointList,Integer count){
+		List<CardDto> cardListAll = new ArrayList<>();
+		if(pointList.size()>0){
+			for(PonitDto dto:pointList){
+				CardDto cardDto = cradService.roundCard(dto.getId());
+				if(cardListAll.size()<count){
+					cardListAll.add(cardDto);
+				}
+			}
+		}
+		return cardListAll;
+	}
 	
 	/**
 	 * 获取练习本中，复习，错题，新的 的数量

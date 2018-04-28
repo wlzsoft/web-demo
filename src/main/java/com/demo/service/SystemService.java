@@ -3,18 +3,25 @@ package com.demo.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.demo.dto.UserDto;
+import com.smartframe.rediscache.dao.RedisStringDao;
 
 @Service
 public class SystemService  {
 //	@Resource
 	private HttpServletRequest request;
 	
+	
+	@Autowired
+    private RedisStringDao redisStringDao;
 	/**
 	 * 
 	 * 方法用途: 获取当前用户信息--自动获取注入的当前请求<br>
@@ -26,7 +33,8 @@ public class SystemService  {
 		if(ra != null) {
 			request = ((ServletRequestAttributes)ra).getRequest(); 
 		}
-		return getCurrentUser(request);
+	   //return getCurrentUser(request);
+		return getWxCurrentUser(request);
 	}
 	
 	
@@ -47,6 +55,26 @@ public class SystemService  {
 		return user;
 	}
 	
+	
+	/**
+	 * 
+	 * 方法用途: 获取当前用户信息-无法注入request的场景使用<br>
+	 * 操作步骤: TODO<br>
+	 * @param request
+	 * @return
+	 */
+	public UserDto getWxCurrentUser(HttpServletRequest request) {
+		String  rdSessionKey= request.getParameter("sessionid"); 
+		if(null==rdSessionKey||rdSessionKey.equals("")){
+			return null;
+		}
+		String openId = (String)redisStringDao.get(rdSessionKey);
+        if(null==openId||openId.equals("")){
+        	return null;
+        }
+        UserDto dto = (UserDto) redisStringDao.get("userCur_"+openId);
+		return dto;
+	}
 	
 	/**
 	 * 

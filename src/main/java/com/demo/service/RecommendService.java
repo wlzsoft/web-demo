@@ -35,7 +35,7 @@ public class RecommendService {
 	
 	
 	
-	/**只能排序算法修改（2018-04-24）
+	/**智能排序算法修改（2018-04-24）
 	 * @param userId
 	 * @param bookId
 	 * @param chapterIds
@@ -57,7 +57,7 @@ public class RecommendService {
 					chapter[i]=Integer.parseInt(chapterId_arry[i]);
 				}
 			 List<PonitDto> pointList_cp=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId);
-			 List<CardDto> cardList_cp = excerciseService.getCardAlgorithm(pointList_cp, COUNT);
+			 List<CardDto> cardList_cp = excerciseService.getRoundCard(pointList_cp, COUNT);
 			 cardListAll.addAll(cardList_cp);
 			}
 		}

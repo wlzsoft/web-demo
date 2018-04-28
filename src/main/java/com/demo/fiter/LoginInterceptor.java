@@ -1,4 +1,5 @@
 package com.demo.fiter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +24,6 @@ public class LoginInterceptor implements HandlerInterceptor{
 		  return true; 
 		}
 		response.setStatus(401);
-		//response.sendRedirect("http://172.29.224.150:8080/#/login");
-/*		HandlerMethod hm = (HandlerMethod)handler;
-		response.getWriter().write("sdfsdf");
-		response.getWriter().flush();*/
 		return false;
 	}
 

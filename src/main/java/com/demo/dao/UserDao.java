@@ -31,5 +31,9 @@ public interface UserDao {
 	 public  List<UserEntity> getUserByName(@Param("username")String userName);
 	 
 	 public void updatePassword(Map<String, Object> map);
+	 
+	 public UserEntity getUserByopenId(@Param("openId")String openId);
+	 
+	 
 
 }

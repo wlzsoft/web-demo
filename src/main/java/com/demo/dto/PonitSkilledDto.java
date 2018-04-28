@@ -22,8 +22,6 @@ public class PonitSkilledDto {
 	
 	public Integer exerciseCycle;//知识点当前练习周期
 	
-	public Integer skilled;//熟练度（0，1，2，3）
-	
 	public Integer state ;// state :答题状态（0：新增   1：上次答错    2：巩固）
 	
 	public Integer hidden;//隐藏状态   0：不隐藏    1：隐藏
@@ -106,14 +104,6 @@ public class PonitSkilledDto {
 
 	public void setExerciseCycle(Integer exerciseCycle) {
 		this.exerciseCycle = exerciseCycle;
-	}
-
-	public Integer getSkilled() {
-		return skilled;
-	}
-
-	public void setSkilled(Integer skilled) {
-		this.skilled = skilled;
 	}
 
 	public Integer getChapterId() {

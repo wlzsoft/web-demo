@@ -159,7 +159,6 @@ public class PointController {
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				dto.setSkilled(0);
 				dto.setExerciseCycle(0);
 				dto.setChapterSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());
 				dto.setSort((null==entity.getSort()||entity.getSort().equals(""))?0:entity.getSort());

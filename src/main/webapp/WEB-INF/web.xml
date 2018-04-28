@@ -63,8 +63,9 @@
             <param-value>
                   classpath:spring-servlet.xml
                   classpath:spring-mybatis.xml
+                  classpath:spring-redis.xml
 <!--                   classpath:spring-mongodb.xml
-                  classpath:spring-redis.xml -->
+                   -->
             </param-value>  
         </init-param>  
         <load-on-startup>1</load-on-startup>  

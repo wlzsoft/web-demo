@@ -75,11 +75,10 @@
 			   exerciseCycle=#{exerciseCycle},
 			   conCorrectNumber=#{conCorrectNumber},
 			   conErrorNumber=#{conErrorNumber},
-			   lastExerciseDate=#{lastExerciseDate},
+			   lastExerciseTime=#{lastExerciseTime},
 			   exerciseNumber=#{exerciseNumber},
 			   correctNumber=#{correctNumber},
-			   firstExerciseDate=#{firstExerciseDate},
-			   skilled=#{skilled},
+			   firstExerciseTime=#{firstExerciseTime},
 			   state=#{state},
 			   errorNumber=#{errorNumber}
 		     where pointId=#{pointId} and userId=#{userId}
@@ -232,7 +231,7 @@
 	  
 	  <select id="getDailyGoals" resultType="com.demo.dto.PointExerciseDetailDto">
 	      SELECT * FROM pointexercisedetail a 
-		  WHERE a.firstExerciseDate=#{toDate}
+		  WHERE a.firstExerciseTime=#{toDate}
 		   AND a.userId=#{userId}
 		   AND a.bookId=#{bookId}
 	  </select>

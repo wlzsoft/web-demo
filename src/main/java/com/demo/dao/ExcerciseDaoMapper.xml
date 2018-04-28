@@ -11,8 +11,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			b.state,
-			b.skilled
+			b.state
 		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
 			 AND t.pointId= a.id
@@ -23,7 +22,7 @@
 			 AND t.bookId=#{bookId}
 			 AND b.hidden=0
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<select id="excerciseError_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -52,7 +51,7 @@
 			   </foreach>
 		    </if>
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<!-- =================新知识训练    ================================================= --> 
@@ -80,7 +79,6 @@
 		    </if>
 		    AND t.exerciseNumber=0
 		    AND t.state=0
-		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
     </select>
@@ -103,7 +101,6 @@
 		    AND t.exerciseNumber=0
 		    AND t.state=0
 		    AND t.hidden=0
-		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
     </select>
@@ -128,7 +125,6 @@
 		    AND t.exerciseNumber>0
 		    AND t.state=2
 		    AND t.hidden=0
-		    AND t.skilled <![CDATA[ <= ]]> 1
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -136,7 +132,7 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="excerciseStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -148,8 +144,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state,
-			t.skilled
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.hidden=0
@@ -157,10 +152,9 @@
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
-		    AND t.skilled <![CDATA[ <= ]]> 1
 		    AND t.state=2
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
    <!-- =================强化训练    ================================================= --> 
@@ -181,7 +175,6 @@
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseCycle>0
-		    AND t.skilled =4
     	    <if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -189,7 +182,7 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY t.lastExerciseDate ASC  
+		  ORDER BY t.lastExerciseTime ASC  
     </select>
     
     <select id="excerciseIntensifyFull_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -201,8 +194,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state,
-			t.skilled
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.hidden=0
@@ -210,9 +202,8 @@
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
-		    AND t.skilled =4
 		    AND a.number>0
-		  ORDER BY t.lastExerciseDate ASC 
+		  ORDER BY t.lastExerciseTime ASC 
     </select>
     
       <select id="excerciseIntensify_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -241,7 +232,7 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="excerciseIntensify_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -253,8 +244,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state,
-			t.skilled
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -265,7 +255,7 @@
 		    AND t.hidden=0
 <!-- 		    AND t.skilled <![CDATA[ > ]]> 1 -->
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     
@@ -285,8 +275,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state,
-			t.skilled
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -295,7 +284,7 @@
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
      <!-- 添加APP 应用 -->
@@ -308,8 +297,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			t.state,
-			t.skilled
+			t.state
 		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
@@ -322,9 +310,8 @@
 			   </foreach>
 		    </if>
 		    AND t.exerciseNumber>0
-		    AND t.skilled <![CDATA[ < ]]> 4
 		    AND a.number>0
-		  ORDER BY t.skilled,t.nextExerciseTime, a.sort,a.id ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
    <select id="excerciseError_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -336,8 +323,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			b.state,
-			b.skilled
+			b.state
 		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
 			 AND t.pointId= a.id
@@ -353,7 +339,7 @@
 			   </foreach>
 		    </if>
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY b.skilled,a.sort,a.id,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<select id="excerciseNew_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -378,7 +364,6 @@
 			   </foreach>
 		    </if>
 		    AND t.exerciseCycle=0
-		    AND t.skilled=0
 		    AND a.number>0
 		  ORDER BY a.sort,a.id ASC 
     </select>
@@ -392,8 +377,7 @@
 			a.chapterSort,
 			a.number,
 			a.bookId,
-			b.state,
-			b.skilled
+			b.state
 		FROM point a,pointExerciseDetail b
 		WHERE b.userId=#{userId}
 			 AND b.pointId= a.id
