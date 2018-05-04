@@ -1,11 +1,14 @@
 package com.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import com.demo.comm.ConstantsUrl;
 import com.demo.dto.ImageUrlDto;
 import com.demo.qiniu.UploadManager;
 import com.demo.service.ImageResService;
+import com.demo.util.FileUtil;
 import com.demo.util.image.MD5Util;
 import com.pmp.entity.ImageResEntity;
 import com.qiniu.common.QiniuException;
@@ -32,6 +36,8 @@ import com.smartframe.dto.ResultObject;
 public class FileUpController {
 	@Autowired
 	private ImageResService imageResService;
+	
+	private FileItem fileItem;
 	
 	@RequestMapping("/uploadFile")
 	public Result<?> uploadImages(@RequestParam(value = "file") CommonsMultipartFile file,HttpServletRequest request ,HttpServletResponse response,String format){
@@ -77,7 +83,7 @@ public class FileUpController {
              }else{
             	 ResultObject.warnMessage("不上传失败，文件类型错误"); 
              }
-
+             
              /*
               * 检查文件是否已经存在
               * 如果存在就不再上传
