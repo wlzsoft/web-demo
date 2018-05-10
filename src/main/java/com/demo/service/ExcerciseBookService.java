@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.BookDao;
+import com.demo.dao.BookPriceDao;
 import com.demo.dao.PointDao;
 import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
+import com.demo.model.BookModel;
 import com.demo.util.ToolUtil;
 import com.pmp.entity.BookEntity;
+import com.pmp.entity.BookPriceEntity;
 
 @Service
 public class ExcerciseBookService {
@@ -24,26 +27,33 @@ public class ExcerciseBookService {
 	private SystemService systemService ;
 	
 	@Autowired
-	private BookDao excerciseBookDao;
+	private BookDao bookDao;
 	
 	@Autowired
 	private PointDao lorePointDao;
 	
+	@Autowired
+	private BookPriceDao bookPriceDao;
+	
 	@Transactional
-	public IdEntity bookSava(BookEntity entity){
-		entity.setCreateId(systemService.getCurrentUser().getId());
-		entity.setCreateTime(new Date());
-		excerciseBookDao.bookSava(entity);
+	public IdEntity bookSava(BookModel model){
+		model.setCreateId(systemService.getCurrentUser().getId());
+		model.setCreateTime(new Date());
+		bookDao.bookSava(model);
 		IdEntity identity = new IdEntity();	
-		identity.setId(entity.getId());
+		identity.setId(model.getId());
 
 		//建立练习本和 练习本分类关系
-		String bookClass = entity.getArea();
+		String bookClass = model.getArea();
 		String[] bookClassKeys = ToolUtil.toStringArry(bookClass);
 		if(bookClassKeys.length>0){
-			excerciseBookDao.addBook_class(entity.getId(), bookClassKeys);	
+			bookDao.addBook_class(model.getId(), bookClassKeys);	
 		}
-		
+		//建立练习本价格表
+/*		BookPriceEntity entityPrice = new BookPriceEntity();
+		entityPrice.setBookId(model.getId());
+		entityPrice.setPrice(model.price);
+		bookPriceDao.addBookPrice(entityPrice);*/
 		return identity;
 	}
 	
@@ -54,10 +64,10 @@ public class ExcerciseBookService {
 	 */
 	@Transactional
 	public int delBook(String bookId){
-		int count = excerciseBookDao.delBookById(bookId);
+		int count = bookDao.delBookById(bookId);
 		lorePointDao.delPoinDetailtByBookId(Integer.parseInt(bookId));
 		lorePointDao.delPointByBookId(Integer.parseInt(bookId));
-		excerciseBookDao.delBook_class(Integer.parseInt(bookId));
+		bookDao.delBook_class(Integer.parseInt(bookId));
 		return count;
 	}
 	
@@ -66,35 +76,35 @@ public class ExcerciseBookService {
 		entity.setUpdateTime(new Date());
 		entity.setUpdateDetailId(systemService.getCurrentUser().getId());
 		entity.setUpdateDetailTime(new Date());
-		int count = excerciseBookDao.editBook(entity);
+		int count = bookDao.editBook(entity);
 		//更新练习本对应的分类关系
-		excerciseBookDao.delBook_class(entity.getId());
+		bookDao.delBook_class(entity.getId());
 		//建立练习本和 练习本分类关系
 		String bookClass = entity.getArea();
 		String[] bookClassKeys = ToolUtil.toStringArry(bookClass);
 		if(bookClassKeys.length>0){
-			excerciseBookDao.addBook_class(entity.getId(), bookClassKeys);	
+			bookDao.addBook_class(entity.getId(), bookClassKeys);	
 		}
 		return count;
 	}
 	
 	public BookEntity findBook(String id){
-		BookEntity entity = excerciseBookDao.findBook(Integer.parseInt(id));
+		BookEntity entity = bookDao.findBook(Integer.parseInt(id));
 		return entity;
 	}
 	
 	public BookDto findBookById(String id){
-		BookDto entity = excerciseBookDao.findBookById(Integer.parseInt(id));
+		BookDto entity = bookDao.findBookById(Integer.parseInt(id));
 		return entity;
 	}
 	
 	public List<BookDto> searchAllExcercise(Integer userId){
-		List<BookDto> list = excerciseBookDao.searchAllExcercise(userId);
+		List<BookDto> list = bookDao.searchAllExcercise(userId);
 		return list;
 	}
 	
 	public List<PonitDto> findExcerciseIdToPonit(Integer bookId){
-		return excerciseBookDao.findExcerciseIdToPonit(bookId);
+		return bookDao.findExcerciseIdToPonit(bookId);
 	}
 
 	
@@ -105,14 +115,14 @@ public class ExcerciseBookService {
 	 */
 	public List<BookDto> getOpenBook(){
 		Integer userId =  systemService.getCurrentUser().getId();
-		List<BookDto> list = excerciseBookDao.getOpenBook(userId);
+		List<BookDto> list = bookDao.getOpenBook(userId);
 		return list;
 	}
 	
 	public BookProgressDto bookProgress(Integer bookId){
 		Integer userId =  systemService.getCurrentUser().getId();
-		Integer count = excerciseBookDao.bookProgress(bookId,userId);
-		Integer yes= excerciseBookDao.bookProgressYes(bookId,userId);
+		Integer count = bookDao.bookProgress(bookId,userId);
+		Integer yes= bookDao.bookProgressYes(bookId,userId);
 		DecimalFormat df=new DecimalFormat("0.00");
 		double progress =Double.valueOf(df.format((float)yes/count));
 		 BookProgressDto dto = new BookProgressDto();
@@ -127,7 +137,7 @@ public class ExcerciseBookService {
 	 * @return
 	 */
 	public BookEntity findBookByPointId(Integer pointId){
-		return excerciseBookDao.findBookByPointId(pointId);
+		return bookDao.findBookByPointId(pointId);
 	}
 	
     /**
@@ -136,7 +146,7 @@ public class ExcerciseBookService {
      * @return
      */
     public BookEntity findBookByCardId(Integer cardId){
-    	return excerciseBookDao.findBookByCardId(cardId);
+    	return bookDao.findBookByCardId(cardId);
 	}
     
     /**
@@ -146,19 +156,19 @@ public class ExcerciseBookService {
      */
     public void updateDetailBybookId(Integer bookId){
     	Integer userId =  systemService.getCurrentUser().getId();
-    	excerciseBookDao.updateDetail(bookId, userId, new Date());
+    	bookDao.updateDetail(bookId, userId, new Date());
     }
     
     public void updateDetailBycardId(Integer cardId){
     	Integer userId =  systemService.getCurrentUser().getId();
     	BookEntity entity = findBookByCardId(cardId);
-    	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
+    	bookDao.updateDetail(entity.getId(), userId, new Date());
     }
     
     public void updateDetailByPointId(Integer pointId){
     	Integer userId =  systemService.getCurrentUser().getId();
     	BookEntity entity = findBookByPointId(pointId);
-    	excerciseBookDao.updateDetail(entity.getId(), userId, new Date());
+    	bookDao.updateDetail(entity.getId(), userId, new Date());
     }
     
     

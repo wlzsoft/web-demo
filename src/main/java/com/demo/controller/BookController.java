@@ -21,6 +21,7 @@ import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitSkilledDto;
 import com.demo.dto.UserBookDto;
+import com.demo.model.BookModel;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.ExcerciseService;
 import com.demo.service.LorePointService;
@@ -81,7 +82,7 @@ public class BookController {
 	 * @return
 	 */
 	@RequestMapping("/addBook")
-	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,BookEntity entity){
+	public Result<?> savaExcercise(HttpServletRequest request ,HttpServletResponse response,BookModel entity){
 		
 		if(null==entity.getBookName()||entity.getBookName().equals("")){
 			return ResultObject.warnMessage("练习本名称不能为空");

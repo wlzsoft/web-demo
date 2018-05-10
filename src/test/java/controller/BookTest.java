@@ -30,7 +30,7 @@ public class BookTest {
 			entity.setCreateTime(new Date());
 			entity.setBookName("魅族科技_"+i);
 			entity.setSharedType(0);
-			excerciseService.bookSava(entity);	
+			//excerciseService.bookSava(entity);	
 		}
 	}
 	

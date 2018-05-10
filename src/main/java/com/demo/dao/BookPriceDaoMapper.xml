@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.BookPriceDao">
+	
+	<insert id="addBookPrice" parameterType="com.pmp.entity.BookPriceEntity" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO bookprice(
+					bookId,
+					price,
+					vipLevel,
+					startTime,
+					endTime,
+					createTime,
+					createId,
+					status
+			)VALUES(
+					#{bookName},
+					#{bookId},
+					#{price},
+					#{vipLevel},
+					#{startTime},
+					#{endTime},
+					#{createTime},
+					#{createId},
+					#{status}
+			)
+	</insert>
+	
+	<update id="updateBookPrice" parameterType="com.pmp.entity.BookPriceEntity">
+		 UPDATE bookprice set
+			   <if test="price !=null" >price=#{price},</if>
+			   <if test="startTime !=null">startTime=#{startTime},</if>
+			   <if test="endTime !=null">endTime=#{endTime},</if>
+			   <if test="updateTime !=null">updateTime=#{updateTime},</if>
+			   <if test="updateId !=null">updateId=#{updateId}</if>
+		   WHERE bookId=#{bookId}
+	</update>
+	
+</mapper>

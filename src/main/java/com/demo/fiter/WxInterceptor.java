@@ -19,12 +19,14 @@ public class WxInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		//获取请求的URL 
 		String url = request.getRequestURI(); 
-		if(url.indexOf("/login")>=0){ 
+		System.out.println("请求地址："+url);
+		if(url.indexOf("/wxlogin")>=0){ 
 		    return true;    
 		}
 		String  rdSessionKey= request.getParameter("sessionid"); 
 		String openId = (String)redisStringDao.get(rdSessionKey);
-		if(openId != null){
+		System.out.println("WX登录拦截到openId:"+openId);
+		if(null!=openId||!"".equals(openId)){
 		  return true; 
 		}
 		response.setStatus(401);

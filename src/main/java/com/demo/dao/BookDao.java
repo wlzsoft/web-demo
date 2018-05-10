@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.dto.BookDto;
 import com.demo.dto.PonitDto;
+import com.demo.model.BookModel;
 import com.pmp.entity.BookEntity;
 
 
 @Repository
 public interface BookDao {
 
-	public void bookSava(BookEntity entity);
+	public void bookSava(BookModel entity);
 	
 	public int delBookById(@Param("bookId")String bookId);
 	

@@ -183,6 +183,7 @@ public class LorePointService {
 					pointDetail.setPointId(entity.getId());
 					pointDetail.setBookId(bookId);
 					pointDetail.setNextExerciseTime(new Date());
+					pointDetail.setNextUpdateTime(new Date());
 					//pointDetail.setSkilled(0);
 					pointDetail.setExerciseCycle(0);
 					pointDetail.setState(0);

@@ -55,11 +55,13 @@ public class WxController {
 		}else{
 			JSONObject objret = new JSONObject();
 			String JSCODE=req.getCode();
+			logger.info("请求code:"+JSCODE);
 			//String JSCODE="0034M26C1RCoa30dtd7C1CUh6C14M267";
 			String url="https://api.weixin.qq.com/sns/jscode2session?appid="+APPID+"&secret="+SECRET+"&js_code="+JSCODE+"&grant_type=authorization_code";
 			 RestTemplate restTemplate = new RestTemplate();  
 		     ResponseEntity<String>  responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-		     if(responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {  
+		     if(responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
+		    	    logger.info("调取WX接口成功");
 		            String sessionData = responseEntity.getBody();  
 		            logger.info("sessionData = "+ sessionData);  
 		            JSONObject jsonObj = JSONObject.fromObject(sessionData);  
