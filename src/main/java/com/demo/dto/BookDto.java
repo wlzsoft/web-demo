@@ -26,6 +26,8 @@ public class BookDto {
 	public float progress;//练习本进度
 	
 	public Date lastTime;//上次练习时间
+	
+	public Integer dailyGoal ;//练习本练习目标
 
 	public Integer getId() {
 		return id;
@@ -113,6 +115,14 @@ public class BookDto {
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
+	}
+
+	public Integer getDailyGoal() {
+		return dailyGoal;
+	}
+
+	public void setDailyGoal(Integer dailyGoal) {
+		this.dailyGoal = dailyGoal;
 	}
 	
 }

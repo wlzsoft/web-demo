@@ -72,6 +72,7 @@
 					pointId,
 					bookId,
 					nextExerciseTime,
+					nextUpdateTime,
 					state
 			)VALUES
 			<foreach collection="entityList" item="item" index="index" separator=",">
@@ -80,6 +81,7 @@
 				 #{item.pointId},
 				 #{item.bookId},
 				 #{item.nextExerciseTime},
+				 #{item.nextUpdateTime},
 				 #{item.state}
 				)
 			</foreach>

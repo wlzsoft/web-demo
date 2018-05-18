@@ -21,6 +21,7 @@ import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitSkilledDto;
 import com.demo.dto.UserBookDto;
+import com.demo.dto.UserBookInfoDto;
 import com.demo.model.BookModel;
 import com.demo.service.ExcerciseBookService;
 import com.demo.service.ExcerciseService;
@@ -30,6 +31,7 @@ import com.demo.service.SystemService;
 import com.demo.service.UserBookService;
 import com.demo.service.UtilService;
 import com.pmp.entity.BookEntity;
+import com.pmp.entity.PointExerciseDetailEntity;
 import com.pmp.entity.UserBookEntity;
 import com.smartframe.dto.Result;
 import com.smartframe.dto.ResultObject;
@@ -241,7 +243,7 @@ public class BookController {
 			for(PointNumDto dto:dtoList){
 				BookNumDto bookNum =new BookNumDto();
 				bookNum.setBookId(dto.getBookId());
-				
+				bookNum.setBookName(dto.getBookName());
 				//1、查询练习本下所有知识点
 				List<PonitSkilledDto> pointList1 =lorePointDao.findBookIdToPonit_card(dto.getBookId(),userId);
 				bookNum.setPointNum(pointList1.size());
@@ -278,7 +280,8 @@ public class BookController {
 					bookNum.setExNum(dto.getExIntensifyNum());//强化
 					bookNum.setState(3 ); // 3：强化   
 				}
-				
+				PointExerciseDetailEntity entity = bookService.findUserExBook(userId, dto.getBookId());
+				bookNum.setNextExerciseTime(entity.getNextExerciseTime());
 				bookNum.setContinueNum(0);
 				bookDtoList.add(bookNum);
 			}
@@ -489,7 +492,18 @@ public class BookController {
 		
 	}
 	
-	
-	
+	/**
+	 * 获取用户练习本 目标数量、练习本是否隐藏
+	 * @param request
+	 * @param response
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping("/bookExNum")
+	public Result<?> bookExNum(HttpServletRequest request ,HttpServletResponse response){
+		Integer userId = systemService.getCurrentUser().getId();
+		UserBookInfoDto dto = bookService.getBookExNum(userId);
+		return ResultObject.successObject(dto, null); 
+	}	
 	
 }

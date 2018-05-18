@@ -69,7 +69,7 @@ public class SystemService  {
 			return null;
 		}
 		String openId = (String)redisStringDao.get(rdSessionKey);
-        if(null==openId||openId.equals("")){
+        if(null==openId&&openId.equals("")){
         	return null;
         }
         UserDto dto = (UserDto) redisStringDao.get("userCur_"+openId);

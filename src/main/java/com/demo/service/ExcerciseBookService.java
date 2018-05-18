@@ -15,10 +15,13 @@ import com.demo.dto.BookDto;
 import com.demo.dto.BookProgressDto;
 import com.demo.dto.IdEntity;
 import com.demo.dto.PonitDto;
+import com.demo.dto.UserBookInfoDto;
 import com.demo.model.BookModel;
 import com.demo.util.ToolUtil;
 import com.pmp.entity.BookEntity;
-import com.pmp.entity.BookPriceEntity;
+import com.pmp.entity.PointEntity;
+import com.pmp.entity.PointExerciseDetailEntity;
+import com.pmp.entity.UserBookEntity;
 
 @Service
 public class ExcerciseBookService {
@@ -34,6 +37,9 @@ public class ExcerciseBookService {
 	
 	@Autowired
 	private BookPriceDao bookPriceDao;
+	
+	@Autowired
+	private UserBookService userBookService;
 	
 	@Transactional
 	public IdEntity bookSava(BookModel model){
@@ -109,6 +115,15 @@ public class ExcerciseBookService {
 
 	
 	/**
+	 * 根据用户ID ，bookId  查询出 用户最近需要练习的知识点时间
+	 * @param userId
+	 * @return
+	 */
+	public PointExerciseDetailEntity findUserExBook(Integer userId,Integer bookId){
+		return bookDao.findUserExBook(userId,bookId);
+	}
+	
+	/**
 	 * 获取所有共享类型练习本
 	 * 注：不包含自己所共享出现的练习本
 	 * @return
@@ -171,7 +186,22 @@ public class ExcerciseBookService {
     	bookDao.updateDetail(entity.getId(), userId, new Date());
     }
     
-    
+    /**
+     * 根据用户获取 练习本的总数  ，知识点的总数
+     * @param userId
+     * @return
+     */
+    public UserBookInfoDto getBookExNum(Integer userId){
+    	//查询用户所订阅的所有练习本
+    	List<UserBookEntity> userBookList = userBookService.findUserBookList(userId);
+    	//产线用户所订阅的所有练习本下所有知识点
+    	List<PointEntity> pointList = userBookService.findUserPointList(userId);
+    	UserBookInfoDto dto = new UserBookInfoDto();
+    	    dto.setBookNum(userBookList.size());
+    	    dto.setPointNum(pointList.size());
+    	    dto.setUserId(userId);
+    	 return dto;
+    }
     
  
 

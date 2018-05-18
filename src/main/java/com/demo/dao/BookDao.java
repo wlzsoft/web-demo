@@ -10,6 +10,7 @@ import com.demo.dto.BookDto;
 import com.demo.dto.PonitDto;
 import com.demo.model.BookModel;
 import com.pmp.entity.BookEntity;
+import com.pmp.entity.PointExerciseDetailEntity;
 
 
 @Repository
@@ -75,6 +76,13 @@ public interface BookDao {
     
     public void delBook_class(@Param("bookId")Integer bookId);
     
+    
+	/**
+	 * 根据用户ID 查询出 用户最近需要练习的知识点时间
+	 * @param userId
+	 * @return
+	 */
+	public PointExerciseDetailEntity findUserExBook(@Param("userId")Integer userId,@Param("bookId")Integer bookId);
     
     
     

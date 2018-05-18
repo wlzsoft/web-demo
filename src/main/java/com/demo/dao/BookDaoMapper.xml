@@ -68,6 +68,7 @@
 			a.remark,
 			a.progress,
 			a.lastTime,
+			a.dailyGoal,
 			b.username AS createName
 		from book t  ,userbook a,userinfo b where a.bookId=t.id and t.createId=b.id and a.userId=#{userId}
 	</select>
@@ -133,5 +134,12 @@
    <delete id="delBook_class" parameterType="java.lang.Integer">
       DELETE FROM  book_bookclass  where bookId=#{bookId}
    </delete>
+   
+   <select id="findUserExBook" parameterType="java.lang.Integer" resultType="com.pmp.entity.PointExerciseDetailEntity">
+      SELECT b.* FROM pointexercisedetail b 
+          WHERE b.bookId =#{bookId}
+            AND b.userId=#{userId}
+          ORDER BY b.nextExerciseTime ,b.id ASC LIMIT 1
+   </select>
      
 </mapper>

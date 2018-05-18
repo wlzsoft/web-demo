@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.demo.dao.UserBookDao;
 import com.demo.dto.UserBookDto;
+import com.pmp.entity.PointEntity;
 import com.pmp.entity.UserBookEntity;
 
 @Service
@@ -93,5 +94,14 @@ public class UserBookService {
 		return userBookDao.findUserBook(userId, bookId);
 	}
 	
-
+	//查询用户所订阅的所有练习本
+	public List<UserBookEntity> findUserBookList(Integer userId){
+		return userBookDao.findUserBookList(userId);
+	}
+	//查询用户所订阅的所有练习本下所有知识点
+	public List<PointEntity> findUserPointList(Integer userId){
+		return userBookDao.findUserPointList(userId);
+	}
+	
+	
 }

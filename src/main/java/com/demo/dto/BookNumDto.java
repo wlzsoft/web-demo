@@ -1,5 +1,7 @@
 package com.demo.dto;
 
+import java.util.Date;
+
 /**
  * 练习本 练习信息对象
  * @author Administrator
@@ -8,6 +10,8 @@ package com.demo.dto;
 public class BookNumDto{
 	
 	public Integer bookId;
+	
+	public String bookName;
 	
 	public Integer dailyGoal;//每日目标
 	
@@ -22,6 +26,17 @@ public class BookNumDto{
 	public Integer state;//状态  0：新增   1：上次答错    2：巩固    
 	
 	public Integer exNum;//需练习的数量
+	
+	public Date nextExerciseTime;//练习本下最近需要练习的知识点的下次练习时间
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
 
 	public Integer getContinueNum() {
 		return continueNum;
@@ -89,4 +104,13 @@ public class BookNumDto{
 	public void setExNum(Integer exNum) {
 		this.exNum = exNum;
 	}
+
+	public Date getNextExerciseTime() {
+		return nextExerciseTime;
+	}
+
+	public void setNextExerciseTime(Date nextExerciseTime) {
+		this.nextExerciseTime = nextExerciseTime;
+	}
+	
 }

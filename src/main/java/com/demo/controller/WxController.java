@@ -35,12 +35,7 @@ public class WxController {
 	
 	public static boolean initialized = false;
 	
-	//wlz
-	private static final String APPID="wx5b3c6776c8d2028f";
-	private static final String SECRET="fb59d323b7251efb2ab7a2929d54e771";
-	
-/*	private static final String APPID="wx618e74db9875dada";
-	private static final String SECRET="58c0afffda3f84a205c060a2518ad123";*/
+
 	
 	@Autowired
 	private UserService userService;
@@ -57,7 +52,7 @@ public class WxController {
 			String JSCODE=req.getCode();
 			logger.info("请求code:"+JSCODE);
 			//String JSCODE="0034M26C1RCoa30dtd7C1CUh6C14M267";
-			String url="https://api.weixin.qq.com/sns/jscode2session?appid="+APPID+"&secret="+SECRET+"&js_code="+JSCODE+"&grant_type=authorization_code";
+			 String url="https://api.weixin.qq.com/sns/jscode2session?appid="+APPID+"&secret="+SECRET+"&js_code="+JSCODE+"&grant_type=authorization_code";
 			 RestTemplate restTemplate = new RestTemplate();  
 		     ResponseEntity<String>  responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
 		     if(responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -68,7 +63,7 @@ public class WxController {
 		            if(jsonObj.containsKey("errcode")){
 		            	String errcode = jsonObj.get("errcode").toString();
 		                logger.info("微信返回的错误码{}", errcode);
-		            	return ResultObject.warnMessage(jsonObj.getString("errmsg"));
+		            	return ResultObject.warnMessage("错误编码："+errcode+" 错误信息："+jsonObj.getString("errmsg"));
 		            }else if(jsonObj.containsKey("session_key")){
 		            	logger.info("调微信成功");
 		            	String openId = jsonObj.getString("openid");  //获取openId

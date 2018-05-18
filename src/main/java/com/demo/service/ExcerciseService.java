@@ -10,6 +10,7 @@ import com.demo.dao.ExcerciseDao;
 import com.demo.dto.CardDto;
 import com.demo.dto.PointNumDto;
 import com.demo.dto.PonitDto;
+import com.pmp.entity.BookEntity;
 
 @Service
 public class ExcerciseService {
@@ -26,6 +27,9 @@ public class ExcerciseService {
 	
 	@Autowired
 	private LoreCradService cradService;
+	
+	@Autowired
+	private ExcerciseBookService bookService;
 	
 	private final int COUNT=20;
 	
@@ -380,6 +384,8 @@ public class ExcerciseService {
 			List<PonitDto> pointList_intensify = excerciseDao.excerciseIntensify_bookId(bookId, userId);
 			    dto.setExIntensifyNum(pointList_intensify.size());//强化
 				dto.setBookId(bookId);
+			BookEntity bookDto = bookService.findBook(bookId.toString());
+				dto.setBookName(bookDto.getBookName());
 				pintNumList.add(dto);
 		}
 		return pintNumList;

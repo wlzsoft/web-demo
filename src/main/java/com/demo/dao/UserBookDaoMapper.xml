@@ -70,4 +70,12 @@
 	     and t.userId=#{userId}
 	</select>
     
+    <select id="findUserBookList" parameterType="java.lang.Integer" resultType="com.pmp.entity.UserBookEntity">
+        select * from userbook where userId=#{userId}
+    </select>
+    
+    <select id="findUserPointList" parameterType="java.lang.Integer" resultType="com.pmp.entity.PointEntity">
+        SELECT b.* FROM userbook a ,point b WHERE a.bookId=b.bookId AND a.userId=#{userId}
+    </select>
+    
 </mapper>

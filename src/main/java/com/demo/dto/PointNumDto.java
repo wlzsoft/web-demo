@@ -4,6 +4,8 @@ public class PointNumDto {
 	
 	public Integer bookId;
 	
+	public String bookName;
+	
 	public Integer exErrorNum;//错题数
 	
 	public Integer exNewNum;//新题数
@@ -51,5 +53,14 @@ public class PointNumDto {
 	public void setExIntensifyNum(Integer exIntensifyNum) {
 		this.exIntensifyNum = exIntensifyNum;
 	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	
 	
 }

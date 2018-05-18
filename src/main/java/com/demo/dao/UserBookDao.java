@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dto.UserBookDto;
+import com.pmp.entity.PointEntity;
 import com.pmp.entity.UserBookEntity;
 
 @Repository
@@ -63,5 +64,13 @@ public interface UserBookDao {
 	 * @param bookId
 	 */
 	public UserBookDto findUserBook(@Param("userId")Integer userId ,@Param("bookId")Integer bookId);
+	
+	
+	//查询用户所订阅的所有练习本
+	public List<UserBookEntity> findUserBookList(@Param("userId")Integer userId);
+	
+	//查询用户所订阅的所有练习本下所有知识点
+	public List<PointEntity> findUserPointList(@Param("userId")Integer userId);
+	
 
 }

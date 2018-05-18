@@ -26,7 +26,7 @@ public class WxInterceptor implements HandlerInterceptor{
 		String  rdSessionKey= request.getParameter("sessionid"); 
 		String openId = (String)redisStringDao.get(rdSessionKey);
 		System.out.println("WX登录拦截到openId:"+openId);
-		if(null!=openId||!"".equals(openId)){
+		if(null!=openId&&!"".equals(openId)){
 		  return true; 
 		}
 		response.setStatus(401);
