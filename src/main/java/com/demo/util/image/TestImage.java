@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class TestImage {
 	
-    @Test
+    
     public void testCompare() throws IOException{
         String url_1="d:\\tmp\\1.jpg";
         String url_2="d:\\tmp\\1-2.jpg";

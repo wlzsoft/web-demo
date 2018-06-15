@@ -98,7 +98,12 @@ public class PractiseController {
 				}
 				
 				PointExerciseDetailDto entity = pointDao.pointIdByDetail(dto.getPointId(),userId);
-				dto.setPointState(entity.getState());
+				if(null==entity){
+					dto.setPointState(0);
+				}else{
+					dto.setPointState(entity.getState());	
+				}
+				
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

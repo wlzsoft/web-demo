@@ -33,6 +33,9 @@ public class RecommendService {
 	@Autowired
 	private UtilService utilService;
 	
+	@Autowired
+	private CacheObjectService cacheObjectService;
+	
 	
 	
 	/**智能排序算法修改（2018-04-24）
@@ -56,7 +59,8 @@ public class RecommendService {
 				for(int i=0;i<chapterId_arry.length;i++){
 					chapter[i]=Integer.parseInt(chapterId_arry[i]);
 				}
-			 List<PonitDto> pointList_cp=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId);
+			 Integer bookVer = Integer.valueOf(cacheObjectService.getBookVer(bookId.toString()));//获取练习当前版本号
+			 List<PonitDto> pointList_cp=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId,bookVer);
 			 List<CardDto> cardList_cp = excerciseService.getRoundCard(pointList_cp, COUNT);
 			 cardListAll.addAll(cardList_cp);
 			}
@@ -74,10 +78,13 @@ public class RecommendService {
 	 */
 	public List<CardDto> excerciseCard(Integer userId,Integer bookId,String chapterIds){
 		List<CardDto> cardListAll = new ArrayList<>();
+		
+		Integer bookVer = Integer.valueOf(cacheObjectService.getBookVer(bookId.toString()));//获取练习当前版本号
+		
 		if(null==chapterIds||chapterIds.equals("")){
 			LOGGER.info("按练习本来获取练习本知识点.....");
            //****1、先查询是否有错题
-			List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId);
+			List<PonitDto> pointList_error =  excerciseDao.excerciseError_bookId(bookId, userId,bookVer);
 			List<CardDto> cardList_error = excerciseService.getCardAlgorithm(pointList_error, COUNT);
 			cardListAll.addAll(cardList_error);
 			if(cardListAll.size()>=COUNT){
@@ -85,7 +92,7 @@ public class RecommendService {
 			 }
 			 
 		   //****2、再查询是否有需要巩固复习的知识点
-			 List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId);
+			 List<PonitDto> pointList_strenthen = excerciseDao.excerciseStrenthen_bookId(bookId, userId,bookVer);
 			 List<CardDto> cardList_strenthen = excerciseService.getCardAlgorithm(pointList_strenthen, COUNT-cardListAll.size());
 			 cardListAll.addAll(cardList_strenthen);
 			 if(cardListAll.size()>=COUNT){
@@ -105,7 +112,7 @@ public class RecommendService {
 				//还继续需要完成 知识点的数量
 				 Integer count=dailyGoalsNumber-completeNuber; 
 				 
-				 List<PonitDto> pointList_new = excerciseDao.excerciseNew_bookId(bookId, userId);
+				 List<PonitDto> pointList_new = excerciseDao.excerciseNew_bookId(bookId, userId,bookVer);
 				 
 				 List<PonitDto> pointCountList = new ArrayList<PonitDto>();
 				 if(pointList_new.size()>count){
@@ -133,14 +140,14 @@ public class RecommendService {
 				}
 
 				//****1、先查询是否有错题
-					List<PonitDto> pointList_error=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId);
+					List<PonitDto> pointList_error=excerciseDao.excerciseError_chapterIds(bookId, chapter, userId,bookVer);
 					List<CardDto> cardList_error = excerciseService.getCardAlgorithm(pointList_error, COUNT);
 					cardListAll.addAll(cardList_error);
 					if(cardListAll.size()>=COUNT){
 						 return cardListAll;
 					 }
 			    //****2、再查询是否有需要巩固的知识点
-					List<PonitDto> pointList_strenthen =excerciseDao.excerciseStrenthen_chapterIds(bookId, chapter, userId);
+					List<PonitDto> pointList_strenthen =excerciseDao.excerciseStrenthen_chapterIds(bookId, chapter, userId,bookVer);
 					List<CardDto> cardList_strenthen = excerciseService.getCardAlgorithm(pointList_strenthen, COUNT-cardListAll.size());
 					 cardListAll.addAll(cardList_strenthen);
 					 if(cardListAll.size()>=COUNT){
@@ -160,7 +167,7 @@ public class RecommendService {
 						//还继续需要完成 知识点的数量
 						 Integer count=dailyGoalsNumber-completeNuber; 
 						 
-						 List<PonitDto> pointList_new =excerciseDao.excerciseNew_chapterIds(bookId, chapter, userId);
+						 List<PonitDto> pointList_new =excerciseDao.excerciseNew_chapterIds(bookId, chapter, userId,bookVer);
 						 
 						 List<PonitDto> pointCountList = new ArrayList<PonitDto>();
 						 if(pointList_new.size()>count){

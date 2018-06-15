@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.demo.dto.PointExerciseDetailDto;
 import com.demo.dto.PonitDto;
 import com.demo.dto.PonitSkilledDto;
+import com.pmp.entity.BookEntity;
 import com.pmp.entity.PointEntity;
 import com.pmp.entity.PointExerciseDetailEntity;
 
@@ -35,7 +36,9 @@ public interface PointDao {
 	 * @param id 知识点Id
 	 * @return
 	 */
-	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer id,@Param("userId")Integer userId);
+	public PointExerciseDetailDto findPointIdByDetail(@Param("id")Integer pointId,
+														@Param("userId")Integer userId,
+														@Param("bookVer")Integer bookVer);
 	
 
 	/**
@@ -44,7 +47,8 @@ public interface PointDao {
 	 * @param userId
 	 * @return
 	 */
-	public PointExerciseDetailDto pointIdByDetail(@Param("pointId")Integer pointId,@Param("userId")Integer userId);
+	public PointExerciseDetailDto pointIdByDetail(@Param("pointId")Integer pointId,
+												@Param("userId")Integer userId);
 	
 	public void addPointDetail(PointExerciseDetailEntity entity);
 	
@@ -133,5 +137,6 @@ public interface PointDao {
 	public int hidePoint(@Param("pointIdArray")Integer[] pointIdArray,@Param("state") Integer state,@Param("userId")Integer userId);
 	
 	
+	public BookEntity findBookBypointId(@Param("pointId")Integer pointId);
 	
 }

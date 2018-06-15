@@ -33,8 +33,8 @@ public class SystemService  {
 		if(ra != null) {
 			request = ((ServletRequestAttributes)ra).getRequest(); 
 		}
-	    //return getCurrentUser(request);
-		return getWxCurrentUser(request);
+	    return getCurrentUser(request);
+		//return getWxCurrentUser(request);
 	}
 	
 	

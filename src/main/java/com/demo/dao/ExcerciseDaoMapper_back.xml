@@ -4,7 +4,7 @@
   
    <select id="excerciseError_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
-			a.pointId AS id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -12,23 +12,22 @@
 			a.number,
 			a.bookId,
 			b.state
-		FROM errorwarehouse t ,point_branch a,pointExerciseDetail b
+		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
-			 AND t.pointId= a.pointId
+			 AND t.pointId= a.id
 			 AND t.pointId=b.pointId
 			 AND t.userId=b.userId
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
 			 AND t.bookId=#{bookId}
 			 AND b.hidden=0
-			 AND a.version=#{bookVer}
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY a.sort,a.pointId,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<select id="excerciseError_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
-			a.pointId AS id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -36,16 +35,15 @@
 			a.number,
 			a.bookId,
 			b.state
-		FROM errorwarehouse t ,point_branch a,pointExerciseDetail b
+		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
-			 AND t.pointId= a.pointId
+			 AND t.pointId= a.id
 			 AND t.pointId=b.pointId
 			 AND t.userId=b.userId
 			 AND t.bookId=a.bookId
 			 AND t.isRight=0
 			 AND b.hidden=0
 			 AND t.bookId=#{bookId}
-			 AND a.version=#{bookVer}
 			<if test="chapterId !=null and chapterId !='' ">
 		        and a.chapterId in 
 		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
@@ -53,62 +51,13 @@
 			   </foreach>
 		    </if>
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY a.sort,a.pointId,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<!-- =================新知识训练    ================================================= --> 
     <select id="excerciseNew_chapterIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-       SELECT 
-			a.pointId id,
-			a.pointName,
-			a.sort,
-			a.chapterId,
-			a.chapterSort,
-			a.number,
-			a.bookId,
-      		0 as state 
-		 FROM point_branch a 
-		 WHERE a.bookId=#{bookId}
-		   AND a.number>0
-		   AND a.version=#{bookVer}
-    	   <if test="chapterId !=null and chapterId !='' ">
-		        and a.chapterId in 
-		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
-				  #{id}
-			   </foreach>
-		    </if>
-		   AND a.pointId not IN (
-		       SELECT t.pointId 
-		       FROM pointExerciseDetail t
-		       WHERE t.bookId=#{bookId} 
-		        AND t.userId=#{userId} 
-		        AND t.hidden=0)
-		ORDER BY a.sort,a.pointId ASC 
-    </select>
-    
-    <select id="excerciseNew_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-		 SELECT 
-			a.pointId id,
-			a.pointName,
-			a.sort,
-			a.chapterId,
-			a.chapterSort,
-			a.number,
-			a.bookId,
-      		0 as state 
-		 FROM point_branch a 
-		 WHERE a.bookId=#{bookId}
-		   AND a.number>0
-		   AND a.version=#{bookVer}
-		   AND a.pointId not IN (SELECT t.pointId FROM pointExerciseDetail t WHERE t.bookId=#{bookId} AND t.userId=#{userId} AND t.hidden=0)
-		ORDER BY a.sort,a.pointId ASC 
-    </select>
-    
-    <!-- =================巩固训练    ================================================= --> 
-    
-    <select id="excerciseStrenthen_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
-    	 SELECT 
-			a.pointId as id ,
+		  SELECT 
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -116,10 +65,61 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
-		    AND a.version=#{bookVer}
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.hidden=0
+    	    <if test="chapterId !=null and chapterId !='' ">
+		        and a.chapterId in 
+		       <foreach collection="chapterId" item="id" index="index" open="(" close=")" separator=",">
+				  #{id}
+			   </foreach>
+		    </if>
+		    AND t.exerciseNumber=0
+		    AND t.state=0
+		    AND a.number>0
+		  ORDER BY a.sort,a.id ASC 
+    </select>
+    
+    <select id="excerciseNew_bookId" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+         SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
+		    AND t.userId=#{userId}
+		    AND t.bookId=#{bookId}
+		    AND t.exerciseNumber=0
+		    AND t.state=0
+		    AND t.hidden=0
+		    AND a.number>0
+		  ORDER BY a.sort,a.id ASC 
+    </select>
+    
+    <!-- =================巩固训练    ================================================= --> 
+    
+    <select id="excerciseStrenthen_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
+    	 SELECT 
+			a.id ,
+			a.pointName,
+			a.sort,
+			a.chapterId,
+			a.chapterSort,
+			a.number,
+			a.bookId,
+			t.state
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
+		    AND t.bookId=a.bookId
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -132,12 +132,12 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="excerciseStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId AS id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -145,23 +145,22 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.hidden=0
 		    AND t.bookId=a.bookId
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND t.state=2
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
    <!-- =================强化训练    ================================================= --> 
    <select id="excerciseIntensifyFull_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -169,11 +168,10 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.hidden=0
 		    AND t.bookId=a.bookId
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseCycle>0
@@ -189,7 +187,7 @@
     
     <select id="excerciseIntensifyFull_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -197,11 +195,10 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
+		  FROM pointExerciseDetail t ,point a 
 		  WHERE t.pointId=a.id
 		    AND t.hidden=0
 		    AND t.bookId=a.bookId
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -211,7 +208,7 @@
     
       <select id="excerciseIntensify_chapterIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -219,11 +216,10 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
 		    AND t.hidden=0
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -236,12 +232,12 @@
 			   </foreach>
 		    </if>
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     <select id="excerciseIntensify_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -249,10 +245,9 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
@@ -260,23 +255,20 @@
 		    AND t.hidden=0
 <!-- 		    AND t.skilled <![CDATA[ > ]]> 1 -->
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
     
     <select id="findCardByPoindId" parameterType="java.lang.Integer" resultType="com.demo.dto.CardDto">
-          select t.cardId as id,t.pointId ,b.pointName ,t.cardData
-          from card_branch t ,point_branch b  
-          where  t.pointId=b.pointId 
-          	AND a.version=#{bookVer} 
-          	and t.pointId=#{pointId} 
-          	AND b.number>0
+          select t.id,t.pointId ,b.pointName ,t.cardData
+          from card t ,point b  
+          where  t.pointId=b.id and t.pointId=#{pointId} AND b.number>0
     </select> 
     
     
     <select id="findStrenthen_bookId"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -284,22 +276,21 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
 		    AND t.hidden=0
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    AND t.bookId=#{bookId}
 		    AND t.exerciseNumber>0
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
      <!-- 添加APP 应用 -->
     <select id="excerciseStrenthen_bookIds"  parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
     	 SELECT 
-			aa.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -307,11 +298,10 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
 		    AND t.hidden=0
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    <if test="bookId !=null and bookId !='' ">
 		        AND t.bookId in 
@@ -321,12 +311,12 @@
 		    </if>
 		    AND t.exerciseNumber>0
 		    AND a.number>0
-		  ORDER BY t.nextExerciseTime, a.sort,a.pointId ASC 
+		  ORDER BY t.nextExerciseTime, a.sort,a.id ASC 
     </select>
     
    <select id="excerciseError_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -334,14 +324,13 @@
 			a.number,
 			a.bookId,
 			b.state
-		FROM errorwarehouse t ,point_branch a,pointExerciseDetail b
+		FROM errorwarehouse t ,point a,pointExerciseDetail b
 			WHERE t.userId=#{userId}
-			 AND t.pointId= a.pointId
+			 AND t.pointId= a.id
 			 AND t.pointId=b.pointId
 			 AND t.userId=b.userId
 			 AND t.hidden=0
 			 AND t.bookId=a.bookId
-			 AND a.version=#{bookVer}
 			 AND t.isRight=0
 			<if test="bookId !=null and bookId !='' ">
 		        AND t.bookId in 
@@ -350,12 +339,12 @@
 			   </foreach>
 		    </if>
 		  GROUP BY t.bookId,t.pointId
-		  ORDER BY a.sort,a.pointId,t.createTime ASC 
+		  ORDER BY a.sort,a.id,t.createTime ASC 
 	</select>
 	
 	<select id="excerciseNew_bookIds" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
          SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -363,11 +352,10 @@
 			a.number,
 			a.bookId,
 			t.state
-		  FROM pointExerciseDetail t ,point_branch a 
-		  WHERE t.pointId=a.pointId
+		  FROM pointExerciseDetail t ,point a 
+		  WHERE t.pointId=a.id
 		    AND t.bookId=a.bookId
 		    AND t.hidden=0
-		    AND a.version=#{bookVer}
 		    AND t.userId=#{userId}
 		    <if test="bookId !=null and bookId !='' ">
 		        AND t.bookId in 
@@ -377,12 +365,12 @@
 		    </if>
 		    AND t.exerciseCycle=0
 		    AND a.number>0
-		  ORDER BY a.sort,a.pointId ASC 
+		  ORDER BY a.sort,a.id ASC 
     </select>
 	
    <select id="excercisePoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
 		SELECT 
-			a.pointId as id ,
+			a.id ,
 			a.pointName,
 			a.sort,
 			a.chapterId,
@@ -390,11 +378,10 @@
 			a.number,
 			a.bookId,
 			b.state
-		FROM point_branch a,pointExerciseDetail b
+		FROM point a,pointExerciseDetail b
 		WHERE b.userId=#{userId}
-			 AND b.pointId= a.pointId
+			 AND b.pointId= a.id
 			 AND b.bookId=a.bookId
-			 AND a.version=#{bookVer}
 			 AND a.bookId=#{bookId}
 			 AND b.hidden=0
 			<if test="chapterId !=null and chapterId !='' ">

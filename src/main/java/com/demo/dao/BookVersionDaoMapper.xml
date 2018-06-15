@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.BookVersionDao">
+
+  <select id="getBookById" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity">
+     select * from book t where t.id=#{bookId}
+  </select>
+  
+  <select id="findBookVersion" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookBranchEntity">
+      select * from book_branch t where t.bookId=#{bookId} and t.status=3
+  </select>
+  
+  <select id="findBookBranch" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookBranchEntity">
+      select * from book_branch t where t.bookId=#{bookId} and t.status in (1,2)
+  </select>
+  
+  <select id="getChapterByBookId" parameterType="java.lang.Integer" resultType="com.pmp.entity.ChapterEntity">
+      select * From chapter t where t.bookId=#{bookId}
+  </select>
+  
+  <select id="getPointByBookId" parameterType="java.lang.Integer" resultType="com.pmp.entity.PointEntity">
+      select * from point t where t.bookId=#{bookId}
+  </select>
+  
+  <select id="getCardByBookId" parameterType="java.lang.Integer" resultType="com.pmp.entity.CardEntity">
+     select * from card t where t.bookId=#{bookId}
+  </select>
+  
+  <insert id="insertBookBranch" parameterType="com.pmp.entity.BookBranchEntity">
+  			INSERT INTO book_branch(
+  					bookId,
+					bookName,
+					language,
+					area,
+					sharedType,
+					remark,
+					version,
+					status
+			)VALUES(
+					#{bookId},
+					#{bookName},
+					#{language},
+					#{area},
+					#{sharedType},
+					#{remark},
+					#{version},
+					#{status}
+			)
+  </insert>
+  
+  <insert id="inserChapterBranch" parameterType="java.util.ArrayList">
+    	INSERT INTO chapter_branch(
+  					chapterId,
+					bookId,
+					parentId,
+					name,
+					level,
+					sort,
+					isOpen,
+					version
+			)VALUES
+			<foreach collection="list" item="item" index="index" separator=",">
+			  (
+					#{item.chapterId},
+					#{item.bookId},
+					#{item.parentId},
+					#{item.name},
+					#{item.level},
+					#{item.sort},
+					#{item.isOpen},
+					#{item.version}
+			   )
+			</foreach>
+
+  </insert>
+  
+  <insert id="inserPointBranch" parameterType="java.util.ArrayList">
+      	INSERT INTO point_branch(
+  					bookId,
+					chapterId,
+					pointId,
+					pointName,
+					number,
+					sort,
+					chapterSort,
+					version
+			)VALUES
+			<foreach collection="list" item="item" index="index" separator=",">
+			(
+					#{item.bookId},
+					#{item.chapterId},
+					#{item.pointId},
+					#{item.pointName},
+					#{item.number},
+					#{item.sort},
+					#{item.chapterSort},
+					#{item.version}
+			)
+			</foreach>
+			
+
+  </insert>
+  
+  <insert id="inserCardBranch" parameterType="java.util.ArrayList">
+        	INSERT INTO card_branch(
+  					bookId,
+					pointId,
+					cardId,
+					cardData,
+					version
+			)VALUES
+		   <foreach collection="list" item="item" index="index" separator=",">
+				(
+						#{item.bookId},
+						#{item.pointId},
+						#{item.cardId},
+						#{item.cardData},
+						#{item.version}
+				)
+			</foreach>
+			
+
+  </insert>
+  
+  <update id="updateBookBranch" parameterType="java.lang.Integer">
+     update book_branch t set t.status=#{status} where t.bookId=#{bookId}
+  </update>
+  
+  <update id="updateBook" parameterType="java.lang.Integer">
+     update book t set t.version=#{version} where t.id=#{bookId}
+  </update>
+	
+
+     
+</mapper>

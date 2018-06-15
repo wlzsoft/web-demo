@@ -157,14 +157,17 @@
 			 t.errorNumber,
 			 t.avgConsumingTime,
 			 t.state
-		FROM pointExerciseDetail t ,point a 
-		WHERE  a.id=t.pointId
+		FROM pointExerciseDetail t ,point_branch a 
+		WHERE  a.pointId=t.pointId
+			AND a.version=#{bookVer}
 		    AND t.pointId=#{id}
 		    AND t.userId=#{userId}
 	</select>
 	
 	<select id="pointIdByDetail" parameterType="java.lang.Integer" resultType="com.demo.dto.PointExerciseDetailDto">
-		SELECT t.* FROM pointExerciseDetail t  WHERE t.pointId=#{pointId} and t.userId=#{userId}
+		SELECT t.* FROM pointExerciseDetail t 
+		    WHERE t.pointId=#{pointId} 
+		    and t.userId=#{userId}
 	</select>
 	
 	<select id="roundPoint" parameterType="java.lang.Integer" resultType="com.demo.dto.PonitDto">
@@ -237,5 +240,11 @@
 			</foreach>
 		  AND userId=#{userId}
 	</update>
+    
+    <select id="findBookBypointId" parameterType="java.lang.Integer" resultType="com.pmp.entity.BookEntity">
+		select a.*  from book a , point t where a.id=t.bookId and t.id=#{pointId}
+	</select>
+     
+     
      
 </mapper>

@@ -118,10 +118,10 @@ public class LorePointService {
 		return lorePointDao.searchAllLorePoint();
 	}
 	
-	public PointExerciseDetailDto findPointIdByDetail(Integer id){
+	public PointExerciseDetailDto findPointIdByDetail(Integer pointId){
 		Integer userId =systemService.getCurrentUser().getId();
-		
-		return lorePointDao.findPointIdByDetail(id,userId);
+		BookEntity bookEntity = findBookBypointId(pointId);
+		return lorePointDao.findPointIdByDetail(pointId,userId,bookEntity.getVersion());
 	}
 	
 	
@@ -247,6 +247,15 @@ public class LorePointService {
 		}
 		int count = lorePointDao.hidePoint(points,state,userId);
 		return count;
+	}
+	
+	
+	/**根据知识点Id 获取所属练习本信息
+	 * @param pointId
+	 * @return
+	 */
+	public BookEntity findBookBypointId(Integer pointId){
+		return lorePointDao.findBookBypointId(pointId);
 	}
 	
 }

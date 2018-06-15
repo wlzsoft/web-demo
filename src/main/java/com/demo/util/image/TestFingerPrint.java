@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class TestFingerPrint {
 	
-    @Test
+    
     public void testCompare() throws IOException{
         FingerPrint fp1 = new FingerPrint(ImageIO.read(new File("d:\\tmp\\111.png")));
         FingerPrint fp2 =new FingerPrint(ImageIO.read(new File("d:\\tmp\\113.png")));

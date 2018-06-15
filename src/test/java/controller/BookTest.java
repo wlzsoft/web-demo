@@ -21,7 +21,6 @@ public class BookTest {
 	@Autowired
 	private ExcerciseBookService excerciseService ;	
 	
-	@Test
 	public void savaBook(){
 		for(int i=10;i>0;i--){
 			BookEntity entity = new BookEntity();
@@ -34,13 +33,11 @@ public class BookTest {
 		}
 	}
 	
-	@Test
 	public void delBook(){
 		String bookId = "1";
 		excerciseService.delBook(bookId);
 	}
 	
-	@Test
 	public void editbook(){
 		BookEntity entity = new BookEntity();
 		entity.setId(22);
@@ -51,15 +48,6 @@ public class BookTest {
 		excerciseService.editBook(entity);
 	}
 	
-	
-	@Test
-	public void findbook(){
-		String excerciseId = "22";
-		BookEntity entity = excerciseService.findBook(excerciseId);
-		System.out.println(entity.getId()+"_"+entity.getBookName());
-	}
-	
-	@Test
 	public void booklist(){
 		Integer userId=1;
 		List<BookDto> entityList = excerciseService.searchAllExcercise(userId);

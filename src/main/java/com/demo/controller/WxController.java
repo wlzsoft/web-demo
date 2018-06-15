@@ -35,7 +35,12 @@ public class WxController {
 	
 	public static boolean initialized = false;
 	
-
+	//wlz
+/*	private static final String APPID="wx5b3c6776c8d2028f";
+	private static final String SECRET="fb59d323b7251efb2ab7a2929d54e771";*/
+	
+	private static final String APPID="wx618e74db9875dada";
+	private static final String SECRET="58c0afffda3f84a205c060a2518ad123";
 	
 	@Autowired
 	private UserService userService;

@@ -91,6 +91,7 @@ public class CardController {
 		if(userId!=point.getCreateId()){
 			return ResultObject.warnMessage("无操作权限");	
 		}else{
+			cardEntity.setBookId(point.getBookId());
 			IdEntity idEntity =  loreCradService.savaLoreCrad(cardEntity);
 			 utilService.bookProgress(userId, point.getBookId());
 			 LOGGER.info("练习本进度计算统计完成");

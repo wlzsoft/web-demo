@@ -81,22 +81,22 @@
 		<property name="defaultContentType" value="text/html"></property>
 	</bean>
 	
-<!--    <bean id="webFilter" class="com.demo.fiter.LoginInterceptor"></bean>
+   <bean id="webFilter" class="com.demo.fiter.LoginInterceptor"></bean>
    <mvc:interceptors>
 	  <mvc:interceptor>
 	     <mvc:mapping path="/*/*"/>
 	        <ref bean="webFilter"/> 
 	  </mvc:interceptor> 
    </mvc:interceptors>
-    -->
    
-   <bean id="wxFilter" class="com.demo.fiter.WxInterceptor"></bean>
+   
+<!--    <bean id="wxFilter" class="com.demo.fiter.WxInterceptor"></bean>
    <mvc:interceptors>
 	  <mvc:interceptor>
 	     <mvc:mapping path="/*/*"/>
 	        <ref bean="wxFilter"/>
 	  </mvc:interceptor> 
-   </mvc:interceptors>
+   </mvc:interceptors> -->
    
 </beans>
 

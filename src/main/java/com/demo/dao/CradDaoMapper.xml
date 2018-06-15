@@ -4,11 +4,13 @@
 	
   <insert id="savaLoreCrad" parameterType="com.pmp.entity.CardEntity" useGeneratedKeys="true" keyProperty="id">
  	  INSERT INTO card(
+ 	   			bookId,
 				pointId,
                 cardData,
 				createTime,
 				createId
 		)VALUES(
+		        #{bookId},
 				#{pointId},
 				#{cardData},
 				#{createTime},
